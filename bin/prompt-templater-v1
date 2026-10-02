@@ -1,0 +1,4 @@
+#!/usr/bin/env tsx
+
+import { main } from '../src/entrypoints/cli.ts'
+main();
