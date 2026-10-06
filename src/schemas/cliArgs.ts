@@ -1,14 +1,14 @@
 import { z } from 'zod';
-import { CLI_ARGS_PROCESSING__EMPTY_STRING, CLI_ARGS_PROCESSING__EXPECTED_1_ARGUMENT } from '../constants/errorMessages.js';
+import { messages } from '../constants/errorMessages.js';
 
 export const CliArgsSchema = z
   .array(
     z.string().nonempty({
-      error: CLI_ARGS_PROCESSING__EMPTY_STRING,
+      error: messages.cliArgsProcessing_emptyStringAsArgument,
     }),
   )
   .length(1, {
-    error: CLI_ARGS_PROCESSING__EXPECTED_1_ARGUMENT,
+    error: messages.cliArgsProcessing_wrongArgumentFormat,
   }).transform(([workflowFile]) => ({
     workflowFile: workflowFile!,
   }));
