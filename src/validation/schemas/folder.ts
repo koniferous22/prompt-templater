@@ -1,7 +1,7 @@
 import { errorMessages } from "../../constants/errorMessages.js";
-import { AbsolutePathToStats } from "../codecs/absolutePathFsStats.js";
+import { AbsolutePathToFsStatsSchema } from "../codecs/absolutePathFsStats.js";
 
-export const FolderSchema = AbsolutePathToStats
+export const FolderSchema = AbsolutePathToFsStatsSchema
   .check((ctx) => {
     if (!ctx.value.fsStats.isDirectory()) {
       ctx.issues.push({

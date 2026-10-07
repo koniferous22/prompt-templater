@@ -9,7 +9,7 @@ const CodecOutputSchema = z.object({
   fsStats: FsStatsSchema,
 });
 
-export const AbsolutePathToStats = z.codec(
+export const AbsolutePathToFsStatsSchema = z.codec(
   AbsolutePathSchema,
   CodecOutputSchema,
   {
