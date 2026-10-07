@@ -10,6 +10,7 @@ export const AbsolutePathSchema = z
         code: 'custom',
         message: messages.inputValidation_inputIsNotAbsolutePath({ value: ctx.value }),
         input: ctx.value,
+        continue: false,
       })
     }
   });
