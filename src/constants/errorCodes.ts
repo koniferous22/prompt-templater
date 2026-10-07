@@ -1,7 +1,8 @@
 export type AppErrorCode =
   | 'cliArgsProcessing_emptyStringAsArgument'
   | 'cliArgsProcessing_wrongArgumentFormat'
-  | 'fs_statOperationFailed'
+  | 'dependency_nodeFs_fsStatInvalidShape'
+  | 'dependency_nodeFs_fsStatOperationFailed'
   | 'inputValidation_inputIsNotAbsolutePath'
   | 'inputValidation_absolutePathDoesNotExist'
   | 'inputValidation_absolutePathIsNotFolder'
