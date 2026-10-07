@@ -16,6 +16,12 @@ export const zodRegisterIssue = <
     message: (errorMessages[code] as (ctx: MessageContext[ErrorCode]) => string)(meta),
     input,
     continue: false,
+    params: {
+      code,
+      meta,
+    } satisfies {
+      code: ErrorCode
+      meta: MessageContext[ErrorCode],
+    }
   })
 };
-
