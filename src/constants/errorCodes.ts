@@ -1,6 +1,7 @@
 export type AppErrorCode =
   | 'cliArgsProcessing_emptyStringAsArgument'
   | 'cliArgsProcessing_wrongArgumentFormat'
+  | 'inputValidation_inputIsNotAbsolutePath'
 
 export type AppError = {
   readonly code: AppErrorCode;
