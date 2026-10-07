@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import { z } from "zod";
 import { AbsolutePathSchema, type AbsolutePath } from "./path.js";
-import { messages } from "../constants/errorMessages.js";
+import { messages } from "../../constants/errorMessages.js";
 
 
 export const FolderSchema = AbsolutePathSchema

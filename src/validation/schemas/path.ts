@@ -1,6 +1,6 @@
 import path from "node:path";
 import { z } from "zod";
-import { messages } from "../constants/errorMessages.js";
+import { messages } from "../../constants/errorMessages.js";
 
 export const AbsolutePathSchema = z
   .string()
