@@ -1,6 +1,7 @@
 export type AppErrorCode =
   | 'cliArgsProcessing_emptyStringAsArgument'
   | 'cliArgsProcessing_wrongArgumentFormat'
+  | 'fs_statOperationFailed'
   | 'inputValidation_inputIsNotAbsolutePath'
   | 'inputValidation_absolutePathDoesNotExist'
   | 'inputValidation_absolutePathIsNotFolder'

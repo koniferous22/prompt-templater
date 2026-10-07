@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import { z } from "zod";
-import { AbsolutePathSchema, type AbsolutePath } from "./path.js";
+import { AbsolutePathSchema, type AbsolutePath } from "../inputTypes/path.js";
 import { messages } from "../../constants/errorMessages.js";
 
 

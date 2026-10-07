@@ -3,6 +3,7 @@ import type { AppErrorCode } from "./errorCodes.js";
 export const messages = {
   cliArgsProcessing_emptyStringAsArgument: () =>  'Expected CLI input arg to be non empty string',
   cliArgsProcessing_wrongArgumentFormat: () => 'Expected exactly 1 input CLI argument denoting workflow file',
+  fs_statOperationFailed: (ctx?: { value: string, errorMessage: string  }) => `fs.stat operation failed${ctx !== undefined ? `on entry "${ctx.value}" with message "${ctx.errorMessage}"` : ''}`,
   inputValidation_inputIsNotAbsolutePath: (ctx ?: { value: string }) => `Expected absolute path${ctx !== undefined ? `, got "${ctx.value}"` : ''}`,
   inputValidation_absolutePathDoesNotExist: (ctx ?: { value: string }) => `Expected existing absolute path ${ctx !== undefined ? ` for input "${ctx.value}"` : ''}`,
   inputValidation_absolutePathIsNotFolder: (ctx ?: { value: string }) => `Expected folder${ctx !== undefined ? ` for input "${ctx.value}"` : ''}`,
