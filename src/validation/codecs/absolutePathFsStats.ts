@@ -25,6 +25,7 @@ export const AbsolutePathToFsStatsSchema = z.codec(
           code: "custom",
           message: errorMessages.dependency_nodeFs_fsStatOperationFailed({ value: absolutePath, errorMessage: err.message }),
           input: absolutePath,
+          continue: false,
         });
         return z.NEVER;
       }
