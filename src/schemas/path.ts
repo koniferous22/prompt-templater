@@ -13,6 +13,8 @@ export const AbsolutePathSchema = z
         continue: false,
       })
     }
-  });
+  })
+  .brand<'AbsolutePath'>()
 
+export type AbsolutePath = z.output<typeof AbsolutePathSchema>;
 // TODO - try implementing automatic `neverthrow` mapping
