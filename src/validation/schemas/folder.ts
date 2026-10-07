@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import { z } from "zod";
 import { AbsolutePathSchema, type AbsolutePath } from "../inputTypes/path.js";
-import { messages } from "../../constants/errorMessages.js";
+import { errorMessages } from "../../constants/errorMessages.js";
 
 
 export const FolderSchema = AbsolutePathSchema
@@ -9,7 +9,7 @@ export const FolderSchema = AbsolutePathSchema
     if (!fs.existsSync(ctx.value)) {
       ctx.issues.push({
         code: 'custom',
-        message: messages.inputValidation_absolutePathDoesNotExist({ value: ctx.value }),
+        message: errorMessages.inputValidation_absolutePathDoesNotExist({ value: ctx.value }),
         input: ctx.value,
         continue: false,
       })

@@ -1,6 +1,6 @@
 import { err, errAsync } from 'neverthrow';
 import type { AppError, AppErrorCode } from '../../constants/errorCodes.js';
-import { messages, type MessageContext } from '../../constants/errorMessages.js';
+import { errorMessages, type MessageContext } from '../../constants/errorMessages.js';
 
 export interface AppErrOpts<C extends AppErrorCode> {
   cause?: unknown;
@@ -14,7 +14,7 @@ export function createError<C extends AppErrorCode>(
 ): AppError {
   // Temporarily commented out until I have error type that actually makes use of context
   // const message = opts?.message ?? messages[code](opts?.meta as any);
-  const message = opts?.message ?? messages[code](opts?.meta ?? undefined);
+  const message = opts?.message ?? errorMessages[code](opts?.meta ?? undefined);
   return {
     code,
     message,

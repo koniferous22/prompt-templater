@@ -1,6 +1,6 @@
 import type { AppErrorCode } from "./errorCodes.js";
 
-export const messages = {
+export const errorMessages = {
   cliArgsProcessing_emptyStringAsArgument: () =>  'Expected CLI input arg to be non empty string',
   cliArgsProcessing_wrongArgumentFormat: () => 'Expected exactly 1 input CLI argument denoting workflow file',
   fs_statOperationFailed: (ctx?: { value: string, errorMessage: string  }) => `fs.stat operation failed${ctx !== undefined ? `on entry "${ctx.value}" with message "${ctx.errorMessage}"` : ''}`,
@@ -10,5 +10,5 @@ export const messages = {
 } as const satisfies Record<AppErrorCode, string | ((ctx?: any) => string)>;
 
 export type MessageContext = {
-  [K in AppErrorCode]?: Parameters<typeof messages[K]>[0];
+  [K in AppErrorCode]?: Parameters<typeof errorMessages[K]>[0];
 };

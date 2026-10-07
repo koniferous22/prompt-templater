@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import z from "zod";
 import { AbsolutePathSchema } from "../inputTypes/path.js";
 import { FsStatsSchema } from "../schemas/fs.js";
-import { messages } from '../../constants/errorMessages.js';
+import { errorMessages } from '../../constants/errorMessages.js';
 
 const CodecOutputSchema = z.object({
   absolutePath: AbsolutePathSchema,
@@ -23,7 +23,7 @@ export const AbsolutePathToStats = z.codec(
       } catch (err: any) {
         ctx.issues.push({
           code: "custom",
-          message: messages.fs_statOperationFailed({ value: absolutePath, errorMessage: err.message }),
+          message: errorMessages.fs_statOperationFailed({ value: absolutePath, errorMessage: err.message }),
           input: absolutePath,
         });
         return z.NEVER;
