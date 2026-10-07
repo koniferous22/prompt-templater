@@ -1,15 +1,11 @@
 import { errorMessages } from "../../constants/errorMessages.js";
+import { zodRegisterIssue } from "../../utils/zod/zodRegisterIssue.js";
 import { AbsolutePathToFsStatsSchema } from "../codecs/absolutePathFsStats.js";
 
 export const FolderSchema = AbsolutePathToFsStatsSchema
   .check((ctx) => {
     if (!ctx.value.fsStats.isDirectory()) {
-      ctx.issues.push({
-        code: 'custom',
-        message: errorMessages.validation_types_absolutePath_pathDoesNotExist({ value: ctx.value.absolutePath }),
-        input: ctx.value.absolutePath,
-        continue: false,
-      })
+      zodRegisterIssue(ctx.value.absolutePath, ctx, 'validation_types_absolutePath_pathDoesNotExist', { value: ctx.value.absolutePath });
     }
   })
   .brand<'Folder'>();

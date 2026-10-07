@@ -3,6 +3,7 @@ import z from "zod";
 import { AbsolutePathSchema } from "../customTypes/path.js";
 import { FsStatsSchema } from "../external/node/fs.js";
 import { errorMessages } from '../../constants/errorMessages.js';
+import { zodRegisterIssue } from '../../utils/zod/zodRegisterIssue.js';
 
 const CodecOutputSchema = z.object({
   absolutePath: AbsolutePathSchema,
@@ -21,12 +22,7 @@ export const AbsolutePathToFsStatsSchema = z.codec(
           fsStats,
         };
       } catch (err: any) {
-        ctx.issues.push({
-          code: "custom",
-          message: errorMessages.dependency_nodeFs_fsStatOperationFailed({ value: absolutePath, errorMessage: err.message }),
-          input: absolutePath,
-          continue: false,
-        });
+        zodRegisterIssue(absolutePath, ctx, 'dependency_nodeFs_fsStatOperationFailed', { value: absolutePath, errorMessage: err.message });
         return z.NEVER;
       }
     },
