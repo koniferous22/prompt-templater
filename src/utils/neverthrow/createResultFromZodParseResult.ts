@@ -1,6 +1,7 @@
 import { err, ok } from "neverthrow";
 import type { input, ZodType } from "zod";
 
+/** @deprecated */
 export const createResultFromZodParseResult = <
   ZodSchema extends ZodType<any, any>,
   ZodSchemaInput extends input<ZodSchema>,

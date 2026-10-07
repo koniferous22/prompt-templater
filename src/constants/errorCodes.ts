@@ -4,6 +4,8 @@ export type AppErrorCode =
   | 'dependency_nodeFs_fsReadDirOperationFailed'
   | 'dependency_nodeFs_fsStatInvalidShape'
   | 'dependency_nodeFs_fsStatOperationFailed'
+  | 'dependency_zod_validationError'
+  | 'dependency_zod_safeParseErrorWithoutIssues'
   | 'validation_types_absolutePath_invalidInputFormat'
   | 'validation_types_absolutePath_pathDoesNotExist'
   | 'validation_types_absolutePath_pathIsNotFolder'

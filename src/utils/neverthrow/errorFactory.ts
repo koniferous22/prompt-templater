@@ -35,3 +35,11 @@ export const appErrAsync = <C extends AppErrorCode>(
   meta: MessageContext[C],
   opts?: Parameters<typeof createError>[2]
 ) => errAsync(createError(code, meta, opts));
+
+export const appAggregateErr = (
+  ...args: AppError[]
+) => err(args);
+
+export const appAggregateErrAsync = (
+  ...args: AppError[]
+) => errAsync(args);
