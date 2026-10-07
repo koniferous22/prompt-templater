@@ -6,7 +6,7 @@ export const FolderSchema = AbsolutePathToFsStatsSchema
     if (!ctx.value.fsStats.isDirectory()) {
       ctx.issues.push({
         code: 'custom',
-        message: errorMessages.inputValidation_absolutePathDoesNotExist({ value: ctx.value.absolutePath }),
+        message: errorMessages.validation_types_absolutePath_pathDoesNotExist({ value: ctx.value.absolutePath }),
         input: ctx.value.absolutePath,
         continue: false,
       })

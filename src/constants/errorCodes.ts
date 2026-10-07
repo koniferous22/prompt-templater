@@ -4,9 +4,9 @@ export type AppErrorCode =
   | 'dependency_nodeFs_fsReadDirOperationFailed'
   | 'dependency_nodeFs_fsStatInvalidShape'
   | 'dependency_nodeFs_fsStatOperationFailed'
-  | 'inputValidation_inputIsNotAbsolutePath'
-  | 'inputValidation_absolutePathDoesNotExist'
-  | 'inputValidation_absolutePathIsNotFolder'
+  | 'validation_types_absolutePath_invalidInputFormat'
+  | 'validation_types_absolutePath_pathDoesNotExist'
+  | 'validation_types_absolutePath_pathIsNotFolder'
 
 export type AppError = {
   readonly code: AppErrorCode;

@@ -8,7 +8,7 @@ export const AbsolutePathSchema = z
     if (!path.isAbsolute(ctx.value)) {
       ctx.issues.push({
         code: 'custom',
-        message: errorMessages.inputValidation_inputIsNotAbsolutePath({ value: ctx.value }),
+        message: errorMessages.validation_types_absolutePath_invalidInputFormat({ value: ctx.value }),
         input: ctx.value,
         continue: false,
       })
