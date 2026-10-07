@@ -14,7 +14,7 @@ export function createError<C extends AppErrorCode>(
 ): AppError {
   // Temporarily commented out until I have error type that actually makes use of context
   // const message = opts?.message ?? messages[code](opts?.meta as any);
-  const message = opts?.message ?? errorMessages[code](opts?.meta ?? undefined);
+  const message = opts?.message ?? (errorMessages[code] as (ctx: MessageContext[C]) => string)(opts?.meta ?? undefined);
   return {
     code,
     message,
