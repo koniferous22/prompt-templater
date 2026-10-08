@@ -2,7 +2,6 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { createError, type AppError } from '../../utils/deps/neverthrow/errorFactory.js';
 import type { AppErrorCode } from '../../constants/errorCodes.js';
-import { resultFromErrorList } from '../../utils/deps/neverthrow/resultFromErrorList.js';
 import { AbsolutePathSchema, PathFragmentSchema, type AbsolutePath, type PathFragment } from '../../validation/customTypes/path.js';
 import { createDirentFlagsMatcher, type DirentFlagPatterns } from './direntFlagsMatcher.js';
 import { dirname, join } from "node:path";
