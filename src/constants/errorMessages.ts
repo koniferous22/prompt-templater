@@ -11,10 +11,10 @@ export const errorMessages = {
   dependency_zod_safeParseErrorWithoutIssues: () => `Encountered "zod" error with no attached issues`,
   dependency_zod_validationError: (ctx: { zodError: ZodError<any>}) => `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
   validation_customTypes_absolutePath_invalidInputFormat: (ctx: { value: string }) => `Expected absolute path, got "${ctx.value}"`,
-  validation_customTypes_absolutePath_pathDoesNotExist: (ctx: { value: string }) => `Expected existing absolute path for input "${ctx.value}"`,
-  validation_customTypes_absolutePath_pathIsNotFolder: (ctx: { value: string }) => `Expected folder for input "${ctx.value}"`,
   validation_customTypes_relativePath_emptyInput: () => 'Expected relative path, got ""',
   validation_customTypes_relativePath_invalidInputFormat: (ctx: { value: string }) => `Expected relative path, got "${ctx.value}"`,
+  validation_schemas_folderSchema_pathDoesNotExist: (ctx: { value: string }) => `Expected existing absolute path for input "${ctx.value}"`,
+  validation_schemas_folderSchema_pathIsNotFolder: (ctx: { value: string }) => `Expected folder for input "${ctx.value}"`,
 } as const satisfies Record<AppErrorCode, ((ctx: any) => string)>;
 
 export type MessageContext = {
