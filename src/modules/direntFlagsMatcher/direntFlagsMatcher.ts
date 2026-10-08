@@ -168,7 +168,7 @@ export const createDirentFlagsMatcher = (
     }
 
   } else {
-    for (const [absolutePath, { pattern, direntFlags }] of comparisonMap) {
+    for (const [, { pattern, direntFlags }] of comparisonMap) {
       // Pattern not found in folder
       if (pattern !== null && direntFlags === null) {
         errors.push(createError('module_direntFlagsMatcher_patternNotFound', {
