@@ -1,26 +1,38 @@
-import path from "node:path";
-import { z } from "zod";
-import { zodRegisterIssue } from "../../utils/zod/zodRegisterIssue.js";
-import { errorMessages } from "../../constants/errorMessages.js";
+import { pathFragmentVariant } from "../../utils/node/detectPlatformFeatures.js";
+import { match } from "ts-pattern";
+import type z from "zod";
 
-export const AbsolutePathSchema = z
-  .string()
-  .check((ctx) => {
-    if (!path.isAbsolute(ctx.value)) {
-      zodRegisterIssue(ctx.value, ctx, 'validation_customTypes_absolutePath_invalidInputFormat', { value: ctx.value });
-    }
+export const {
+  AbsolutePathSchema,
+  PathFragmentSchema,
+  RelativePathSchema,
+} = await match(pathFragmentVariant)
+  .with('posix', async () => {
+    const {
+      AbsolutePathPosixSchema,
+      PathFragmentPosixSchema,
+      RelativePathPosixSchema,
+    } = await import('./platform-specific/posix/path.js');
+    return {
+      AbsolutePathSchema: AbsolutePathPosixSchema,
+      PathFragmentSchema: PathFragmentPosixSchema,
+      RelativePathSchema: RelativePathPosixSchema,
+    };
   })
-  .brand<'AbsolutePath'>()
-
+  .with('win32', async () => {
+    const {
+      AbsolutePathWin32Schema,
+      PathFragmentWin32Schema,
+      RelativePathWin32Schema,
+    } = await import('./platform-specific/win32/path.js');
+    return {
+      AbsolutePathSchema: AbsolutePathWin32Schema,
+      PathFragmentSchema: PathFragmentWin32Schema,
+      RelativePathSchema: RelativePathWin32Schema,
+    };
+  })
+  .exhaustive();
+  
 export type AbsolutePath = z.output<typeof AbsolutePathSchema>;
-
-export const RelativePathSchema = z
-  .string()
-  .min(1, { error: errorMessages.validation_customTypes_relativePath_emptyInput() })
-  .check((ctx) => {
-    if (path.posix.isAbsolute(ctx.value) || path.win32.isAbsolute(ctx.value)) {
-      zodRegisterIssue(ctx.value, ctx, 'validation_customTypes_relativePath_invalidInputFormat', { value: ctx.value });
-    }
-  })
-  .brand<"RelativePath">();
+export type PathFragment = z.output<typeof PathFragmentSchema>;
 export type RelativePath = z.output<typeof RelativePathSchema>;
