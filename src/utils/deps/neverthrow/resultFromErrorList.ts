@@ -8,7 +8,8 @@ export const resultFromErrorList = <
 >(
   ...errors: [AppError<C>, ...AppError<C>[]]
 ) => {
-  const result = match<[AppError<C>, ...AppError<C>[]], Err<unknown, AppError<C>> | Err<unknown, AppErrors<C>>>(errors)
+  const result = match(errors)
+    .returnType<Err<unknown, AppError<C>> | Err<unknown, AppErrors<C>>>()
     .with(
       [P._, P._, ...P.array()],
         // @ts-expect-error some too strict of inferrence
@@ -21,4 +22,13 @@ export const resultFromErrorList = <
     )
     .otherwise(([error]) => err(error));
   return result;
+};
+
+export const resultFromErrors = <
+  C extends AppErrorCode,
+>(
+  ...errors: [Err<unknown, AppError<C>>, ...Err<unknown, AppError<C>>[]]
+) => {
+  const unwrappedErrors = errors.map((error) => error.error) as [AppError<C>, ...AppError<C>[]];
+  return resultFromErrorList(...unwrappedErrors);
 };
