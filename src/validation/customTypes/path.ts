@@ -33,6 +33,8 @@ export const {
   })
   .exhaustive();
   
-export type AbsolutePath = z.output<typeof AbsolutePathSchema>;
-export type PathFragment = z.output<typeof PathFragmentSchema>;
-export type RelativePath = z.output<typeof RelativePathSchema>;
+export type {
+  AbsolutePath,
+  RelativePath,
+  PathFragment,
+} from './type-brands/path.js';
