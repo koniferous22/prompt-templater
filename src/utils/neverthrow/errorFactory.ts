@@ -13,7 +13,7 @@ export type AppErrorInstance = {
   [C in AppErrorCode]: AppError<C>;
 }[AppErrorCode];
 
-export type AppErrors = readonly [AppErrorInstance, ...AppErrorInstance[]];
+export type AppErrors = readonly [AppErrorInstance, AppErrorInstance, ...AppErrorInstance[]];
 
 export interface AppErrOpts {
   cause?: unknown;
@@ -50,13 +50,13 @@ export const appErrAsync = <C extends AppErrorCode>(
 ) => errAsync(createError(code, meta, opts));
 
 export const appAggregateErr = <
-  const ErrorTypes extends readonly [AppErrorInstance, AppErrorInstance, ...AppErrorInstance[]],
+  const ErrorTypes extends AppErrors,
 >(...errors: ErrorTypes): Result<never, ErrorTypes> => {
   return err(errors);
 }
 
 export const appAggregateErrAsync = <
-  const ErrorTypes extends readonly [AppErrorInstance, AppErrorInstance, ...AppErrorInstance[]],
+  const ErrorTypes extends AppErrors,
 >(...errors: ErrorTypes): ResultAsync<never, ErrorTypes> => {
   return errAsync(errors);
 }
