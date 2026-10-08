@@ -186,5 +186,7 @@ export const createDirentFlagsMatcher = (
     }
   }
 
-  return resultFromErrorList(...errors);
+  return isNonEmptyArray(errors) ?
+    resultFromErrorList(...errors) :
+    ok(undefined);
 };

@@ -1,4 +1,4 @@
-import { Result, err, ok } from "neverthrow";
+import { Result, err } from "neverthrow";
 import { match, P } from "ts-pattern";
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import { type AppError, type AppErrors, appAggregateErr } from "./errorFactory.js";
@@ -6,10 +6,9 @@ import { type AppError, type AppErrors, appAggregateErr } from "./errorFactory.j
 export const resultFromErrorList = <
   C extends AppErrorCode,
 >(
-  ...errors: AppError<C>[]
+  ...errors: [AppError<C>, ...AppError<C>[]]
 ) => {
-  const result = match<AppError<C>[], Result<undefined, AppError<C>> | Result<undefined, AppErrors<C>>>(errors)
-    .with([P._], ([error]) => err(error))
+  const result = match<[AppError<C>, ...AppError<C>[]], Result<undefined, AppError<C>> | Result<undefined, AppErrors<C>>>(errors)
     .with(
       [P._, P._, ...P.array()],
         // @ts-expect-error some too strict of inferrence
@@ -20,14 +19,6 @@ export const resultFromErrorList = <
         ...rest
       ),
     )
-    .with(
-      // Expecting empty array here     
-      P.array(),
-      // @ts-expect-error
-      () => {
-        return ok(undefined);
-      }
-    )
-    .exhaustive(); 
+    .otherwise(([error]) => err(error));
   return result;
 };
