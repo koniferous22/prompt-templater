@@ -1,6 +1,19 @@
-import { err, errAsync } from 'neverthrow';
-import type { AppError, AppErrorCode } from '../../constants/errorCodes.js';
+import { err, errAsync, Result, ResultAsync } from 'neverthrow';
+import type { AppErrorCode } from '../../constants/errorCodes.js';
 import { errorMessages, type MessageContext } from '../../constants/errorMessages.js';
+
+export type AppError<C extends AppErrorCode> = {
+  readonly code: AppErrorCode;
+  readonly message: string;
+  readonly cause?: unknown;
+  readonly meta: MessageContext[C];
+};
+
+export type AppErrorInstance = {
+  [C in AppErrorCode]: AppError<C>;
+}[AppErrorCode];
+
+export type AppErrors = readonly [AppErrorInstance, ...AppErrorInstance[]];
 
 export interface AppErrOpts {
   cause?: unknown;
@@ -11,7 +24,7 @@ export function createError<C extends AppErrorCode>(
   code: C,
   meta: MessageContext[C],
   opts?: AppErrOpts,
-): AppError {
+): AppError<C> {
   // Temporarily commented out until I have error type that actually makes use of context
   // const message = opts?.message ?? messages[code](opts?.meta as any);
   const message = opts?.message ?? (errorMessages[code] as (ctx: MessageContext[C]) => string)(meta);
@@ -19,7 +32,7 @@ export function createError<C extends AppErrorCode>(
     code,
     message,
     cause: opts?.cause,
-    meta: meta ?? {},
+    meta,
   };
 }
 
@@ -36,10 +49,14 @@ export const appErrAsync = <C extends AppErrorCode>(
   opts?: Parameters<typeof createError>[2]
 ) => errAsync(createError(code, meta, opts));
 
-export const appAggregateErr = (
-  ...args: AppError[]
-) => err(args);
+export function appAggregateErr<
+  const Es extends readonly [AppErrorInstance, AppErrorInstance, ...AppErrorInstance[]],
+>(...errors: Es): Result<never, Es> {
+  return err(errors);
+}
 
-export const appAggregateErrAsync = (
-  ...args: AppError[]
-) => errAsync(args);
+export function appAggregateErrAsync<
+  const Es extends readonly [AppErrorInstance, AppErrorInstance, ...AppErrorInstance[]],
+>(...errors: Es): ResultAsync<never, Es> {
+  return errAsync(errors);
+}
