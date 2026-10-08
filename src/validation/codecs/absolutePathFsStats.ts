@@ -2,8 +2,7 @@ import fs from 'node:fs';
 import z from "zod";
 import { AbsolutePathSchema } from "../customTypes/path.js";
 import { FsStatsSchema } from "../external/node/fs.js";
-import { errorMessages } from '../../constants/errorMessages.js';
-import { zodRegisterIssue } from '../../utils/zod/zodRegisterIssue.js';
+import { zodRegisterIssue } from '../../utils/deps/zod/zodRegisterIssue.js';
 
 const CodecOutputSchema = z.object({
   absolutePath: AbsolutePathSchema,

@@ -1,6 +1,6 @@
 import { err, errAsync, Result, ResultAsync } from 'neverthrow';
-import type { AppErrorCode } from '../../constants/errorCodes.js';
-import { errorMessages, type MessageContext } from '../../constants/errorMessages.js';
+import type { AppErrorCode } from '../../../constants/errorCodes.js';
+import { errorMessages, type MessageContext } from '../../../constants/errorMessages.js';
 
 export type AppError<C extends AppErrorCode> = {
   readonly code: AppErrorCode;
@@ -9,11 +9,11 @@ export type AppError<C extends AppErrorCode> = {
   readonly meta: MessageContext[C];
 };
 
-export type AppErrorInstance = {
-  [C in AppErrorCode]: AppError<C>;
-}[AppErrorCode];
+export type AppErrorInstance<ErrorCodes extends AppErrorCode = AppErrorCode> = {
+  [C in ErrorCodes]: AppError<C>;
+}[ErrorCodes];
 
-export type AppErrors = readonly [AppErrorInstance, AppErrorInstance, ...AppErrorInstance[]];
+export type AppErrors<ErrorCodes extends AppErrorCode = AppErrorCode> = readonly [AppErrorInstance<ErrorCodes>, AppErrorInstance<ErrorCodes>, ...AppErrorInstance<ErrorCodes>[]];
 
 export interface AppErrOpts {
   cause?: unknown;
@@ -50,13 +50,15 @@ export const appErrAsync = <C extends AppErrorCode>(
 ) => errAsync(createError(code, meta, opts));
 
 export const appAggregateErr = <
-  const ErrorTypes extends AppErrors,
+  const ErrorCodes extends AppErrorCode = AppErrorCode,
+  const ErrorTypes extends AppErrors<AppErrorCode> = AppErrors<AppErrorCode>,
 >(...errors: ErrorTypes): Result<never, ErrorTypes> => {
   return err(errors);
 }
 
 export const appAggregateErrAsync = <
-  const ErrorTypes extends AppErrors,
+  const ErrorCodes extends AppErrorCode = AppErrorCode,
+  const ErrorTypes extends AppErrors<AppErrorCode> = AppErrors<AppErrorCode>,
 >(...errors: ErrorTypes): ResultAsync<never, ErrorTypes> => {
   return errAsync(errors);
 }

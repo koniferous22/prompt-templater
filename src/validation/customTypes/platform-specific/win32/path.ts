@@ -1,6 +1,6 @@
 import path from "path/win32";
 import z from "zod";
-import { zodRegisterIssue } from "../../../../utils/zod/zodRegisterIssue.js";
+import { zodRegisterIssue } from "../../../../utils/deps/zod/zodRegisterIssue.js";
 import { errorMessages } from "../../../../constants/errorMessages.js";
 
 const UnbrandedAbsolutePathWin32Schema = z

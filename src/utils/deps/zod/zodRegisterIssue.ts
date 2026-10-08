@@ -1,6 +1,6 @@
 import type { core } from "zod";
-import type { AppErrorCode } from "../../constants/errorCodes.js";
-import { errorMessages, type MessageContext } from "../../constants/errorMessages.js";
+import type { AppErrorCode } from "../../../constants/errorCodes.js";
+import { errorMessages, type MessageContext } from "../../../constants/errorMessages.js";
 
 export const zodRegisterIssue = <
   Input extends unknown,

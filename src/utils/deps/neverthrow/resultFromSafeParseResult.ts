@@ -2,11 +2,10 @@ import { err, ok } from "neverthrow";
 import { ZodError, type ZodSafeParseResult } from "zod";
 import { appAggregateErr, appErr, createError, type AppError, type AppErrors } from "./errorFactory.js";
 import { match, P } from "ts-pattern";
-import { errorMessages } from "../../constants/errorMessages.js";
-import type { AppErrorCode } from "../../constants/errorCodes.js";
+import { errorMessages } from "../../../constants/errorMessages.js";
+import type { AppErrorCode } from "../../../constants/errorCodes.js";
 
 export const errFromZodError = <T>(zodError: ZodError<T>) => {
-
   const errors = zodError.issues.map((issue): AppError<AppErrorCode> => {
     if (issue.code !== 'custom') {
       return createError('dependency_zod_validationError', { zodError }, { cause: zodError });
