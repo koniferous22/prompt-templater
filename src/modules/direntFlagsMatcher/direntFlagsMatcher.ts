@@ -82,7 +82,7 @@ const createDirentFlagsMap = (inputDirents: DirentData[]) => {
 
 export const createDirentFlagsMatcher = (
   folderPath: AbsolutePath,
-  patterns: Map<RelativePath,DirentFlagPatterns>,
+  patterns: Map<RelativePath, DirentFlagPatterns>,
   options: {
     failOnExtraItems: boolean;
   } = {
