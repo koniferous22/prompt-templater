@@ -9,3 +9,5 @@ export type AppErrorCode =
   | 'validation_customTypes_absolutePath_invalidInputFormat'
   | 'validation_customTypes_absolutePath_pathDoesNotExist'
   | 'validation_customTypes_absolutePath_pathIsNotFolder'
+  | 'validation_customTypes_relativePath_emptyInput'
+  | 'validation_customTypes_relativePath_invalidInputFormat'
