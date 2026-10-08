@@ -9,26 +9,26 @@ export const {
 } = await match(pathFragmentVariant)
   .with('posix', async () => {
     const {
-      AbsolutePathPosixSchema,
-      PathFragmentPosixSchema,
-      RelativePathPosixSchema,
+      AbsolutePathSchema,
+      PathFragmentSchema,
+      RelativePathSchema,
     } = await import('./platform-specific/posix/path.js');
     return {
-      AbsolutePathSchema: AbsolutePathPosixSchema,
-      PathFragmentSchema: PathFragmentPosixSchema,
-      RelativePathSchema: RelativePathPosixSchema,
+      AbsolutePathSchema,
+      PathFragmentSchema,
+      RelativePathSchema,
     };
   })
   .with('win32', async () => {
     const {
-      AbsolutePathWin32Schema,
-      PathFragmentWin32Schema,
-      RelativePathWin32Schema,
+      AbsolutePathSchema,
+      PathFragmentSchema,
+      RelativePathSchema,
     } = await import('./platform-specific/win32/path.js');
     return {
-      AbsolutePathSchema: AbsolutePathWin32Schema,
-      PathFragmentSchema: PathFragmentWin32Schema,
-      RelativePathSchema: RelativePathWin32Schema,
+      AbsolutePathSchema,
+      PathFragmentSchema,
+      RelativePathSchema,
     };
   })
   .exhaustive();
