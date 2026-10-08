@@ -49,14 +49,14 @@ export const appErrAsync = <C extends AppErrorCode>(
   opts?: Parameters<typeof createError>[2]
 ) => errAsync(createError(code, meta, opts));
 
-export function appAggregateErr<
-  const Es extends readonly [AppErrorInstance, AppErrorInstance, ...AppErrorInstance[]],
->(...errors: Es): Result<never, Es> {
+export const appAggregateErr = <
+  const ErrorTypes extends readonly [AppErrorInstance, AppErrorInstance, ...AppErrorInstance[]],
+>(...errors: ErrorTypes): Result<never, ErrorTypes> => {
   return err(errors);
 }
 
-export function appAggregateErrAsync<
-  const Es extends readonly [AppErrorInstance, AppErrorInstance, ...AppErrorInstance[]],
->(...errors: Es): ResultAsync<never, Es> {
+export const appAggregateErrAsync = <
+  const ErrorTypes extends readonly [AppErrorInstance, AppErrorInstance, ...AppErrorInstance[]],
+>(...errors: ErrorTypes): ResultAsync<never, ErrorTypes> => {
   return errAsync(errors);
 }
