@@ -7,6 +7,8 @@ import { createDirentFlagsMatcher, type DirentFlagPatterns } from './direntFlags
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readdir } from 'node:fs/promises';
+import z from 'zod';
+import { DirentSchema } from '../../validation/pipes/dirent.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, '../../../'))
@@ -175,7 +177,8 @@ describe('direntFlagsMatcher', () => {
         testInput.data.options,
       );
       const folderContents = await readdir(testInput.data.inputFolderPath, { withFileTypes: true });
-      const result = direntFlagsMatcher(folderContents);
+      const dirents = z.array(DirentSchema).parse(folderContents);
+      const result = direntFlagsMatcher(dirents);
 
       assert.strictEqual(result.isOk(), testOutcome.data.ok);
       if (result.isOk()) {

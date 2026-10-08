@@ -1,7 +1,6 @@
-import type { Dirent } from "node:fs";
 import type z from "zod";
 import { AbsolutePathSchema, PathFragmentSchema, type AbsolutePath, type PathFragment } from "../../validation/customTypes/path.js";
-import type { DirentSchema } from "../../validation/pipes/dirent.js";
+import type { DirentData } from "../../validation/pipes/dirent.js";
 import { appErr, createError, type AppErrorInstance } from "../../utils/deps/neverthrow/errorFactory.js";
 import { ok } from "neverthrow";
 import { errFromZodError } from "../../utils/deps/neverthrow/resultFromSafeParseResult.js";
@@ -9,7 +8,7 @@ import { isNonEmptyArray } from "../../utils/array/isNonEmptyArray.js";
 import { resultFromErrorList } from "../../utils/deps/neverthrow/resultFromErrorList.js";
 import { getOrInsert } from "../../utils/map/getOrInsert.js";
 
-export type DirentFlags = z.output<typeof DirentSchema>['direntFlags'];
+export type DirentFlags = DirentData['direntFlags'];
 type DirentFlag = keyof DirentFlags
 
 type DirentFlagPattern =
@@ -50,7 +49,7 @@ export const validateDirentFlags = (expectedFlagPatterns: DirentFlagPatterns, di
 
 
 // Map construction
-const createDirentFlagsMap = (inputDirents: Dirent<string>[]) => {
+const createDirentFlagsMap = (inputDirents: DirentData[]) => {
   const result = new Map<AbsolutePath, Map<PathFragment, DirentFlags>>();
   for (const dirent of inputDirents) {
     const parentPathResult = AbsolutePathSchema.safeParse(dirent.parentPath);
@@ -64,11 +63,7 @@ const createDirentFlagsMap = (inputDirents: Dirent<string>[]) => {
       return errFromZodError(dirEntryNameResult.error);
     }
     const folderEntryMap = getOrInsert(result, parentPathResult.data, new Map<PathFragment, DirentFlags>());
-    folderEntryMap.set(dirEntryNameResult.data, {
-      isDirectory: dirent.isDirectory(),
-      isFile: dirent.isFile(),
-      isSymlink: dirent.isSymbolicLink(),
-    });
+    folderEntryMap.set(dirEntryNameResult.data, dirent.direntFlags);
   }
   return ok(result);
 };
@@ -81,7 +76,7 @@ export const createDirentFlagsMatcher = (
   } = {
     failOnExtraItems: false,
   },
-) => (inputDirents: Dirent<string>[]) => {
+) => (inputDirents: DirentData[]) => {
   const direntsMatchingAbsPath = inputDirents.filter((dirent) => dirent.parentPath === folderPath);
   const direntsExtra = inputDirents.filter((dirent) => dirent.parentPath !== folderPath).map((dirent) => dirent.name);
   if (options.failOnExtraItems && isNonEmptyArray(direntsExtra)) {
