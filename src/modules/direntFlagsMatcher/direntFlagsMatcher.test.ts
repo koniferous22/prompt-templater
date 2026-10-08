@@ -68,9 +68,7 @@ const testCasesForDirentFlagsMatcher = [
         ok: false,
         errors: createError('module_direntFlagsMatcher_extraItemsFound', {
           expectedFolderPath: projectFixturesFolder,
-          extraItems: [
-            'workspace2',
-          ]
+          extraItem: AbsolutePathSchema.parse(join(projectFixturesFolder, 'workspace2')),
         })
       },
       testBehaviourDescription: 'return error',

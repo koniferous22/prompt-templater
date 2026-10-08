@@ -36,7 +36,7 @@ const UnbrandedPathFragmentWin32Schema = z
       zodRegisterIssue(ctx.value, ctx, 'validation_customTypes_win32_pathFragment_invalidInputFormat', { value: ctx.value });
     }
   });
-export const PathFragmentWin32Schema = UnbrandedPathFragmentWin32Schema.brand<"PathFragmentWin32">();
-export const PathFragmentSchema = UnbrandedPathFragmentWin32Schema.brand<"PathFragment">();
+export const PathFragmentWin32Schema = UnbrandedPathFragmentWin32Schema.brand<"PathFragmentWin32">().brand<'RelativePathWin32'>();
+export const PathFragmentSchema = UnbrandedPathFragmentWin32Schema.brand<"PathFragment">().brand<'RelativePath'>();
 
 export type PathFragmentWin32 = z.output<typeof PathFragmentWin32Schema>;

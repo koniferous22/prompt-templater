@@ -9,4 +9,4 @@ export type RelativePathLiteral = 'RelativePath'
 export type RelativePath = string & z.$brand<RelativePathLiteral>;
 
 export type PathFragmentLiteral = 'PathFragment'
-export type PathFragment = string & z.$brand<PathFragmentLiteral>;
+export type PathFragment = RelativePath & z.$brand<PathFragmentLiteral>;

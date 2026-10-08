@@ -36,7 +36,7 @@ const UnbrandedPathFragmentPosixSchema = z
       zodRegisterIssue(ctx.value, ctx, 'validation_customTypes_posix_pathFragment_invalidInputFormat', { value: ctx.value });
     }
   });
-export const PathFragmentPosixSchema = UnbrandedPathFragmentPosixSchema.brand<"PathFragmentPosix">();
-export const PathFragmentSchema = UnbrandedPathFragmentPosixSchema.brand<"PathFragment">();
+export const PathFragmentPosixSchema = UnbrandedPathFragmentPosixSchema.brand<"PathFragmentPosix">().brand<'RelativePathPosix'>();
+export const PathFragmentSchema = UnbrandedPathFragmentPosixSchema.brand<"PathFragment">().brand<'RelativePath'>();
 
 export type PathFragmentPosix = z.output<typeof PathFragmentPosixSchema>;

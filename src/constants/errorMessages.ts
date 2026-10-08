@@ -1,7 +1,7 @@
 import { z, type ZodError } from "zod";
 import type { AppErrorCode } from "./errorCodes.js";
 import type { DirentSchema } from "../validation/pipes/dirent.js";
-import type { AbsolutePath, PathFragment } from "../validation/customTypes/path.js";
+import type { AbsolutePath, RelativePath } from "../validation/customTypes/path.js";
 
 const createRenderItemList = <T>(renderItem: (item: T) => string) => (items: [T, ...T[]]): string => {
   const truncatedItems = items.length > 2 ? [ ...items.slice(0, 2).map(renderItem), '...' ] : items.map(renderItem);
@@ -19,10 +19,9 @@ export const errorMessages = {
   dependency_zod_safeParseErrorWithoutIssues: () => `Encountered "zod" error with no attached issues`,
   dependency_zod_validationError: (ctx: { zodError: ZodError<any>}) => `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
   module_direntFlagsMatcher_createDirentFlagsMapFailed: () => 'Error creating data structure for validating FS shape',
-  module_direntFlagsMatcher_extraItemsFound: (ctx: { expectedFolderPath: AbsolutePath; extraItems: [string, ...string[]] }) => `Encountered unmatched entries, located in "${ctx.expectedFolderPath}" - ${renderStringList(ctx.extraItems)}`,
+  module_direntFlagsMatcher_extraItemsFound: (ctx: { expectedFolderPath: AbsolutePath; extraItem: AbsolutePath }) => `Encountered unmatched entry "${ctx.extraItem}", located in "${ctx.expectedFolderPath}"`,
   module_direntFlagsMatcher_extraItemsFromWrongFolderFound: (ctx: { expectedFolderPath: AbsolutePath; extraItems: [string, ...string[]] }) => `Encountered unmatched entries from expected folder path "${ctx.expectedFolderPath}" - ${renderStringList(ctx.extraItems)}`,
-  module_direntFlagsMatcher_noFolderContentsFound: (ctx: { expectedFolderPath: AbsolutePath }) => `No folder contents found for folder "${ctx.expectedFolderPath}"`,
-  module_direntFlagsMatcher_patternNotFound: (ctx: { pattern: PathFragment; parentPath: AbsolutePath }) => `Expected "${ctx.pattern}" to be located in folder "${ctx.parentPath}"`,
+  module_direntFlagsMatcher_patternNotFound: (ctx: { pattern: RelativePath; parentPath: AbsolutePath }) => `Expected "${ctx.pattern}" to be located in folder "${ctx.parentPath}"`,
   module_direntFlagsMatcher_unmatchedDirentFlag: (ctx: { direntFlag: keyof z.output<typeof DirentSchema>['direntFlags']; expected: boolean; actual: boolean; path: AbsolutePath; }) => `Encountered incorrect dirent flag "${ctx.direntFlag}" for "${ctx.path}"; expected - "${ctx.expected}", actual - "${ctx.actual}"`,
   validation_customTypes_posix_absolutePath_invalidInputFormat: (ctx: { value: string }) => `Expected POSIX absolute path, got "${ctx.value}"`,
   validation_customTypes_posix_pathFragment_emptyInput: () => 'Expected POSIX path fragment, got ""',

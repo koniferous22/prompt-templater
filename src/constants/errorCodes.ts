@@ -9,7 +9,6 @@ export type AppErrorCode =
   | 'module_direntFlagsMatcher_createDirentFlagsMapFailed'
   | 'module_direntFlagsMatcher_extraItemsFound'
   | 'module_direntFlagsMatcher_extraItemsFromWrongFolderFound'
-  | 'module_direntFlagsMatcher_noFolderContentsFound'
   | 'module_direntFlagsMatcher_patternNotFound'
   | 'module_direntFlagsMatcher_unmatchedDirentFlag'
   | 'validation_customTypes_posix_absolutePath_invalidInputFormat'
