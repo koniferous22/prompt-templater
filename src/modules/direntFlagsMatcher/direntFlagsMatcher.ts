@@ -7,6 +7,7 @@ import { ok } from "neverthrow";
 import { errFromZodError } from "../../utils/deps/neverthrow/resultFromSafeParseResult.js";
 import { isNonEmptyArray } from "../../utils/array/isNonEmptyArray.js";
 import { resultFromErrorList } from "../../utils/deps/neverthrow/resultFromErrorList.js";
+import { getOrInsert } from "../../utils/map/getOrInsert.js";
 
 export type DirentFlags = z.output<typeof DirentSchema>['direntFlags'];
 type DirentFlag = keyof DirentFlags
@@ -62,7 +63,7 @@ const createDirentFlagsMap = (inputDirents: Dirent<string>[]) => {
       // TODO actual exception
       return errFromZodError(dirEntryNameResult.error);
     }
-    const folderEntryMap = result.getOrInsert(parentPathResult.data, new Map<PathFragment, DirentFlags>());
+    const folderEntryMap = getOrInsert(result, parentPathResult.data, new Map<PathFragment, DirentFlags>());
     folderEntryMap.set(dirEntryNameResult.data, {
       isDirectory: dirent.isDirectory(),
       isFile: dirent.isFile(),
@@ -73,7 +74,7 @@ const createDirentFlagsMap = (inputDirents: Dirent<string>[]) => {
 };
 
 export const createDirentFlagsMatcher = (
-  expectedFolderPath: AbsolutePath,
+  folderPath: AbsolutePath,
   patterns: Map<PathFragment,DirentFlagPatterns>,
   options: {
     failOnExtraItems: boolean;
@@ -81,11 +82,11 @@ export const createDirentFlagsMatcher = (
     failOnExtraItems: false,
   },
 ) => (inputDirents: Dirent<string>[]) => {
-  const direntsMatchingAbsPath = inputDirents.filter((dirent) => dirent.parentPath === expectedFolderPath);
-  const direntsExtra = inputDirents.filter((dirent) => dirent.parentPath !== expectedFolderPath).map((dirent) => dirent.name);
+  const direntsMatchingAbsPath = inputDirents.filter((dirent) => dirent.parentPath === folderPath);
+  const direntsExtra = inputDirents.filter((dirent) => dirent.parentPath !== folderPath).map((dirent) => dirent.name);
   if (options.failOnExtraItems && isNonEmptyArray(direntsExtra)) {
     return appErr('module_direntFlagsMatcher_extraItemsFromWrongFolderFound', {
-      expectedFolderPath,
+      expectedFolderPath: folderPath,
       extraItems: direntsExtra,
     })
   }
@@ -95,12 +96,12 @@ export const createDirentFlagsMatcher = (
       cause: direntFlagsMapResult.error,
     });
   }
-  const direntFlagsMap = direntFlagsMapResult.value.get(expectedFolderPath);
+  const direntFlagsMap = direntFlagsMapResult.value.get(folderPath);
   if (direntFlagsMap === undefined) {
     return patterns.size > 0 ?
       ok(undefined) :
       appErr('module_direntFlagsMatcher_noFolderContentsFound', {
-        expectedFolderPath,
+        expectedFolderPath: folderPath,
       });
   }
   const errors: AppErrorInstance[] = []
@@ -111,7 +112,7 @@ export const createDirentFlagsMatcher = (
     // Pattern not found in folder
     if (actualFlags === undefined) {
       errors.push(createError('module_direntFlagsMatcher_patternNotFound', {
-        parentPath: expectedFolderPath,
+        parentPath: folderPath,
         pattern,
       }));
     } else {
@@ -126,13 +127,13 @@ export const createDirentFlagsMatcher = (
     const extraItems = direntFlagsMap.keys().filter((direntryFileName) => !patterns.has(direntryFileName)).toArray();
     if (isNonEmptyArray(extraItems)) {
       errors.push(createError('module_direntFlagsMatcher_extraItemsFound', {
-        expectedFolderPath,
+        expectedFolderPath: folderPath,
         extraItems,
       }))
     }
   }
   for (const [, { expected, actual }] of direntsWithFlagsToCheck) {
-    const validateDirentFlagsResult = validateDirentFlags(expected, actual, { path: expectedFolderPath });
+    const validateDirentFlagsResult = validateDirentFlags(expected, actual, { path: folderPath });
     if (validateDirentFlagsResult !== null) {
       errors.push(...validateDirentFlagsResult);
     }
