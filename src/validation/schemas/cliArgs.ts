@@ -5,11 +5,11 @@ import { errorMessages } from '../../constants/errorMessages.js';
 export const CliArgsSchema = z
   .array(
     z.string().nonempty({
-      error: errorMessages.cliArgsProcessing_emptyStringAsArgument,
+      error: errorMessages.cliArgsProcessing_emptyStringAsArgument(),
     }),
   )
   .length(1, {
-    error: errorMessages.cliArgsProcessing_wrongArgumentFormat,
+    error: errorMessages.cliArgsProcessing_wrongArgumentFormat(),
   }).transform(([workflowFile]) => ({
     workflowFile: workflowFile!,
   }));
