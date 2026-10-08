@@ -6,7 +6,7 @@ export const AbsolutePathSchema = z
   .string()
   .check((ctx) => {
     if (!path.isAbsolute(ctx.value)) {
-      zodRegisterIssue(ctx.value, ctx, 'validation_types_absolutePath_invalidInputFormat', { value: ctx.value });
+      zodRegisterIssue(ctx.value, ctx, 'validation_customTypes_absolutePath_invalidInputFormat', { value: ctx.value });
     }
   })
   .brand<'AbsolutePath'>()
