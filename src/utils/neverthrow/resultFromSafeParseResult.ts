@@ -1,13 +1,13 @@
 import { err, ok } from "neverthrow";
 import { ZodError, type ZodSafeParseResult } from "zod";
-import type { AppError } from "../../constants/errorCodes.js";
-import { appAggregateErr, appErr, createError } from "./errorFactory.js";
+import { appAggregateErr, appErr, createError, type AppError, type AppErrors } from "./errorFactory.js";
 import { match, P } from "ts-pattern";
 import { errorMessages } from "../../constants/errorMessages.js";
+import type { AppErrorCode } from "../../constants/errorCodes.js";
 
 export const errFromZodError = <T>(zodError: ZodError<T>) => {
 
-  const errors = zodError.issues.map((issue): AppError => {
+  const errors = zodError.issues.map((issue): AppError<AppErrorCode> => {
     if (issue.code !== 'custom') {
       return createError('dependency_zod_validationError', { zodError }, { cause: zodError });
     }
@@ -15,7 +15,7 @@ export const errFromZodError = <T>(zodError: ZodError<T>) => {
     const errorCode = params.code;
     if (errorCode in errorMessages) {
       return createError(
-        errorCode as keyof typeof errorMessages,
+        errorCode as AppErrorCode,
         params.meta as any,
         {
           cause: zodError,
@@ -29,7 +29,10 @@ export const errFromZodError = <T>(zodError: ZodError<T>) => {
       cause: zodError,
     }))
     .with([P.any], ([error]) => err(error))
-    .otherwise((errors) => appAggregateErr(...errors));
+    // @ts-expect-error workaround for limited type narrowing
+    .otherwise((errors: AppErrors) => appAggregateErr(
+      ...errors,
+    ));
   return error;
 };
 

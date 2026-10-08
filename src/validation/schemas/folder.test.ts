@@ -11,28 +11,31 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const FolderSchemaCases = [
   {
-    input: join(__dirname, '../../../fixtures'),
-    success: true,
+    testInput: join(__dirname, '../../../fixtures'),
+    testOutcome: true,
   },
   {
-    input: join(__dirname, '../../../package.json'),
-    success: false,
+    testInput: join(__dirname, '../../../package.json'),
+    testOutcome: false,
   },
   {
-    input: 'not-absolute-path',
-    success: false,
+    testInput: 'not-absolute-path',
+    testOutcome: false,
   },
   {
-    input: join(__dirname, '../../../non-existing-file'),
-    success: false,
+    testInput: join(__dirname, '../../../non-existing-file'),
+    testOutcome: false,
   },
-] satisfies { input: z.input<typeof FolderSchema>; success: boolean }[];
+] satisfies {
+  testInput: z.input<typeof FolderSchema>;
+  testOutcome: boolean;
+}[];
 
 describe('FolderSchema', () => {
-  for (const { input, success } of FolderSchemaCases) {
-    it(`"${input}" parsing should return "${success}"`, async () => {
-      const parsingResult = await FolderSchema.safeParseAsync(input);
-      assert.strictEqual(parsingResult.success, success);
+  for (const { testInput, testOutcome } of FolderSchemaCases) {
+    it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
+      const parsingResult = await FolderSchema.safeParseAsync(testInput);
+      assert.strictEqual(parsingResult.success, testOutcome);
     });
   }
 });

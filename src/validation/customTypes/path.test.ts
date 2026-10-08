@@ -3,22 +3,25 @@ import assert from 'node:assert/strict';
 import { AbsolutePathSchema } from './path.js';
 import type z from 'zod';
 
-const AbsolutePathSchemaCases = [
+const testCasesForAbsolutePathSchema = [
   {
-    input: '/home/some/absolute/path',
-    success: true,
+    testInput: '/home/some/absolute/path',
+    testOutcome: true,
   },
   {
-    input: 'not-absolute-path',
-    success: false,
+    testInput: 'not-absolute-path',
+    testOutcome: false,
   },
-] satisfies { input: z.input<typeof AbsolutePathSchema>; success: boolean }[];
+] satisfies {
+  testInput: z.input<typeof AbsolutePathSchema>;
+  testOutcome: boolean;
+}[];
 
 describe('AbsolutePathSchema', () => {
-  for (const { input, success } of AbsolutePathSchemaCases) {
-    it(`"${input}" parsing should return "${success}"`, () => {
-      const parsingResult = AbsolutePathSchema.safeParse(input);
-      assert.strictEqual(parsingResult.success, success);
+  for (const { testInput, testOutcome } of testCasesForAbsolutePathSchema) {
+    it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
+      const parsingResult = AbsolutePathSchema.safeParse(testInput);
+      assert.strictEqual(parsingResult.success, testOutcome);
     });
   }
 });
