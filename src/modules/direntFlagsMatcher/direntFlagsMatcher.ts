@@ -2,10 +2,10 @@ import type z from "zod";
 import { AbsolutePathSchema, PathFragmentSchema, type AbsolutePath, type PathFragment, type RelativePath } from "../../validation/customTypes/path.js";
 import type { DirentData } from "../../validation/pipes/dirent.js";
 import { appErr, createError, type AppErrorInstance } from "../../utils/deps/neverthrow/errorFactory.js";
-import { ok } from "neverthrow";
+import { err, ok } from "neverthrow";
 import { errFromZodError } from "../../utils/deps/neverthrow/resultFromSafeParseResult.js";
 import { isNonEmptyArray } from "../../utils/array/isNonEmptyArray.js";
-import { resultFromErrorList } from "../../utils/deps/neverthrow/resultFromErrorList.js";
+import { errorFromErrorList } from "../../utils/deps/neverthrow/errorList.js";
 import { getOrInsert } from "../../utils/map/getOrInsert.js";
 import { join } from "node:path";
 
@@ -140,7 +140,12 @@ export const createDirentFlagsMatcher = (
         ];
     })
   );
-  const errors: AppErrorInstance[] = []
+  // Type narrowing to avoid too generic return type
+  type ErrorCodes =
+  | 'module_direntFlagsMatcher_patternNotFound'
+  | 'module_direntFlagsMatcher_extraItemsFound'
+  | 'module_direntFlagsMatcher_unmatchedDirentFlag'
+  const errors: AppErrorInstance<ErrorCodes>[] = []
   // If directory is supposed to be exact match, check vice versa - i.e. if FS folder contains no other items aside from those specified in pattern
   if (options.failOnExtraItems) {
     for (const [absolutePath, { pattern, direntFlags }] of comparisonMap) {
@@ -187,6 +192,6 @@ export const createDirentFlagsMatcher = (
   }
 
   return isNonEmptyArray(errors) ?
-    resultFromErrorList(...errors) :
+    err(errorFromErrorList(...errors)) :
     ok(undefined);
 };

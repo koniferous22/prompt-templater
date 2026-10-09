@@ -3,6 +3,7 @@ import type { AppErrorCode } from '../../../constants/errorCodes.js';
 import { errorMessages, type MessageContext } from '../../../constants/errorMessages.js';
 
 export type AppError<C extends AppErrorCode> = {
+  readonly type: 'plain';
   readonly code: C;
   readonly message: string;
   readonly cause?: unknown;
@@ -15,24 +16,43 @@ export type AppErrorInstance<ErrorCodes extends AppErrorCode = AppErrorCode> = {
 
 export type AppErrors<ErrorCodes extends AppErrorCode = AppErrorCode> = readonly [AppErrorInstance<ErrorCodes>, AppErrorInstance<ErrorCodes>, ...AppErrorInstance<ErrorCodes>[]];
 
+export type AppAggregateErr<
+  ErrorCodes extends AppErrorCode = AppErrorCode,
+  ErrorTypes extends AppErrors<ErrorCodes> = AppErrors<ErrorCodes>,
+> = {
+  readonly type: 'aggregate';
+  errors: ErrorTypes;
+}
 export interface AppErrOpts {
   cause?: unknown;
   message?: string;
 }
 
-export function createError<C extends AppErrorCode>(
+export const createError = <const C extends AppErrorCode>(
   code: C,
   meta: MessageContext[C],
   opts?: AppErrOpts,
-): AppError<C> {
+): AppError<C> => {
   // Temporarily commented out until I have error type that actually makes use of context
   // const message = opts?.message ?? messages[code](opts?.meta as any);
   const message = opts?.message ?? (errorMessages[code] as (ctx: MessageContext[C]) => string)(meta);
   return {
+    type: 'plain',
     code,
     message,
     cause: opts?.cause,
     meta,
+  };
+}
+export const createAggregateError = <
+  ErrorCodes extends AppErrorCode = AppErrorCode,
+  ErrorTypes extends AppErrors<ErrorCodes> = AppErrors<ErrorCodes>,
+>(
+...errors: ErrorTypes
+): AppAggregateErr<ErrorCodes, ErrorTypes> => {
+  return {
+    type: 'aggregate',
+    errors,
   };
 }
 
@@ -50,15 +70,16 @@ export const appErrAsync = <C extends AppErrorCode>(
 ) => errAsync(createError(code, meta, opts));
 
 export const appAggregateErr = <
-  const ErrorCodes extends AppErrorCode = AppErrorCode,
-  const ErrorTypes extends AppErrors<AppErrorCode> = AppErrors<AppErrorCode>,
->(...errors: ErrorTypes): Result<never, ErrorTypes> => {
-  return err(errors);
+  ErrorCodes extends AppErrorCode = AppErrorCode,
+  ErrorTypes extends AppErrors<ErrorCodes> = AppErrors<ErrorCodes>,
+>(...errors: ErrorTypes): Result<never, AppAggregateErr<ErrorCodes, ErrorTypes>> => {
+  // @ts-expect-error
+  return err(createAggregateError(...errors));
 }
 
 export const appAggregateErrAsync = <
-  const ErrorCodes extends AppErrorCode = AppErrorCode,
-  const ErrorTypes extends AppErrors<AppErrorCode> = AppErrors<AppErrorCode>,
->(...errors: ErrorTypes): ResultAsync<never, ErrorTypes> => {
-  return errAsync(errors);
+  ErrorCodes extends AppErrorCode = AppErrorCode,
+  ErrorTypes extends AppErrors<ErrorCodes> = AppErrors<ErrorCodes>,
+>(...errors: ErrorTypes): ResultAsync<never, AppAggregateErr<ErrorCodes, ErrorTypes>> => {
+  return errAsync(createAggregateError(...errors));
 }
