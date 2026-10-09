@@ -3,7 +3,7 @@ import type { AppErrorCode } from '../../../constants/errorCodes.js';
 import { errorMessages, type MessageContext } from '../../../constants/errorMessages.js';
 
 export type AppError<C extends AppErrorCode> = {
-  readonly code: AppErrorCode;
+  readonly code: C;
   readonly message: string;
   readonly cause?: unknown;
   readonly meta: MessageContext[C];
