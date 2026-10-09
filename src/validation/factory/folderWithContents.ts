@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import { match } from 'ts-pattern';
 import { ok, err, Result } from 'neverthrow';
 
-import { AbsolutePathSchema, type AbsolutePath, type PathFragment, type RelativePath } from "../customTypes/path.js";
+import type { AbsolutePath, PathFragment, RelativePath } from "../customTypes/path.js";
 import { DirentSchema } from '../pipes/dirent.js';
 import z from 'zod';
 import { appErr } from '../../utils/deps/neverthrow/errorFactory.js';
@@ -12,6 +12,7 @@ import { AbsolutePathToFsStatsSchema } from '../codecs/absolutePathFsStats.js';
 import { isNonEmptyArray } from '../../utils/array/isNonEmptyArray.js';
 import { resultFromErrorList } from '../../utils/deps/neverthrow/errorList.js';
 import { zodIssueFromAppError } from '../../utils/deps/zod/zodIssueFromAppError.js';
+import { FolderSchema } from '../schemas/folder.js';
 
 type CreateFolderWithContentsSchemaOpts = {
   failOnExtraItems: boolean;
@@ -119,22 +120,22 @@ export const createFolderWithContentsSchema = (
   opts: CreateFolderWithContentsSchemaOpts,
 ) => {
   const absolutePathValidationCallback = createAbsolutePathValidationCallbackFromOptions(opts);
-  return AbsolutePathSchema
+  return FolderSchema
     .check(async (ctx) => {
       const value = ctx.value;
-      const result = await absolutePathValidationCallback(value);
+      const result = await absolutePathValidationCallback(value.absolutePath);
       if (result.isErr()) {
         const errorFromCallback = result.error;
         if (errorFromCallback.type === 'plain') {
           ctx.issues.push(zodIssueFromAppError(
             errorFromCallback,
-            ctx.value,
+            ctx.value.absolutePath,
           ))
         } else {
           for (const nestedError of errorFromCallback.errors) {
             ctx.issues.push(zodIssueFromAppError(
               nestedError,
-              ctx.value,
+              ctx.value.absolutePath,
             ))
           }
         }

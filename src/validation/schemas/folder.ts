@@ -8,4 +8,3 @@ export const FolderSchema = AbsolutePathToFsStatsSchema
     }
   })
   .brand<'Folder'>();
-// TODO - try implementing automatic `neverthrow` mapping
