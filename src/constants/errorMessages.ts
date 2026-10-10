@@ -25,6 +25,7 @@ export const errorMessages = {
   module_direntFlagsMatcher_extraItemsFromWrongFolderFound: (ctx: { expectedFolderPath: AbsolutePath; extraItems: [string, ...string[]] }) => `Encountered unmatched entries from expected folder path "${ctx.expectedFolderPath}" - ${renderStringList(ctx.extraItems)}`,
   module_direntFlagsMatcher_patternNotFound: (ctx: { pattern: RelativePath; parentPath: AbsolutePath }) => `Expected "${ctx.pattern}" to be located in folder "${ctx.parentPath}"`,
   module_direntFlagsMatcher_unmatchedDirentFlag: (ctx: { direntFlag: keyof z.output<typeof DirentSchema>['direntFlags']; expected: boolean; actual: boolean; path: AbsolutePath; }) => `Encountered incorrect dirent flag "${ctx.direntFlag}" for "${ctx.path}"; expected - "${ctx.expected}", actual - "${ctx.actual}"`,
+  validation_customTypes_nonEmptyString_invalidInput: (ctx: { value: string }) => `Expected non-empty string got "${ctx.value}"`,
   validation_codec_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any>}) => `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
   validation_customTypes_posix_absolutePath_invalidInputFormat: (ctx: { value: string }) => `Expected POSIX absolute path, got "${ctx.value}"`,
   validation_customTypes_posix_pathFragment_emptyInput: () => 'Expected POSIX path fragment, got ""',
