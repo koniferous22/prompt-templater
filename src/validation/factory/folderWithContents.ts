@@ -14,22 +14,21 @@ import { resultFromErrorList } from '../../utils/deps/neverthrow/errorList.js';
 import { zodIssueFromAppError } from '../../utils/deps/zod/zodIssueFromAppError.js';
 import { FolderSchema } from '../schemas/folder.js';
 
-type CreateFolderWithContentsSchemaOpts = {
+type CreateFolderWithContentsSchemaOpts =
+| {
+  pathDetection: 'checkStaticEntries';
+  items: Map<PathFragment, DirentFlagPatterns>;
+}
+| {
+  pathDetection: 'readDir';
+  items: Map<PathFragment, DirentFlagPatterns>;
   failOnExtraItems: boolean;
-} & (
-  | {
-    pathDetection: 'checkStaticEntries';
-    items: Map<PathFragment, DirentFlagPatterns>;
-  }
-  | {
-    pathDetection: 'readDir';
-    items: Map<PathFragment, DirentFlagPatterns>;
-  }
-  | {
-    pathDetection: 'readDirRecursive';
-    items: Map<RelativePath, DirentFlagPatterns>;
-  }
-);
+}
+| {
+  pathDetection: 'readDirRecursive';
+  items: Map<RelativePath, DirentFlagPatterns>;
+  failOnExtraItems: boolean;
+};
 
 const pathDetectionReadDir = async (parentFolder: AbsolutePath, { recursive }: { recursive: boolean } = { recursive: false }) => {
   try {
@@ -89,16 +88,16 @@ const pathDetectionCheckStaticEntries = async (parentFolder: AbsolutePath, liste
 
 const createAbsolutePathValidationCallbackFromOptions = (options: CreateFolderWithContentsSchemaOpts) => {
   return match(options)
-    .with({ pathDetection: 'readDir' }, ({ items }) => async (absPath: AbsolutePath) => {
-      const direntMatcher = createDirentFlagsMatcher(absPath, items, { failOnExtraItems: options.failOnExtraItems });
+    .with({ pathDetection: 'readDir' }, ({ items, failOnExtraItems }) => async (absPath: AbsolutePath) => {
+      const direntMatcher = createDirentFlagsMatcher(absPath, items, { failOnExtraItems });
       const fsPathsResult = await pathDetectionReadDir(absPath);
       if (!fsPathsResult.isOk()) {
         return fsPathsResult;
       }
       return direntMatcher(fsPathsResult.value);
     })
-    .with({ pathDetection: 'readDirRecursive' }, ({ items }) => async (absPath: AbsolutePath) => {
-      const direntMatcher = createDirentFlagsMatcher(absPath, items, { failOnExtraItems: options.failOnExtraItems });
+    .with({ pathDetection: 'readDirRecursive' }, ({ items, failOnExtraItems }) => async (absPath: AbsolutePath) => {
+      const direntMatcher = createDirentFlagsMatcher(absPath, items, { failOnExtraItems });
       const fsPathsResult = await pathDetectionReadDir(absPath, { recursive: true });
       if (!fsPathsResult.isOk()) {
         return fsPathsResult;
@@ -106,7 +105,8 @@ const createAbsolutePathValidationCallbackFromOptions = (options: CreateFolderWi
       return direntMatcher(fsPathsResult.value);
     })
     .with({ pathDetection: 'checkStaticEntries' }, ({ items }) => async (absPath: AbsolutePath) => {
-      const direntMatcher = createDirentFlagsMatcher(absPath, items, { failOnExtraItems: options.failOnExtraItems });
+      // Note - `failOnExtraItems` unapplicable here, because whitelist is passed
+      const direntMatcher = createDirentFlagsMatcher(absPath, items, { failOnExtraItems: false });
       const fsPathsResult = await pathDetectionCheckStaticEntries(absPath, Array.from(items.keys()));
       if (!fsPathsResult.isOk()) {
         return fsPathsResult;
