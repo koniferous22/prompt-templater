@@ -1,7 +1,6 @@
 import { PathFragmentSchema, type PathFragment } from "../customTypes/path.js";
 import { createFolderWithContentsSchema } from "../factory/folderWithContents.js";
 import type { DirentFlagPatterns } from "../../modules/direntFlagsMatcher/direntFlagsMatcher.js";
-import type z from "zod";
 
 export const WorkspaceContextSchema = createFolderWithContentsSchema(
   {
