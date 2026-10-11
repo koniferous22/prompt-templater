@@ -1,6 +1,7 @@
-import { PathFragmentSchema, type PathFragment } from "../customTypes/path.js";
+import { AbsolutePathSchema, PathFragmentSchema, RelativePathSchema, type PathFragment } from "../customTypes/path.js";
 import { createFolderWithContentsSchema } from "../factory/folderWithContents.js";
 import type { DirentFlagPatterns } from "../../modules/direntFlagsMatcher/direntFlagsMatcher.js";
+import z from "zod";
 
 export const WorkspaceContextSchema = createFolderWithContentsSchema(
   {
@@ -33,3 +34,8 @@ export const WorkspaceContextSchema = createFolderWithContentsSchema(
     ]),
   },
 )
+
+export const WorkspaceContextPathSchema = z.union([
+  AbsolutePathSchema,
+  RelativePathSchema,
+]);
