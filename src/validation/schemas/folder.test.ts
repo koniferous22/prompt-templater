@@ -9,7 +9,7 @@ import { FolderSchema } from "./folder.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const FolderSchemaCases = [
+const testCasesForFolderSchema = [
   {
     testInput: join(__dirname, '../../../fixtures'),
     testOutcome: true,
@@ -32,7 +32,7 @@ const FolderSchemaCases = [
 }[];
 
 describe('FolderSchema', () => {
-  for (const { testInput, testOutcome } of FolderSchemaCases) {
+  for (const { testInput, testOutcome } of testCasesForFolderSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = await FolderSchema.safeParseAsync(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);

@@ -4,7 +4,8 @@ import { AbsolutePathToFsStatsSchema } from "../codecs/absolutePathFsStats.js";
 export const FolderSchema = AbsolutePathToFsStatsSchema
   .check((ctx) => {
     if (!ctx.value.fsStats.isDirectory()) {
-      zodRegisterIssue(ctx.value.absolutePath, ctx, 'validation_schemas_folderSchema_pathDoesNotExist', { value: ctx.value.absolutePath });
+      zodRegisterIssue(ctx.value.absolutePath, ctx, 'validation_schemas_folderSchema_pathIsNotFolder', { value: ctx.value.absolutePath });
     }
   })
+  .transform(({ absolutePath }) => absolutePath)
   .brand<'Folder'>();

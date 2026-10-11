@@ -123,23 +123,22 @@ export const createFolderWithContentsSchema = (
   return FolderSchema
     .check(async (ctx) => {
       const value = ctx.value;
-      const result = await absolutePathValidationCallback(value.absolutePath);
+      const result = await absolutePathValidationCallback(value);
       if (result.isErr()) {
         const errorFromCallback = result.error;
         if (errorFromCallback.type === 'plain') {
           ctx.issues.push(zodIssueFromAppError(
             errorFromCallback,
-            ctx.value.absolutePath,
+            ctx.value,
           ))
         } else {
           for (const nestedError of errorFromCallback.errors) {
             ctx.issues.push(zodIssueFromAppError(
               nestedError,
-              ctx.value.absolutePath,
+              ctx.value,
             ))
           }
         }
       }
-    })
-    .transform(({ absolutePath }) => absolutePath);
+    });
 };
