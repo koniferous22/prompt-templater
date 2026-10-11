@@ -30,10 +30,11 @@ const context = bindEnv(
     context: envContext,
     key: "CONTEXT",
     parser: contextValueParser,
+    default: null,
     // no default - it should fail if missing from both CLI and env vars
   },
 );
 
-export const parser = object({
+export const cliArgsParser = object({
   context,
 });

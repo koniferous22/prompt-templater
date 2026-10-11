@@ -1,5 +1,5 @@
 import { runAsync } from '@optique/run';
-import { parser } from '../modules/optique/cli-args.js';
+import { cliArgsParser } from '../modules/optique/cli-args.js';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { AbsolutePathSchema } from '../validation/customTypes/path.js';
@@ -12,8 +12,8 @@ export const main = async () => {
   const projectRoot = AbsolutePathSchema.parse(join(__dirname, '../../'))
   const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, 'fixtures'));
   const workspace1Folder = AbsolutePathSchema.parse(join(projectFixturesFolder, 'workspace1'));
-  const config = await runAsync(parser, {
+  const cliInput = await runAsync(cliArgsParser, {
     args: ["--context", workspace1Folder],
   });
-  console.log(JSON.stringify(config, null, 2));
+  console.log(JSON.stringify(cliInput, null, 2));
 };
