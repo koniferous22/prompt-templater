@@ -1,7 +1,14 @@
 import path from "path";
-import { AbsolutePathWin32Schema, type AbsolutePathWin32 } from "../../../../validation/customTypes/platform-specific/win32/path.js";
 
-export function longestCommonPathPrefixWin32(a: AbsolutePathWin32, b: AbsolutePathWin32): AbsolutePathWin32 | null {
+import {
+  AbsolutePathWin32Schema,
+  type AbsolutePathWin32,
+} from "../../../../validation/customTypes/platform-specific/win32/path.js";
+
+export function longestCommonPathPrefixWin32(
+  a: AbsolutePathWin32,
+  b: AbsolutePathWin32,
+): AbsolutePathWin32 | null {
   const normA = path.win32.normalize(a);
   const normB = path.win32.normalize(b);
 
@@ -13,8 +20,8 @@ export function longestCommonPathPrefixWin32(a: AbsolutePathWin32, b: AbsolutePa
     return null;
   }
 
-  const segmentsA = normA.slice(rootA.length).split('\\').filter(Boolean);
-  const segmentsB = normB.slice(rootB.length).split('\\').filter(Boolean);
+  const segmentsA = normA.slice(rootA.length).split("\\").filter(Boolean);
+  const segmentsB = normB.slice(rootB.length).split("\\").filter(Boolean);
 
   const common: string[] = [];
   const len = Math.min(segmentsA.length, segmentsB.length);
@@ -31,5 +38,5 @@ export function longestCommonPathPrefixWin32(a: AbsolutePathWin32, b: AbsolutePa
     return AbsolutePathWin32Schema.parse(rootA);
   }
 
-  return AbsolutePathWin32Schema.parse(rootA + common.join('\\'));
+  return AbsolutePathWin32Schema.parse(rootA + common.join("\\"));
 }

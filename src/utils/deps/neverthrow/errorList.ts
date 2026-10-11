@@ -1,7 +1,13 @@
 import { Err, err } from "neverthrow";
 import { match, P } from "ts-pattern";
+
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
-import { type AppAggregateErr, type AppError, type AppErrors, createAggregateError } from "./errorFactory.js";
+import {
+  type AppAggregateErr,
+  type AppError,
+  type AppErrors,
+  createAggregateError,
+} from "./errorFactory.js";
 
 export const errorFromErrorList = <
   ErrorCodes extends AppErrorCode = AppErrorCode,
@@ -13,20 +19,14 @@ export const errorFromErrorList = <
     .returnType<AppError<ErrorCodes> | AppAggregateErr<ErrorCodes, ErrorTypes>>()
     .with(
       [P._, P._, ...P.array()],
-        // @ts-expect-error some too strict of inferrence
-        ([first, second, ...rest]) => createAggregateError(
-        first,
-        second,
-        ...rest
-      ),
+      // @ts-expect-error some too strict of inferrence
+      ([first, second, ...rest]) => createAggregateError(first, second, ...rest),
     )
     .otherwise(([error]) => error);
   return result;
 };
 
-export const resultFromErrorList = <
-  C extends AppErrorCode,
->(
+export const resultFromErrorList = <C extends AppErrorCode>(
   ...errors: [Err<unknown, AppError<C>>, ...Err<unknown, AppError<C>>[]]
 ) => {
   const unwrappedErrors = errors.map((error) => error.error) as [AppError<C>, ...AppError<C>[]];

@@ -1,20 +1,12 @@
 // TODO - remove this file when upgrading to node26
-export function getOrInsert<K, V>(
-  map: Map<K, V>,
-  key: K,
-  defaultValue: V,
-): V {
+export function getOrInsert<K, V>(map: Map<K, V>, key: K, defaultValue: V): V {
   if (!map.has(key)) {
     map.set(key, defaultValue);
   }
   return map.get(key)!;
 }
 
-export function getOrInsertComputed<K, V>(
-  map: Map<K, V>,
-  key: K,
-  compute: (key: K) => V,
-): V {
+export function getOrInsertComputed<K, V>(map: Map<K, V>, key: K, compute: (key: K) => V): V {
   if (!map.has(key)) {
     map.set(key, compute(key));
   }

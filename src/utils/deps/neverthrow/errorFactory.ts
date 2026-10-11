@@ -1,9 +1,10 @@
-import { err, errAsync, Result, ResultAsync } from 'neverthrow';
-import type { AppErrorCode } from '../../../constants/errorCodes.js';
-import { errorMessages, type MessageContext } from '../../../constants/errorMessages.js';
+import { err, errAsync, Result, ResultAsync } from "neverthrow";
+
+import type { AppErrorCode } from "../../../constants/errorCodes.js";
+import { errorMessages, type MessageContext } from "../../../constants/errorMessages.js";
 
 export type AppError<C extends AppErrorCode> = {
-  readonly type: 'plain';
+  readonly type: "plain";
   readonly code: C;
   readonly message: string;
   readonly cause?: unknown;
@@ -14,15 +15,19 @@ export type AppErrorInstance<ErrorCodes extends AppErrorCode = AppErrorCode> = {
   [C in ErrorCodes]: AppError<C>;
 }[ErrorCodes];
 
-export type AppErrors<ErrorCodes extends AppErrorCode = AppErrorCode> = readonly [AppErrorInstance<ErrorCodes>, AppErrorInstance<ErrorCodes>, ...AppErrorInstance<ErrorCodes>[]];
+export type AppErrors<ErrorCodes extends AppErrorCode = AppErrorCode> = readonly [
+  AppErrorInstance<ErrorCodes>,
+  AppErrorInstance<ErrorCodes>,
+  ...AppErrorInstance<ErrorCodes>[],
+];
 
 export type AppAggregateErr<
   ErrorCodes extends AppErrorCode = AppErrorCode,
   ErrorTypes extends AppErrors<ErrorCodes> = AppErrors<ErrorCodes>,
 > = {
-  readonly type: 'aggregate';
+  readonly type: "aggregate";
   errors: ErrorTypes;
-}
+};
 export interface AppErrOpts {
   cause?: unknown;
   message?: string;
@@ -35,51 +40,56 @@ export const createError = <const C extends AppErrorCode>(
 ): AppError<C> => {
   // Temporarily commented out until I have error type that actually makes use of context
   // const message = opts?.message ?? messages[code](opts?.meta as any);
-  const message = opts?.message ?? (errorMessages[code] as (ctx: MessageContext[C]) => string)(meta);
+  const message =
+    opts?.message ?? (errorMessages[code] as (ctx: MessageContext[C]) => string)(meta);
   return {
-    type: 'plain',
+    type: "plain",
     code,
     message,
     cause: opts?.cause,
     meta,
   };
-}
+};
 export const createAggregateError = <
   ErrorCodes extends AppErrorCode = AppErrorCode,
   ErrorTypes extends AppErrors<ErrorCodes> = AppErrors<ErrorCodes>,
 >(
-...errors: ErrorTypes
+  ...errors: ErrorTypes
 ): AppAggregateErr<ErrorCodes, ErrorTypes> => {
   return {
-    type: 'aggregate',
+    type: "aggregate",
     errors,
   };
-}
+};
 
 // `neverthrow` wrappers
 export const appErr = <C extends AppErrorCode>(
   code: C,
   meta: MessageContext[C],
-  opts?: Parameters<typeof createError>[2]
+  opts?: Parameters<typeof createError>[2],
 ) => err(createError(code, meta, opts));
 
 export const appErrAsync = <C extends AppErrorCode>(
   code: C,
   meta: MessageContext[C],
-  opts?: Parameters<typeof createError>[2]
+  opts?: Parameters<typeof createError>[2],
 ) => errAsync(createError(code, meta, opts));
 
 export const appAggregateErr = <
   ErrorCodes extends AppErrorCode = AppErrorCode,
   ErrorTypes extends AppErrors<ErrorCodes> = AppErrors<ErrorCodes>,
->(...errors: ErrorTypes): Result<never, AppAggregateErr<ErrorCodes, ErrorTypes>> => {
+>(
+  ...errors: ErrorTypes
+): Result<never, AppAggregateErr<ErrorCodes, ErrorTypes>> => {
   // @ts-expect-error
   return err(createAggregateError(...errors));
-}
+};
 
 export const appAggregateErrAsync = <
   ErrorCodes extends AppErrorCode = AppErrorCode,
   ErrorTypes extends AppErrors<ErrorCodes> = AppErrors<ErrorCodes>,
->(...errors: ErrorTypes): ResultAsync<never, AppAggregateErr<ErrorCodes, ErrorTypes>> => {
+>(
+  ...errors: ErrorTypes
+): ResultAsync<never, AppAggregateErr<ErrorCodes, ErrorTypes>> => {
   return errAsync(createAggregateError(...errors));
-}
+};

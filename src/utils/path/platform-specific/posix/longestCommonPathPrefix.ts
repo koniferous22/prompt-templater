@@ -1,7 +1,14 @@
-import path from 'node:path';
-import { AbsolutePathPosixSchema, type AbsolutePathPosix } from '../../../../validation/customTypes/platform-specific/posix/path.js';
+import path from "node:path";
 
-export function longestCommonPathPrefixPosix(a: AbsolutePathPosix, b: AbsolutePathPosix): AbsolutePathPosix | null {
+import {
+  AbsolutePathPosixSchema,
+  type AbsolutePathPosix,
+} from "../../../../validation/customTypes/platform-specific/posix/path.js";
+
+export function longestCommonPathPrefixPosix(
+  a: AbsolutePathPosix,
+  b: AbsolutePathPosix,
+): AbsolutePathPosix | null {
   const normA = path.posix.normalize(a);
   const normB = path.posix.normalize(b);
 
@@ -12,8 +19,8 @@ export function longestCommonPathPrefixPosix(a: AbsolutePathPosix, b: AbsolutePa
     return null;
   }
 
-  const segmentsA = normA.slice(rootA.length).split('/').filter(Boolean);
-  const segmentsB = normB.slice(rootB.length).split('/').filter(Boolean);
+  const segmentsA = normA.slice(rootA.length).split("/").filter(Boolean);
+  const segmentsB = normB.slice(rootB.length).split("/").filter(Boolean);
 
   const common: string[] = [];
   const len = Math.min(segmentsA.length, segmentsB.length);
@@ -29,5 +36,5 @@ export function longestCommonPathPrefixPosix(a: AbsolutePathPosix, b: AbsolutePa
     return AbsolutePathPosixSchema.parse(rootA);
   }
 
-  return AbsolutePathPosixSchema.parse(rootA + common.join('/'));
+  return AbsolutePathPosixSchema.parse(rootA + common.join("/"));
 }

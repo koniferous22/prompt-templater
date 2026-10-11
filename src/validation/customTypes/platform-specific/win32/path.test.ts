@@ -1,7 +1,13 @@
-import { describe, it } from 'node:test';
-import assert from 'node:assert/strict';
-import type z from 'zod';
-import { AbsolutePathWin32Schema, PathFragmentWin32Schema, RelativePathWin32Schema } from './path.js';
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+
+import type z from "zod";
+
+import {
+  AbsolutePathWin32Schema,
+  PathFragmentWin32Schema,
+  RelativePathWin32Schema,
+} from "./path.js";
 
 const testCasesForAbsolutePathWin32Schema = [
   {
@@ -133,7 +139,7 @@ const testCasesForAbsolutePathWin32Schema = [
   testOutcome: boolean;
 }[];
 
-describe('AbsolutePathWin32Schema', () => {
+describe("AbsolutePathWin32Schema", () => {
   for (const { testInput, testOutcome } of testCasesForAbsolutePathWin32Schema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = AbsolutePathWin32Schema.safeParse(testInput);
@@ -232,7 +238,7 @@ const testCasesForRelativePathWin32Schema = [
   testOutcome: boolean;
 }[];
 
-describe('RelativePathWin32Schema', () => {
+describe("RelativePathWin32Schema", () => {
   for (const { testInput, testOutcome } of testCasesForRelativePathWin32Schema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = RelativePathWin32Schema.safeParse(testInput);
@@ -319,7 +325,7 @@ const testCasesForPathFragmentWin32Schema = [
   testOutcome: boolean;
 }[];
 
-describe('PathFragmentWin32Schema', () => {
+describe("PathFragmentWin32Schema", () => {
   for (const { testInput, testOutcome } of testCasesForPathFragmentWin32Schema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = PathFragmentWin32Schema.safeParse(testInput);

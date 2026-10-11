@@ -1,6 +1,6 @@
 import assert from "node:assert";
-import { describe, it } from "node:test";
 import { dirname, join } from "node:path";
+import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import type z from "zod";
@@ -11,19 +11,19 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const testCasesForFolderSchema = [
   {
-    testInput: join(__dirname, '../../../fixtures'),
+    testInput: join(__dirname, "../../../fixtures"),
     testOutcome: true,
   },
   {
-    testInput: join(__dirname, '../../../package.json'),
+    testInput: join(__dirname, "../../../package.json"),
     testOutcome: false,
   },
   {
-    testInput: 'not-absolute-path',
+    testInput: "not-absolute-path",
     testOutcome: false,
   },
   {
-    testInput: join(__dirname, '../../../non-existing-file'),
+    testInput: join(__dirname, "../../../non-existing-file"),
     testOutcome: false,
   },
 ] satisfies {
@@ -31,7 +31,7 @@ const testCasesForFolderSchema = [
   testOutcome: boolean;
 }[];
 
-describe('FolderSchema', () => {
+describe("FolderSchema", () => {
   for (const { testInput, testOutcome } of testCasesForFolderSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = await FolderSchema.safeParseAsync(testInput);

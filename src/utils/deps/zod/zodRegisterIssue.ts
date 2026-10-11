@@ -1,11 +1,9 @@
 import type { core } from "zod";
+
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import { errorMessages, type MessageContext } from "../../../constants/errorMessages.js";
 
-export const zodRegisterIssue = <
-  Input extends unknown,
-  ErrorCode extends AppErrorCode,
->(
+export const zodRegisterIssue = <Input extends unknown, ErrorCode extends AppErrorCode>(
   input: unknown,
   ctx: core.ParsePayload<Input>,
   code: ErrorCode,
@@ -20,8 +18,8 @@ export const zodRegisterIssue = <
       code,
       meta,
     } satisfies {
-      code: ErrorCode
-      meta: MessageContext[ErrorCode],
-    }
-  })
+      code: ErrorCode;
+      meta: MessageContext[ErrorCode];
+    },
+  });
 };

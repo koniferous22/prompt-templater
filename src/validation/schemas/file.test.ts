@@ -1,6 +1,6 @@
 import assert from "node:assert";
-import { describe, it } from "node:test";
 import { dirname, join } from "node:path";
+import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import type z from "zod";
@@ -11,19 +11,19 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const testCasesForFileSchema = [
   {
-    testInput: join(__dirname, '../../../package.json'),
+    testInput: join(__dirname, "../../../package.json"),
     testOutcome: true,
   },
   {
-    testInput: join(__dirname, '../../../fixtures'),
+    testInput: join(__dirname, "../../../fixtures"),
     testOutcome: false,
   },
   {
-    testInput: 'not-absolute-path',
+    testInput: "not-absolute-path",
     testOutcome: false,
   },
   {
-    testInput: join(__dirname, '../../../non-existing-file'),
+    testInput: join(__dirname, "../../../non-existing-file"),
     testOutcome: false,
   },
 ] satisfies {
@@ -31,7 +31,7 @@ const testCasesForFileSchema = [
   testOutcome: boolean;
 }[];
 
-describe('FileSchema', () => {
+describe("FileSchema", () => {
   for (const { testInput, testOutcome } of testCasesForFileSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = await FileSchema.safeParseAsync(testInput);
@@ -39,4 +39,3 @@ describe('FileSchema', () => {
     });
   }
 });
-

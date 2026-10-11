@@ -1,22 +1,24 @@
-import { zodAsync } from "@optique/zod";
-import { WorkspaceContextSchema } from "../../../validation/schemas/workspaceContext.js";
-import z from "zod";
-import { message } from "@optique/core/message";
 import { object, option, optional } from "@optique/core";
+import { message } from "@optique/core/message";
 import { bindEnv } from "@optique/env";
+import { zodAsync } from "@optique/zod";
+import z from "zod";
+
+import { WorkspaceContextSchema } from "../../../validation/schemas/workspaceContext.js";
 import { envContext } from "../context/env.js";
 
 const contextValueParser = zodAsync<z.output<typeof WorkspaceContextSchema>>(
   // @ts-expect-error minor branded type inconsistency
-  WorkspaceContextSchema, {
+  WorkspaceContextSchema,
+  {
     // placeholder unused because of no prompting library on top of CLI
     placeholder: "",
     metavar: "CONTEXT",
     errors: {
       zodError: (error, input) => {
         // Note - `optique` only renders the first error, likely because of zod/v3 compatibility
-        return message`${z.prettifyError(error)}`
-      }
+        return message`${z.prettifyError(error)}`;
+      },
     },
   },
 );
@@ -37,5 +39,4 @@ const context = optional(
 
 export const globalOptionsParser = object({
   context,
-})
-
+});

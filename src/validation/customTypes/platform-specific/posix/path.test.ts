@@ -1,19 +1,25 @@
-import { describe, it } from 'node:test';
-import assert from 'node:assert/strict';
-import type z from 'zod';
-import { AbsolutePathPosixSchema, PathFragmentPosixSchema, RelativePathPosixSchema } from './path.js';
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+
+import type z from "zod";
+
+import {
+  AbsolutePathPosixSchema,
+  PathFragmentPosixSchema,
+  RelativePathPosixSchema,
+} from "./path.js";
 
 const testCasesForAbsolutePathPosixSchema = [
   {
-    testInput: '/home/some/absolute/path',
+    testInput: "/home/some/absolute/path",
     testOutcome: true,
   },
   {
-    testInput: 'C:\\windows-absolute-path',
+    testInput: "C:\\windows-absolute-path",
     testOutcome: false,
   },
   {
-    testInput: 'not-absolute-path',
+    testInput: "not-absolute-path",
     testOutcome: false,
   },
 ] satisfies {
@@ -21,7 +27,7 @@ const testCasesForAbsolutePathPosixSchema = [
   testOutcome: boolean;
 }[];
 
-describe('AbsolutePathPosixSchema', () => {
+describe("AbsolutePathPosixSchema", () => {
   for (const { testInput, testOutcome } of testCasesForAbsolutePathPosixSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = AbsolutePathPosixSchema.safeParse(testInput);
@@ -32,15 +38,15 @@ describe('AbsolutePathPosixSchema', () => {
 
 const testCasesForRelativePathPosixSchema = [
   {
-    testInput: '/home/some/absolute/path',
+    testInput: "/home/some/absolute/path",
     testOutcome: false,
   },
   {
-    testInput: 'C:\\windows-absolute-path',
+    testInput: "C:\\windows-absolute-path",
     testOutcome: true,
   },
   {
-    testInput: 'not-absolute-path',
+    testInput: "not-absolute-path",
     testOutcome: true,
   },
 ] satisfies {
@@ -48,7 +54,7 @@ const testCasesForRelativePathPosixSchema = [
   testOutcome: boolean;
 }[];
 
-describe('RelativePathPosixSchema', () => {
+describe("RelativePathPosixSchema", () => {
   for (const { testInput, testOutcome } of testCasesForRelativePathPosixSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = RelativePathPosixSchema.safeParse(testInput);
@@ -59,15 +65,15 @@ describe('RelativePathPosixSchema', () => {
 
 const testCasesForPathFragmentPosixSchema = [
   {
-    testInput: '/home/some/absolute/path',
+    testInput: "/home/some/absolute/path",
     testOutcome: false,
   },
   {
-    testInput: 'C:\\windows-absolute-path',
+    testInput: "C:\\windows-absolute-path",
     testOutcome: true,
   },
   {
-    testInput: 'not-absolute-path',
+    testInput: "not-absolute-path",
     testOutcome: true,
   },
 ] satisfies {
@@ -75,7 +81,7 @@ const testCasesForPathFragmentPosixSchema = [
   testOutcome: boolean;
 }[];
 
-describe('PathFragmentPosixSchema', () => {
+describe("PathFragmentPosixSchema", () => {
   for (const { testInput, testOutcome } of testCasesForPathFragmentPosixSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = PathFragmentPosixSchema.safeParse(testInput);
