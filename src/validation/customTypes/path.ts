@@ -1,6 +1,5 @@
 import { pathFragmentVariant } from "../../utils/node/detectPlatformFeatures.js";
 import { match } from "ts-pattern";
-import type z from "zod";
 
 export const {
   AbsolutePathSchema,
