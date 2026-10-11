@@ -34,8 +34,3 @@ export const WorkspaceContextSchema = createFolderWithContentsSchema(
     ]),
   },
 )
-
-export const WorkspaceContextPathSchema = z.union([
-  AbsolutePathSchema,
-  RelativePathSchema,
-]);

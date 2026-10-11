@@ -1,12 +1,10 @@
 import path, { dirname } from 'node:path';
-import type { CliArgs } from "../optique/cliArgs.js";
-import type { File } from '../../validation/schemas/file.js';
 import { AbsolutePathSchema, type AbsolutePath } from '../../validation/customTypes/path.js';
 import { longestCommonPathPrefix } from '../../utils/path/platform-specific/longestCommonPathPrefix.js';
 import { WorkspaceContextSchema } from '../../validation/schemas/workspaceContext.js';
 import { errAsync, okAsync } from 'neverthrow';
 
-const getWorkspacePrefixesByWorkflowFile = (workflowFile: File) => {
+const getWorkspacePrefixesByWorkflowFile = (workflowFile: AbsolutePath) => {
   let currentPath: AbsolutePath = AbsolutePathSchema.parse(dirname(workflowFile));
   const { root } = path.parse(workflowFile);
   const result: AbsolutePath[] = [];
@@ -17,7 +15,7 @@ const getWorkspacePrefixesByWorkflowFile = (workflowFile: File) => {
   return result;
 }
 
-const getWorkspacePrefixesByWorkflowAndPresetFiles = (workflowFile: File, workflowPresetFile: File) => {
+const getWorkspacePrefixesByWorkflowAndPresetFiles = (workflowFile: AbsolutePath, workflowPresetFile: AbsolutePath) => {
   const longestCommonPrefix = longestCommonPathPrefix(workflowFile, workflowPresetFile);
   if (longestCommonPrefix === null) {
     // If workflow and workflow preset have no common prefix, then consider workflow preset to be outside of workspace
@@ -41,8 +39,8 @@ const getWorkspacePrefixesByWorkflowAndPresetFiles = (workflowFile: File, workfl
   return result;
 }
 
-// Add configurable option for context detection for dynamic context detection
-export const detectWorkspaceContextFromCliInput = async (cliInput: CliArgs['positionalArgs']) => {
+// Note - dynamic context detection relies that at very least the input files absolute path has been resolved
+export const detectWorkspaceContextFromCliInput = async (cliInput: { workflow: AbsolutePath; workflowPreset: AbsolutePath; }) => {
   const {
     workflow,
     workflowPreset,

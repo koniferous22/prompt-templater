@@ -1,16 +1,19 @@
 import { argument, map, message, optional, seq } from "@optique/core";
 import type { Parser } from "@optique/core/parser";
 import { zod } from "@optique/zod";
-import type { File } from "../../../validation/schemas/file.js";
 import z from "zod";
-import { WorkspaceContextPathSchema } from "../../../validation/schemas/workspaceContext.js";
+import { NonEmptyStringToAbsoluteOrRelativePath } from "../../../validation/codecs/nonEmptyStringToAbsoluteOrRelativePath.js";
+import { RelativePathSchema } from "../../../validation/customTypes/path.js";
 
-export type WorkspaceContextPath = z.output<typeof WorkspaceContextPathSchema>;
+export type WorkspaceContextPath = z.output<typeof NonEmptyStringToAbsoluteOrRelativePath>;
 
 export const positionalArgsParser = map(
   seq(
-    argument(zod(WorkspaceContextPathSchema, {
-      placeholder: "",
+    argument(zod<WorkspaceContextPath>(NonEmptyStringToAbsoluteOrRelativePath, {
+      placeholder: {
+        type: 'relative',
+        path: RelativePathSchema.parse('file'),
+      },
       metavar: 'WORKFLOW',
       errors: {
         zodError: (error) => {
@@ -19,8 +22,11 @@ export const positionalArgsParser = map(
         }
       },
     })),
-    optional(argument(zod(WorkspaceContextPathSchema, {
-      placeholder: "",
+    optional(argument(zod<WorkspaceContextPath>(NonEmptyStringToAbsoluteOrRelativePath, {
+      placeholder: {
+        type: 'relative',
+        path: RelativePathSchema.parse('file'),
+      },
       metavar: 'WORKFLOW_PRESET',
       errors: {
         zodError: (error) => {
@@ -30,7 +36,7 @@ export const positionalArgsParser = map(
       },
     }))),
   ),
-  ([workflow, workflowPreset]) => ({ workflow: workflow as File, workflowPreset: workflowPreset as File | undefined }),
+  ([workflow, workflowPreset]) => ({ workflow, workflowPreset }),
   // Note - encountering TS 4023 error - Exported variable 'positionalArgs' has or is using name 'SeqState' from external module "/path/to/project" but cannot be named.
   // hence casting
 ) as Parser<

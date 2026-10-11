@@ -2,6 +2,7 @@ import path from "path/posix";
 import z from "zod";
 import { zodRegisterIssue } from "../../../../utils/deps/zod/zodRegisterIssue.js";
 import { errorMessages } from "../../../../constants/errorMessages.js";
+import type { AbsolutePathLiteral, PathFragmentLiteral, RelativePathLiteral } from "../../type-brands/path.js";
 
 const UnbrandedAbsolutePathPosixSchema = z
   .string()
@@ -11,7 +12,7 @@ const UnbrandedAbsolutePathPosixSchema = z
     }
   });
 export const AbsolutePathPosixSchema = UnbrandedAbsolutePathPosixSchema.brand<'AbsolutePathPosix'>()
-export const AbsolutePathSchema = UnbrandedAbsolutePathPosixSchema.brand<'AbsolutePath'>()
+export const AbsolutePathSchema = UnbrandedAbsolutePathPosixSchema.brand<AbsolutePathLiteral>()
 
 export type AbsolutePathPosix = z.output<typeof AbsolutePathPosixSchema>;
 
@@ -24,7 +25,7 @@ const UnbrandedRelativePathPosixSchema = z
     }
   });
 export const RelativePathPosixSchema = UnbrandedRelativePathPosixSchema.brand<"RelativePathPosix">();
-export const RelativePathSchema = UnbrandedRelativePathPosixSchema.brand<"RelativePath">();
+export const RelativePathSchema = UnbrandedRelativePathPosixSchema.brand<RelativePathLiteral>();
 
 export type RelativePathPosix = z.output<typeof RelativePathPosixSchema>;
 
@@ -37,6 +38,6 @@ const UnbrandedPathFragmentPosixSchema = z
     }
   });
 export const PathFragmentPosixSchema = UnbrandedPathFragmentPosixSchema.brand<"PathFragmentPosix">().brand<'RelativePathPosix'>();
-export const PathFragmentSchema = UnbrandedPathFragmentPosixSchema.brand<"PathFragment">().brand<'RelativePath'>();
+export const PathFragmentSchema = UnbrandedPathFragmentPosixSchema.brand<PathFragmentLiteral>().brand<RelativePathLiteral>();
 
 export type PathFragmentPosix = z.output<typeof PathFragmentPosixSchema>;

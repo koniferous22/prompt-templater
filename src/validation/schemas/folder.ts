@@ -1,5 +1,5 @@
 import { zodRegisterIssue } from "../../utils/deps/zod/zodRegisterIssue.js";
-import { AbsolutePathToFsStatsSchema } from "../codecs/absolutePathFsStats.js";
+import { AbsolutePathToFsStatsSchema } from "../codecs/absolutePathToFsStats.js";
 
 export const FolderSchema = AbsolutePathToFsStatsSchema
   .check((ctx) => {

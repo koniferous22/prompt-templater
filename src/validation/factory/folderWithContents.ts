@@ -8,7 +8,7 @@ import z from 'zod';
 import { appErr } from '../../utils/deps/neverthrow/errorFactory.js';
 import { createDirentFlagsMatcher, type DirentFlagPatterns } from '../../modules/direntFlagsMatcher/direntFlagsMatcher.js';
 import  { join } from 'node:path';
-import { AbsolutePathToFsStatsSchema } from '../codecs/absolutePathFsStats.js';
+import { AbsolutePathToFsStatsSchema } from '../codecs/absolutePathToFsStats.js';
 import { isNonEmptyArray } from '../../utils/array/isNonEmptyArray.js';
 import { resultFromErrorList } from '../../utils/deps/neverthrow/errorList.js';
 import { zodIssueFromAppError } from '../../utils/deps/zod/zodIssueFromAppError.js';

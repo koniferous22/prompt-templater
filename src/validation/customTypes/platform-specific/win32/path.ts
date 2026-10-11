@@ -2,6 +2,7 @@ import path from "path/win32";
 import z from "zod";
 import { zodRegisterIssue } from "../../../../utils/deps/zod/zodRegisterIssue.js";
 import { errorMessages } from "../../../../constants/errorMessages.js";
+import type { AbsolutePathLiteral, PathFragmentLiteral, RelativePathLiteral } from "../../type-brands/path.js";
 
 const UnbrandedAbsolutePathWin32Schema = z
   .string()
@@ -11,7 +12,7 @@ const UnbrandedAbsolutePathWin32Schema = z
     }
   });
 export const AbsolutePathWin32Schema = UnbrandedAbsolutePathWin32Schema.brand<'AbsolutePathWin32'>()
-export const AbsolutePathSchema = UnbrandedAbsolutePathWin32Schema.brand<'AbsolutePath'>()
+export const AbsolutePathSchema = UnbrandedAbsolutePathWin32Schema.brand<AbsolutePathLiteral>()
 
 export type AbsolutePathWin32 = z.output<typeof AbsolutePathWin32Schema>;
 
@@ -24,7 +25,7 @@ const UnbrandedRelativePathWin32Schema = z
     }
   })
 export const RelativePathWin32Schema = UnbrandedRelativePathWin32Schema.brand<"RelativePathWin32">();
-export const RelativePathSchema = UnbrandedRelativePathWin32Schema.brand<"RelativePath">();
+export const RelativePathSchema = UnbrandedRelativePathWin32Schema.brand<RelativePathLiteral>();
 
 export type RelativePathWin32 = z.output<typeof RelativePathWin32Schema>;
 
@@ -37,6 +38,6 @@ const UnbrandedPathFragmentWin32Schema = z
     }
   });
 export const PathFragmentWin32Schema = UnbrandedPathFragmentWin32Schema.brand<"PathFragmentWin32">().brand<'RelativePathWin32'>();
-export const PathFragmentSchema = UnbrandedPathFragmentWin32Schema.brand<"PathFragment">().brand<'RelativePath'>();
+export const PathFragmentSchema = UnbrandedPathFragmentWin32Schema.brand<PathFragmentLiteral>().brand<RelativePathLiteral>();
 
 export type PathFragmentWin32 = z.output<typeof PathFragmentWin32Schema>;
