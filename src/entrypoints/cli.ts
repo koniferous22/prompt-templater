@@ -1,19 +1,17 @@
-import { runAsync } from '@optique/run';
+import { run } from '@optique/run';
 import { cliArgsParser } from '../modules/optique/cli-args.js';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { AbsolutePathSchema } from '../validation/customTypes/path.js';
+import { envContext } from '../modules/optique/context/env.js';
+import { message } from '@optique/core/message';
 
 const processWorkflow = async (workflowFile: string) => {
 }
 
 export const main = async () => {
-  const __dirname = dirname(fileURLToPath(import.meta.url));
-  const projectRoot = AbsolutePathSchema.parse(join(__dirname, '../../'))
-  const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, 'fixtures'));
-  const workspace1Folder = AbsolutePathSchema.parse(join(projectFixturesFolder, 'workspace1'));
-  const cliInput = await runAsync(cliArgsParser, {
-    args: ["--context", workspace1Folder],
+  const cliInput = await run(cliArgsParser, {
+    programName: "prompt-templater-v1",
+    contexts: [envContext],
+    help: "option",
+    brief: message`Templating clipboard util for making prompt typing more efficient`,
   });
   console.log(JSON.stringify(cliInput, null, 2));
 };

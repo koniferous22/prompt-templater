@@ -1,14 +1,12 @@
 import { object } from "@optique/core/constructs";
 import { option } from "@optique/core/primitives";
 import { message } from "@optique/core/message";
-import { bindEnv, createEnvContext } from "@optique/env";
+import { bindEnv } from "@optique/env";
 import { zodAsync } from "@optique/zod";
 import { WorkspaceContextSchema } from "../../validation/schemas/workspaceContext.js";
 import z from "zod";
-
-const envContext = createEnvContext({
-  prefix: "PROMPT_TEMPLATER",
-});
+import { envContext } from "./context/env.js";
+import { optional } from "@optique/core";
 
 const contextValueParser = zodAsync(WorkspaceContextSchema, {
   // placeholder unused because of no prompting library on top of CLI
@@ -22,17 +20,18 @@ const contextValueParser = zodAsync(WorkspaceContextSchema, {
   },
 });
 
-const context = bindEnv(
-  option("--context", "-ctx", contextValueParser, {
-    description: message`Test input value (required).`,
-  }),
-  {
-    context: envContext,
-    key: "CONTEXT",
-    parser: contextValueParser,
-    default: null,
-    // no default - it should fail if missing from both CLI and env vars
-  },
+// Note - null default value results in errors, hence using `optional`
+const context = optional(
+  bindEnv(
+    option("--context", "-ctx", contextValueParser, {
+      description: message`Test input value (required).`,
+    }),
+    {
+      context: envContext,
+      key: "CONTEXT",
+      parser: contextValueParser,
+    },
+  ),
 );
 
 export const cliArgsParser = object({
