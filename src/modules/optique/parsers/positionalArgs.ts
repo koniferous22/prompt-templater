@@ -1,7 +1,7 @@
 import { argument, map, optional, seq, string } from "@optique/core";
 import type { Parser } from "@optique/core/parser";
 
-export const positionalArgs = map(
+export const positionalArgsParser = map(
   seq(
     argument(string({ metavar: "WORKFLOW" })),
     optional(argument(string({ metavar: "WORKFLOW_PRESET" }))),
