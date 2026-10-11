@@ -1,5 +1,5 @@
 import { run } from '@optique/run';
-import { cliArgsParser } from '../modules/optique/cli-args.js';
+import { cliArgsParser } from '../modules/optique/cliArgs.js';
 import { envContext } from '../modules/optique/context/env.js';
 import { message } from '@optique/core/message';
 
