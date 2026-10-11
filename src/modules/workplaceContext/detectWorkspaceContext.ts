@@ -3,8 +3,10 @@ import { AbsolutePathSchema, type AbsolutePath } from '../../validation/customTy
 import { longestCommonPathPrefix } from '../../utils/path/platform-specific/longestCommonPathPrefix.js';
 import { WorkspaceContextSchema } from '../../validation/schemas/workspaceContext.js';
 import { errAsync, okAsync } from 'neverthrow';
+import type { File } from '../../validation/schemas/file.js';
+import { appErrAsync } from '../../utils/deps/neverthrow/errorFactory.js';
 
-const getWorkspacePrefixesByWorkflowFile = (workflowFile: AbsolutePath) => {
+const getWorkspacePrefixesByWorkflowFile = (workflowFile: File) => {
   let currentPath: AbsolutePath = AbsolutePathSchema.parse(dirname(workflowFile));
   const { root } = path.parse(workflowFile);
   const result: AbsolutePath[] = [];
@@ -15,7 +17,7 @@ const getWorkspacePrefixesByWorkflowFile = (workflowFile: AbsolutePath) => {
   return result;
 }
 
-const getWorkspacePrefixesByWorkflowAndPresetFiles = (workflowFile: AbsolutePath, workflowPresetFile: AbsolutePath) => {
+const getWorkspacePrefixesByWorkflowAndPresetFiles = (workflowFile: File, workflowPresetFile: File) => {
   const longestCommonPrefix = longestCommonPathPrefix(workflowFile, workflowPresetFile);
   if (longestCommonPrefix === null) {
     // If workflow and workflow preset have no common prefix, then consider workflow preset to be outside of workspace
@@ -40,7 +42,7 @@ const getWorkspacePrefixesByWorkflowAndPresetFiles = (workflowFile: AbsolutePath
 }
 
 // Note - dynamic context detection relies that at very least the input files absolute path has been resolved
-export const detectWorkspaceContextFromCliInput = async (cliInput: { workflow: AbsolutePath; workflowPreset: AbsolutePath; }) => {
+export const detectWorkspaceContextFromCliInput = async (cliInput: { workflow: File; workflowPreset?: File | undefined; }) => {
   const {
     workflow,
     workflowPreset,
@@ -54,5 +56,8 @@ export const detectWorkspaceContextFromCliInput = async (cliInput: { workflow: A
       return okAsync(parseResult.data);
     }
   }
-  return errAsync(undefined)
+  return appErrAsync('module_detectWorkspaceContext_noContextFound', {
+    workflowFile: workflow,
+    workflowPresetFile: workflowPreset,
+  })
 };

@@ -6,8 +6,8 @@ import { errorFromErrorList, resultFromErrorList } from './errorList.js';
 import { match } from 'ts-pattern';
 import { err, type Err } from 'neverthrow';
 
-const errorStandalone1 = createError('cliArgsProcessing_emptyStringAsArgument', undefined);
-const errorStandalone2 = createError('cliArgsProcessing_wrongArgumentFormat', undefined);
+const errorStandalone1 = createError('module_direntFlagsMatcher_createDirentFlagsMapFailed', undefined);
+const errorStandalone2 = createError('dependency_zod_safeParseErrorWithoutIssues', undefined);
 
 const testCasesForErrorFromErrorList = [
   {

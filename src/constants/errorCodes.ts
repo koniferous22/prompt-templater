@@ -1,6 +1,4 @@
 export type AppErrorCode =
-  | 'cliArgsProcessing_emptyStringAsArgument'
-  | 'cliArgsProcessing_wrongArgumentFormat'
   | 'dependency_nodeFs_fsReadDirInvalidOuptutShape'
   | 'dependency_nodeFs_fsReadDirOperationFailed'
   | 'dependency_nodeFs_fsStatInvalidOutputShape'
@@ -8,6 +6,9 @@ export type AppErrorCode =
   | 'dependency_zod_awaitingAsyncDecode'
   | 'dependency_zod_safeParseErrorWithoutIssues'
   | 'dependency_zod_validationError'
+  | 'entrypoint_cli_positionalArgumentNotFile'
+  | 'entrypoint_cli_unableToDetectContext'
+  | 'module_detectWorkspaceContext_noContextFound'
   | 'module_direntFlagsMatcher_createDirentFlagsMapFailed'
   | 'module_direntFlagsMatcher_extraItemsFound'
   | 'module_direntFlagsMatcher_extraItemsFromWrongFolderFound'
