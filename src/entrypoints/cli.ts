@@ -6,7 +6,7 @@ import { ok } from 'neverthrow';
 import { match } from 'ts-pattern';
 import { AbsolutePathSchema, type AbsolutePath } from '../validation/customTypes/path.js';
 import { join } from 'node:path';
-import { detectWorkspaceContextFromCliInput } from '../modules/workplaceContext/detectWorkspaceContext.js';
+import { detectWorkspaceContextFromCliInput } from '../modules/workspaceContext/detectWorkspaceContext.js';
 import { FileSchema } from '../validation/schemas/file.js';
 import { appAggregateErrAsync, appErrAsync, createError } from '../utils/deps/neverthrow/errorFactory.js';
 
@@ -151,4 +151,3 @@ export const main = async () => {
   // TODO - perform things within the context
   // 1 - parse the workflow file
 };
-

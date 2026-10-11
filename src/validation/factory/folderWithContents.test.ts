@@ -4,7 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { createFolderWithContentsSchema } from "./folderWithContents.js";
-import { AbsolutePathSchema, PathFragmentSchema, type AbsolutePath, type PathFragment } from "../customTypes/path.js";
+import { AbsolutePathSchema, PathFragmentSchema, RelativePathSchema, type AbsolutePath, type PathFragment, type RelativePath } from "../customTypes/path.js";
 import type { DirentFlagPatterns } from "../../modules/direntFlagsMatcher/direntFlagsMatcher.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -15,6 +15,12 @@ const fixturesWorkspace1Folder = AbsolutePathSchema.parse(join(projectFixturesFo
 const directoryDirentFlagsPattern: DirentFlagPatterns = {
   isDirectory: true,
   isFile: false,
+  isSymlink: false,
+}
+
+const fileDirentFlagsPattern: DirentFlagPatterns = {
+  isDirectory: false,
+  isFile: true,
   isSymlink: false,
 }
 
@@ -271,7 +277,7 @@ const testCasesForCreateFolderWithContentsSchema = [
         folderWithContentsSchema: {
           failOnExtraItems: true,
           pathDetection: 'readDirRecursive',
-          items: new Map<PathFragment, DirentFlagPatterns>([
+          items: new Map<RelativePath, DirentFlagPatterns>([
             [
               PathFragmentSchema.parse('templates'),
               directoryDirentFlagsPattern,
@@ -285,8 +291,16 @@ const testCasesForCreateFolderWithContentsSchema = [
               directoryDirentFlagsPattern,
             ],
             [
+              RelativePathSchema.parse('workflows/test-workflow.yml'),
+              fileDirentFlagsPattern,
+            ],
+            [
               PathFragmentSchema.parse('workflow-presets'),
               directoryDirentFlagsPattern,
+            ],
+            [
+              RelativePathSchema.parse('workflow-presets/test-workflow-preset.yml'),
+              fileDirentFlagsPattern,
             ],
           ])
         },

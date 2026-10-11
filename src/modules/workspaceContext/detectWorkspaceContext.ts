@@ -2,7 +2,7 @@ import path, { dirname } from 'node:path';
 import { AbsolutePathSchema, type AbsolutePath } from '../../validation/customTypes/path.js';
 import { longestCommonPathPrefix } from '../../utils/path/platform-specific/longestCommonPathPrefix.js';
 import { WorkspaceContextSchema } from '../../validation/schemas/workspaceContext.js';
-import { errAsync, okAsync } from 'neverthrow';
+import { okAsync } from 'neverthrow';
 import type { File } from '../../validation/schemas/file.js';
 import { appErrAsync } from '../../utils/deps/neverthrow/errorFactory.js';
 
