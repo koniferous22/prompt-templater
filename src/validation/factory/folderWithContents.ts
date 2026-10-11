@@ -141,4 +141,5 @@ export const createFolderWithContentsSchema = (
         }
       }
     })
+    .transform(({ absolutePath }) => absolutePath);
 };

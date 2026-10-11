@@ -2,17 +2,24 @@ import { object } from "@optique/core/constructs";
 import { option } from "@optique/core/primitives";
 import { message } from "@optique/core/message";
 import { bindEnv, createEnvContext } from "@optique/env";
-import { zod } from "@optique/zod";
-import { NonEmptyStringSchema } from "../../validation/customTypes/string.js";
+import { zodAsync } from "@optique/zod";
+import { WorkspaceContextSchema } from "../../validation/schemas/workspaceContext.js";
+import z from "zod";
 
 const envContext = createEnvContext({
   prefix: "PROMPT_TEMPLATER",
 });
 
-const contextValueParser = zod(NonEmptyStringSchema, {
+const contextValueParser = zodAsync(WorkspaceContextSchema, {
   // placeholder unused because of no prompting library on top of CLI
   placeholder: "",
   metavar: "CONTEXT",
+  errors: {
+    zodError: (error, input) => {
+      // Note - `optique` only renders the first error, likely because of zod/v3 compatibility
+      return message`${z.prettifyError(error)}`
+    }
+  },
 });
 
 const context = bindEnv(

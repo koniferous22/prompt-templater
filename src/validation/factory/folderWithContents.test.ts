@@ -156,6 +156,10 @@ const testCasesForCreateFolderWithContentsSchema = [
               PathFragmentSchema.parse('workflows'),
               directoryDirentFlagsPattern,
             ],
+            [
+              PathFragmentSchema.parse('workflow-presets'),
+              directoryDirentFlagsPattern,
+            ],
           ])
         },
         rootFolder: fixturesWorkspace1Folder,
@@ -182,6 +186,10 @@ const testCasesForCreateFolderWithContentsSchema = [
             ],
             [
               PathFragmentSchema.parse('terms'),
+              directoryDirentFlagsPattern,
+            ],
+            [
+              PathFragmentSchema.parse('workflows'),
               directoryDirentFlagsPattern,
             ],
           ])
@@ -276,6 +284,10 @@ const testCasesForCreateFolderWithContentsSchema = [
               PathFragmentSchema.parse('workflows'),
               directoryDirentFlagsPattern,
             ],
+            [
+              PathFragmentSchema.parse('workflow-presets'),
+              directoryDirentFlagsPattern,
+            ],
           ])
         },
         rootFolder: fixturesWorkspace1Folder,
@@ -302,6 +314,10 @@ const testCasesForCreateFolderWithContentsSchema = [
             ],
             [
               PathFragmentSchema.parse('terms'),
+              directoryDirentFlagsPattern,
+            ],
+            [
+              PathFragmentSchema.parse('workflows'),
               directoryDirentFlagsPattern,
             ],
           ])
