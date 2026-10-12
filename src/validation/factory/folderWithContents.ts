@@ -164,5 +164,6 @@ export const createFolderWithContentsSchema = (opts: CreateFolderWithContentsSch
         }
       }
     }
-  });
+  })
+  .brand<'FolderWithContents'>();
 };
