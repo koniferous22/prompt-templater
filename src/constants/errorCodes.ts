@@ -15,7 +15,7 @@ export type AppErrorCode =
   | "module_direntFlagsMatcher_patternNotFound"
   | "module_direntFlagsMatcher_unmatchedDirentFlag"
   | "validation_codec_absolutePathToFsStats_invalidInputData"
-  | "validation_codec_nonEmptyStringToAbsoluteOrRelativeConfigPath_invalidInputData"
+  | "validation_codec_nonEmptyStringToWorkflowUserInput_invalidInputData"
   | "validation_customTypes_fileExtension_invalidInput"
   | "validation_customTypes_nonEmptyString_invalidInput"
   | "validation_customTypes_posix_absolutePath_invalidInputFormat"

@@ -3,19 +3,19 @@ import type { Parser } from "@optique/core/parser";
 import { zod } from "@optique/zod";
 import z from "zod";
 
-import { NonEmptyStringToAbsoluteOrRelativeConfigPath } from "../../../validation/codecs/nonEmptyStringToAbsoluteOrRelativeConfigPath.js";
-import { YamlRelativePathSchema } from "../../../validation/schemas/pathWithExtensions.js";
+import { NonEmptyStringToResourceUserInputSchema } from "../../../validation/codecs/nonEmptyStringToResourceUserInput.js";
+import { ResourceUserInputSchema } from "../../../validation/schemas/resourceUserInput.js";
 
-export type WorkspaceContextPath = z.output<typeof NonEmptyStringToAbsoluteOrRelativeConfigPath>;
+export type WorkspaceContextPath = z.output<typeof NonEmptyStringToResourceUserInputSchema>;
 
 export const positionalArgsParser = map(
   seq(
     argument(
-      zod<WorkspaceContextPath>(NonEmptyStringToAbsoluteOrRelativeConfigPath, {
-        placeholder: {
+      zod<WorkspaceContextPath>(NonEmptyStringToResourceUserInputSchema, {
+        placeholder: ResourceUserInputSchema.parse({
           type: "relative",
-          path: YamlRelativePathSchema.parse("file.yaml"),
-        },
+          path: "file.yaml",
+        }),
         metavar: "WORKFLOW",
         errors: {
           zodError: (error) => {
@@ -27,11 +27,11 @@ export const positionalArgsParser = map(
     ),
     optional(
       argument(
-        zod<WorkspaceContextPath>(NonEmptyStringToAbsoluteOrRelativeConfigPath, {
-          placeholder: {
+        zod<WorkspaceContextPath>(NonEmptyStringToResourceUserInputSchema, {
+          placeholder: ResourceUserInputSchema.parse({
             type: "relative",
-            path: YamlRelativePathSchema.parse("file.yaml"),
-          },
+            path: "file.yaml",
+          }),
           metavar: "WORKFLOW_PRESET",
           errors: {
             zodError: (error) => {
