@@ -96,11 +96,16 @@ export const errorMessages = {
     'Expected Win32 relative path, got ""',
   validation_customTypes_win32_relativePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected Win32 relative path, got "${ctx.value}"`,
-  validation_factories_fileWithExtension_invalidExtension: (ctx: {
+  validation_factories_absolutePathWithExtension_invalidExtension: (ctx: {
     expectedExtensions: NonEmptyArray<string>;
     file: AbsolutePath;
   }) =>
-    `Expected ${ctx.expectedExtensions.length > 1 ? `extension "${ctx.expectedExtensions[0]}"` : `one of following extensions: ${renderStringList(ctx.expectedExtensions, null)}`} for file "${ctx.file}"`,
+    `Expected ${ctx.expectedExtensions.length === 1 ? `extension "${ctx.expectedExtensions[0]}"` : `one of following extensions: ${renderStringList(ctx.expectedExtensions, null)}`} for file "${ctx.file}"`,
+  validation_factories_relativePathWithExtension_invalidExtension: (ctx: {
+    expectedExtensions: NonEmptyArray<string>;
+    file: RelativePath;
+  }) =>
+    `Expected ${ctx.expectedExtensions.length === 1 ? `extension "${ctx.expectedExtensions[0]}"` : `one of following extensions: ${renderStringList(ctx.expectedExtensions, null)}`} for file "${ctx.file}"`,
   validation_schemas_fileSchema_pathIsNotFolder: (ctx: { value: string }) =>
     `Expected file for input "${ctx.value}"`,
   validation_schemas_folderSchema_pathIsNotFolder: (ctx: { value: string }) =>

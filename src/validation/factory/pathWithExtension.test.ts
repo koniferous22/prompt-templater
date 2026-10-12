@@ -3,19 +3,17 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { FileSchema, type File } from "../../validation/schemas/file.js";
 import { FileExtensionSchema, type FileExtension } from "../customTypes/fileExtension.js";
-import { createFileWithExtensionSchema } from "./fileWithExtension.js";
+import { AbsolutePathSchema, type AbsolutePath } from "../customTypes/path.js";
+import { createAbsolutePathWithExtensionSchema } from "./pathWithExtension.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Cases
-
-const testCasesForCreateFileWithExtensionSchema = [
+const testCasesForCreateAbsolutePathWithExtensionSchema = [
   {
     testInput: {
       data: {
-        file: await FileSchema.parseAsync(
+        file: AbsolutePathSchema.parse(
           join(__dirname, "../../../fixtures/workspace1/workflows/test-workflow.yml"),
         ),
         extension: FileExtensionSchema.parse("yml"),
@@ -32,7 +30,7 @@ const testCasesForCreateFileWithExtensionSchema = [
   {
     testInput: {
       data: {
-        file: await FileSchema.parseAsync(
+        file: AbsolutePathSchema.parse(
           join(__dirname, "../../../fixtures/workspace1/workflows/test-workflow.yml"),
         ),
         extension: FileExtensionSchema.parse("json"),
@@ -49,7 +47,7 @@ const testCasesForCreateFileWithExtensionSchema = [
 ] satisfies {
   testInput: {
     data: {
-      file: File;
+      file: AbsolutePath;
       extension: FileExtension;
     };
     testCaseDescription: string;
@@ -62,14 +60,16 @@ const testCasesForCreateFileWithExtensionSchema = [
   };
 }[];
 
-describe("createFileWithExtensionSchema", () => {
-  for (const { testInput, testOutcome } of testCasesForCreateFileWithExtensionSchema) {
+describe("createAbsolutePathWithExtensionSchema", () => {
+  for (const { testInput, testOutcome } of testCasesForCreateAbsolutePathWithExtensionSchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
-      const FileWithExtensionSchema = createFileWithExtensionSchema(testInput.data.extension);
-      const fileWithExtensionResult = await FileWithExtensionSchema.safeParseAsync(
+      const AbsolutePathWithExtensionSchema = createAbsolutePathWithExtensionSchema(
+        testInput.data.extension,
+      );
+      const AbsolutePathWithExtensionResult = AbsolutePathWithExtensionSchema.safeParse(
         testInput.data.file,
       );
-      assert.strictEqual(fileWithExtensionResult.success, testOutcome.data.result);
+      assert.strictEqual(AbsolutePathWithExtensionResult.success, testOutcome.data.result);
     });
   }
 });
