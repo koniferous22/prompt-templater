@@ -64,6 +64,8 @@ export const errorMessages = {
     `Encountered incorrect dirent flag "${ctx.direntFlag}" for "${ctx.path}"; expected - "${ctx.expected}", actual - "${ctx.actual}"`,
   validation_customTypes_nonEmptyString_invalidInput: (ctx: { value: string }) =>
     `Expected non-empty string got "${ctx.value}"`,
+  validation_customTypes_fileExtension_invalidInput: (ctx: { value: string }) =>
+    `Expected file extension got "${ctx.value}"`,
   validation_codec_nonEmptyStringToAbsoluteOrRelativePath_invalidInputData: (ctx: {
     value: string;
   }) => `Expected absolute or relative path, got "${ctx.value}`,

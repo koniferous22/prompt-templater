@@ -11,3 +11,5 @@ export const NonEmptyStringSchema = z
       }),
   })
   .brand<"NonEmptyString">();
+
+export type NonEmptyString = z.output<typeof NonEmptyStringSchema>;
