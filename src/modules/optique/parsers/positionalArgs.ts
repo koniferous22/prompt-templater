@@ -3,18 +3,18 @@ import type { Parser } from "@optique/core/parser";
 import { zod } from "@optique/zod";
 import z from "zod";
 
-import { NonEmptyStringToAbsoluteOrRelativePath } from "../../../validation/codecs/nonEmptyStringToAbsoluteOrRelativePath.js";
-import { RelativePathSchema } from "../../../validation/customTypes/path.js";
+import { NonEmptyStringToAbsoluteOrRelativeConfigPath } from "../../../validation/codecs/nonEmptyStringToAbsoluteOrRelativeConfigPath.js";
+import { YamlRelativePathSchema } from "../../../validation/schemas/pathWithExtensions.js";
 
-export type WorkspaceContextPath = z.output<typeof NonEmptyStringToAbsoluteOrRelativePath>;
+export type WorkspaceContextPath = z.output<typeof NonEmptyStringToAbsoluteOrRelativeConfigPath>;
 
 export const positionalArgsParser = map(
   seq(
     argument(
-      zod<WorkspaceContextPath>(NonEmptyStringToAbsoluteOrRelativePath, {
+      zod<WorkspaceContextPath>(NonEmptyStringToAbsoluteOrRelativeConfigPath, {
         placeholder: {
           type: "relative",
-          path: RelativePathSchema.parse("file"),
+          path: YamlRelativePathSchema.parse("file.yaml"),
         },
         metavar: "WORKFLOW",
         errors: {
@@ -27,10 +27,10 @@ export const positionalArgsParser = map(
     ),
     optional(
       argument(
-        zod<WorkspaceContextPath>(NonEmptyStringToAbsoluteOrRelativePath, {
+        zod<WorkspaceContextPath>(NonEmptyStringToAbsoluteOrRelativeConfigPath, {
           placeholder: {
             type: "relative",
-            path: RelativePathSchema.parse("file"),
+            path: YamlRelativePathSchema.parse("file.yaml"),
           },
           metavar: "WORKFLOW_PRESET",
           errors: {

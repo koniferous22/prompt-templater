@@ -3,19 +3,25 @@ import z from "zod";
 import { zodRegisterIssue } from "../../utils/deps/zod/zodRegisterIssue.js";
 import { AbsolutePathSchema, RelativePathSchema } from "../customTypes/path.js";
 import { NonEmptyStringSchema } from "../customTypes/string.js";
+import {
+  JsonAbsolutePathSchema,
+  JsonRelativePathSchema,
+  YamlAbsolutePathSchema,
+  YamlRelativePathSchema,
+} from "../schemas/pathWithExtensions.js";
 
 const CodecOutputSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("absolute"),
-    path: AbsolutePathSchema,
+    path: z.union([JsonAbsolutePathSchema, YamlAbsolutePathSchema]),
   }),
   z.object({
     type: z.literal("relative"),
-    path: RelativePathSchema,
+    path: z.union([JsonRelativePathSchema, YamlRelativePathSchema]),
   }),
 ]);
 
-export const NonEmptyStringToAbsoluteOrRelativePath = z.codec(
+export const NonEmptyStringToAbsoluteOrRelativeConfigPath = z.codec(
   NonEmptyStringSchema,
   CodecOutputSchema,
   {
@@ -35,7 +41,7 @@ export const NonEmptyStringToAbsoluteOrRelativePath = z.codec(
         zodRegisterIssue(
           nonEmptyString,
           ctx,
-          "validation_codec_nonEmptyStringToAbsoluteOrRelativePath_invalidInputData",
+          "validation_codec_nonEmptyStringToAbsoluteOrRelativeConfigPath_invalidInputData",
           {
             value: nonEmptyString,
           },

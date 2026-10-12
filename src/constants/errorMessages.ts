@@ -71,7 +71,7 @@ export const errorMessages = {
     `Expected non-empty string got "${ctx.value}"`,
   validation_customTypes_fileExtension_invalidInput: (ctx: { value: string }) =>
     `Expected file extension got "${ctx.value}"`,
-  validation_codec_nonEmptyStringToAbsoluteOrRelativePath_invalidInputData: (ctx: {
+  validation_codec_nonEmptyStringToAbsoluteOrRelativeConfigPath_invalidInputData: (ctx: {
     value: string;
   }) => `Expected absolute or relative path, got "${ctx.value}`,
   validation_codec_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
