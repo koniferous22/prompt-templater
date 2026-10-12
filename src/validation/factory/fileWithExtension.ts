@@ -1,9 +1,9 @@
 import path from "node:path";
 
+import type { NonEmptyArray } from "../../utils/array/isNonEmptyArray.js";
 import { zodRegisterIssue } from "../../utils/deps/zod/zodRegisterIssue.js";
 import type { FileExtension } from "../customTypes/fileExtension.js";
 import { FileSchema } from "../schemas/file.js";
-import type { NonEmptyArray } from "../../utils/array/isNonEmptyArray.js";
 
 export const createFileWithExtensionSchema = (...extensions: NonEmptyArray<FileExtension>) => {
   return FileSchema.check(async (ctx) => {
