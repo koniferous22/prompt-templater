@@ -5,7 +5,7 @@ import { okAsync } from "neverthrow";
 import { appErrAsync } from "../../utils/deps/neverthrow/errorFactory.js";
 import { longestCommonPathPrefix } from "../../utils/path/platform-specific/longestCommonPathPrefix.js";
 import { AbsolutePathSchema, type AbsolutePath } from "../../validation/customTypes/path.js";
-import type { File } from "../../validation/schemas/file.js";
+import type { File } from "../../validation/schemas/fs/file.js";
 import { WorkspaceContextSchema } from "../../validation/schemas/workspaceContext.js";
 
 const getWorkspacePrefixesByWorkflowFile = (workflowFile: File) => {

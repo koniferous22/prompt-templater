@@ -4,7 +4,7 @@ import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { AbsolutePathSchema, type AbsolutePath } from "../../validation/customTypes/path.js";
-import { FileSchema, type File } from "../../validation/schemas/file.js";
+import { FileSchema, type File } from "../../validation/schemas/fs/file.js";
 import { detectWorkspaceContextFromCliInput } from "./detectWorkspaceContext.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

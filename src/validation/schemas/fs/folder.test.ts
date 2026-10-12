@@ -11,11 +11,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const testCasesForFolderSchema = [
   {
-    testInput: join(__dirname, "../../../fixtures"),
+    testInput: join(__dirname, "../../../../fixtures"),
     testOutcome: true,
   },
   {
-    testInput: join(__dirname, "../../../package.json"),
+    testInput: join(__dirname, "../../../../package.json"),
     testOutcome: false,
   },
   {
@@ -23,7 +23,7 @@ const testCasesForFolderSchema = [
     testOutcome: false,
   },
   {
-    testInput: join(__dirname, "../../../non-existing-file"),
+    testInput: join(__dirname, "../../../../non-existing-file"),
     testOutcome: false,
   },
 ] satisfies {

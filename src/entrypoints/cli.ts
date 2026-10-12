@@ -14,7 +14,7 @@ import {
   createError,
 } from "../utils/deps/neverthrow/errorFactory.js";
 import { AbsolutePathSchema, type AbsolutePath } from "../validation/customTypes/path.js";
-import { FileSchema } from "../validation/schemas/file.js";
+import { FileSchema } from "../validation/schemas/fs/file.js";
 
 type ResolveContextArgs = {
   positionalArgs: Pick<CliArgs["positionalArgs"], "workflow" | "workflowPreset">;
