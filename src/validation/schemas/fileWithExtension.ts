@@ -1,4 +1,4 @@
-import type z from "zod";
+import z from "zod";
 
 import { FileExtensionSchema } from "../customTypes/fileExtension.js";
 import { createFileWithExtensionSchema } from "../factory/fileWithExtension.js";
@@ -9,6 +9,7 @@ export const JsonFileSchema = createFileWithExtensionSchema(
 export type JsonFile = z.output<typeof JsonFileSchema>;
 export const YamlFileSchema = createFileWithExtensionSchema(
   FileExtensionSchema.parse("yaml"),
+  FileExtensionSchema.parse("yml"),
 ).brand<"YamlFile">();
 export type YamlFile = z.output<typeof YamlFileSchema>;
 export const PugFileSchema = createFileWithExtensionSchema(

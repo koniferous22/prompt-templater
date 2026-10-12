@@ -1,15 +1,18 @@
 import { z, type ZodError } from "zod";
 
+import type { NonEmptyArray } from "../utils/array/isNonEmptyArray.js";
 import type { AbsolutePath, RelativePath } from "../validation/customTypes/path.js";
 import type { DirentFlagsData } from "../validation/pipes/dirent.js";
 import type { AppErrorCode } from "./errorCodes.js";
 
 const createRenderItemList =
   <T>(renderItem: (item: T) => string) =>
-  (items: [T, ...T[]]): string => {
-    const truncatedItems =
-      items.length > 2 ? [...items.slice(0, 2).map(renderItem), "..."] : items.map(renderItem);
-    return truncatedItems.join(", ");
+  (items: [T, ...T[]], truncatedLength: number | null = 2): string => {
+    const shouldTruncate = truncatedLength !== null && items.length > truncatedLength;
+    const displayedItems = shouldTruncate
+      ? [...items.slice(0, 2).map(renderItem), "..."]
+      : items.map(renderItem);
+    return displayedItems.join(", ");
   };
 
 const renderStringList = createRenderItemList<string>((x: string) => x);
@@ -94,9 +97,10 @@ export const errorMessages = {
   validation_customTypes_win32_relativePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected Win32 relative path, got "${ctx.value}"`,
   validation_factories_fileWithExtension_invalidExtension: (ctx: {
-    expectedExtension: string;
+    expectedExtensions: NonEmptyArray<string>;
     file: AbsolutePath;
-  }) => `Expected extension "${ctx.expectedExtension}" for file "${ctx.file}"`,
+  }) =>
+    `Expected ${ctx.expectedExtensions.length > 1 ? `extension "${ctx.expectedExtensions[0]}"` : `one of following extensions: ${renderStringList(ctx.expectedExtensions, null)}`} for file "${ctx.file}"`,
   validation_schemas_fileSchema_pathIsNotFolder: (ctx: { value: string }) =>
     `Expected file for input "${ctx.value}"`,
   validation_schemas_folderSchema_pathIsNotFolder: (ctx: { value: string }) =>
