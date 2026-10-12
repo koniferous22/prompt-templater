@@ -183,5 +183,13 @@ export const main = async () => {
   }
   console.log(JSON.stringify(cliInput, null, 2));
   // TODO - perform things within the context
-  // 1 - parse the workflow file
+  // 1 - parse the workflow file - part 1-  validate structure
+  // * parsing output - generated template render context schema + serialized steps
+  // 2 - parse the workflow file - part 2 - validate contents
+  // * separate codec - WorkflowFileToWorkflowWithTemplate
+  //   * read read template file at this point
+  // 3 - run inquirer validators
+  // 4 - render + copy to clipboard
+  // * add CLI option to render to `stdout` what has been copied
+  //   * add env variable configurability
 };
