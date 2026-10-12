@@ -8,7 +8,7 @@ export const FileSchema = AbsolutePathToFsStatsSchema.check((ctx) => {
     zodRegisterIssue(
       ctx.value.absolutePath,
       ctx,
-      "validation_schemas_folderSchema_pathIsNotFolder",
+      "validation_schemas_fileSchema_pathIsNotFolder",
       { value: ctx.value.absolutePath },
     );
   }

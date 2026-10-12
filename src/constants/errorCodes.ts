@@ -27,5 +27,5 @@ export type AppErrorCode =
   | "validation_customTypes_win32_pathFragment_invalidInputFormat"
   | "validation_customTypes_win32_relativePath_emptyInput"
   | "validation_customTypes_win32_relativePath_invalidInputFormat"
-  | "validation_schemas_folderSchema_pathDoesNotExist"
+  | "validation_schemas_fileSchema_pathIsNotFolder"
   | "validation_schemas_folderSchema_pathIsNotFolder";

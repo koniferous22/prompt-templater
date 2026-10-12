@@ -89,8 +89,8 @@ export const errorMessages = {
     'Expected Win32 relative path, got ""',
   validation_customTypes_win32_relativePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected Win32 relative path, got "${ctx.value}"`,
-  validation_schemas_folderSchema_pathDoesNotExist: (ctx: { value: string }) =>
-    `Expected existing absolute path for input "${ctx.value}"`,
+  validation_schemas_fileSchema_pathIsNotFolder: (ctx: { value: string }) =>
+    `Expected file for input "${ctx.value}"`,
   validation_schemas_folderSchema_pathIsNotFolder: (ctx: { value: string }) =>
     `Expected folder for input "${ctx.value}"`,
 } as const satisfies Record<AppErrorCode, (ctx: any) => string>;
