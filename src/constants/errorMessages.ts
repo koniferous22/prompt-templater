@@ -14,6 +14,8 @@ const createRenderItemList =
 
 const renderStringList = createRenderItemList<string>((x: string) => x);
 
+// TODO - often encountering circular references, because zod issue formatting reuses `errorMessages` as well
+
 export const errorMessages = {
   dependency_nodeFs_fsReadDirInvalidOuptutShape: () =>
     'unexpected output of fs.readdir from node:fs, expected array of "Dirent" class',
@@ -91,6 +93,10 @@ export const errorMessages = {
     'Expected Win32 relative path, got ""',
   validation_customTypes_win32_relativePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected Win32 relative path, got "${ctx.value}"`,
+  validation_factories_fileWithExtension_invalidExtension: (ctx: {
+    expectedExtension: string;
+    file: AbsolutePath;
+  }) => `Expected extension "${ctx.expectedExtension}" for file "${ctx.file}"`,
   validation_schemas_fileSchema_pathIsNotFolder: (ctx: { value: string }) =>
     `Expected file for input "${ctx.value}"`,
   validation_schemas_folderSchema_pathIsNotFolder: (ctx: { value: string }) =>
