@@ -1,7 +1,7 @@
 import { z, type ZodError } from "zod";
 
 import type { AbsolutePath, RelativePath } from "../validation/customTypes/path.js";
-import type { DirentSchema } from "../validation/pipes/dirent.js";
+import type { DirentFlagsData } from "../validation/pipes/dirent.js";
 import type { AppErrorCode } from "./errorCodes.js";
 
 const createRenderItemList =
@@ -58,7 +58,7 @@ export const errorMessages = {
     parentPath: AbsolutePath;
   }) => `Expected "${ctx.pattern}" to be located in folder "${ctx.parentPath}"`,
   module_direntFlagsMatcher_unmatchedDirentFlag: (ctx: {
-    direntFlag: keyof z.output<typeof DirentSchema>["direntFlags"];
+    direntFlag: keyof DirentFlagsData;
     expected: boolean;
     actual: boolean;
     path: AbsolutePath;
