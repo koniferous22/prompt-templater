@@ -5,7 +5,7 @@ import {
   JsonRelativePathSchema,
   YamlAbsolutePathSchema,
   YamlRelativePathSchema,
-} from "./path/pathWithExtensions.js";
+} from "../path/pathWithExtensions.js";
 
 export const ResourceUserInputSchema = z
   .discriminatedUnion("type", [

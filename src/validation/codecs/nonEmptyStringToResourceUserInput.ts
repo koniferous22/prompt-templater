@@ -3,7 +3,7 @@ import z from "zod";
 import { zodRegisterIssue } from "../../utils/deps/zod/zodRegisterIssue.js";
 import { AbsolutePathSchema, RelativePathSchema } from "../customTypes/path.js";
 import { NonEmptyStringSchema } from "../customTypes/string.js";
-import { ResourceUserInputSchema } from "../schemas/resourceUserInput.js";
+import { ResourceUserInputSchema } from "../schemas/resources/resourceUserInput.js";
 
 export const NonEmptyStringToResourceUserInputSchema = z.codec(
   NonEmptyStringSchema,
