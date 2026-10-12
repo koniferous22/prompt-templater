@@ -11,7 +11,8 @@
     "check:types": "bun check",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
-    "test": "bun test"
+    "test": "bun test",
+    "prepare": "husky"
   },
   "dependencies": {
     "@inquirer/prompts": "^8.7.3",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@types/bun": "^1.4.2",
+    "husky": "^9.1.7",
     "oxfmt": "^0.72.0",
     "oxlint": "^1.87.0"
   },
