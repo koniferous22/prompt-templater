@@ -1,7 +1,9 @@
-import { describe, it } from 'node:test';
-import assert from 'node:assert/strict';
-import { FileExtensionSchema } from './fileExtension.js';
-import type z from 'zod';
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+
+import type z from "zod";
+
+import { FileExtensionSchema } from "./fileExtension.js";
 
 const testCasesForFileExtensionSchema = [
   {

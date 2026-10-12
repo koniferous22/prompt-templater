@@ -1,17 +1,14 @@
-import { NonEmptyStringSchema } from './string.js';
-import { zodRegisterIssue } from "../../utils/deps/zod/zodRegisterIssue.js";
+import type z from "zod";
 
-export const FileExtensionSchema = NonEmptyStringSchema
-  .check((ctx) => {
-    if (ctx.value.includes('.')) {
-      zodRegisterIssue(
-        ctx.value,
-        ctx,
-        'validation_customTypes_fileExtension_invalidInput',
-        {
-          value: ctx.value,
-        }
-      )
-    }
-  })
-  .brand<"FileExtension">();
+import { zodRegisterIssue } from "../../utils/deps/zod/zodRegisterIssue.js";
+import { NonEmptyStringSchema } from "./string.js";
+
+export const FileExtensionSchema = NonEmptyStringSchema.check((ctx) => {
+  if (ctx.value.includes(".")) {
+    zodRegisterIssue(ctx.value, ctx, "validation_customTypes_fileExtension_invalidInput", {
+      value: ctx.value,
+    });
+  }
+}).brand<"FileExtension">();
+
+export type FileExtension = z.output<typeof FileExtensionSchema>;
