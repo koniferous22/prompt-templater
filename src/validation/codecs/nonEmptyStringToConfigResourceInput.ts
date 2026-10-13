@@ -6,10 +6,10 @@ import { zodRegisterIssue } from "../../utils/deps/zod/zodRegisterIssue.js";
 import { AbsolutePathSchema } from "../customTypes/path.js";
 import { NonEmptyStringSchema } from "../customTypes/string.js";
 import { ConfigResourceInputSchema } from "../schemas/resources/configResourceInput.js";
-import { AbsolutePathToResourceAbsolutePath } from "./absolutePathToResourceAbsolutePath.js";
-import { RelativePathToResourceRelativePath } from "./relativePathToResourceRelativePath.js";
+import { AbsolutePathToConfigResourceAbsolutePath } from "./absolutePathToConfigResourceAbsolutePath.js";
+import { RelativePathToConfigResourceRelativePath } from "./relativePathToConfigResourceRelativePath.js";
 
-export const NonEmptyStringToResourceUserInputSchema = z.codec(
+export const NonEmptyStringToConfigResourceInputSchema = z.codec(
   NonEmptyStringSchema,
   ConfigResourceInputSchema,
   {
@@ -17,7 +17,7 @@ export const NonEmptyStringToResourceUserInputSchema = z.codec(
       try {
         const absolutePathParseResult = AbsolutePathSchema.safeParse(nonEmptyString);
         if (absolutePathParseResult.success) {
-          const resourceAbsolutePathResult = AbsolutePathToResourceAbsolutePath.safeParse(
+          const resourceAbsolutePathResult = AbsolutePathToConfigResourceAbsolutePath.safeParse(
             absolutePathParseResult.data,
           );
           if (!resourceAbsolutePathResult.success) {
@@ -39,7 +39,7 @@ export const NonEmptyStringToResourceUserInputSchema = z.codec(
             filePath: resourceAbsolutePathResult.data,
           };
         }
-        const resourceRelativePathResult = RelativePathToResourceRelativePath.safeParse(
+        const resourceRelativePathResult = RelativePathToConfigResourceRelativePath.safeParse(
           absolutePathParseResult.data,
         );
         if (!resourceRelativePathResult.success) {

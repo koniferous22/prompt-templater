@@ -6,12 +6,12 @@ import z from "zod";
 
 import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
 import { zodIssueFromAppError } from "../../utils/deps/zod/zodIssueFromAppError.js";
-import { AbsolutePathSchema } from "../customTypes/path.js";
-import { ConfigResourceAbsolutePathSchema } from "../schemas/resources/configResourceAbsolutePath.js";
+import { RelativePathSchema } from "../customTypes/path.js";
+import { ConfigResourceRelativePathSchema } from "../schemas/resources/configResourceRelativePath.js";
 
-export const AbsolutePathToResourceAbsolutePath = z.codec(
-  AbsolutePathSchema,
-  ConfigResourceAbsolutePathSchema,
+export const RelativePathToConfigResourceRelativePath = z.codec(
+  RelativePathSchema,
+  ConfigResourceRelativePathSchema,
   {
     decode: (value, ctx) => {
       const extname = path.extname(value);
@@ -30,10 +30,13 @@ export const AbsolutePathToResourceAbsolutePath = z.codec(
           }),
         )
         .otherwise(() => {
-          return appErr("validation_codec_absolutePathToResourceAbsolutePath_invalidExtension", {
-            resourceInput: value,
-            allowedExtensions: ["json", "yaml", "yml"],
-          });
+          return appErr(
+            "validation_codec_relativePathToConfigResourceRelativePath_invalidExtension",
+            {
+              resourceInput: value,
+              allowedExtensions: ["json", "yaml", "yml"],
+            },
+          );
         });
       if (resourceResult.isOk()) {
         return resourceResult.value;
@@ -47,7 +50,7 @@ export const AbsolutePathToResourceAbsolutePath = z.codec(
       return z.NEVER;
     },
     encode: (value) => {
-      return AbsolutePathSchema.parse(value.path);
+      return RelativePathSchema.parse(value.path);
     },
   },
 );

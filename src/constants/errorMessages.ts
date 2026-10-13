@@ -73,14 +73,14 @@ export const errorMessages = {
     `Expected file extension got "${ctx.value}"`,
   validation_codec_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
-  validation_codec_absolutePathToResourceAbsolutePath_invalidExtension: (ctx: {
+  validation_codec_absolutePathToConfigResourceAbsolutePath_invalidExtension: (ctx: {
     resourceInput: AbsolutePath;
     allowedExtensions: NonEmptyArray<string>;
   }) =>
     `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
   validation_codec_nonEmptyStringToResourceUserInput_invalidInputData: (ctx: { value: string }) =>
     `Expected absolute or relative path, got "${ctx.value}`,
-  validation_codec_relativePathToResourceRelativePath_invalidExtension: (ctx: {
+  validation_codec_relativePathToConfigResourceRelativePath_invalidExtension: (ctx: {
     resourceInput: RelativePath;
     allowedExtensions: NonEmptyArray<string>;
   }) =>
