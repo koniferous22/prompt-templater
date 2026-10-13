@@ -39,9 +39,8 @@ export const NonEmptyStringToConfigResourceInputSchema = z.codec(
             filePath: resourceAbsolutePathResult.data,
           };
         }
-        const resourceRelativePathResult = RelativePathToConfigResourceRelativePath.safeParse(
-          absolutePathParseResult.data,
-        );
+        const resourceRelativePathResult =
+          RelativePathToConfigResourceRelativePath.safeParse(nonEmptyString);
         if (!resourceRelativePathResult.success) {
           // Map inner custom zod issues
           for (const issue of resourceRelativePathResult.error.issues) {

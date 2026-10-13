@@ -75,6 +75,16 @@ export const errorMessages = {
   module_resources_configResourceFileFromInput_invalidInputYamlRelativePath: (ctx: {
     value: string;
   }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
+  module_resources_configResourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
+    `Error reading file "${ctx.value}"`,
+  module_resources_configResourceFromResourceFile_invalidJsonContents: (ctx: { file: string }) =>
+    `File "${ctx.file}" contains invalid JSON contents`,
+  module_resources_configResourceFromResourceFile_invalidStructure: (ctx: {
+    file: string;
+    zodError: ZodError<any>;
+  }) => `File "${ctx.file}" contains invalid data\n${z.prettifyError(ctx.zodError)}`,
+  module_resources_configResourceFromResourceFile_invalidYamlContents: (ctx: { file: string }) =>
+    `File "${ctx.file}" contains invalid YAML contents`,
   validation_customTypes_nonEmptyString_invalidInput: (ctx: { value: string }) =>
     `Expected non-empty string got "${ctx.value}"`,
   validation_customTypes_fileExtension_invalidInput: (ctx: { value: string }) =>
@@ -111,6 +121,9 @@ export const errorMessages = {
     allowedExtensions: NonEmptyArray<string>;
   }) =>
     `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+  validation_codec_templateResources_nonEmptyStringToResourceInput_invalidInputData: (ctx: {
+    value: string;
+  }) => `Expected absolute or relative path, got "${ctx.value}`,
   validation_codec_templateResources_relativePathToResourceRelativePath_invalidExtension: (ctx: {
     resourceInput: RelativePath;
     allowedExtensions: NonEmptyArray<string>;

@@ -1,9 +1,11 @@
 import z from "zod";
 
-import { TemplateResourceInputSchema } from "../../template/templateResourceInput.js";
+import { NonEmptyStringToTemplateResourceInputSchema } from "../../../../codecs/templateResource/nonEmptyStringToResourceInput.js";
 
 export const WorkflowSchema = z
   .object({
-    templateFile: TemplateResourceInputSchema,
+    templateFile: NonEmptyStringToTemplateResourceInputSchema,
   })
   .brand<"Workflow">();
+
+export type Workflow = z.output<typeof WorkflowSchema>;

@@ -232,6 +232,8 @@ const testCasesForCreateFolderWithContentsSchema = [
             [PathFragmentSchema.parse("workflows"), directoryDirentFlagsPattern],
             [RelativePathSchema.parse("workflows/test-workflow.yml"), fileDirentFlagsPattern],
             [RelativePathSchema.parse("workflows/test-workflow.json"), fileDirentFlagsPattern],
+            [RelativePathSchema.parse("workflows/test-bad-syntax.yml"), fileDirentFlagsPattern],
+            [RelativePathSchema.parse("workflows/test-bad-syntax.json"), fileDirentFlagsPattern],
             [PathFragmentSchema.parse("workflow-presets"), directoryDirentFlagsPattern],
             [
               RelativePathSchema.parse("workflow-presets/test-workflow-preset.yml"),
