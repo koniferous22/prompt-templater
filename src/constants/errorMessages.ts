@@ -98,6 +98,16 @@ export const errorMessages = {
   validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidYamlPath: (ctx: {
     value: string;
   }) => `Error retrieving absolute path from "${ctx.value}"`,
+  validation_codec_templateResources_absolutePathToResourceAbsolutePath_invalidExtension: (ctx: {
+    resourceInput: AbsolutePath;
+    allowedExtensions: NonEmptyArray<string>;
+  }) =>
+    `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+  validation_codec_templateResources_relativePathToResourceRelativePath_invalidExtension: (ctx: {
+    resourceInput: RelativePath;
+    allowedExtensions: NonEmptyArray<string>;
+  }) =>
+    `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
   validation_customTypes_posix_absolutePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected POSIX absolute path, got "${ctx.value}"`,
   validation_customTypes_posix_pathFragment_emptyInput: () =>

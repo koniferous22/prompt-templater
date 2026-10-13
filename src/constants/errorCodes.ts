@@ -22,6 +22,8 @@ export type AppErrorCode =
   | "validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidJsonPath"
   | "validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidYamlFile"
   | "validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidYamlPath"
+  | "validation_codec_templateResources_absolutePathToResourceAbsolutePath_invalidExtension"
+  | "validation_codec_templateResources_relativePathToResourceRelativePath_invalidExtension"
   | "validation_customTypes_fileExtension_invalidInput"
   | "validation_customTypes_nonEmptyString_invalidInput"
   | "validation_customTypes_posix_absolutePath_invalidInputFormat"
