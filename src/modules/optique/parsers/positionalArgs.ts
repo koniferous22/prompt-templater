@@ -15,7 +15,7 @@ export const positionalArgsParser = map(
         placeholder: ConfigResourceInputSchema.parse({
           type: "relative",
           filePath: {
-            format: 'yaml',
+            format: "yaml",
             path: "file.yaml",
           },
         }),
@@ -34,7 +34,7 @@ export const positionalArgsParser = map(
           placeholder: ConfigResourceInputSchema.parse({
             type: "relative",
             filePath: {
-              format: 'yaml',
+              format: "yaml",
               path: "file.yaml",
             },
           }),
