@@ -4,7 +4,6 @@ import z from "zod";
 
 import { appErr, appErrAsync } from "../../../utils/deps/neverthrow/errorFactory.js";
 import { zodIssueFromAppError } from "../../../utils/deps/zod/zodIssueFromAppError.js";
-import { zodRegisterIssue } from "../../../utils/deps/zod/zodRegisterIssue.js";
 import {
   JsonAbsolutePathSchema,
   YamlAbsolutePathSchema,

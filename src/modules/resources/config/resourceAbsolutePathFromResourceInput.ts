@@ -3,14 +3,14 @@ import { join } from "node:path";
 import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 
-import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
+import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
 import {
   JsonAbsolutePathSchema,
   YamlAbsolutePathSchema,
-} from "../../validation/schemas/path/pathWithExtensions.js";
-import { ConfigResourceAbsolutePathSchema } from "../../validation/schemas/resources/configResourceAbsolutePath.js";
-import type { ConfigResourceInput } from "../../validation/schemas/resources/configResourceInput.js";
-import type { WorkspaceContext } from "../../validation/schemas/workspaceContext.js";
+} from "../../../validation/schemas/path/pathWithExtensions.js";
+import { ConfigResourceAbsolutePathSchema } from "../../../validation/schemas/resources/configResourceAbsolutePath.js";
+import type { ConfigResourceInput } from "../../../validation/schemas/resources/configResourceInput.js";
+import type { WorkspaceContext } from "../../../validation/schemas/workspaceContext.js";
 
 export const configResourceAbsolutePathFromInput = (
   resourceInput: ConfigResourceInput,

@@ -3,23 +3,23 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { AbsolutePathSchema } from "../../validation/customTypes/path.js";
+import { AbsolutePathSchema } from "../../../validation/customTypes/path.js";
 import {
   ConfigResourceAbsolutePathSchema,
   type ConfigResourceAbsolutePath,
-} from "../../validation/schemas/resources/configResourceAbsolutePath.js";
+} from "../../../validation/schemas/resources/configResourceAbsolutePath.js";
 import {
   ConfigResourceInputSchema,
   type ConfigResourceInput,
-} from "../../validation/schemas/resources/configResourceInput.js";
+} from "../../../validation/schemas/resources/configResourceInput.js";
 import {
   WorkspaceContextSchema,
   type WorkspaceContext,
-} from "../../validation/schemas/workspaceContext.js";
-import { configResourceAbsolutePathFromInput } from "./resourceAbsolutePathFromUserInput.js";
+} from "../../../validation/schemas/workspaceContext.js";
+import { configResourceAbsolutePathFromInput } from "./resourceAbsolutePathFromResourceInput.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../"));
+const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
 const workspaceContext = await WorkspaceContextSchema.parseAsync(
   join(projectFixturesFolder, "workspace1"),
