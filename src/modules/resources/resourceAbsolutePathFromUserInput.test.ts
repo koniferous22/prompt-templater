@@ -5,13 +5,13 @@ import { fileURLToPath } from "node:url";
 
 import { AbsolutePathSchema } from "../../validation/customTypes/path.js";
 import {
-  ResourceAbsolutePathSchema,
-  type ResourceAbsolutePath,
-} from "../../validation/schemas/resources/resourceAbsolutePath.js";
+  ConfigResourceAbsolutePathSchema,
+  type ConfigResourceAbsolutePath,
+} from "../../validation/schemas/resources/configResourceAbsolutePath.js";
 import {
-  ResourceUserInputSchema,
-  type ResourceUserInput,
-} from "../../validation/schemas/resources/resourceUserInput.js";
+  ConfigResourceUserInputSchema,
+  type ConfigResourceUserInput,
+} from "../../validation/schemas/resources/configResourceUserInput.js";
 import {
   WorkspaceContextSchema,
   type WorkspaceContext,
@@ -29,7 +29,7 @@ const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        userInput: ResourceUserInputSchema.parse({
+        userInput: ConfigResourceUserInputSchema.parse({
           type: "absolute",
           filePath: {
             format: "json",
@@ -41,7 +41,7 @@ const testCasesForDirentFlagsMatcher = [
       testCaseDescription: "absolute .json path",
     },
     testOutcome: {
-      data: ResourceAbsolutePathSchema.parse({
+      data: ConfigResourceAbsolutePathSchema.parse({
         format: "json",
         path: "/some/path/outside/of/context/resource.json",
       }),
@@ -51,7 +51,7 @@ const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        userInput: ResourceUserInputSchema.parse({
+        userInput: ConfigResourceUserInputSchema.parse({
           type: "absolute",
           filePath: {
             format: "yaml",
@@ -63,7 +63,7 @@ const testCasesForDirentFlagsMatcher = [
       testCaseDescription: "absolute .yaml path",
     },
     testOutcome: {
-      data: ResourceAbsolutePathSchema.parse({
+      data: ConfigResourceAbsolutePathSchema.parse({
         format: "yaml",
         path: "/some/path/outside/of/context/resource.yaml",
       }),
@@ -73,7 +73,7 @@ const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        userInput: ResourceUserInputSchema.parse({
+        userInput: ConfigResourceUserInputSchema.parse({
           type: "relative",
           filePath: {
             format: "json",
@@ -85,7 +85,7 @@ const testCasesForDirentFlagsMatcher = [
       testCaseDescription: "relative .json path",
     },
     testOutcome: {
-      data: ResourceAbsolutePathSchema.parse({
+      data: ConfigResourceAbsolutePathSchema.parse({
         format: "json",
         path: join(workspaceContext, "workflows/workflow1.json"),
       }),
@@ -95,7 +95,7 @@ const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        userInput: ResourceUserInputSchema.parse({
+        userInput: ConfigResourceUserInputSchema.parse({
           type: "relative",
           filePath: {
             format: "yaml",
@@ -107,7 +107,7 @@ const testCasesForDirentFlagsMatcher = [
       testCaseDescription: "relative .yaml path",
     },
     testOutcome: {
-      data: ResourceAbsolutePathSchema.parse({
+      data: ConfigResourceAbsolutePathSchema.parse({
         format: "yaml",
         path: join(workspaceContext, "workflows/workflow1.yaml"),
       }),
@@ -117,13 +117,13 @@ const testCasesForDirentFlagsMatcher = [
 ] satisfies {
   testInput: {
     data: {
-      userInput: ResourceUserInput;
+      userInput: ConfigResourceUserInput;
       workspaceContext: WorkspaceContext;
     };
     testCaseDescription: string;
   };
   testOutcome: {
-    data: ResourceAbsolutePath;
+    data: ConfigResourceAbsolutePath;
     testBehaviourDescription: string;
   };
 }[];

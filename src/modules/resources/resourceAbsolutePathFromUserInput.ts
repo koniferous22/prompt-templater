@@ -8,12 +8,12 @@ import {
   JsonAbsolutePathSchema,
   YamlAbsolutePathSchema,
 } from "../../validation/schemas/path/pathWithExtensions.js";
-import { ResourceAbsolutePathSchema } from "../../validation/schemas/resources/resourceAbsolutePath.js";
-import type { ResourceUserInput } from "../../validation/schemas/resources/resourceUserInput.js";
+import { ConfigResourceAbsolutePathSchema } from "../../validation/schemas/resources/configResourceAbsolutePath.js";
+import type { ConfigResourceUserInput } from "../../validation/schemas/resources/configResourceUserInput.js";
 import type { WorkspaceContext } from "../../validation/schemas/workspaceContext.js";
 
 export const resourceAbsolutePathFromUserInput = (
-  resourceInput: ResourceUserInput,
+  resourceInput: ConfigResourceUserInput,
   workspaceContext: WorkspaceContext,
 ) => {
   const resourceAbsolutePathInputResult = match(resourceInput)
@@ -58,7 +58,7 @@ export const resourceAbsolutePathFromUserInput = (
   if (!resourceAbsolutePathInputResult.isOk()) {
     return resourceAbsolutePathInputResult;
   }
-  const resourceAbsolutePathResult = ResourceAbsolutePathSchema.safeParse(
+  const resourceAbsolutePathResult = ConfigResourceAbsolutePathSchema.safeParse(
     resourceAbsolutePathInputResult.value,
   );
   return resourceAbsolutePathResult.success

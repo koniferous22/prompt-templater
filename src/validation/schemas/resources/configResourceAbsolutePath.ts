@@ -2,7 +2,7 @@ import z from "zod";
 
 import { JsonAbsolutePathSchema, YamlAbsolutePathSchema } from "../path/pathWithExtensions.js";
 
-export const ResourceAbsolutePathSchema = z.discriminatedUnion("format", [
+export const ConfigResourceAbsolutePathSchema = z.discriminatedUnion("format", [
   z.object({
     format: z.literal("json"),
     path: JsonAbsolutePathSchema,
@@ -13,4 +13,4 @@ export const ResourceAbsolutePathSchema = z.discriminatedUnion("format", [
   }),
 ]);
 
-export type ResourceAbsolutePath = z.output<typeof ResourceAbsolutePathSchema>;
+export type ConfigResourceAbsolutePath = z.output<typeof ConfigResourceAbsolutePathSchema>;

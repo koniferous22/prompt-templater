@@ -5,13 +5,13 @@ import type { AppError } from "../../utils/deps/neverthrow/types.js";
 import { zodRegisterIssue } from "../../utils/deps/zod/zodRegisterIssue.js";
 import { AbsolutePathSchema } from "../customTypes/path.js";
 import { NonEmptyStringSchema } from "../customTypes/string.js";
-import { ResourceUserInputSchema } from "../schemas/resources/resourceUserInput.js";
+import { ConfigResourceUserInputSchema } from "../schemas/resources/configResourceUserInput.js";
 import { AbsolutePathToResourceAbsolutePath } from "./absolutePathToResourceAbsolutePath.js";
 import { RelativePathToResourceRelativePath } from "./relativePathToResourceRelativePath.js";
 
 export const NonEmptyStringToResourceUserInputSchema = z.codec(
   NonEmptyStringSchema,
-  ResourceUserInputSchema,
+  ConfigResourceUserInputSchema,
   {
     decode: (nonEmptyString, ctx) => {
       try {

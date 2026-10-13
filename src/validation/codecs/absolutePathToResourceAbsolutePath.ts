@@ -7,11 +7,11 @@ import z from "zod";
 import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
 import { zodIssueFromAppError } from "../../utils/deps/zod/zodIssueFromAppError.js";
 import { AbsolutePathSchema } from "../customTypes/path.js";
-import { ResourceAbsolutePathSchema } from "../schemas/resources/resourceAbsolutePath.js";
+import { ConfigResourceAbsolutePathSchema } from "../schemas/resources/configResourceAbsolutePath.js";
 
 export const AbsolutePathToResourceAbsolutePath = z.codec(
   AbsolutePathSchema,
-  ResourceAbsolutePathSchema,
+  ConfigResourceAbsolutePathSchema,
   {
     decode: (value, ctx) => {
       const extname = path.extname(value);

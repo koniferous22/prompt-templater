@@ -7,11 +7,11 @@ import z from "zod";
 import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
 import { zodIssueFromAppError } from "../../utils/deps/zod/zodIssueFromAppError.js";
 import { RelativePathSchema } from "../customTypes/path.js";
-import { ResourceRelativePathSchema } from "../schemas/resources/resourceRelativePath.js";
+import { ConfigResourceRelativePathSchema } from "../schemas/resources/configResourceRelativePath.js";
 
 export const RelativePathToResourceRelativePath = z.codec(
   RelativePathSchema,
-  ResourceRelativePathSchema,
+  ConfigResourceRelativePathSchema,
   {
     decode: (value, ctx) => {
       const extname = path.extname(value);
