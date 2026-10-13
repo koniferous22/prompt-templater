@@ -3,8 +3,11 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import {
+  ConfigResourceFileSchema,
+  type ConfigResourceFile,
+} from "../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
 import { AbsolutePathSchema, type AbsolutePath } from "../../validation/customTypes/path.js";
-import { FileSchema, type File } from "../../validation/schemas/fs/file.js";
 import { detectWorkspaceContextFromCliInput } from "./detectWorkspaceContext.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -15,9 +18,10 @@ const testCasesForDetectWorkspaceContextFromCliInput = [
   {
     testInput: {
       data: {
-        workflowFile: await FileSchema.parseAsync(
-          join(__dirname, "../../../fixtures/workspace1/workflows/test-workflow.yml"),
-        ),
+        workflowFile: await ConfigResourceFileSchema.parseAsync({
+          format: "yaml",
+          path: join(__dirname, "../../../fixtures/workspace1/workflows/test-workflow.yml"),
+        }),
         workflowPresetFile: null,
       },
       testCaseDescription: "existing workflow file",
@@ -33,12 +37,17 @@ const testCasesForDetectWorkspaceContextFromCliInput = [
   {
     testInput: {
       data: {
-        workflowFile: await FileSchema.parseAsync(
-          join(__dirname, "../../../fixtures/workspace1/workflows/test-workflow.yml"),
-        ),
-        workflowPresetFile: await FileSchema.parseAsync(
-          join(__dirname, "../../../fixtures/workspace1/workflow-presets/test-workflow-preset.yml"),
-        ),
+        workflowFile: await ConfigResourceFileSchema.parseAsync({
+          format: "yaml",
+          path: join(__dirname, "../../../fixtures/workspace1/workflows/test-workflow.yml"),
+        }),
+        workflowPresetFile: await ConfigResourceFileSchema.parseAsync({
+          format: "yaml",
+          path: join(
+            __dirname,
+            "../../../fixtures/workspace1/workflow-presets/test-workflow-preset.yml",
+          ),
+        }),
       },
       testCaseDescription: "existing workflow file and workflow preset file",
     },
@@ -53,8 +62,8 @@ const testCasesForDetectWorkspaceContextFromCliInput = [
 ] satisfies {
   testInput: {
     data: {
-      workflowFile: File;
-      workflowPresetFile: File | null;
+      workflowFile: ConfigResourceFile;
+      workflowPresetFile: ConfigResourceFile | null;
     };
     testCaseDescription: string;
   };

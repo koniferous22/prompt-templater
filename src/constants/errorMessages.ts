@@ -34,12 +34,10 @@ export const errorMessages = {
     `Encountered "zod" error with no attached issues`,
   dependency_zod_validationError: (ctx: { zodError: ZodError<any> }) =>
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
-  entrypoint_cli_positionalArgumentNotFile: (ctx: {
-    path: AbsolutePath;
-    type: "workflow" | "workflow preset";
-  }) => `Received non-existing path "${ctx.path}" for ${ctx.type} input`,
   entrypoint_cli_unableToDetectContext: (ctx: { workflowFileInput: string }) =>
     `Unable to detect workspace context from workflow file "${ctx.workflowFileInput}"`,
+  entrypoint_cli_invalidWorkflowPath: (ctx: { workflowFileInput: string }) =>
+    `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
   module_detectWorkspaceContext_noContextFound: (ctx: {
     workflowFile: AbsolutePath;
     workflowPresetFile?: AbsolutePath | undefined;
