@@ -2,36 +2,7 @@ import { err, errAsync, Result, ResultAsync } from "neverthrow";
 
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import { errorMessages, type MessageContext } from "../../../constants/errorMessages.js";
-
-export type AppError<C extends AppErrorCode> = {
-  readonly type: "plain";
-  readonly code: C;
-  readonly message: string;
-  readonly cause?: unknown;
-  readonly meta: MessageContext[C];
-};
-
-export type AppErrorInstance<ErrorCodes extends AppErrorCode = AppErrorCode> = {
-  [C in ErrorCodes]: AppError<C>;
-}[ErrorCodes];
-
-export type AppErrors<ErrorCodes extends AppErrorCode = AppErrorCode> = readonly [
-  AppErrorInstance<ErrorCodes>,
-  AppErrorInstance<ErrorCodes>,
-  ...AppErrorInstance<ErrorCodes>[],
-];
-
-export type AppAggregateErr<
-  ErrorCodes extends AppErrorCode = AppErrorCode,
-  ErrorTypes extends AppErrors<ErrorCodes> = AppErrors<ErrorCodes>,
-> = {
-  readonly type: "aggregate";
-  errors: ErrorTypes;
-};
-export interface AppErrOpts {
-  cause?: unknown;
-  message?: string;
-}
+import type { AppErrOpts, AppError, AppErrors, AppAggregateErr } from "./types.js";
 
 export const createError = <const C extends AppErrorCode>(
   code: C,

@@ -7,7 +7,8 @@ import { fileURLToPath } from "node:url";
 import z from "zod";
 
 import type { AppErrorCode } from "../../constants/errorCodes.js";
-import { createError, type AppError } from "../../utils/deps/neverthrow/errorFactory.js";
+import { createError } from "../../utils/deps/neverthrow/errorFactory.js";
+import type { AppError } from "../../utils/deps/neverthrow/types.js";
 import {
   AbsolutePathSchema,
   PathFragmentSchema,

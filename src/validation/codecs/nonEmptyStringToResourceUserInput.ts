@@ -1,9 +1,13 @@
 import z from "zod";
 
+import type { AppErrorCode } from "../../constants/errorCodes.js";
+import type { AppError } from "../../utils/deps/neverthrow/types.js";
 import { zodRegisterIssue } from "../../utils/deps/zod/zodRegisterIssue.js";
-import { AbsolutePathSchema, RelativePathSchema } from "../customTypes/path.js";
+import { AbsolutePathSchema } from "../customTypes/path.js";
 import { NonEmptyStringSchema } from "../customTypes/string.js";
 import { ResourceUserInputSchema } from "../schemas/resources/resourceUserInput.js";
+import { AbsolutePathToResourceAbsolutePath } from "./absolutePathToResourceAbsolutePath.js";
+import { RelativePathToResourceRelativePath } from "./relativePathToResourceRelativePath.js";
 
 export const NonEmptyStringToResourceUserInputSchema = z.codec(
   NonEmptyStringSchema,
@@ -12,20 +16,55 @@ export const NonEmptyStringToResourceUserInputSchema = z.codec(
     decode: (nonEmptyString, ctx) => {
       try {
         const absolutePathParseResult = AbsolutePathSchema.safeParse(nonEmptyString);
-        return absolutePathParseResult.success
-          ? {
-              type: "absolute" as const,
-              path: absolutePathParseResult.data,
+        if (absolutePathParseResult.success) {
+          const resourceAbsolutePathResult = AbsolutePathToResourceAbsolutePath.safeParse(
+            absolutePathParseResult.data,
+          );
+          if (!resourceAbsolutePathResult.success) {
+            for (const issue of resourceAbsolutePathResult.error.issues) {
+              // Map inner custom zod issues
+              if (issue.code === "custom") {
+                zodRegisterIssue(
+                  nonEmptyString,
+                  ctx,
+                  (issue.params as AppError<AppErrorCode>).code,
+                  (issue.params as AppError<AppErrorCode>).meta,
+                );
+              }
             }
-          : {
-              type: "relative" as const,
-              path: RelativePathSchema.parse(nonEmptyString),
-            };
+            return z.NEVER;
+          }
+          return {
+            type: "absolute" as const,
+            filePath: resourceAbsolutePathResult.data,
+          };
+        }
+        const resourceRelativePathResult = RelativePathToResourceRelativePath.safeParse(
+          absolutePathParseResult.data,
+        );
+        if (!resourceRelativePathResult.success) {
+          // Map inner custom zod issues
+          for (const issue of resourceRelativePathResult.error.issues) {
+            if (issue.code === "custom") {
+              zodRegisterIssue(
+                nonEmptyString,
+                ctx,
+                (issue.params as AppError<AppErrorCode>).code,
+                (issue.params as AppError<AppErrorCode>).meta,
+              );
+            }
+          }
+          return z.NEVER;
+        }
+        return {
+          type: "relative" as const,
+          filePath: resourceRelativePathResult.data,
+        };
       } catch (err: any) {
         zodRegisterIssue(
           nonEmptyString,
           ctx,
-          "validation_codec_nonEmptyStringToWorkflowUserInput_invalidInputData",
+          "validation_codec_nonEmptyStringToResourceUserInput_invalidInputData",
           {
             value: nonEmptyString,
           },
@@ -33,6 +72,6 @@ export const NonEmptyStringToResourceUserInputSchema = z.codec(
         return z.NEVER;
       }
     },
-    encode: async (data) => NonEmptyStringSchema.parse(data.path),
+    encode: async (data) => NonEmptyStringSchema.parse(data.filePath.path),
   },
 );

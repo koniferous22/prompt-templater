@@ -15,7 +15,9 @@ export type AppErrorCode =
   | "module_direntFlagsMatcher_patternNotFound"
   | "module_direntFlagsMatcher_unmatchedDirentFlag"
   | "validation_codec_absolutePathToFsStats_invalidInputData"
-  | "validation_codec_nonEmptyStringToWorkflowUserInput_invalidInputData"
+  | "validation_codec_absolutePathToResourceAbsolutePath_invalidExtension"
+  | "validation_codec_nonEmptyStringToResourceUserInput_invalidInputData"
+  | "validation_codec_relativePathToResourceRelativePath_invalidExtension"
   | "validation_customTypes_fileExtension_invalidInput"
   | "validation_customTypes_nonEmptyString_invalidInput"
   | "validation_customTypes_posix_absolutePath_invalidInputFormat"
@@ -31,4 +33,7 @@ export type AppErrorCode =
   | "validation_factories_absolutePathWithExtension_invalidExtension"
   | "validation_factories_relativePathWithExtension_invalidExtension"
   | "validation_schemas_fileSchema_pathIsNotFolder"
-  | "validation_schemas_folderSchema_pathIsNotFolder";
+  | "validation_schemas_folderSchema_pathIsNotFolder"
+  | "validation_schemas_resourceAbsolutePathFromUserInput_invalidInput"
+  | "validation_schemas_resourceAbsolutePathFromUserInput_invalidInputJsonRelativePath"
+  | "validation_schemas_resourceAbsolutePathFromUserInput_invalidInputYamlRelativePath";

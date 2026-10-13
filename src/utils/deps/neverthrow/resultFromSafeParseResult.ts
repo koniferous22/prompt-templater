@@ -4,13 +4,8 @@ import { ZodError, type ZodSafeParseResult } from "zod";
 
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import { errorMessages } from "../../../constants/errorMessages.js";
-import {
-  appAggregateErr,
-  appErr,
-  createError,
-  type AppError,
-  type AppErrors,
-} from "./errorFactory.js";
+import { appAggregateErr, appErr, createError } from "./errorFactory.js";
+import type { AppError, AppErrors } from "./types.js";
 
 export const errFromZodError = <T>(zodError: ZodError<T>) => {
   const errors = zodError.issues.map((issue): AppError<AppErrorCode> => {

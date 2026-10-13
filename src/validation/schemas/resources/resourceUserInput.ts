@@ -1,22 +1,20 @@
 import z from "zod";
 
-import {
-  JsonAbsolutePathSchema,
-  JsonRelativePathSchema,
-  YamlAbsolutePathSchema,
-  YamlRelativePathSchema,
-} from "../path/pathWithExtensions.js";
+import { ResourceAbsolutePathSchema } from "./resourceAbsolutePath.js";
+import { ResourceRelativePathSchema } from "./resourceRelativePath.js";
 
 export const ResourceUserInputSchema = z
   .discriminatedUnion("type", [
     z.object({
       type: z.literal("absolute"),
-      path: z.union([JsonAbsolutePathSchema, YamlAbsolutePathSchema]),
+      filePath: ResourceAbsolutePathSchema,
     }),
     // Resources, such as workflow can be specified by relative path in case "workspace context" is specified
     z.object({
       type: z.literal("relative"),
-      path: z.union([JsonRelativePathSchema, YamlRelativePathSchema]),
+      filePath: ResourceRelativePathSchema,
     }),
   ])
   .brand<"ResourceUserInput">();
+
+export type ResourceUserInput = z.output<typeof ResourceUserInputSchema>;

@@ -1,3 +1,5 @@
+import type z from "zod";
+
 import type { DirentFlagPatterns } from "../../modules/direntFlagsMatcher/direntFlagsMatcher.js";
 import { PathFragmentSchema, type PathFragment } from "../customTypes/path.js";
 import { createFolderWithContentsSchema } from "../factory/folderWithContents.js";
@@ -31,3 +33,5 @@ export const WorkspaceContextSchema = createFolderWithContentsSchema({
     ],
   ]),
 }).brand<"WorkspaceContext">();
+
+export type WorkspaceContext = z.output<typeof WorkspaceContextSchema>;

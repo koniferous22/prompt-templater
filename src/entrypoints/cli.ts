@@ -2,17 +2,19 @@ import { join } from "node:path";
 
 import { message } from "@optique/core/message";
 import { run } from "@optique/run";
-import { ok } from "neverthrow";
+import { Err, Ok, ok } from "neverthrow";
 import { match } from "ts-pattern";
 
 import { cliArgsParser, type CliArgs } from "../modules/optique/cliArgs.js";
 import { envContext } from "../modules/optique/context/env.js";
+import { resourceAbsolutePathFromUserInput } from "../modules/resources/resourceAbsolutePathFromUserInput.js";
 import { detectWorkspaceContextFromCliInput } from "../modules/workspaceContext/detectWorkspaceContext.js";
 import {
   appAggregateErrAsync,
   appErrAsync,
   createError,
 } from "../utils/deps/neverthrow/errorFactory.js";
+import { resultFromOptionalErrorList } from "../utils/deps/neverthrow/optionalErrorList.js";
 import { AbsolutePathSchema, type AbsolutePath } from "../validation/customTypes/path.js";
 import { FileSchema } from "../validation/schemas/fs/file.js";
 
@@ -112,19 +114,31 @@ const validateInputFiles = async (inputFiles: {
 const resolveContext = async ({ positionalArgs, globalOptions }: ResolveContextArgs) => {
   if (globalOptions.context !== undefined) {
     const context = globalOptions.context;
-    const workflowPath = match(positionalArgs.workflow)
-      .with({ type: "absolute" }, ({ path }) => path)
-      .with({ type: "relative" }, ({ path }) => AbsolutePathSchema.parse(join(context, path)))
-      .exhaustive();
-    const workflowPresetPath =
+    const workflowConfigResourcePath = resourceAbsolutePathFromUserInput(
+      positionalArgs.workflow,
+      context,
+    );
+    const workflowPresetConfigResourcePath =
       positionalArgs.workflowPreset &&
-      match(positionalArgs.workflowPreset)
-        .with({ type: "absolute" }, ({ path }) => path)
-        .with({ type: "relative" }, ({ path }) => AbsolutePathSchema.parse(join(context, path)))
-        .exhaustive();
+      resourceAbsolutePathFromUserInput(positionalArgs.workflowPreset, context);
+
+    if (
+      !workflowConfigResourcePath.isOk() ||
+      (workflowPresetConfigResourcePath !== undefined && !workflowPresetConfigResourcePath.isOk())
+    ) {
+      const error = resultFromOptionalErrorList(
+        workflowConfigResourcePath.isErr() ? workflowConfigResourcePath : undefined,
+        workflowPresetConfigResourcePath !== undefined && workflowPresetConfigResourcePath.isErr()
+          ? workflowPresetConfigResourcePath
+          : undefined,
+      );
+      // Note - incomplete type narrowing - Should be error
+      return error as Exclude<typeof error, Ok<null, never>>;
+    }
     const validateInputFilesResult = await validateInputFiles({
-      workflow: workflowPath,
-      workflowPreset: workflowPresetPath,
+      workflow: workflowConfigResourcePath.value.path,
+      workflowPreset:
+        workflowPresetConfigResourcePath && workflowPresetConfigResourcePath.value.path,
     });
     if (!validateInputFilesResult.isOk()) {
       return validateInputFilesResult;
@@ -138,17 +152,17 @@ const resolveContext = async ({ positionalArgs, globalOptions }: ResolveContextA
   }
   if (positionalArgs.workflow.type === "relative") {
     return appErrAsync("entrypoint_cli_unableToDetectContext", {
-      workflowFileInput: positionalArgs.workflow.path,
+      workflowFileInput: positionalArgs.workflow.filePath.path,
     });
   }
   // Workflow absolute path is taken as SSOT in case no context has been found
-  const workflowAbsolutePath = positionalArgs.workflow.path;
+  const workflowAbsolutePath = positionalArgs.workflow.filePath.path;
   const validateInputFilesResult = await validateInputFiles({
     workflow: workflowAbsolutePath,
     workflowPreset:
       positionalArgs.workflowPreset !== undefined &&
       positionalArgs.workflowPreset.type === "absolute"
-        ? positionalArgs.workflowPreset.path
+        ? positionalArgs.workflowPreset.filePath.path
         : undefined,
   });
   if (!validateInputFilesResult.isOk()) {
@@ -181,6 +195,7 @@ export const main = async () => {
   if (!resolveContextResult.isOk()) {
     return resolveContextResult;
   }
+  const resolvedContext = resolveContextResult.value;
   console.log(JSON.stringify(cliInput, null, 2));
   // TODO - perform things within the context
   // 1 - parse the workflow file - part 1-  validate structure

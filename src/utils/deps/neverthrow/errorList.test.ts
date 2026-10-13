@@ -5,8 +5,9 @@ import { err, type Err } from "neverthrow";
 import { match } from "ts-pattern";
 
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
-import { createError, type AppError } from "./errorFactory.js";
+import { createError } from "./errorFactory.js";
 import { errorFromErrorList, resultFromErrorList } from "./errorList.js";
+import type { AppError } from "./types.js";
 
 const errorStandalone1 = createError(
   "module_direntFlagsMatcher_createDirentFlagsMapFailed",
@@ -25,7 +26,7 @@ const testCasesForErrorFromErrorList = [
         type: "plain",
         error: errorStandalone1,
       },
-      testBehaviourDescription: "return 'err' with single app error",
+      testBehaviourDescription: "return single app error",
     },
   },
   {
@@ -41,8 +42,7 @@ const testCasesForErrorFromErrorList = [
         type: "aggregate",
         errors: [errorStandalone1, errorStandalone1],
       },
-      testBehaviourDescription:
-        "return 'err' with aggregated error of multiple app errors of same type",
+      testBehaviourDescription: "return aggregated error of multiple app errors of same type",
     },
   },
   {
@@ -58,8 +58,7 @@ const testCasesForErrorFromErrorList = [
         type: "aggregate",
         errors: [errorStandalone1, errorStandalone2],
       },
-      testBehaviourDescription:
-        "return 'err' with aggregated error of multiple app errors of varying types",
+      testBehaviourDescription: "return aggregated error of multiple app errors of varying types",
     },
   },
 ] satisfies {

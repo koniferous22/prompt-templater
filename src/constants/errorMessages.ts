@@ -3,6 +3,7 @@ import { z, type ZodError } from "zod";
 import type { NonEmptyArray } from "../utils/array/isNonEmptyArray.js";
 import type { AbsolutePath, RelativePath } from "../validation/customTypes/path.js";
 import type { DirentFlagsData } from "../validation/pipes/dirent.js";
+import type { JsonRelativePath } from "../validation/schemas/path/pathWithExtensions.js";
 import type { AppErrorCode } from "./errorCodes.js";
 
 const createRenderItemList =
@@ -71,10 +72,20 @@ export const errorMessages = {
     `Expected non-empty string got "${ctx.value}"`,
   validation_customTypes_fileExtension_invalidInput: (ctx: { value: string }) =>
     `Expected file extension got "${ctx.value}"`,
-  validation_codec_nonEmptyStringToWorkflowUserInput_invalidInputData: (ctx: { value: string }) =>
-    `Expected absolute or relative path, got "${ctx.value}`,
   validation_codec_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
+  validation_codec_absolutePathToResourceAbsolutePath_invalidExtension: (ctx: {
+    resourceInput: AbsolutePath;
+    allowedExtensions: NonEmptyArray<string>;
+  }) =>
+    `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+  validation_codec_nonEmptyStringToResourceUserInput_invalidInputData: (ctx: { value: string }) =>
+    `Expected absolute or relative path, got "${ctx.value}`,
+  validation_codec_relativePathToResourceRelativePath_invalidExtension: (ctx: {
+    resourceInput: RelativePath;
+    allowedExtensions: NonEmptyArray<string>;
+  }) =>
+    `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
   validation_customTypes_posix_absolutePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected POSIX absolute path, got "${ctx.value}"`,
   validation_customTypes_posix_pathFragment_emptyInput: () =>
@@ -109,6 +120,14 @@ export const errorMessages = {
     `Expected file for input "${ctx.value}"`,
   validation_schemas_folderSchema_pathIsNotFolder: (ctx: { value: string }) =>
     `Expected folder for input "${ctx.value}"`,
+  validation_schemas_resourceAbsolutePathFromUserInput_invalidInput: (ctx: { value: string }) =>
+    `Expected config resource path ${ctx.value} for user input`,
+  validation_schemas_resourceAbsolutePathFromUserInput_invalidInputJsonRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .json relative path ${ctx.value} from user input`,
+  validation_schemas_resourceAbsolutePathFromUserInput_invalidInputYamlRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
 } as const satisfies Record<AppErrorCode, (ctx: any) => string>;
 
 export type MessageContext = {

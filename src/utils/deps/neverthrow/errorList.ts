@@ -2,12 +2,8 @@ import { Err, err } from "neverthrow";
 import { match, P } from "ts-pattern";
 
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
-import {
-  type AppAggregateErr,
-  type AppError,
-  type AppErrors,
-  createAggregateError,
-} from "./errorFactory.js";
+import { createAggregateError } from "./errorFactory.js";
+import type { AppErrors, AppError, AppAggregateErr } from "./types.js";
 
 export const errorFromErrorList = <
   ErrorCodes extends AppErrorCode = AppErrorCode,

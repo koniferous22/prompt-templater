@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/bun": "^1.4.3",
     "@types/pug": "^2.0.10",
+    "expect-type": "^1.4.0",
     "husky": "^9.1.7",
     "oxfmt": "^0.72.0",
     "oxlint": "^1.87.0"

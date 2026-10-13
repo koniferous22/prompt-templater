@@ -4,13 +4,10 @@ import { err, ok } from "neverthrow";
 import type z from "zod";
 
 import { isNonEmptyArray } from "../../utils/array/isNonEmptyArray.js";
-import {
-  appErr,
-  createError,
-  type AppErrorInstance,
-} from "../../utils/deps/neverthrow/errorFactory.js";
+import { appErr, createError } from "../../utils/deps/neverthrow/errorFactory.js";
 import { errorFromErrorList } from "../../utils/deps/neverthrow/errorList.js";
 import { errFromZodError } from "../../utils/deps/neverthrow/resultFromSafeParseResult.js";
+import type { AppErrorInstance } from "../../utils/deps/neverthrow/types.js";
 import { getOrInsert } from "../../utils/map/getOrInsert.js";
 import {
   AbsolutePathSchema,
