@@ -16,7 +16,7 @@ import {
   WorkspaceContextSchema,
   type WorkspaceContext,
 } from "../../../validation/schemas/workspaceContext.js";
-import { configResourceAbsolutePathFromInput } from "./resourceAbsolutePathFromResourceInput.js";
+import { configResourceAbsolutePathFromInput } from "./resourceAbsolutePathFromInput.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));

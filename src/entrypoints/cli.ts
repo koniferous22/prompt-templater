@@ -5,7 +5,7 @@ import { match } from "ts-pattern";
 
 import { cliArgsParser, type CliArgs } from "../modules/optique/cliArgs.js";
 import { envContext } from "../modules/optique/context/env.js";
-import { configResourceAbsolutePathFromInput } from "../modules/resources/config/resourceAbsolutePathFromResourceInput.js";
+import { configResourceAbsolutePathFromInput } from "../modules/resources/config/resourceAbsolutePathFromInput.js";
 import { detectWorkspaceContextFromCliInput } from "../modules/workspaceContext/detectWorkspaceContext.js";
 import {
   appAggregateErrAsync,
