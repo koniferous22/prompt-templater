@@ -4,20 +4,19 @@ import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import {
-  ConfigResourceFileSchema,
-  type ConfigResourceFile,
-} from "../../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
+  TemplateResourceFileSchema,
+  type TemplateResourceFile,
+} from "../../../validation/codecs/templateResource/resourceAbsolutePathToResourceFile.js";
 import { AbsolutePathSchema } from "../../../validation/customTypes/path.js";
 import {
-  ConfigResourceInputSchema,
-} from "../../../validation/schemas/resources/config/codecUtils/configResourceInput.js";
+  TemplateResourceInputSchema,
+  type TemplateResourceInput,
+} from "../../../validation/schemas/resources/template/templateResourceInput.js";
 import {
   WorkspaceContextSchema,
   type WorkspaceContext,
 } from "../../../validation/schemas/workspaceContext.js";
 import { templateResourceFileFromInput } from "./resourceFileFromInput.js";
-import { TemplateResourceInputSchema, type TemplateResourceInput } from "../../../validation/schemas/resources/template/templateResourceInput.js";
-import { TemplateResourceFileSchema, type TemplateResourceFile } from "../../../validation/codecs/templateResource/resourceAbsolutePathToResourceFile.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));
@@ -100,4 +99,3 @@ describe("templateResourceFileFromInput", () => {
     });
   }
 });
-
