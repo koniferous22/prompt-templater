@@ -1,7 +1,6 @@
 import { join } from "node:path";
 
 import { err, ok } from "neverthrow";
-import type z from "zod";
 
 import { isNonEmptyArray } from "../../utils/array/isNonEmptyArray.js";
 import { appErr, createError } from "../../utils/deps/neverthrow/errorFactory.js";

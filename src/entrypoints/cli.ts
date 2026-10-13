@@ -1,8 +1,6 @@
-import { join } from "node:path";
-
 import { message } from "@optique/core/message";
 import { run } from "@optique/run";
-import { Err, Ok, ok } from "neverthrow";
+import { Ok, ok } from "neverthrow";
 import { match } from "ts-pattern";
 
 import { cliArgsParser, type CliArgs } from "../modules/optique/cliArgs.js";

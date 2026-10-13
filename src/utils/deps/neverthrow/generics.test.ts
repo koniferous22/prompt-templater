@@ -2,7 +2,7 @@ import { expectTypeOf } from "expect-type";
 
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import type { AppErrorFromOptionalAppErrors } from "./generics.js";
-import type { AppAggregateErr, AppError, AppErrorInstance, OptionalAppErrors } from "./types.js";
+import type { AppAggregateErr, AppError, AppErrorInstance } from "./types.js";
 
 type Test1Input = [
   undefined,

@@ -15,7 +15,7 @@ const contextValueParser = zodAsync<z.output<typeof WorkspaceContextSchema>>(
     placeholder: "",
     metavar: "CONTEXT",
     errors: {
-      zodError: (error, input) => {
+      zodError: (error) => {
         // Note - `optique` only renders the first error, likely because of zod/v3 compatibility
         return message`${z.prettifyError(error)}`;
       },

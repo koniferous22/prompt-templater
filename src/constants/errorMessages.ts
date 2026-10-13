@@ -3,7 +3,6 @@ import { z, type ZodError } from "zod";
 import type { NonEmptyArray } from "../utils/array/isNonEmptyArray.js";
 import type { AbsolutePath, RelativePath } from "../validation/customTypes/path.js";
 import type { DirentFlagsData } from "../validation/pipes/dirent.js";
-import type { JsonRelativePath } from "../validation/schemas/path/pathWithExtensions.js";
 import type { AppErrorCode } from "./errorCodes.js";
 
 const createRenderItemList =
