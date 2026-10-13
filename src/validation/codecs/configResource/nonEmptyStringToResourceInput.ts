@@ -5,7 +5,7 @@ import type { AppError } from "../../../utils/deps/neverthrow/types.js";
 import { zodRegisterIssue } from "../../../utils/deps/zod/zodRegisterIssue.js";
 import { AbsolutePathSchema } from "../../customTypes/path.js";
 import { NonEmptyStringSchema } from "../../customTypes/string.js";
-import { ConfigResourceInputSchema } from "../../schemas/resources/config/utils/configResourceInput.js";
+import { ConfigResourceInputSchema } from "../../schemas/resources/config/codecUtils/configResourceInput.js";
 import { AbsolutePathToConfigResourceAbsolutePath } from "./absolutePathToResourceAbsolutePath.js";
 import { RelativePathToConfigResourceRelativePath } from "./relativePathToResourceRelativePath.js";
 

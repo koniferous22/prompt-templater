@@ -8,7 +8,7 @@ import {
   JsonAbsolutePathSchema,
   YamlAbsolutePathSchema,
 } from "../../schemas/path/pathWithExtensions.js";
-import { ConfigResourceAbsolutePathSchema } from "../../schemas/resources/config/utils/configResourceAbsolutePath.js";
+import { ConfigResourceAbsolutePathSchema } from "../../schemas/resources/config/codecUtils/configResourceAbsolutePath.js";
 import { JsonFileSchema } from "../absolutePathToFile/json.js";
 import { YamlFileSchema } from "../absolutePathToFile/yaml.js";
 
