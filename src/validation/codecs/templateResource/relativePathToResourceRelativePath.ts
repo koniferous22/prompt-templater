@@ -7,7 +7,7 @@ import z from "zod";
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
 import { zodIssueFromAppError } from "../../../utils/deps/zod/zodIssueFromAppError.js";
 import { RelativePathSchema } from "../../customTypes/path.js";
-import { TemplateResourceRelativePathSchema } from "../../schemas/resources/templateResourceRelativePath.js";
+import { TemplateResourceRelativePathSchema } from "../../schemas/resources/template/templateResourceRelativePath.js";
 
 export const RelativePathToTemplateResourceRelativePath = z.codec(
   RelativePathSchema,

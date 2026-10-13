@@ -5,7 +5,7 @@ import z from "zod";
 import { appErr, appErrAsync } from "../../../utils/deps/neverthrow/errorFactory.js";
 import { zodIssueFromAppError } from "../../../utils/deps/zod/zodIssueFromAppError.js";
 import { PugAbsolutePathSchema } from "../../schemas/path/pathWithExtensions.js";
-import { TemplateResourceAbsolutePathSchema } from "../../schemas/resources/templateResourceAbsolutePath.js";
+import { TemplateResourceAbsolutePathSchema } from "../../schemas/resources/template/templateResourceAbsolutePath.js";
 import { PugFileSchema } from "../absolutePathToFile/pug.js";
 
 export const TemplateResourceFileSchema = z

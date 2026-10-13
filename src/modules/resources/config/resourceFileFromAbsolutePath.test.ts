@@ -11,7 +11,7 @@ import { AbsolutePathSchema } from "../../../validation/customTypes/path.js";
 import {
   ConfigResourceAbsolutePathSchema,
   type ConfigResourceAbsolutePath,
-} from "../../../validation/schemas/resources/configResourceAbsolutePath.js";
+} from "../../../validation/schemas/resources/config/utils/configResourceAbsolutePath.js";
 import { WorkspaceContextSchema } from "../../../validation/schemas/workspaceContext.js";
 import { configResourceFileFromAbsolutePath } from "./resourceFileFromAbsolutePath.js";
 

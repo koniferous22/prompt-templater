@@ -9,7 +9,7 @@ import {
   JsonAbsolutePathSchema,
   YamlAbsolutePathSchema,
 } from "../../../validation/schemas/path/pathWithExtensions.js";
-import type { ConfigResourceInput } from "../../../validation/schemas/resources/configResourceInput.js";
+import type { ConfigResourceInput } from "../../../validation/schemas/resources/config/utils/configResourceInput.js";
 import type { WorkspaceContext } from "../../../validation/schemas/workspaceContext.js";
 
 export const configResourceFileFromInput = async (

@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { JsonAbsolutePathSchema, YamlAbsolutePathSchema } from "../path/pathWithExtensions.js";
+import { JsonAbsolutePathSchema, YamlAbsolutePathSchema } from "../../../path/pathWithExtensions.js";
 
 export const ConfigResourceAbsolutePathSchema = z.discriminatedUnion("format", [
   z.object({

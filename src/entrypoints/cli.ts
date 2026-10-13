@@ -10,7 +10,7 @@ import { configResourceFileFromInput } from "../modules/resources/config/resourc
 import { detectWorkspaceContextFromCliInput } from "../modules/workspaceContext/detectWorkspaceContext.js";
 import { appErrAsync } from "../utils/deps/neverthrow/errorFactory.js";
 import { resultFromOptionalErrorList } from "../utils/deps/neverthrow/optionalErrorList.js";
-import type { ConfigResourceInput } from "../validation/schemas/resources/configResourceInput.js";
+import type { ConfigResourceInput } from "../validation/schemas/resources/config/utils/configResourceInput.js";
 import type { WorkspaceContext } from "../validation/schemas/workspaceContext.js";
 
 type ResolveContextArgs = {

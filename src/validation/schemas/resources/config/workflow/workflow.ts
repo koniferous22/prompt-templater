@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { TemplateResourceInputSchema } from "../templateResourceInput.js";
+import { TemplateResourceInputSchema } from "../../template/templateResourceInput.js";
 
 export const WorkflowSchema = z
   .object({

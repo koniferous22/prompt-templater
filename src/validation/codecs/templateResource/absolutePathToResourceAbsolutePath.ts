@@ -7,7 +7,7 @@ import z from "zod";
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
 import { zodIssueFromAppError } from "../../../utils/deps/zod/zodIssueFromAppError.js";
 import { AbsolutePathSchema } from "../../customTypes/path.js";
-import { TemplateResourceAbsolutePathSchema } from "../../schemas/resources/templateResourceAbsolutePath.js";
+import { TemplateResourceAbsolutePathSchema } from "../../schemas/resources/template/templateResourceAbsolutePath.js";
 
 export const AbsolutePathToConfigResourceAbsolutePath = z.codec(
   AbsolutePathSchema,

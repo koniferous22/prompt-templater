@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { JsonRelativePathSchema, YamlRelativePathSchema } from "../path/pathWithExtensions.js";
+import { JsonRelativePathSchema, YamlRelativePathSchema } from "../../../path/pathWithExtensions.js";
 
 export const ConfigResourceRelativePathSchema = z.discriminatedUnion("format", [
   z.object({

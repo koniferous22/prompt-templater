@@ -2,7 +2,7 @@ import { ok } from "neverthrow";
 
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
 import { ConfigResourceFileSchema } from "../../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
-import type { ConfigResourceAbsolutePath } from "../../../validation/schemas/resources/configResourceAbsolutePath.js";
+import type { ConfigResourceAbsolutePath } from "../../../validation/schemas/resources/config/utils/configResourceAbsolutePath.js";
 
 export const configResourceFileFromAbsolutePath = async (
   resourceAbsolutePath: ConfigResourceAbsolutePath,

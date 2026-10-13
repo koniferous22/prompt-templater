@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { PugRelativePathSchema } from "../path/pathWithExtensions.js";
+import { PugRelativePathSchema } from "../../path/pathWithExtensions.js";
 
 export const TemplateResourceRelativePathSchema = z.discriminatedUnion("format", [
   z.object({

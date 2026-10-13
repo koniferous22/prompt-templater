@@ -4,7 +4,7 @@ import { zod } from "@optique/zod";
 import z from "zod";
 
 import { NonEmptyStringToConfigResourceInputSchema } from "../../../validation/codecs/configResource/nonEmptyStringToResourceInput.js";
-import { ConfigResourceInputSchema } from "../../../validation/schemas/resources/configResourceInput.js";
+import { ConfigResourceInputSchema } from "../../../validation/schemas/resources/config/utils/configResourceInput.js";
 
 export type WorkspaceContextPath = z.output<typeof NonEmptyStringToConfigResourceInputSchema>;
 
