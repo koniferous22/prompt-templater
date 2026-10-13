@@ -83,6 +83,11 @@ export const errorMessages = {
     file: string;
     zodError: ZodError<any>;
   }) => `File "${ctx.file}" contains invalid data\n${z.prettifyError(ctx.zodError)}`,
+  module_resources_templateResourceFileFromInput_invalidInput: (ctx: { value: string }) =>
+    `Expected config resource path ${ctx.value} for user input`,
+  module_resources_templateResourceFileFromInput_invalidInputPugRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .pug relative path ${ctx.value} from user input`,
   module_resources_configResourceFromResourceFile_invalidYamlContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid YAML contents`,
   validation_customTypes_nonEmptyString_invalidInput: (ctx: { value: string }) =>

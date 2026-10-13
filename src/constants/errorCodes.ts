@@ -22,6 +22,8 @@ export type AppErrorCode =
   | "module_resources_configResourceFromResourceFile_invalidJsonContents"
   | "module_resources_configResourceFromResourceFile_invalidYamlContents"
   | "module_resources_configResourceFromResourceFile_invalidStructure"
+  | "module_resources_templateResourceFileFromInput_invalidInputPugRelativePath"
+  | "module_resources_templateResourceFileFromInput_invalidInput"
   | "validation_codec_absolutePathToFsStats_invalidInputData"
   | "validation_codec_configResources_absolutePathToResourceAbsolutePath_invalidExtension"
   | "validation_codec_configResources_nonEmptyStringToResourceInput_invalidInputData"
