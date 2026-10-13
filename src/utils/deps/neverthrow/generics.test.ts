@@ -32,4 +32,6 @@ expectTypeOf<Test2Result>().toEqualTypeOf<
 expectTypeOf<Test3Result>().toEqualTypeOf<null>();
 
 type GenericTestResult = AppErrorFromOptionalAppErrors;
-expectTypeOf<GenericTestResult>().toEqualTypeOf<AppErrorInstance<AppErrorCode> | AppAggregateErr<AppErrorCode> | null>();
+expectTypeOf<GenericTestResult>().toEqualTypeOf<
+  AppErrorInstance<AppErrorCode> | AppAggregateErr<AppErrorCode> | null
+>();
