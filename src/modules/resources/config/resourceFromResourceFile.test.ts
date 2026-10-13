@@ -13,7 +13,7 @@ import {
 } from "../../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
 import { AbsolutePathSchema } from "../../../validation/customTypes/path.js";
 import { WorkspaceContextSchema } from "../../../validation/schemas/workspaceContext.js";
-import { configResourceFromConfigResourceFile } from "./resourceFromResourceFile.js";
+import { configResourceFromResourceFile } from "./resourceFromResourceFile.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));
@@ -69,7 +69,7 @@ const testCasesForConfigResourceFromResourceFile = [
           zodError: new ZodError([]),
         }),
       },
-      testBehaviourDescription: "succeed",
+      testBehaviourDescription: "fail with invalid structure error",
     },
   },
   {
@@ -88,7 +88,7 @@ const testCasesForConfigResourceFromResourceFile = [
           zodError: new ZodError([]),
         }),
       },
-      testBehaviourDescription: "succeed",
+      testBehaviourDescription: "fail with invalid structure error",
     },
   },
 ] satisfies {
@@ -112,7 +112,7 @@ const testCasesForConfigResourceFromResourceFile = [
 describe("configResourceFromResourceFile - Workflow", () => {
   for (const { testInput, testOutcome } of testCasesForConfigResourceFromResourceFile) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
-      const resourceResult = await configResourceFromConfigResourceFile("workflow", testInput.data);
+      const resourceResult = await configResourceFromResourceFile("workflow", testInput.data);
       assert.strictEqual(resourceResult.isOk(), testOutcome.data.result);
       if (testOutcome.data.result === false) {
         // Compare only error code

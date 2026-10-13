@@ -14,7 +14,7 @@ import {
   type ConfigResourceType,
 } from "./resourceTypes.js";
 
-export const configResourceFromConfigResourceFile = async <
+export const configResourceFromResourceFile = async <
   ConfigResourceT extends ConfigResourceType,
   ConfigResourceSchema extends ConfigResourceSchemaByResourceType<ConfigResourceT> =
     ConfigResourceSchemaByResourceType<ConfigResourceT>,
