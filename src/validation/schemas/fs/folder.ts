@@ -1,5 +1,5 @@
 import { zodRegisterIssue } from "../../../utils/deps/zod/zodRegisterIssue.js";
-import { AbsolutePathToFsStatsSchema } from "../../codecs/absolutePathToFsStats.js";
+import { AbsolutePathToFsStatsSchema } from "../../codecs/absolutePathToFsStats/absolutePathToFsStats.js";
 
 export const FolderSchema = AbsolutePathToFsStatsSchema.check((ctx) => {
   if (!ctx.value.fsStats.isDirectory()) {

@@ -3,7 +3,7 @@ import type { Parser } from "@optique/core/parser";
 import { zod } from "@optique/zod";
 import z from "zod";
 
-import { NonEmptyStringToConfigResourceInputSchema } from "../../../validation/codecs/nonEmptyStringToConfigResourceInput.js";
+import { NonEmptyStringToConfigResourceInputSchema } from "../../../validation/codecs/configResource/nonEmptyStringToResourceInput.js";
 import { ConfigResourceInputSchema } from "../../../validation/schemas/resources/configResourceInput.js";
 
 export type WorkspaceContextPath = z.output<typeof NonEmptyStringToConfigResourceInputSchema>;

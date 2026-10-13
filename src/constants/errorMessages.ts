@@ -73,18 +73,31 @@ export const errorMessages = {
     `Expected file extension got "${ctx.value}"`,
   validation_codec_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
-  validation_codec_absolutePathToConfigResourceAbsolutePath_invalidExtension: (ctx: {
+  validation_codec_configResources_absolutePathToResourceAbsolutePath_invalidExtension: (ctx: {
     resourceInput: AbsolutePath;
     allowedExtensions: NonEmptyArray<string>;
   }) =>
     `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
-  validation_codec_nonEmptyStringToResourceUserInput_invalidInputData: (ctx: { value: string }) =>
-    `Expected absolute or relative path, got "${ctx.value}`,
-  validation_codec_relativePathToConfigResourceRelativePath_invalidExtension: (ctx: {
+  validation_codec_configResources_nonEmptyStringToResourceInput_invalidInputData: (ctx: {
+    value: string;
+  }) => `Expected absolute or relative path, got "${ctx.value}`,
+  validation_codec_configResources_relativePathToResourceRelativePath_invalidExtension: (ctx: {
     resourceInput: RelativePath;
     allowedExtensions: NonEmptyArray<string>;
   }) =>
     `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+  validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidJsonFile: (ctx: {
+    value: string;
+  }) => `Path "${ctx.value}" doesn't point to valid JSON file`,
+  validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidJsonPath: (ctx: {
+    value: string;
+  }) => `Error retrieving absolute path from "${ctx.value}"`,
+  validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidYamlFile: (ctx: {
+    value: string;
+  }) => `Path "${ctx.value}" doesn't point to valid YAML file`,
+  validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidYamlPath: (ctx: {
+    value: string;
+  }) => `Error retrieving absolute path from "${ctx.value}"`,
   validation_customTypes_posix_absolutePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected POSIX absolute path, got "${ctx.value}"`,
   validation_customTypes_posix_pathFragment_emptyInput: () =>

@@ -13,7 +13,7 @@ import { isNonEmptyArray } from "../../utils/array/isNonEmptyArray.js";
 import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
 import { resultFromErrorList } from "../../utils/deps/neverthrow/errorList.js";
 import { zodIssueFromAppError } from "../../utils/deps/zod/zodIssueFromAppError.js";
-import { AbsolutePathToFsStatsSchema } from "../codecs/absolutePathToFsStats.js";
+import { AbsolutePathToFsStatsSchema } from "../codecs/absolutePathToFsStats/absolutePathToFsStats.js";
 import type { AbsolutePath, PathFragment, RelativePath } from "../customTypes/path.js";
 import { DirentSchema } from "../pipes/dirent.js";
 import { FolderSchema } from "../schemas/fs/folder.js";

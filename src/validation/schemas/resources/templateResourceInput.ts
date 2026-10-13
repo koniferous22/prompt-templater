@@ -1,7 +1,7 @@
 import z from "zod";
 
 import { TemplateResourceAbsolutePathSchema } from "./templateResourceAbsolutePath.js";
-import { TemplateResourceRelativePathSchema } from "./templateResourceRelateivePath.js";
+import { TemplateResourceRelativePathSchema } from "./templateResourceRelativePath.js";
 
 export const TemplateResourceInputSchema = z
   .discriminatedUnion("type", [

@@ -4,10 +4,10 @@ import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 import z from "zod";
 
-import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
-import { zodIssueFromAppError } from "../../utils/deps/zod/zodIssueFromAppError.js";
-import { RelativePathSchema } from "../customTypes/path.js";
-import { ConfigResourceRelativePathSchema } from "../schemas/resources/configResourceRelativePath.js";
+import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
+import { zodIssueFromAppError } from "../../../utils/deps/zod/zodIssueFromAppError.js";
+import { RelativePathSchema } from "../../customTypes/path.js";
+import { ConfigResourceRelativePathSchema } from "../../schemas/resources/configResourceRelativePath.js";
 
 export const RelativePathToConfigResourceRelativePath = z.codec(
   RelativePathSchema,
@@ -31,7 +31,7 @@ export const RelativePathToConfigResourceRelativePath = z.codec(
         )
         .otherwise(() => {
           return appErr(
-            "validation_codec_relativePathToConfigResourceRelativePath_invalidExtension",
+            "validation_codec_configResources_relativePathToResourceRelativePath_invalidExtension",
             {
               resourceInput: value,
               allowedExtensions: ["json", "yaml", "yml"],

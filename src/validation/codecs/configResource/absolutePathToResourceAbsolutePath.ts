@@ -4,10 +4,10 @@ import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 import z from "zod";
 
-import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
-import { zodIssueFromAppError } from "../../utils/deps/zod/zodIssueFromAppError.js";
-import { AbsolutePathSchema } from "../customTypes/path.js";
-import { ConfigResourceAbsolutePathSchema } from "../schemas/resources/configResourceAbsolutePath.js";
+import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
+import { zodIssueFromAppError } from "../../../utils/deps/zod/zodIssueFromAppError.js";
+import { AbsolutePathSchema } from "../../customTypes/path.js";
+import { ConfigResourceAbsolutePathSchema } from "../../schemas/resources/configResourceAbsolutePath.js";
 
 export const AbsolutePathToConfigResourceAbsolutePath = z.codec(
   AbsolutePathSchema,
@@ -31,7 +31,7 @@ export const AbsolutePathToConfigResourceAbsolutePath = z.codec(
         )
         .otherwise(() => {
           return appErr(
-            "validation_codec_absolutePathToConfigResourceAbsolutePath_invalidExtension",
+            "validation_codec_configResources_absolutePathToResourceAbsolutePath_invalidExtension",
             {
               resourceInput: value,
               allowedExtensions: ["json", "yaml", "yml"],

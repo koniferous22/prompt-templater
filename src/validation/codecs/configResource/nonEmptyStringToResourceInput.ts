@@ -1,13 +1,13 @@
 import z from "zod";
 
-import type { AppErrorCode } from "../../constants/errorCodes.js";
-import type { AppError } from "../../utils/deps/neverthrow/types.js";
-import { zodRegisterIssue } from "../../utils/deps/zod/zodRegisterIssue.js";
-import { AbsolutePathSchema } from "../customTypes/path.js";
-import { NonEmptyStringSchema } from "../customTypes/string.js";
-import { ConfigResourceInputSchema } from "../schemas/resources/configResourceInput.js";
-import { AbsolutePathToConfigResourceAbsolutePath } from "./absolutePathToConfigResourceAbsolutePath.js";
-import { RelativePathToConfigResourceRelativePath } from "./relativePathToConfigResourceRelativePath.js";
+import type { AppErrorCode } from "../../../constants/errorCodes.js";
+import type { AppError } from "../../../utils/deps/neverthrow/types.js";
+import { zodRegisterIssue } from "../../../utils/deps/zod/zodRegisterIssue.js";
+import { AbsolutePathSchema } from "../../customTypes/path.js";
+import { NonEmptyStringSchema } from "../../customTypes/string.js";
+import { ConfigResourceInputSchema } from "../../schemas/resources/configResourceInput.js";
+import { AbsolutePathToConfigResourceAbsolutePath } from "./absolutePathToResourceAbsolutePath.js";
+import { RelativePathToConfigResourceRelativePath } from "./relativePathToResourceRelativePath.js";
 
 export const NonEmptyStringToConfigResourceInputSchema = z.codec(
   NonEmptyStringSchema,
@@ -64,7 +64,7 @@ export const NonEmptyStringToConfigResourceInputSchema = z.codec(
         zodRegisterIssue(
           nonEmptyString,
           ctx,
-          "validation_codec_nonEmptyStringToResourceUserInput_invalidInputData",
+          "validation_codec_configResources_nonEmptyStringToResourceInput_invalidInputData",
           {
             value: nonEmptyString,
           },
