@@ -82,9 +82,7 @@ const pathDetectionCheckStaticEntries = async (
           )
           .exhaustive(),
       )
-      .with({ status: "rejected" }, () =>
-        appErr("dependency_zod_awaitingAsyncDecode", {}),
-      )
+      .with({ status: "rejected" }, () => appErr("dependency_zod_awaitingAsyncDecode", {}))
       .exhaustive();
     return statsResult.isErr()
       ? err(statsResult.error)
