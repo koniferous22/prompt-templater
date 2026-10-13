@@ -9,14 +9,14 @@ import {
   type ConfigResourceAbsolutePath,
 } from "../../validation/schemas/resources/configResourceAbsolutePath.js";
 import {
-  ConfigResourceUserInputSchema,
-  type ConfigResourceUserInput,
-} from "../../validation/schemas/resources/configResourceUserInput.js";
+  ConfigResourceInputSchema,
+  type ConfigResourceInput,
+} from "../../validation/schemas/resources/configResourceInput.js";
 import {
   WorkspaceContextSchema,
   type WorkspaceContext,
 } from "../../validation/schemas/workspaceContext.js";
-import { resourceAbsolutePathFromUserInput } from "./resourceAbsolutePathFromUserInput.js";
+import { configResourceAbsolutePathFromInput } from "./resourceAbsolutePathFromUserInput.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../"));
@@ -29,7 +29,7 @@ const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        userInput: ConfigResourceUserInputSchema.parse({
+        userInput: ConfigResourceInputSchema.parse({
           type: "absolute",
           filePath: {
             format: "json",
@@ -51,7 +51,7 @@ const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        userInput: ConfigResourceUserInputSchema.parse({
+        userInput: ConfigResourceInputSchema.parse({
           type: "absolute",
           filePath: {
             format: "yaml",
@@ -73,7 +73,7 @@ const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        userInput: ConfigResourceUserInputSchema.parse({
+        userInput: ConfigResourceInputSchema.parse({
           type: "relative",
           filePath: {
             format: "json",
@@ -95,7 +95,7 @@ const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        userInput: ConfigResourceUserInputSchema.parse({
+        userInput: ConfigResourceInputSchema.parse({
           type: "relative",
           filePath: {
             format: "yaml",
@@ -117,7 +117,7 @@ const testCasesForDirentFlagsMatcher = [
 ] satisfies {
   testInput: {
     data: {
-      userInput: ConfigResourceUserInput;
+      userInput: ConfigResourceInput;
       workspaceContext: WorkspaceContext;
     };
     testCaseDescription: string;
@@ -131,7 +131,7 @@ const testCasesForDirentFlagsMatcher = [
 describe("resourceAbsolutePathFromUserInput", () => {
   for (const { testInput, testOutcome } of testCasesForDirentFlagsMatcher) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
-      const resourceAbsolutePathResult = resourceAbsolutePathFromUserInput(
+      const resourceAbsolutePathResult = configResourceAbsolutePathFromInput(
         testInput.data.userInput,
         testInput.data.workspaceContext,
       );

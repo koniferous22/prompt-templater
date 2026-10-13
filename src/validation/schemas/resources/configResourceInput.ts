@@ -3,7 +3,7 @@ import z from "zod";
 import { ConfigResourceAbsolutePathSchema } from "./configResourceAbsolutePath.js";
 import { ConfigResourceRelativePathSchema } from "./configResourceRelativePath.js";
 
-export const ConfigResourceUserInputSchema = z
+export const ConfigResourceInputSchema = z
   .discriminatedUnion("type", [
     z.object({
       type: z.literal("absolute"),
@@ -15,6 +15,6 @@ export const ConfigResourceUserInputSchema = z
       filePath: ConfigResourceRelativePathSchema,
     }),
   ])
-  .brand<"ConfigResourceUserInput">();
+  .brand<"ConfigResourceInput">();
 
-export type ConfigResourceUserInput = z.output<typeof ConfigResourceUserInputSchema>;
+export type ConfigResourceInput = z.output<typeof ConfigResourceInputSchema>;

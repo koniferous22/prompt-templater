@@ -5,7 +5,7 @@ import { match } from "ts-pattern";
 
 import { cliArgsParser, type CliArgs } from "../modules/optique/cliArgs.js";
 import { envContext } from "../modules/optique/context/env.js";
-import { resourceAbsolutePathFromUserInput } from "../modules/resources/resourceAbsolutePathFromUserInput.js";
+import { configResourceAbsolutePathFromInput } from "../modules/resources/resourceAbsolutePathFromUserInput.js";
 import { detectWorkspaceContextFromCliInput } from "../modules/workspaceContext/detectWorkspaceContext.js";
 import {
   appAggregateErrAsync,
@@ -112,13 +112,13 @@ const validateInputFiles = async (inputFiles: {
 const resolveContext = async ({ positionalArgs, globalOptions }: ResolveContextArgs) => {
   if (globalOptions.context !== undefined) {
     const context = globalOptions.context;
-    const workflowConfigResourcePath = resourceAbsolutePathFromUserInput(
+    const workflowConfigResourcePath = configResourceAbsolutePathFromInput(
       positionalArgs.workflow,
       context,
     );
     const workflowPresetConfigResourcePath =
       positionalArgs.workflowPreset &&
-      resourceAbsolutePathFromUserInput(positionalArgs.workflowPreset, context);
+      configResourceAbsolutePathFromInput(positionalArgs.workflowPreset, context);
 
     if (
       !workflowConfigResourcePath.isOk() ||

@@ -9,11 +9,11 @@ import {
   YamlAbsolutePathSchema,
 } from "../../validation/schemas/path/pathWithExtensions.js";
 import { ConfigResourceAbsolutePathSchema } from "../../validation/schemas/resources/configResourceAbsolutePath.js";
-import type { ConfigResourceUserInput } from "../../validation/schemas/resources/configResourceUserInput.js";
+import type { ConfigResourceInput } from "../../validation/schemas/resources/configResourceInput.js";
 import type { WorkspaceContext } from "../../validation/schemas/workspaceContext.js";
 
-export const resourceAbsolutePathFromUserInput = (
-  resourceInput: ConfigResourceUserInput,
+export const configResourceAbsolutePathFromInput = (
+  resourceInput: ConfigResourceInput,
   workspaceContext: WorkspaceContext,
 ) => {
   const resourceAbsolutePathInputResult = match(resourceInput)
