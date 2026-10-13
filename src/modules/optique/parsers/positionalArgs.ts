@@ -14,7 +14,10 @@ export const positionalArgsParser = map(
       zod<WorkspaceContextPath>(NonEmptyStringToConfigResourceInputSchema, {
         placeholder: ConfigResourceInputSchema.parse({
           type: "relative",
-          path: "file.yaml",
+          filePath: {
+            format: 'yaml',
+            path: "file.yaml",
+          },
         }),
         metavar: "WORKFLOW",
         errors: {
@@ -30,7 +33,10 @@ export const positionalArgsParser = map(
         zod<WorkspaceContextPath>(NonEmptyStringToConfigResourceInputSchema, {
           placeholder: ConfigResourceInputSchema.parse({
             type: "relative",
-            path: "file.yaml",
+            filePath: {
+              format: 'yaml',
+              path: "file.yaml",
+            },
           }),
           metavar: "WORKFLOW_PRESET",
           errors: {
