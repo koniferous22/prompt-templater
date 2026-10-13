@@ -24,6 +24,8 @@ export type AppErrorCode =
   | "validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidYamlPath"
   | "validation_codec_templateResources_absolutePathToResourceAbsolutePath_invalidExtension"
   | "validation_codec_templateResources_relativePathToResourceRelativePath_invalidExtension"
+  | "validation_codec_templateResources_resourceAbsolutePathToResourceFile_invalidPugFile"
+  | "validation_codec_templateResources_resourceAbsolutePathToResourceFile_invalidPugPath"
   | "validation_customTypes_fileExtension_invalidInput"
   | "validation_customTypes_nonEmptyString_invalidInput"
   | "validation_customTypes_posix_absolutePath_invalidInputFormat"

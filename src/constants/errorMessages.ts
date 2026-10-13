@@ -108,6 +108,12 @@ export const errorMessages = {
     allowedExtensions: NonEmptyArray<string>;
   }) =>
     `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+  validation_codec_templateResources_resourceAbsolutePathToResourceFile_invalidPugFile: (ctx: {
+    value: string;
+  }) => `Path "${ctx.value}" doesn't point to valid .pug file`,
+  validation_codec_templateResources_resourceAbsolutePathToResourceFile_invalidPugPath: (ctx: {
+    value: string;
+  }) => `Error retrieving absolute path from "${ctx.value}"`,
   validation_customTypes_posix_absolutePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected POSIX absolute path, got "${ctx.value}"`,
   validation_customTypes_posix_pathFragment_emptyInput: () =>
