@@ -3,17 +3,11 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import type z from "zod";
-
 import {
   ConfigResourceFileSchema,
   type ConfigResourceFile,
 } from "../../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
 import { AbsolutePathSchema } from "../../../validation/customTypes/path.js";
-import {
-  ConfigResourceAbsolutePathSchema,
-  type ConfigResourceAbsolutePath,
-} from "../../../validation/schemas/resources/configResourceAbsolutePath.js";
 import {
   ConfigResourceInputSchema,
   type ConfigResourceInput,

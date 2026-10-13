@@ -14,6 +14,10 @@ export type AppErrorCode =
   | "module_direntFlagsMatcher_extraItemsFromWrongFolderFound"
   | "module_direntFlagsMatcher_patternNotFound"
   | "module_direntFlagsMatcher_unmatchedDirentFlag"
+  | "module_resources_configResourceFileFromInput_invalidInputJsonRelativePath"
+  | "module_resources_configResourceFileFromInput_invalidInputYamlRelativePath"
+  | "module_resources_configResourceFileFromInput_invalidInput"
+  | "module_resources_configResourceFileFromAbsolutePath_invalidInput"
   | "validation_codec_absolutePathToFsStats_invalidInputData"
   | "validation_codec_configResources_absolutePathToResourceAbsolutePath_invalidExtension"
   | "validation_codec_configResources_nonEmptyStringToResourceInput_invalidInputData"
@@ -41,7 +45,4 @@ export type AppErrorCode =
   | "validation_factories_absolutePathWithExtension_invalidExtension"
   | "validation_factories_relativePathWithExtension_invalidExtension"
   | "validation_schemas_fileSchema_pathIsNotFolder"
-  | "validation_schemas_folderSchema_pathIsNotFolder"
-  | "validation_schemas_resourceAbsolutePathFromUserInput_invalidInput"
-  | "validation_schemas_resourceAbsolutePathFromUserInput_invalidInputJsonRelativePath"
-  | "validation_schemas_resourceAbsolutePathFromUserInput_invalidInputYamlRelativePath";
+  | "validation_schemas_folderSchema_pathIsNotFolder";

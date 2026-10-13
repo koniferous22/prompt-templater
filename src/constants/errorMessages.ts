@@ -67,6 +67,16 @@ export const errorMessages = {
     path: AbsolutePath;
   }) =>
     `Encountered incorrect dirent flag "${ctx.direntFlag}" for "${ctx.path}"; expected - "${ctx.expected}", actual - "${ctx.actual}"`,
+  module_resources_configResourceFileFromAbsolutePath_invalidInput: (ctx: { value: string }) =>
+    `Expected config resource path ${ctx.value} for user input`,
+  module_resources_configResourceFileFromInput_invalidInput: (ctx: { value: string }) =>
+    `Expected config resource path ${ctx.value} for user input`,
+  module_resources_configResourceFileFromInput_invalidInputJsonRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .json relative path ${ctx.value} from user input`,
+  module_resources_configResourceFileFromInput_invalidInputYamlRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
   validation_customTypes_nonEmptyString_invalidInput: (ctx: { value: string }) =>
     `Expected non-empty string got "${ctx.value}"`,
   validation_customTypes_fileExtension_invalidInput: (ctx: { value: string }) =>
@@ -148,14 +158,6 @@ export const errorMessages = {
     `Expected file for input "${ctx.value}"`,
   validation_schemas_folderSchema_pathIsNotFolder: (ctx: { value: string }) =>
     `Expected folder for input "${ctx.value}"`,
-  validation_schemas_resourceAbsolutePathFromUserInput_invalidInput: (ctx: { value: string }) =>
-    `Expected config resource path ${ctx.value} for user input`,
-  validation_schemas_resourceAbsolutePathFromUserInput_invalidInputJsonRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .json relative path ${ctx.value} from user input`,
-  validation_schemas_resourceAbsolutePathFromUserInput_invalidInputYamlRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
 } as const satisfies Record<AppErrorCode, (ctx: any) => string>;
 
 export type MessageContext = {

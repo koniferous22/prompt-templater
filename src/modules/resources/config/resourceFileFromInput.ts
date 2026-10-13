@@ -29,12 +29,9 @@ export const configResourceFileFromInput = async (
                 format: fp.format,
                 path: jsonAbsolutePathResult.data,
               })
-            : appErr(
-                "validation_schemas_resourceAbsolutePathFromUserInput_invalidInputJsonRelativePath",
-                {
-                  value: filePath.path,
-                },
-              );
+            : appErr("module_resources_configResourceFileFromInput_invalidInputJsonRelativePath", {
+                value: filePath.path,
+              });
         })
         .with({ format: "yaml" }, (fp) => {
           const yamlAbsolutePathResult = YamlAbsolutePathSchema.safeParse(
@@ -45,12 +42,9 @@ export const configResourceFileFromInput = async (
                 format: fp.format,
                 path: yamlAbsolutePathResult.data,
               })
-            : appErr(
-                "validation_schemas_resourceAbsolutePathFromUserInput_invalidInputYamlRelativePath",
-                {
-                  value: filePath.path,
-                },
-              );
+            : appErr("module_resources_configResourceFileFromInput_invalidInputYamlRelativePath", {
+                value: filePath.path,
+              });
         })
         .exhaustive(),
     )
@@ -63,7 +57,7 @@ export const configResourceFileFromInput = async (
   );
   return resourceAbsolutePathResult.success
     ? ok(resourceAbsolutePathResult.data)
-    : appErr("validation_schemas_resourceAbsolutePathFromUserInput_invalidInput", {
+    : appErr("module_resources_configResourceFileFromInput_invalidInput", {
         value: resourceAbsolutePathInputResult.value.path,
       });
 };
