@@ -3,6 +3,12 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import type z from "zod";
+
+import {
+  ConfigResourceFileSchema,
+  type ConfigResourceFile,
+} from "../../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
 import { AbsolutePathSchema } from "../../../validation/customTypes/path.js";
 import {
   ConfigResourceAbsolutePathSchema,
@@ -16,7 +22,7 @@ import {
   WorkspaceContextSchema,
   type WorkspaceContext,
 } from "../../../validation/schemas/workspaceContext.js";
-import { configResourceAbsolutePathFromInput } from "./resourceAbsolutePathFromInput.js";
+import { configResourceFileFromInput } from "./resourceFileFromInput.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));
@@ -25,7 +31,7 @@ const workspaceContext = await WorkspaceContextSchema.parseAsync(
   join(projectFixturesFolder, "workspace1"),
 );
 
-const testCasesForDirentFlagsMatcher = [
+const testCasesForConfigResourceFileFromInput = [
   {
     testInput: {
       data: {
@@ -33,7 +39,7 @@ const testCasesForDirentFlagsMatcher = [
           type: "absolute",
           filePath: {
             format: "json",
-            path: "/some/path/outside/of/context/resource.json",
+            path: join(workspaceContext, "workflows/test-workflow.json"),
           },
         }),
         workspaceContext,
@@ -41,9 +47,9 @@ const testCasesForDirentFlagsMatcher = [
       testCaseDescription: "absolute .json path",
     },
     testOutcome: {
-      data: ConfigResourceAbsolutePathSchema.parse({
+      data: await ConfigResourceFileSchema.parseAsync({
         format: "json",
-        path: "/some/path/outside/of/context/resource.json",
+        path: join(workspaceContext, "workflows/test-workflow.json"),
       }),
       testBehaviourDescription: "succeed with original absolute path",
     },
@@ -55,7 +61,7 @@ const testCasesForDirentFlagsMatcher = [
           type: "absolute",
           filePath: {
             format: "yaml",
-            path: "/some/path/outside/of/context/resource.yaml",
+            path: join(workspaceContext, "workflows/test-workflow.yml"),
           },
         }),
         workspaceContext,
@@ -63,9 +69,9 @@ const testCasesForDirentFlagsMatcher = [
       testCaseDescription: "absolute .yaml path",
     },
     testOutcome: {
-      data: ConfigResourceAbsolutePathSchema.parse({
+      data: await ConfigResourceFileSchema.parseAsync({
         format: "yaml",
-        path: "/some/path/outside/of/context/resource.yaml",
+        path: join(workspaceContext, "workflows/test-workflow.yml"),
       }),
       testBehaviourDescription: "succeed with original absolute path",
     },
@@ -77,7 +83,7 @@ const testCasesForDirentFlagsMatcher = [
           type: "relative",
           filePath: {
             format: "json",
-            path: "workflows/workflow1.json",
+            path: "workflows/test-workflow.json",
           },
         }),
         workspaceContext,
@@ -85,9 +91,9 @@ const testCasesForDirentFlagsMatcher = [
       testCaseDescription: "relative .json path",
     },
     testOutcome: {
-      data: ConfigResourceAbsolutePathSchema.parse({
+      data: await ConfigResourceFileSchema.parseAsync({
         format: "json",
-        path: join(workspaceContext, "workflows/workflow1.json"),
+        path: join(workspaceContext, "workflows/test-workflow.json"),
       }),
       testBehaviourDescription: "succeed with concatenated relative path to workspace context",
     },
@@ -99,7 +105,7 @@ const testCasesForDirentFlagsMatcher = [
           type: "relative",
           filePath: {
             format: "yaml",
-            path: "workflows/workflow1.yaml",
+            path: "workflows/test-workflow.yml",
           },
         }),
         workspaceContext,
@@ -107,9 +113,9 @@ const testCasesForDirentFlagsMatcher = [
       testCaseDescription: "relative .yaml path",
     },
     testOutcome: {
-      data: ConfigResourceAbsolutePathSchema.parse({
+      data: await ConfigResourceFileSchema.parseAsync({
         format: "yaml",
-        path: join(workspaceContext, "workflows/workflow1.yaml"),
+        path: join(workspaceContext, "workflows/test-workflow.yml"),
       }),
       testBehaviourDescription: "succeed with concatenated relative path to workspace context",
     },
@@ -123,15 +129,15 @@ const testCasesForDirentFlagsMatcher = [
     testCaseDescription: string;
   };
   testOutcome: {
-    data: ConfigResourceAbsolutePath;
+    data: ConfigResourceFile;
     testBehaviourDescription: string;
   };
 }[];
 
-describe("resourceAbsolutePathFromUserInput", () => {
-  for (const { testInput, testOutcome } of testCasesForDirentFlagsMatcher) {
+describe("configResourceFileFromInput", () => {
+  for (const { testInput, testOutcome } of testCasesForConfigResourceFileFromInput) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
-      const resourceAbsolutePathResult = configResourceAbsolutePathFromInput(
+      const resourceAbsolutePathResult = await configResourceFileFromInput(
         testInput.data.userInput,
         testInput.data.workspaceContext,
       );

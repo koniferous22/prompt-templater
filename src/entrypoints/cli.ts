@@ -5,7 +5,7 @@ import { match } from "ts-pattern";
 
 import { cliArgsParser, type CliArgs } from "../modules/optique/cliArgs.js";
 import { envContext } from "../modules/optique/context/env.js";
-import { configResourceAbsolutePathFromInput } from "../modules/resources/config/resourceAbsolutePathFromInput.js";
+import { configResourceFileFromInput } from "../modules/resources/config/resourceFileFromInput.js";
 import { detectWorkspaceContextFromCliInput } from "../modules/workspaceContext/detectWorkspaceContext.js";
 import {
   appAggregateErrAsync,
@@ -112,13 +112,13 @@ const validateInputFiles = async (inputFiles: {
 const resolveContext = async ({ positionalArgs, globalOptions }: ResolveContextArgs) => {
   if (globalOptions.context !== undefined) {
     const context = globalOptions.context;
-    const workflowConfigResourcePath = configResourceAbsolutePathFromInput(
+    const workflowConfigResourcePath = await configResourceFileFromInput(
       positionalArgs.workflow,
       context,
     );
     const workflowPresetConfigResourcePath =
       positionalArgs.workflowPreset &&
-      configResourceAbsolutePathFromInput(positionalArgs.workflowPreset, context);
+      (await configResourceFileFromInput(positionalArgs.workflowPreset, context));
 
     if (
       !workflowConfigResourcePath.isOk() ||
@@ -134,9 +134,9 @@ const resolveContext = async ({ positionalArgs, globalOptions }: ResolveContextA
       return error as Exclude<typeof error, Ok<null, never>>;
     }
     const validateInputFilesResult = await validateInputFiles({
-      workflow: workflowConfigResourcePath.value.path,
+      workflow: workflowConfigResourcePath.value.file,
       workflowPreset:
-        workflowPresetConfigResourcePath && workflowPresetConfigResourcePath.value.path,
+        workflowPresetConfigResourcePath && workflowPresetConfigResourcePath.value.file,
     });
     if (!validateInputFilesResult.isOk()) {
       return validateInputFilesResult;

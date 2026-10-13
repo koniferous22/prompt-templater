@@ -4,15 +4,15 @@ import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
+import { ConfigResourceFileSchema } from "../../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
 import {
   JsonAbsolutePathSchema,
   YamlAbsolutePathSchema,
 } from "../../../validation/schemas/path/pathWithExtensions.js";
-import { ConfigResourceAbsolutePathSchema } from "../../../validation/schemas/resources/configResourceAbsolutePath.js";
 import type { ConfigResourceInput } from "../../../validation/schemas/resources/configResourceInput.js";
 import type { WorkspaceContext } from "../../../validation/schemas/workspaceContext.js";
 
-export const configResourceAbsolutePathFromInput = (
+export const configResourceFileFromInput = async (
   resourceInput: ConfigResourceInput,
   workspaceContext: WorkspaceContext,
 ) => {
@@ -58,7 +58,7 @@ export const configResourceAbsolutePathFromInput = (
   if (!resourceAbsolutePathInputResult.isOk()) {
     return resourceAbsolutePathInputResult;
   }
-  const resourceAbsolutePathResult = ConfigResourceAbsolutePathSchema.safeParse(
+  const resourceAbsolutePathResult = await ConfigResourceFileSchema.safeParseAsync(
     resourceAbsolutePathInputResult.value,
   );
   return resourceAbsolutePathResult.success

@@ -22,7 +22,7 @@ export const ConfigResourceFileSchema = z
       }),
       z.object({
         format: z.literal("yaml"),
-        file: JsonFileSchema,
+        file: YamlFileSchema,
       }),
     ]),
     {
