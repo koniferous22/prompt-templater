@@ -93,8 +93,9 @@ export const errorMessages = {
     `Error reading file "${ctx.value}"`,
   module_resources_templateResourceFromResourceFile_invalidPugContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid pug template contents`,
-  module_templateContext_createTemplateContextFromDeferredWorkspaceContext_invalidWorkflowPath: (ctx: { workflowFileInput: string }) =>
-    `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
+  module_templateContext_createTemplateContextFromDeferredWorkspaceContext_invalidWorkflowPath:
+    (ctx: { workflowFileInput: string }) =>
+      `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
   validation_customTypes_nonEmptyString_invalidInput: (ctx: { value: string }) =>
     `Expected non-empty string got "${ctx.value}"`,
   validation_customTypes_fileExtension_invalidInput: (ctx: { value: string }) =>

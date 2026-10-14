@@ -19,9 +19,12 @@ export async function createTemplateContextFromDeferredWorkspaceContext(
   const workflowAbsolutePath = workflowResourcePath;
   const workflowResult = await configResourceFileFromAbsolutePath(workflowAbsolutePath);
   if (!workflowResult.isOk()) {
-    return appErrAsync("module_templateContext_createTemplateContextFromDeferredWorkspaceContext_invalidWorkflowPath", {
-      workflowFileInput: workflowAbsolutePath.path,
-    });
+    return appErrAsync(
+      "module_templateContext_createTemplateContextFromDeferredWorkspaceContext_invalidWorkflowPath",
+      {
+        workflowFileInput: workflowAbsolutePath.path,
+      },
+    );
   }
   // Defer resource resolution until "workspace context is detected"
   const deferredContextResult = await createDeferredContext(deferredContextOpts);
