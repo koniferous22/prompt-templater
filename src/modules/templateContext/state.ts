@@ -8,6 +8,7 @@ import type { WorkspaceContext } from "../../validation/schemas/workspaceContext
 import { configResourceFromResourceFile } from "../resources/config/resourceFromResourceFile.js";
 import type { ConfigResourceType } from "../resources/config/resourceTypes.js";
 import { templateResourceFileFromInput } from "../resources/template/resourceFileFromInput.js";
+import { templateResourceFromResourceFile } from "../resources/template/resourceFromResourceFile.js";
 
 const initState = (workspaceContext: WorkspaceContext) => {
   const state = {
@@ -21,7 +22,7 @@ const initState = (workspaceContext: WorkspaceContext) => {
         terms: new Map<File, { listResourceFile: any; data: any }>(),
       },
       templateResources: {
-        templates: new Map<File, { templateResourceFile: any; template: any }>(),
+        templates: new Map<File, { templateResourceFile: TemplateResourceFile; template: (templateContext: Record<string, any>) => string; }>(),
       },
     },
     workspaceContext,
@@ -92,7 +93,23 @@ export const loadResource = async (
       } satisfies TemplateContextMutationFnResult);
     })
     .with({ type: "templateResource" }, async (value) => {
-      // WIP - Noop
+      if (state.resources.templateResources.templates.has(value.file.file)) {
+        // return noop if file already processed
+        return ok({
+          state,
+          enqueuedOperations: [],
+        } satisfies TemplateContextMutationFnResult);
+      }
+      // 1 - Load file
+      const loadingResult = await templateResourceFromResourceFile(value.file);
+      if (!loadingResult.isOk()) {
+        return loadingResult;
+      }
+      // 2 - update state
+      state.resources.templateResources.templates.set(value.file.file, {
+        templateResourceFile: value.file,
+        template: loadingResult.value,
+      });
       return ok({
         state,
         enqueuedOperations: [],

@@ -16,6 +16,7 @@ import {
   type TemplateContextAddResourceOperation,
   type TemplateContextMutationFnResult,
 } from "./state.js";
+import { TemplateResourceFileSchema } from "../../validation/codecs/templateResource/resourceAbsolutePathToResourceFile.js";
 
 // Mini-mutation testing framework
 
@@ -148,7 +149,7 @@ const testCasesForConfigResourceFileFromInput = [
               assert.strictEqual(
                 result.value.enqueuedOperations.length,
                 1,
-                "expected result to contains 1 enqueued operation",
+                "expected result to contain 1 enqueued operation",
               );
             }
           },
@@ -160,6 +161,11 @@ const testCasesForConfigResourceFileFromInput = [
               state.resources.configResources.workflows.size,
               1,
               "expected 1 workflow to be loaded",
+            );
+            assert.strictEqual(
+              state.resources.templateResources.templates.size,
+              0,
+              "expected rest of the state not to be polluted",
             );
           },
         },
@@ -179,7 +185,7 @@ const testCasesForConfigResourceFileFromInput = [
               assert.strictEqual(
                 result.value.enqueuedOperations.length,
                 0,
-                "expected result to contains 0 enqueued operation",
+                "expected result to contain 0 enqueued operations",
               );
             }
           },
@@ -192,14 +198,100 @@ const testCasesForConfigResourceFileFromInput = [
               1,
               "expected 1 workflow to be loaded",
             );
+            assert.strictEqual(
+              state.resources.templateResources.templates.size,
+              0,
+              "expected rest of the state not to be polluted",
+            );
           },
         },
       ]),
-      testCaseDescription: "case of simple idempotency test",
+      testCaseDescription: "repeated load of workflow resource",
     },
     testOutcome: {
       data: null,
-      testBehaviourDescription: "should have only 1 loaded workflow on repeated load",
+      testBehaviourDescription: "should have only 1 loaded workflow",
+    },
+  },
+  {
+    testInput: {
+      data: loadResourceTestCaseFactory([
+        {
+          type: "mutationWithOptionalAssertion",
+          operationInput: {
+            type: "templateResource",
+            file: await TemplateResourceFileSchema.parseAsync({
+              format: "pug",
+              path: join(workspaceContext, "templates/test-template.pug"),
+            }),
+          },
+          assertOperationResult(result) {
+            assert.strictEqual(result.isOk(), true, "expected successful result");
+            if (result.isOk()) {
+              assert.strictEqual(
+                result.value.enqueuedOperations.length,
+                0,
+                "expected result to contain 0 enqueued operations",
+              );
+            }
+          },
+        },
+        {
+          type: "stateAssertion",
+          assertState(state) {
+            assert.strictEqual(
+              state.resources.templateResources.templates.size,
+              1,
+              "expected 1 template to be loaded",
+            );
+            assert.strictEqual(
+              state.resources.configResources.workflows.size,
+              0,
+              "expected rest of the state not to be polluted",
+            );
+          },
+        },
+        {
+          type: "mutationWithOptionalAssertion",
+          operationInput: {
+            type: "templateResource",
+            file: await TemplateResourceFileSchema.parseAsync({
+              format: "pug",
+              path: join(workspaceContext, "templates/test-template.pug"),
+            }),
+          },
+          assertOperationResult(result) {
+            assert.strictEqual(result.isOk(), true, "expected successful result");
+            if (result.isOk()) {
+              assert.strictEqual(
+                result.value.enqueuedOperations.length,
+                0,
+                "expected result to contain 0 enqueued operations",
+              );
+            }
+          },
+        },
+        {
+          type: "stateAssertion",
+          assertState(state) {
+            assert.strictEqual(
+              state.resources.templateResources.templates.size,
+              1,
+              "expected 1 template to be loaded",
+            );
+            assert.strictEqual(
+              state.resources.configResources.workflows.size,
+              0,
+              "expected rest of the state not to be polluted",
+            );
+          },
+        },
+      ]),
+      testCaseDescription: "repeated load of workflow resource",
+    },
+    testOutcome: {
+      data: null,
+      testBehaviourDescription: "should have only 1 loaded workflow",
     },
   },
 ] satisfies {
