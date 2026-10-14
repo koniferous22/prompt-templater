@@ -7,6 +7,7 @@ import type { Err, Ok, Result } from "neverthrow";
 import { match } from "ts-pattern";
 
 import { ConfigResourceFileSchema } from "../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
+import { TemplateResourceFileSchema } from "../../validation/codecs/templateResource/resourceAbsolutePathToResourceFile.js";
 import { AbsolutePathSchema } from "../../validation/customTypes/path.js";
 import { WorkspaceContextSchema } from "../../validation/schemas/workspaceContext.js";
 import {
@@ -16,7 +17,6 @@ import {
   type TemplateContextAddResourceOperation,
   type TemplateContextMutationFnResult,
 } from "./state.js";
-import { TemplateResourceFileSchema } from "../../validation/codecs/templateResource/resourceAbsolutePathToResourceFile.js";
 
 // Mini-mutation testing framework
 

@@ -22,7 +22,13 @@ const initState = (workspaceContext: WorkspaceContext) => {
         terms: new Map<File, { listResourceFile: any; data: any }>(),
       },
       templateResources: {
-        templates: new Map<File, { templateResourceFile: TemplateResourceFile; template: (templateContext: Record<string, any>) => string; }>(),
+        templates: new Map<
+          File,
+          {
+            templateResourceFile: TemplateResourceFile;
+            template: (templateContext: Record<string, any>) => string;
+          }
+        >(),
       },
     },
     workspaceContext,
