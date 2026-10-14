@@ -29,6 +29,12 @@ export const AbsolutePathToConfigResourceAbsolutePath = z.codec(
             path: value,
           }),
         )
+        .with("yml", () =>
+          ok({
+            format: "yaml" as const,
+            path: value,
+          }),
+        )
         .otherwise(() => {
           return appErr(
             "validation_codec_configResources_absolutePathToResourceAbsolutePath_invalidExtension",
