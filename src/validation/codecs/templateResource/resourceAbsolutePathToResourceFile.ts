@@ -21,11 +21,11 @@ export const TemplateResourceFileSchema = z
       decode: async (value, ctx) => {
         const result = await match(value)
           .with({ format: "pug" }, async (path) => {
-            const jsonFileResult = await PugFileSchema.safeParseAsync(path.path);
-            return jsonFileResult.success
+            const pugFileResult = await PugFileSchema.safeParseAsync(path.path);
+            return pugFileResult.success
               ? ok({
                   format: path.format,
-                  file: jsonFileResult.data,
+                  file: pugFileResult.data,
                 })
               : appErrAsync(
                   "validation_codec_templateResources_resourceAbsolutePathToResourceFile_invalidPugFile",

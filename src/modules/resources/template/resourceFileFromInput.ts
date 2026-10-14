@@ -41,7 +41,7 @@ export const templateResourceFileFromInput = async (
   );
   return resourceAbsolutePathResult.success
     ? ok(resourceAbsolutePathResult.data)
-    : appErr("module_resources_configResourceFileFromInput_invalidInput", {
+    : appErr("module_resources_templateResourceFileFromInput_invalidInput", {
         value: resourceAbsolutePathInputResult.value.path,
       });
 };
