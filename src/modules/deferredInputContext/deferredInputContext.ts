@@ -1,20 +1,19 @@
-import { Ok, ok, type Err } from "neverthrow";
+import { Ok, ok } from "neverthrow";
 import { match } from "ts-pattern";
 
-import { appErr, createError } from "../../utils/deps/neverthrow/errorFactory.js";
-import {
-  errorFromOptionalErrorList,
-  resultFromOptionalErrorList,
-} from "../../utils/deps/neverthrow/optionalErrorList.js";
+import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
+import { resultFromOptionalErrorList } from "../../utils/deps/neverthrow/optionalErrorList.js";
 import type { ConfigResourceInput } from "../../validation/schemas/resources/config/codecUtils/configResourceInput.js";
 import type { WorkspaceContext } from "../../validation/schemas/workspaceContext.js";
 import { configResourceFileFromAbsolutePath } from "../resources/config/resourceFileFromAbsolutePath.js";
 import { configResourceFileFromInput } from "../resources/config/resourceFileFromInput.js";
 
-// Extract this as utility if this is usable somewhere else
-export const createDeferredContext = async (opts: {
+export type DeferredContextOpts = {
   workflowPreset: ConfigResourceInput | undefined;
-}) => {
+};
+
+// Extract this as utility if this is usable somewhere else
+export const createDeferredContext = async (opts: DeferredContextOpts) => {
   const workflowPreset = await match(opts.workflowPreset)
     .with(undefined, () => undefined)
     .with({ type: "absolute" }, async ({ filePath }) => {

@@ -2,64 +2,81 @@ import { message } from "@optique/core/message";
 import { run } from "@optique/run";
 import { Err, Ok, ok } from "neverthrow";
 
-import { createDeferredContext } from "../modules/deferredInputContext/deferredInputContext.js";
+import {
+  createDeferredContext,
+  type DeferredContextOpts,
+} from "../modules/deferredInputContext/deferredInputContext.js";
 import { cliArgsParser, type CliArgs } from "../modules/optique/cliArgs.js";
 import { envContext } from "../modules/optique/context/env.js";
 import { configResourceFileFromAbsolutePath } from "../modules/resources/config/resourceFileFromAbsolutePath.js";
 import { configResourceFileFromInput } from "../modules/resources/config/resourceFileFromInput.js";
+import { createTemplateContext } from "../modules/templateContext/createTemplateContext.js";
 import { detectWorkspaceContextFromCliInput } from "../modules/workspaceContext/detectWorkspaceContext.js";
 import { appErrAsync } from "../utils/deps/neverthrow/errorFactory.js";
 import { resultFromOptionalErrorList } from "../utils/deps/neverthrow/optionalErrorList.js";
+import type { ConfigResourceAbsolutePath } from "../validation/schemas/resources/config/codecUtils/configResourceAbsolutePath.js";
+import type { WorkspaceContext } from "../validation/schemas/workspaceContext.js";
 
 type ResolveContextArgs = {
   positionalArgs: Pick<CliArgs["positionalArgs"], "workflow" | "workflowPreset">;
   globalOptions: Pick<CliArgs["globalOptions"], "context">;
 };
 
-const resolveContext = async ({ positionalArgs, globalOptions }: ResolveContextArgs) => {
-  if (globalOptions.context !== undefined) {
-    const context = globalOptions.context;
-    const workflowResult = await configResourceFileFromInput(positionalArgs.workflow, context);
-    const workflowPresetResult =
-      positionalArgs.workflowPreset &&
-      (await configResourceFileFromInput(positionalArgs.workflowPreset, context));
+const resolveTemplateContextFromExplicitWorkspace = async (
+  workspaceContext: WorkspaceContext,
+  {
+    workflow,
+    workflowPreset,
+  }: Pick<ResolveContextArgs["positionalArgs"], "workflow" | "workflowPreset">,
+) => {
+  const workflowResult = await configResourceFileFromInput(workflow, workspaceContext);
+  const workflowPresetResult =
+    workflowPreset && (await configResourceFileFromInput(workflowPreset, workspaceContext));
 
-    if (
-      !workflowResult.isOk() ||
-      (workflowPresetResult !== undefined && !workflowPresetResult.isOk())
-    ) {
-      const error = resultFromOptionalErrorList(
-        workflowResult.isErr() ? workflowResult : undefined,
-        workflowPresetResult !== undefined && workflowPresetResult.isErr()
-          ? workflowPresetResult
-          : undefined,
-      );
-      // Note - incomplete type narrowing - Should be error
-      return error as Exclude<typeof error, Ok<null, never>>;
+  if (
+    !workflowResult.isOk() ||
+    (workflowPresetResult !== undefined && !workflowPresetResult.isOk())
+  ) {
+    const error = resultFromOptionalErrorList(
+      workflowResult.isErr() ? workflowResult : undefined,
+      workflowPresetResult !== undefined && workflowPresetResult.isErr()
+        ? workflowPresetResult
+        : undefined,
+    );
+    // Note - incomplete type narrowing - Should be error
+    return error as Exclude<typeof error, Ok<null, never>>;
+  }
+  // Build template context and include all items
+  const templateContext = createTemplateContext(workspaceContext);
+  const addWorkflowResult = await templateContext.addWorkflow(workflowResult.value);
+  if (!addWorkflowResult.isOk()) {
+    return addWorkflowResult;
+  }
+  if (workflowPresetResult !== undefined) {
+    const addWorkflowPresetResult = await templateContext.addWorkflowPreset(
+      workflowPresetResult.value,
+    );
+    if (!addWorkflowPresetResult.isOk()) {
+      return addWorkflowPresetResult;
     }
-    return ok({
-      workspaceContext: globalOptions.context,
-      workflow: workflowResult.value,
-      workflowPreset: workflowPresetResult?.value ?? undefined,
-    });
   }
-  if (positionalArgs.workflow.type === "relative") {
-    return appErrAsync("entrypoint_cli_unableToDetectContext", {
-      workflowFileInput: positionalArgs.workflow.filePath.path,
-    });
-  }
+  return ok(templateContext);
+};
+
+const resolveTemplateContextFromWorkflowPath = async (
+  workflowResourcePath: ConfigResourceAbsolutePath,
+  deferredContextOpts: DeferredContextOpts,
+) => {
   // Workflow absolute path is taken as SSOT in case no context has been found
-  const workflowAbsolutePath = positionalArgs.workflow.filePath;
+  const workflowAbsolutePath = workflowResourcePath;
   const workflowResult = await configResourceFileFromAbsolutePath(workflowAbsolutePath);
   if (!workflowResult.isOk()) {
     return appErrAsync("entrypoint_cli_invalidWorkflowPath", {
-      workflowFileInput: positionalArgs.workflow.filePath.path,
+      workflowFileInput: workflowAbsolutePath.path,
     });
   }
   // Defer resource resolution until "workspace context is detected"
-  const deferredContextResult = await createDeferredContext({
-    workflowPreset: positionalArgs.workflowPreset,
-  });
+  const deferredContextResult = await createDeferredContext(deferredContextOpts);
   if (!deferredContextResult.isOk()) {
     return deferredContextResult;
   }
@@ -82,10 +99,34 @@ const resolveContext = async ({ positionalArgs, globalOptions }: ResolveContextA
   if (!resolvedDeferredContext.isOk()) {
     return resolvedDeferredContext;
   }
-  return ok({
-    workspaceContext: detectContextResult.value,
-    workflow: workflowResult.value,
-    workflowPreset: resolvedDeferredContext.value.workflowPreset,
+  // Build template context and include all items
+  const templateContext = createTemplateContext(detectContextResult.value);
+  const addWorkflowResult = await templateContext.addWorkflow(workflowResult.value);
+  if (!addWorkflowResult.isOk()) {
+    return addWorkflowResult;
+  }
+  if (resolvedDeferredContext.value.workflowPreset !== undefined) {
+    const addWorkflowPresetResult = await templateContext.addWorkflowPreset(
+      resolvedDeferredContext.value.workflowPreset,
+    );
+    if (!addWorkflowPresetResult.isOk()) {
+      return addWorkflowPresetResult;
+    }
+  }
+  return ok(templateContext);
+};
+
+const resolveTemplateContext = async ({ positionalArgs, globalOptions }: ResolveContextArgs) => {
+  if (globalOptions.context !== undefined) {
+    return resolveTemplateContextFromExplicitWorkspace(globalOptions.context, positionalArgs);
+  }
+  if (positionalArgs.workflow.type === "relative") {
+    return appErrAsync("entrypoint_cli_unableToDetectContext", {
+      workflowFileInput: positionalArgs.workflow.filePath.path,
+    });
+  }
+  return resolveTemplateContextFromWorkflowPath(positionalArgs.workflow.filePath, {
+    workflowPreset: positionalArgs.workflowPreset,
   });
 };
 
@@ -96,20 +137,9 @@ export const main = async () => {
     help: "option",
     brief: message`Templating clipboard util for making prompt typing more efficient`,
   });
-  const resolveContextResult = await resolveContext(cliInput);
-  if (!resolveContextResult.isOk()) {
-    return resolveContextResult;
+  const templateContextResult = await resolveTemplateContext(cliInput);
+  if (!templateContextResult.isOk()) {
+    return templateContextResult;
   }
-  const { workflow, workflowPreset, workspaceContext } = resolveContextResult.value;
-
-  // TODO - perform things within the context
-  // 1 - parse the workflow file - part 1-  validate structure
-  // * parsing output - generated template render context schema + serialized steps
-  // 2 - parse the workflow file - part 2 - validate contents
-  // * separate codec - WorkflowFileToWorkflowWithTemplate
-  //   * read read template file at this point
-  // 3 - run inquirer validators
-  // 4 - render + copy to clipboard
-  // * add CLI option to render to `stdout` what has been copied
-  //   * add env variable configurability
+  templateContextResult.value.loadWorkflow();
 };
