@@ -24,6 +24,8 @@ export type AppErrorCode =
   | "module_resources_configResourceFromResourceFile_invalidStructure"
   | "module_resources_templateResourceFileFromInput_invalidInputPugRelativePath"
   | "module_resources_templateResourceFileFromInput_invalidInput"
+  | "module_resources_templateResourceFromResourceFile_errorReadingFile"
+  | "module_resources_templateResourceFromResourceFile_invalidPugContents"
   | "validation_codec_absolutePathToFsStats_invalidInputData"
   | "validation_codec_configResources_absolutePathToResourceAbsolutePath_invalidExtension"
   | "validation_codec_configResources_nonEmptyStringToResourceInput_invalidInputData"

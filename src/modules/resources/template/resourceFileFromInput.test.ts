@@ -33,7 +33,7 @@ const testCasesForConfigResourceFileFromInput = [
           type: "absolute",
           filePath: {
             format: "pug",
-            path: join(workspaceContext, "templates/template1.pug"),
+            path: join(workspaceContext, "templates/test-template.pug"),
           },
         }),
         workspaceContext,
@@ -43,7 +43,7 @@ const testCasesForConfigResourceFileFromInput = [
     testOutcome: {
       data: await TemplateResourceFileSchema.parseAsync({
         format: "pug",
-        path: join(workspaceContext, "templates/template1.pug"),
+        path: join(workspaceContext, "templates/test-template.pug"),
       }),
       testBehaviourDescription: "succeed with original absolute path",
     },
@@ -55,7 +55,7 @@ const testCasesForConfigResourceFileFromInput = [
           type: "relative",
           filePath: {
             format: "pug",
-            path: "templates/template1.pug",
+            path: "templates/test-template.pug",
           },
         }),
         workspaceContext,
@@ -65,7 +65,7 @@ const testCasesForConfigResourceFileFromInput = [
     testOutcome: {
       data: await TemplateResourceFileSchema.parseAsync({
         format: "pug",
-        path: join(workspaceContext, "templates/template1.pug"),
+        path: join(workspaceContext, "templates/test-template.pug"),
       }),
       testBehaviourDescription: "succeed with concatenated relative path to workspace context",
     },

@@ -26,7 +26,7 @@ const workspaceContext = await WorkspaceContextSchema.parseAsync(
 );
 
 const expectedWorkflowFixture = WorkflowSchema.parse({
-  templateFile: "templates/template1.pug",
+  templateFile: "templates/test-template.pug",
 });
 
 const testCasesForConfigResourceFileFromInput = [
