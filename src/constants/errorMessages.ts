@@ -36,8 +36,6 @@ export const errorMessages = {
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
   entrypoint_cli_unableToDetectContext: (ctx: { workflowFileInput: string }) =>
     `Unable to detect workspace context from workflow file "${ctx.workflowFileInput}"`,
-  entrypoint_cli_invalidWorkflowPath: (ctx: { workflowFileInput: string }) =>
-    `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
   module_deferredInputContext_rejectedValue: () => "Error detecting workspace context",
   module_detectWorkspaceContext_noContextFound: (ctx: {
     workflowFile: AbsolutePath;
@@ -95,6 +93,8 @@ export const errorMessages = {
     `Error reading file "${ctx.value}"`,
   module_resources_templateResourceFromResourceFile_invalidPugContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid pug template contents`,
+  module_templateContext_createTemplateContextFromDeferredWorkspaceContext_invalidWorkflowPath: (ctx: { workflowFileInput: string }) =>
+    `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
   validation_customTypes_nonEmptyString_invalidInput: (ctx: { value: string }) =>
     `Expected non-empty string got "${ctx.value}"`,
   validation_customTypes_fileExtension_invalidInput: (ctx: { value: string }) =>
