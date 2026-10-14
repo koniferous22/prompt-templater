@@ -11,6 +11,8 @@ const TestEnum = {
 } as const;
 type TestEnumType = (typeof TestEnum)[keyof typeof TestEnum];
 
+// TODO - align this test with format of rest
+
 describe("zodUnionFromEnum", () => {
   it("accepts every value of the enum", () => {
     const schema = zodUnionFromEnum(TestEnum);
