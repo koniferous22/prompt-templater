@@ -20,7 +20,7 @@ const workspaceContext = await WorkspaceContextSchema.parseAsync(
   join(projectFixturesFolder, "workspace1"),
 );
 
-const testCasesForConfigResourceFromResourceFile = [
+const testCasesForTemplateResourceFromResourceFile = [
   {
     testInput: {
       data: await TemplateResourceFileSchema.parseAsync({
@@ -73,7 +73,7 @@ const testCasesForConfigResourceFromResourceFile = [
 }[];
 
 describe("templateResourceFromResourceFile - template", () => {
-  for (const { testInput, testOutcome } of testCasesForConfigResourceFromResourceFile) {
+  for (const { testInput, testOutcome } of testCasesForTemplateResourceFromResourceFile) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const resourceResult = await templateResourceFromResourceFile(testInput.data);
       assert.strictEqual(resourceResult.isOk(), testOutcome.data.result);
