@@ -69,12 +69,12 @@ export const loadResource = async (
         return loadingResult;
       }
       // 2 - Process references
-      const templateFileResult = await templateResourceFileFromInput(
+      const templateFileReferenceResult = await templateResourceFileFromInput(
         loadingResult.value.templateFile,
         state.workspaceContext,
       );
-      if (!templateFileResult.isOk()) {
-        return templateFileResult;
+      if (!templateFileReferenceResult.isOk()) {
+        return templateFileReferenceResult;
       }
       // 3 - update state
       state.resources.configResources.workflows.set(value.file.file, {
@@ -86,7 +86,7 @@ export const loadResource = async (
         enqueuedOperations: [
           {
             type: "templateResource",
-            file: templateFileResult.value,
+            file: templateFileReferenceResult.value,
           },
         ],
       } satisfies TemplateContextMutationFnResult);
