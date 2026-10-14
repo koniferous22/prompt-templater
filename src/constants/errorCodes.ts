@@ -8,6 +8,7 @@ export type AppErrorCode =
   | "dependency_zod_validationError"
   | "entrypoint_cli_unableToDetectContext"
   | "entrypoint_cli_invalidWorkflowPath"
+  | "module_deferredInputContext_rejectedValue"
   | "module_detectWorkspaceContext_noContextFound"
   | "module_direntFlagsMatcher_createDirentFlagsMapFailed"
   | "module_direntFlagsMatcher_extraItemsFound"

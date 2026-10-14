@@ -1,8 +1,8 @@
 import { message } from "@optique/core/message";
 import { run } from "@optique/run";
 import { Err, Ok, ok } from "neverthrow";
-import { match } from "ts-pattern";
 
+import { createDeferredContext } from "../modules/deferredInputContext/deferredInputContext.js";
 import { cliArgsParser, type CliArgs } from "../modules/optique/cliArgs.js";
 import { envContext } from "../modules/optique/context/env.js";
 import { configResourceFileFromAbsolutePath } from "../modules/resources/config/resourceFileFromAbsolutePath.js";
@@ -10,62 +10,10 @@ import { configResourceFileFromInput } from "../modules/resources/config/resourc
 import { detectWorkspaceContextFromCliInput } from "../modules/workspaceContext/detectWorkspaceContext.js";
 import { appErrAsync } from "../utils/deps/neverthrow/errorFactory.js";
 import { resultFromOptionalErrorList } from "../utils/deps/neverthrow/optionalErrorList.js";
-import type { ConfigResourceInput } from "../validation/schemas/resources/config/codecUtils/configResourceInput.js";
-import type { WorkspaceContext } from "../validation/schemas/workspaceContext.js";
 
 type ResolveContextArgs = {
   positionalArgs: Pick<CliArgs["positionalArgs"], "workflow" | "workflowPreset">;
   globalOptions: Pick<CliArgs["globalOptions"], "context">;
-};
-
-const createDeferredContext = async (opts: { workflowPreset: ConfigResourceInput | undefined }) => {
-  const workflowPreset = await match(opts.workflowPreset)
-    .with(undefined, () => undefined)
-    .with({ type: "absolute" }, async ({ filePath }) => {
-      const result = await configResourceFileFromAbsolutePath(filePath);
-      return result.isOk()
-        ? {
-            type: "resolved" as const,
-            value: result.value,
-          }
-        : {
-            type: "rejected" as const,
-            error: result.error,
-          };
-    })
-    .with({ type: "relative" }, (value) => ({
-      type: "deferred" as const,
-      deferred: async (workspaceContext: WorkspaceContext) =>
-        await configResourceFileFromInput(value, workspaceContext),
-    }))
-    .exhaustive();
-  if (workflowPreset !== undefined && workflowPreset.type === "rejected") {
-    // TODO - apply "resultFromOptionalErrorList" if this were to grow
-    return null as any as Err<never, null>;
-  }
-  return ok({
-    workflowPreset,
-  });
-};
-
-const resolveDeferredContext = async (
-  deferredContext: Exclude<
-    Awaited<ReturnType<typeof createDeferredContext>>,
-    Err<never, null>
-  >["value"],
-  workspaceContext: WorkspaceContext,
-) => {
-  const workflowPresetResult = await match(deferredContext.workflowPreset)
-    .with(undefined, () => ok(undefined))
-    .with({ type: "resolved" }, () => ok(undefined))
-    .with({ type: "deferred" }, async ({ deferred }) => await deferred(workspaceContext))
-    .exhaustive();
-  if (!workflowPresetResult.isOk()) {
-    return workflowPresetResult;
-  }
-  return ok({
-    workflowPreset: workflowPresetResult.value,
-  });
 };
 
 const resolveContext = async ({ positionalArgs, globalOptions }: ResolveContextArgs) => {
@@ -104,8 +52,9 @@ const resolveContext = async ({ positionalArgs, globalOptions }: ResolveContextA
   const workflowAbsolutePath = positionalArgs.workflow.filePath;
   const workflowResult = await configResourceFileFromAbsolutePath(workflowAbsolutePath);
   if (!workflowResult.isOk()) {
-    // TODO - new entrypoint exception
-    return null as any as Err<never, null>;
+    return appErrAsync("entrypoint_cli_invalidWorkflowPath", {
+      workflowFileInput: positionalArgs.workflow.filePath.path,
+    });
   }
   // Defer resource resolution until "workspace context is detected"
   const deferredContextResult = await createDeferredContext({
@@ -114,20 +63,20 @@ const resolveContext = async ({ positionalArgs, globalOptions }: ResolveContextA
   if (!deferredContextResult.isOk()) {
     return deferredContextResult;
   }
+  const deferreContextState = deferredContextResult.value.getState();
   // Invoke dynamic context detection
   const detectContextResult = await detectWorkspaceContextFromCliInput({
     workflow: workflowResult.value,
     workflowPreset:
-      deferredContextResult.value.workflowPreset !== undefined &&
-      deferredContextResult.value.workflowPreset.type === "resolved"
-        ? deferredContextResult.value.workflowPreset.value
+      deferreContextState.workflowPreset !== undefined &&
+      deferreContextState.workflowPreset.type === "resolved"
+        ? deferreContextState.workflowPreset.value
         : undefined,
   });
   if (!detectContextResult.isOk()) {
     return detectContextResult;
   }
-  const resolvedDeferredContext = await resolveDeferredContext(
-    deferredContextResult.value,
+  const resolvedDeferredContext = await deferredContextResult.value.resolve(
     detectContextResult.value,
   );
   if (!resolvedDeferredContext.isOk()) {

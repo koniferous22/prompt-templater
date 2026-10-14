@@ -38,6 +38,7 @@ export const errorMessages = {
     `Unable to detect workspace context from workflow file "${ctx.workflowFileInput}"`,
   entrypoint_cli_invalidWorkflowPath: (ctx: { workflowFileInput: string }) =>
     `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
+  module_deferredInputContext_rejectedValue: () => "Error detecting workspace context",
   module_detectWorkspaceContext_noContextFound: (ctx: {
     workflowFile: AbsolutePath;
     workflowPresetFile?: AbsolutePath | undefined;
