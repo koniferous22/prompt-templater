@@ -4,7 +4,7 @@ import { FileExtensionSchema } from "../customTypes/fileExtension.js";
 import {
   createAbsolutePathWithExtensionSchema,
   createRelativePathWithExtensionSchema,
-} from "../factory/pathWithExtension.js";
+} from "../factories/pathWithExtension.js";
 
 // Absolute Paths
 
