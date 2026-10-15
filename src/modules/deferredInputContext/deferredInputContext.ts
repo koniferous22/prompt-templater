@@ -3,8 +3,8 @@ import { match } from "ts-pattern";
 
 import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
 import { resultFromOptionalErrorList } from "../../utils/deps/neverthrow/optionalErrorList.js";
-import type { ConfigResourceInput } from "../../validation/schemas/resources/config/codecUtils/configResourceInput.js";
-import type { WorkspaceContext } from "../../validation/schemas/workspaceContext.js";
+import type { ConfigResourceInput } from "../../validation/resources/config/schemas/codecUtils/configResourceInput.js";
+import type { WorkspaceContext } from "../../validation/workspaceContext/schemas/workspaceContext.js";
 import { configResourceFileFromAbsolutePath } from "../resources/config/resourceFileFromAbsolutePath.js";
 import { configResourceFileFromInput } from "../resources/config/resourceFileFromInput.js";
 

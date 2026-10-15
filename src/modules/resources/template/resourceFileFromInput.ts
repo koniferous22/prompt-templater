@@ -4,10 +4,10 @@ import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
-import { TemplateResourceFileSchema } from "../../../validation/codecs/templateResource/resourceAbsolutePathToResourceFile.js";
-import { PugAbsolutePathSchema } from "../../../validation/schemas/path/pathWithExtensions.js";
-import type { TemplateResourceInput } from "../../../validation/schemas/resources/template/templateResourceInput.js";
-import type { WorkspaceContext } from "../../../validation/schemas/workspaceContext.js";
+import { PugAbsolutePathSchema } from "../../../validation/fs/schemas/pathWithExtensions.js";
+import { TemplateResourceFileSchema } from "../../../validation/resources/template/codecs/resourceAbsolutePathToResourceFile.js";
+import type { TemplateResourceInput } from "../../../validation/resources/template/schemas/templateResourceInput.js";
+import type { WorkspaceContext } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 
 export const templateResourceFileFromInput = async (
   resourceInput: TemplateResourceInput,

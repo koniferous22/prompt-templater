@@ -1,0 +1,37 @@
+import type z from "zod";
+
+import type { DirentFlagPatterns } from "../../../modules/direntFlagsMatcher/direntFlagsMatcher.js";
+import { PathFragmentSchema, type PathFragment } from "../../fs/customTypes/path.js";
+import { createFolderWithContentsSchema } from "../../fs/factory/folderWithContents.js";
+
+export const WorkspaceContextSchema = createFolderWithContentsSchema({
+  pathDetection: "checkStaticEntries",
+  items: new Map<PathFragment, DirentFlagPatterns>([
+    [
+      PathFragmentSchema.parse("templates"),
+      {
+        isDirectory: true,
+        isFile: false,
+        isSymlink: false,
+      },
+    ],
+    [
+      PathFragmentSchema.parse("terms"),
+      {
+        isDirectory: true,
+        isFile: false,
+        isSymlink: false,
+      },
+    ],
+    [
+      PathFragmentSchema.parse("workflows"),
+      {
+        isDirectory: true,
+        isFile: false,
+        isSymlink: false,
+      },
+    ],
+  ]),
+}).brand<"WorkspaceContext">();
+
+export type WorkspaceContext = z.output<typeof WorkspaceContextSchema>;

@@ -1,7 +1,7 @@
 import { ok } from "neverthrow";
 
-import type { ConfigResourceInput } from "../../../validation/schemas/resources/config/codecUtils/configResourceInput.js";
-import type { WorkspaceContext } from "../../../validation/schemas/workspaceContext.js";
+import type { ConfigResourceInput } from "../../../validation/resources/config/schemas/codecUtils/configResourceInput.js";
+import type { WorkspaceContext } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 import { configResourceFileFromInput } from "./resourceFileFromInput.js";
 import { configResourceFromResourceFile } from "./resourceFromResourceFile.js";
 import type { ConfigResourceSchemaByResourceType, ConfigResourceType } from "./resourceTypes.js";

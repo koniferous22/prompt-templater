@@ -1,7 +1,7 @@
 import { ok } from "neverthrow";
 
-import type { ConfigResourceFile } from "../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
-import type { WorkspaceContext } from "../../validation/schemas/workspaceContext.js";
+import type { ConfigResourceFile } from "../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
+import type { WorkspaceContext } from "../../validation/workspaceContext/schemas/workspaceContext.js";
 import { initializeTemplateContext } from "./state.js";
 
 export function createTemplateContext(workspaceContext: WorkspaceContext) {

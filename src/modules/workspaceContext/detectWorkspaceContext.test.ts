@@ -3,11 +3,11 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import { AbsolutePathSchema, type AbsolutePath } from "../../validation/fs/customTypes/path.js";
 import {
   ConfigResourceFileSchema,
   type ConfigResourceFile,
-} from "../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
-import { AbsolutePathSchema, type AbsolutePath } from "../../validation/customTypes/path.js";
+} from "../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
 import { detectWorkspaceContextFromCliInput } from "./detectWorkspaceContext.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

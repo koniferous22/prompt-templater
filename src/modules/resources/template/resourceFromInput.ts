@@ -1,7 +1,7 @@
 import { ok } from "neverthrow";
 
-import type { TemplateResourceInput } from "../../../validation/schemas/resources/template/templateResourceInput.js";
-import type { WorkspaceContext } from "../../../validation/schemas/workspaceContext.js";
+import type { TemplateResourceInput } from "../../../validation/resources/template/schemas/templateResourceInput.js";
+import type { WorkspaceContext } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 import { templateResourceFileFromInput } from "./resourceFileFromInput.js";
 import { templateResourceFromResourceFile } from "./resourceFromResourceFile.js";
 

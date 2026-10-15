@@ -4,13 +4,13 @@ import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
-import { ConfigResourceFileSchema } from "../../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
 import {
   JsonAbsolutePathSchema,
   YamlAbsolutePathSchema,
-} from "../../../validation/schemas/path/pathWithExtensions.js";
-import type { ConfigResourceInput } from "../../../validation/schemas/resources/config/codecUtils/configResourceInput.js";
-import type { WorkspaceContext } from "../../../validation/schemas/workspaceContext.js";
+} from "../../../validation/fs/schemas/pathWithExtensions.js";
+import { ConfigResourceFileSchema } from "../../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
+import type { ConfigResourceInput } from "../../../validation/resources/config/schemas/codecUtils/configResourceInput.js";
+import type { WorkspaceContext } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 
 export const configResourceFileFromInput = async (
   resourceInput: ConfigResourceInput,

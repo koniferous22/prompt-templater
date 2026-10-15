@@ -1,8 +1,8 @@
 import { ok } from "neverthrow";
 
 import { appErrAsync } from "../../utils/deps/neverthrow/errorFactory.js";
-import type { ConfigResourceFile } from "../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
-import type { ConfigResourceAbsolutePath } from "../../validation/schemas/resources/config/codecUtils/configResourceAbsolutePath.js";
+import type { ConfigResourceFile } from "../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
+import type { ConfigResourceAbsolutePath } from "../../validation/resources/config/schemas/codecUtils/configResourceAbsolutePath.js";
 import {
   createDeferredContext,
   type DeferredContextOpts,

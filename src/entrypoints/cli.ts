@@ -9,7 +9,7 @@ import { createTemplateContext } from "../modules/templateContext/createTemplate
 import { createTemplateContextFromDeferredWorkspaceContext } from "../modules/templateContext/createTemplateContextFromDeferredWorkspaceContext.js";
 import { appErrAsync } from "../utils/deps/neverthrow/errorFactory.js";
 import { resultFromOptionalErrorList } from "../utils/deps/neverthrow/optionalErrorList.js";
-import type { WorkspaceContext } from "../validation/schemas/workspaceContext.js";
+import type { WorkspaceContext } from "../validation/workspaceContext/schemas/workspaceContext.js";
 
 type ResolveContextArgs = {
   positionalArgs: Pick<CliArgs["positionalArgs"], "workflow" | "workflowPreset">;

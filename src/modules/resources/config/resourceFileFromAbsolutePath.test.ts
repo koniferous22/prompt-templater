@@ -3,16 +3,16 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import { AbsolutePathSchema } from "../../../validation/fs/customTypes/path.js";
 import {
   ConfigResourceFileSchema,
   type ConfigResourceFile,
-} from "../../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
-import { AbsolutePathSchema } from "../../../validation/customTypes/path.js";
+} from "../../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
 import {
   ConfigResourceAbsolutePathSchema,
   type ConfigResourceAbsolutePath,
-} from "../../../validation/schemas/resources/config/codecUtils/configResourceAbsolutePath.js";
-import { WorkspaceContextSchema } from "../../../validation/schemas/workspaceContext.js";
+} from "../../../validation/resources/config/schemas/codecUtils/configResourceAbsolutePath.js";
+import { WorkspaceContextSchema } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 import { configResourceFileFromAbsolutePath } from "./resourceFileFromAbsolutePath.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

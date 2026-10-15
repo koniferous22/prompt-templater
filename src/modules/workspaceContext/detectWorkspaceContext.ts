@@ -4,9 +4,9 @@ import { okAsync } from "neverthrow";
 
 import { appErrAsync } from "../../utils/deps/neverthrow/errorFactory.js";
 import { longestCommonPathPrefix } from "../../utils/path/platform-specific/longestCommonPathPrefix.js";
-import type { ConfigResourceFile } from "../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
-import { AbsolutePathSchema, type AbsolutePath } from "../../validation/customTypes/path.js";
-import { WorkspaceContextSchema } from "../../validation/schemas/workspaceContext.js";
+import { AbsolutePathSchema, type AbsolutePath } from "../../validation/fs/customTypes/path.js";
+import type { ConfigResourceFile } from "../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
+import { WorkspaceContextSchema } from "../../validation/workspaceContext/schemas/workspaceContext.js";
 
 const getWorkspacePrefixesByWorkflowFile = (workflowFile: ConfigResourceFile) => {
   let currentPath: AbsolutePath = AbsolutePathSchema.parse(dirname(workflowFile.file));

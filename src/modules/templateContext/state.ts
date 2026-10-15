@@ -1,10 +1,10 @@
 import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 
-import type { ConfigResourceFile } from "../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
-import type { TemplateResourceFile } from "../../validation/codecs/templateResource/resourceAbsolutePathToResourceFile.js";
-import type { File } from "../../validation/schemas/fs/file.js";
-import type { WorkspaceContext } from "../../validation/schemas/workspaceContext.js";
+import type { File } from "../../validation/fs/schemas/file.js";
+import type { ConfigResourceFile } from "../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
+import type { TemplateResourceFile } from "../../validation/resources/template/codecs/resourceAbsolutePathToResourceFile.js";
+import type { WorkspaceContext } from "../../validation/workspaceContext/schemas/workspaceContext.js";
 import { configResourceFromResourceFile } from "../resources/config/resourceFromResourceFile.js";
 import type { ConfigResourceType } from "../resources/config/resourceTypes.js";
 import { templateResourceFileFromInput } from "../resources/template/resourceFileFromInput.js";

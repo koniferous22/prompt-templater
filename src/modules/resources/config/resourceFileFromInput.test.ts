@@ -3,19 +3,19 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import { AbsolutePathSchema } from "../../../validation/fs/customTypes/path.js";
 import {
   ConfigResourceFileSchema,
   type ConfigResourceFile,
-} from "../../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
-import { AbsolutePathSchema } from "../../../validation/customTypes/path.js";
+} from "../../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
 import {
   ConfigResourceInputSchema,
   type ConfigResourceInput,
-} from "../../../validation/schemas/resources/config/codecUtils/configResourceInput.js";
+} from "../../../validation/resources/config/schemas/codecUtils/configResourceInput.js";
 import {
   WorkspaceContextSchema,
   type WorkspaceContext,
-} from "../../../validation/schemas/workspaceContext.js";
+} from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 import { configResourceFileFromInput } from "./resourceFileFromInput.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

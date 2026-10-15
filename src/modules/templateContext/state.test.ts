@@ -6,10 +6,10 @@ import { fileURLToPath } from "node:url";
 import type { Err, Ok, Result } from "neverthrow";
 import { match } from "ts-pattern";
 
-import { ConfigResourceFileSchema } from "../../validation/codecs/configResource/resourceAbsolutePathToResourceFile.js";
-import { TemplateResourceFileSchema } from "../../validation/codecs/templateResource/resourceAbsolutePathToResourceFile.js";
-import { AbsolutePathSchema } from "../../validation/customTypes/path.js";
-import { WorkspaceContextSchema } from "../../validation/schemas/workspaceContext.js";
+import { AbsolutePathSchema } from "../../validation/fs/customTypes/path.js";
+import { ConfigResourceFileSchema } from "../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
+import { TemplateResourceFileSchema } from "../../validation/resources/template/codecs/resourceAbsolutePathToResourceFile.js";
+import { WorkspaceContextSchema } from "../../validation/workspaceContext/schemas/workspaceContext.js";
 import {
   initializeTemplateContext,
   loadResource,

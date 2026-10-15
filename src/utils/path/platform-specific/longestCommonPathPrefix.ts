@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
 
-import type { AbsolutePath } from "../../../validation/customTypes/path.js";
+import type { AbsolutePath } from "../../../validation/fs/customTypes/path.js";
 import { pathFragmentVariant } from "../../platform/detectPlatformFeatures.js";
 
 export const longestCommonPathPrefix = await match(pathFragmentVariant)

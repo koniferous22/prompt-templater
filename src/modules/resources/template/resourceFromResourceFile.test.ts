@@ -5,12 +5,12 @@ import { fileURLToPath } from "node:url";
 
 import { createError } from "../../../utils/deps/neverthrow/errorFactory.js";
 import type { AppErrorInstance } from "../../../utils/deps/neverthrow/types.js";
+import { AbsolutePathSchema } from "../../../validation/fs/customTypes/path.js";
 import {
   TemplateResourceFileSchema,
   type TemplateResourceFile,
-} from "../../../validation/codecs/templateResource/resourceAbsolutePathToResourceFile.js";
-import { AbsolutePathSchema } from "../../../validation/customTypes/path.js";
-import { WorkspaceContextSchema } from "../../../validation/schemas/workspaceContext.js";
+} from "../../../validation/resources/template/codecs/resourceAbsolutePathToResourceFile.js";
+import { WorkspaceContextSchema } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 import { templateResourceFromResourceFile } from "./resourceFromResourceFile.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

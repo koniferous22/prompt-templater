@@ -4,7 +4,7 @@ import { bindEnv } from "@optique/env";
 import { zodAsync } from "@optique/zod";
 import z from "zod";
 
-import { WorkspaceContextSchema } from "../../../validation/schemas/workspaceContext.js";
+import { WorkspaceContextSchema } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 import { envContext } from "../context/env.js";
 
 const contextValueParser = zodAsync<z.output<typeof WorkspaceContextSchema>>(
