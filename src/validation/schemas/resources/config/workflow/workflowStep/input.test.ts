@@ -390,6 +390,26 @@ const testCasesForInputWorkflowStepSchema = [
       },
     },
   },
+  {
+    testInput: {
+      data: {
+        id: "input",
+        type: "input",
+        message: "Enter something",
+        validation: {
+          type: "optionalWithDefault",
+          value: "test"
+        },
+      },
+      testCaseDescription: "optionalWithDefault validation without \"validator\" attribute",
+    },
+    testOutcome: {
+      testBehaviourDescription: "succeed with default \"string\" validator",
+      data: {
+        result: true,
+      },
+    },
+  },
 ] satisfies {
   testInput: {
     data: z.input<typeof InputWorkflowStepSchema>;

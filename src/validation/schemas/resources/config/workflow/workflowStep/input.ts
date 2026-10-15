@@ -21,11 +21,11 @@ const BaseOptionalWithDefaultInputPromptValidatorSchema = {
 const InputPromptValidationSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("optional"),
-    validator: zodUnionFromEnum(InquirerInputPromptValidator),
+    validator: zodUnionFromEnum(InquirerInputPromptValidator).prefault('string'),
   }),
   z.object({
     type: z.literal("required"),
-    validator: zodUnionFromEnum(InquirerInputPromptValidator),
+    validator: zodUnionFromEnum(InquirerInputPromptValidator).prefault('string'),
   }),
   z.discriminatedUnion("validator", [
     z.object({
@@ -40,7 +40,7 @@ const InputPromptValidationSchema = z.discriminatedUnion("type", [
     }),
     z.object({
       ...BaseOptionalWithDefaultInputPromptValidatorSchema,
-      validator: z.literal("string"),
+      validator: z.literal("string").prefault('string'),
       value: inputPromptValidatorToZodSchema.string,
     }),
   ]),
