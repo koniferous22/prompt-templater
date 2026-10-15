@@ -4,7 +4,7 @@ import { describe, it } from "node:test";
 import {
   AbsolutePathWin32Schema,
   type AbsolutePathWin32,
-} from "../../../../validation/fs/customTypes/platformSpecific/win32/path.js";
+} from "../../../../validation/path/customTypes/platformSpecific/win32/path.js";
 import { longestCommonPathPrefixWin32 } from "./longestCommonPathPrefix.js";
 
 const testCasesForLongestCommonPathWin32 = [

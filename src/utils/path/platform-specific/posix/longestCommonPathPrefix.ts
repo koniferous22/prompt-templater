@@ -3,7 +3,7 @@ import path from "node:path";
 import {
   AbsolutePathPosixSchema,
   type AbsolutePathPosix,
-} from "../../../../validation/fs/customTypes/platformSpecific/posix/path.js";
+} from "../../../../validation/path/customTypes/platformSpecific/posix/path.js";
 
 export function longestCommonPathPrefixPosix(
   a: AbsolutePathPosix,

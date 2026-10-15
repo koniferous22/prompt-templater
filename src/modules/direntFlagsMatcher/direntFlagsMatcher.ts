@@ -8,14 +8,14 @@ import { errorFromErrorList } from "../../utils/deps/neverthrow/errorList.js";
 import { errFromZodError } from "../../utils/deps/neverthrow/resultFromSafeParseResult.js";
 import type { AppErrorInstance } from "../../utils/deps/neverthrow/types.js";
 import { getOrInsert } from "../../utils/map/getOrInsert.js";
+import type { DirentData } from "../../validation/fs/pipes/dirent.js";
 import {
   AbsolutePathSchema,
   PathFragmentSchema,
   type AbsolutePath,
   type PathFragment,
   type RelativePath,
-} from "../../validation/fs/customTypes/path.js";
-import type { DirentData } from "../../validation/fs/pipes/dirent.js";
+} from "../../validation/path/customTypes/path.js";
 
 export type DirentFlags = DirentData["direntFlags"];
 type DirentFlag = keyof DirentFlags;

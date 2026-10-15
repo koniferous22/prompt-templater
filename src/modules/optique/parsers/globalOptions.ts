@@ -26,8 +26,8 @@ const contextValueParser = zodAsync<z.output<typeof WorkspaceContextSchema>>(
 // Note - null default value results in errors, hence using `optional`
 const context = optional(
   bindEnv(
-    option("--context", "-ctx", contextValueParser, {
-      description: message`Test input value (required).`,
+    option("--workspace", "-w", contextValueParser, {
+      description: message`Folder denoting workspace to use`,
     }),
     {
       context: envContext,

@@ -3,7 +3,7 @@ import path from "path";
 import {
   AbsolutePathWin32Schema,
   type AbsolutePathWin32,
-} from "../../../../validation/fs/customTypes/platformSpecific/win32/path.js";
+} from "../../../../validation/path/customTypes/platformSpecific/win32/path.js";
 
 export function longestCommonPathPrefixWin32(
   a: AbsolutePathWin32,

@@ -4,7 +4,7 @@ import { Ok, ok } from "neverthrow";
 
 import { cliArgsParser, type CliArgs } from "../modules/optique/cliArgs.js";
 import { envContext } from "../modules/optique/context/env.js";
-import { configResourceFileFromInput } from "../modules/resources/config/resourceFileFromInput.js";
+import { configResourceFileFromReference } from "../modules/resources/config/resourceFileFromReference.js";
 import { createTemplateContext } from "../modules/templateContext/createTemplateContext.js";
 import { createTemplateContextFromDeferredWorkspaceContext } from "../modules/templateContext/createTemplateContextFromDeferredWorkspaceContext.js";
 import { appErrAsync } from "../utils/deps/neverthrow/errorFactory.js";
@@ -23,9 +23,9 @@ const resolveTemplateContextFromExplicitWorkspace = async (
     workflowPreset,
   }: Pick<ResolveContextArgs["positionalArgs"], "workflow" | "workflowPreset">,
 ) => {
-  const workflowResult = await configResourceFileFromInput(workflow, workspaceContext);
+  const workflowResult = await configResourceFileFromReference(workflow, workspaceContext);
   const workflowPresetResult =
-    workflowPreset && (await configResourceFileFromInput(workflowPreset, workspaceContext));
+    workflowPreset && (await configResourceFileFromReference(workflowPreset, workspaceContext));
 
   if (
     !workflowResult.isOk() ||

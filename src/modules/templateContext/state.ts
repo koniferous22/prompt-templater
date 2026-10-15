@@ -2,12 +2,12 @@ import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 
 import type { File } from "../../validation/fs/schemas/file.js";
-import type { ConfigResourceFile } from "../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
-import type { TemplateResourceFile } from "../../validation/resources/template/codecs/resourceAbsolutePathToResourceFile.js";
+import type { ConfigResourceFile } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
+import type { TemplateResourceFile } from "../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
 import type { WorkspaceContext } from "../../validation/workspaceContext/schemas/workspaceContext.js";
 import { configResourceFromResourceFile } from "../resources/config/resourceFromResourceFile.js";
 import type { ConfigResourceType } from "../resources/config/resourceTypes.js";
-import { templateResourceFileFromInput } from "../resources/template/resourceFileFromInput.js";
+import { templateResourceFileFromReference } from "../resources/template/resourceFileFromReference.js";
 import { templateResourceFromResourceFile } from "../resources/template/resourceFromResourceFile.js";
 
 const initState = (workspaceContext: WorkspaceContext) => {
@@ -76,7 +76,7 @@ export const loadResource = async (
         return loadingResult;
       }
       // 2 - Process references
-      const templateFileReferenceResult = await templateResourceFileFromInput(
+      const templateFileReferenceResult = await templateResourceFileFromReference(
         loadingResult.value.templateFile,
         state.workspaceContext,
       );

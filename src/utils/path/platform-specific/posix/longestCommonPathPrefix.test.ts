@@ -4,7 +4,7 @@ import { describe, it } from "node:test";
 import {
   AbsolutePathPosixSchema,
   type AbsolutePathPosix,
-} from "../../../../validation/fs/customTypes/platformSpecific/posix/path.js";
+} from "../../../../validation/path/customTypes/platformSpecific/posix/path.js";
 import { longestCommonPathPrefixPosix } from "./longestCommonPathPrefix.js";
 
 const testCasesForLongestCommonPathPosix = [

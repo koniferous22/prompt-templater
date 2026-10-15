@@ -5,11 +5,11 @@ import { fileURLToPath } from "node:url";
 
 import { createError } from "../../../utils/deps/neverthrow/errorFactory.js";
 import type { AppErrorInstance } from "../../../utils/deps/neverthrow/types.js";
-import { AbsolutePathSchema } from "../../../validation/fs/customTypes/path.js";
+import { AbsolutePathSchema } from "../../../validation/path/customTypes/path.js";
 import {
   TemplateResourceFileSchema,
   type TemplateResourceFile,
-} from "../../../validation/resources/template/codecs/resourceAbsolutePathToResourceFile.js";
+} from "../../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
 import { WorkspaceContextSchema } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 import { templateResourceFromResourceFile } from "./resourceFromResourceFile.js";
 

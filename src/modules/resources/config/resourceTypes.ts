@@ -1,4 +1,4 @@
-import { WorkflowSchema } from "../../../validation/resources/config/schemas/workflow/workflow.js";
+import { WorkflowSchema } from "../../../validation/resources/config/workflow/schemas/workflow.js";
 
 export const configResourceTypes = {
   workflow: WorkflowSchema,

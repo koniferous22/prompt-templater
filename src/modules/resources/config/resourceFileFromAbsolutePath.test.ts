@@ -3,15 +3,15 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { AbsolutePathSchema } from "../../../validation/fs/customTypes/path.js";
+import { AbsolutePathSchema } from "../../../validation/path/customTypes/path.js";
 import {
   ConfigResourceFileSchema,
   type ConfigResourceFile,
-} from "../../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
+} from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import {
   ConfigResourceAbsolutePathSchema,
   type ConfigResourceAbsolutePath,
-} from "../../../validation/resources/config/schemas/codecUtils/configResourceAbsolutePath.js";
+} from "../../../validation/resourceReference/config/schemas/configResourceAbsolutePath.js";
 import { WorkspaceContextSchema } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 import { configResourceFileFromAbsolutePath } from "./resourceFileFromAbsolutePath.js";
 

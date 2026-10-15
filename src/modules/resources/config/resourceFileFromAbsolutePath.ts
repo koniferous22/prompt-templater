@@ -1,8 +1,8 @@
 import { ok } from "neverthrow";
 
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
-import { ConfigResourceFileSchema } from "../../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
-import type { ConfigResourceAbsolutePath } from "../../../validation/resources/config/schemas/codecUtils/configResourceAbsolutePath.js";
+import { ConfigResourceFileSchema } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
+import type { ConfigResourceAbsolutePath } from "../../../validation/resourceReference/config/schemas/configResourceAbsolutePath.js";
 
 // Note - utility used in case resource input has been narrowed to absolute path
 export const configResourceFileFromAbsolutePath = async (

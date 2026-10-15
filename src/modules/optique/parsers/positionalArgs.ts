@@ -3,16 +3,16 @@ import type { Parser } from "@optique/core/parser";
 import { zod } from "@optique/zod";
 import z from "zod";
 
-import { NonEmptyStringToConfigResourceInputSchema } from "../../../validation/resources/config/codecs/nonEmptyStringToResourceInput.js";
-import { ConfigResourceInputSchema } from "../../../validation/resources/config/schemas/codecUtils/configResourceInput.js";
+import { NonEmptyStringToConfigResourceReferenceSchema } from "../../../validation/resourceReference/config/codecs/nonEmptyStringToResourceReference.js";
+import { ConfigResourceReferenceSchema } from "../../../validation/resourceReference/config/schemas/configResourceReference.js";
 
-export type WorkspaceContextPath = z.output<typeof NonEmptyStringToConfigResourceInputSchema>;
+export type WorkspaceContextPath = z.output<typeof NonEmptyStringToConfigResourceReferenceSchema>;
 
 export const positionalArgsParser = map(
   seq(
     argument(
-      zod<WorkspaceContextPath>(NonEmptyStringToConfigResourceInputSchema, {
-        placeholder: ConfigResourceInputSchema.parse({
+      zod<WorkspaceContextPath>(NonEmptyStringToConfigResourceReferenceSchema, {
+        placeholder: ConfigResourceReferenceSchema.parse({
           type: "relative",
           filePath: {
             format: "yaml",
@@ -30,8 +30,8 @@ export const positionalArgsParser = map(
     ),
     optional(
       argument(
-        zod<WorkspaceContextPath>(NonEmptyStringToConfigResourceInputSchema, {
-          placeholder: ConfigResourceInputSchema.parse({
+        zod<WorkspaceContextPath>(NonEmptyStringToConfigResourceReferenceSchema, {
+          placeholder: ConfigResourceReferenceSchema.parse({
             type: "relative",
             filePath: {
               format: "yaml",

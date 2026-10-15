@@ -3,13 +3,13 @@ import { match } from "ts-pattern";
 
 import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
 import { resultFromOptionalErrorList } from "../../utils/deps/neverthrow/optionalErrorList.js";
-import type { ConfigResourceInput } from "../../validation/resources/config/schemas/codecUtils/configResourceInput.js";
+import type { ConfigResourceReference } from "../../validation/resourceReference/config/schemas/configResourceReference.js";
 import type { WorkspaceContext } from "../../validation/workspaceContext/schemas/workspaceContext.js";
 import { configResourceFileFromAbsolutePath } from "../resources/config/resourceFileFromAbsolutePath.js";
-import { configResourceFileFromInput } from "../resources/config/resourceFileFromInput.js";
+import { configResourceFileFromReference } from "../resources/config/resourceFileFromReference.js";
 
 export type DeferredContextOpts = {
-  workflowPreset: ConfigResourceInput | undefined;
+  workflowPreset: ConfigResourceReference | undefined;
 };
 
 // Extract this as utility if this is usable somewhere else
@@ -31,7 +31,7 @@ export const createDeferredContext = async (opts: DeferredContextOpts) => {
     .with({ type: "relative" }, (value) => ({
       type: "deferred" as const,
       deferred: async (workspaceContext: WorkspaceContext) =>
-        await configResourceFileFromInput(value, workspaceContext),
+        await configResourceFileFromReference(value, workspaceContext),
     }))
     .exhaustive();
   if (workflowPreset !== undefined && workflowPreset.type === "rejected") {

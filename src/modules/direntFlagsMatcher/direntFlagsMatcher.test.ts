@@ -9,13 +9,13 @@ import z from "zod";
 import type { AppErrorCode } from "../../constants/errorCodes.js";
 import { createError } from "../../utils/deps/neverthrow/errorFactory.js";
 import type { AppError } from "../../utils/deps/neverthrow/types.js";
+import { DirentSchema } from "../../validation/fs/pipes/dirent.js";
 import {
   AbsolutePathSchema,
   PathFragmentSchema,
   type AbsolutePath,
   type PathFragment,
-} from "../../validation/fs/customTypes/path.js";
-import { DirentSchema } from "../../validation/fs/pipes/dirent.js";
+} from "../../validation/path/customTypes/path.js";
 import { createDirentFlagsMatcher, type DirentFlagPatterns } from "./direntFlagsMatcher.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

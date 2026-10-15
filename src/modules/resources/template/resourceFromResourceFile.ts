@@ -6,7 +6,7 @@ import { match } from "ts-pattern";
 
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
 import type { AppError } from "../../../utils/deps/neverthrow/types.js";
-import type { TemplateResourceFile } from "../../../validation/resources/template/codecs/resourceAbsolutePathToResourceFile.js";
+import type { TemplateResourceFile } from "../../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
 
 // Note - generalize in similar manner to "configResourceFromResourceFile", in case there are multiple "template" resources with various schemas
 export const templateResourceFromResourceFile = async (

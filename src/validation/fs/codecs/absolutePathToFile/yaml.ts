@@ -1,7 +1,7 @@
 import z from "zod";
 
+import { YamlAbsolutePathSchema } from "../../../path/schemas/pathWithExtensions.js";
 import { FileSchema } from "../../schemas/file.js";
-import { YamlAbsolutePathSchema } from "../../schemas/pathWithExtensions.js";
 
 export const YamlFileSchema = z
   .codec(YamlAbsolutePathSchema, FileSchema, {

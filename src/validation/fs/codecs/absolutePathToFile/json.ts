@@ -1,7 +1,7 @@
 import z from "zod";
 
+import { JsonAbsolutePathSchema } from "../../../path/schemas/pathWithExtensions.js";
 import { FileSchema } from "../../schemas/file.js";
-import { JsonAbsolutePathSchema } from "../../schemas/pathWithExtensions.js";
 
 export const JsonFileSchema = z
   .codec(JsonAbsolutePathSchema, FileSchema, {

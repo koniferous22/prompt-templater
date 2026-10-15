@@ -7,7 +7,7 @@ import type z from "zod";
 
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
 import type { AppError } from "../../../utils/deps/neverthrow/types.js";
-import type { ConfigResourceFile } from "../../../validation/resources/config/codecs/resourceAbsolutePathToResourceFile.js";
+import type { ConfigResourceFile } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import {
   configResourceTypes,
   type ConfigResourceSchemaByResourceType,
