@@ -37,7 +37,7 @@ export const AbsolutePathToConfigResourceAbsolutePath = z.codec(
         )
         .otherwise(() => {
           return appErr(
-            "validation_codec_configResources_absolutePathToResourceAbsolutePath_invalidExtension",
+            "validation_resourceReference_config_codecs_absolutePathToResourceAbsolutePath_invalidExtension",
             {
               resourceInput: value,
               allowedExtensions: ["json", "yaml", "yml"],

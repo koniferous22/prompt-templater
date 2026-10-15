@@ -16,7 +16,7 @@ export const createAbsolutePathWithExtensionSchema = (
       zodRegisterIssue(
         ctx.value,
         ctx,
-        "validation_factories_absolutePathWithExtension_invalidExtension",
+        "validation_path_factories_absolutePathWithExtension_invalidExtension",
         {
           expectedExtensions: extensions,
           file: ctx.value,
@@ -37,7 +37,7 @@ export const createRelativePathWithExtensionSchema = (
       zodRegisterIssue(
         ctx.value,
         ctx,
-        "validation_factories_relativePathWithExtension_invalidExtension",
+        "validation_path_factories_relativePathWithExtension_invalidExtension",
         {
           expectedExtensions: extensions,
           file: ctx.value,

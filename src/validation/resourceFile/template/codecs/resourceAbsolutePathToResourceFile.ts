@@ -28,7 +28,7 @@ export const TemplateResourceFileSchema = z
                   file: pugFileResult.data,
                 })
               : appErrAsync(
-                  "validation_codec_templateResources_resourceAbsolutePathToResourceFile_invalidPugFile",
+                  "validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidPugFile",
                   {
                     value: path.path,
                   },
@@ -51,7 +51,7 @@ export const TemplateResourceFileSchema = z
                   path: pugAbsolutePathResult.data,
                 })
               : appErr(
-                  "validation_codec_templateResources_resourceAbsolutePathToResourceFile_invalidPugPath",
+                  "validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidPugPath",
                   {
                     value: path.file,
                   },

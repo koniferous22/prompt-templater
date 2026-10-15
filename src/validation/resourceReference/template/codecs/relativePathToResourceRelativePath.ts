@@ -25,7 +25,7 @@ export const RelativePathToTemplateResourceRelativePath = z.codec(
         )
         .otherwise(() => {
           return appErr(
-            "validation_codec_configResources_relativePathToResourceRelativePath_invalidExtension",
+            "validation_resourceReference_template_codecs_relativePathToResourceRelativePath_invalidExtension",
             {
               resourceInput: value,
               allowedExtensions: ["pug"],

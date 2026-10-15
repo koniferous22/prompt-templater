@@ -5,9 +5,14 @@ import { AbsolutePathToFsStatsSchema } from "../codecs/absolutePathToFsStats.js"
 
 export const FileSchema = AbsolutePathToFsStatsSchema.check((ctx) => {
   if (!ctx.value.fsStats.isFile()) {
-    zodRegisterIssue(ctx.value.absolutePath, ctx, "validation_schemas_fileSchema_pathIsNotFolder", {
-      value: ctx.value.absolutePath,
-    });
+    zodRegisterIssue(
+      ctx.value.absolutePath,
+      ctx,
+      "validation_fs_schemas_fileSchema_pathIsNotFolder",
+      {
+        value: ctx.value.absolutePath,
+      },
+    );
   }
 })
   .transform(({ absolutePath }) => absolutePath)

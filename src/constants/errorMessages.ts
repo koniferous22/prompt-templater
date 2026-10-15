@@ -96,90 +96,81 @@ export const errorMessages = {
   module_templateContext_createTemplateContextFromDeferredWorkspaceContext_invalidWorkflowPath:
     (ctx: { workflowFileInput: string }) =>
       `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
-  validation_customTypes_nonEmptyString_invalidInput: (ctx: { value: string }) =>
-    `Expected non-empty string got "${ctx.value}"`,
-  validation_customTypes_fileExtension_invalidInput: (ctx: { value: string }) =>
-    `Expected file extension got "${ctx.value}"`,
-  validation_codec_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
+  validation_fs_codecs_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
-  validation_codec_configResources_absolutePathToResourceAbsolutePath_invalidExtension: (ctx: {
-    resourceInput: AbsolutePath;
-    allowedExtensions: NonEmptyArray<string>;
-  }) =>
-    `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
-  validation_codec_configResources_nonEmptyStringToResourceInput_invalidInputData: (ctx: {
-    value: string;
-  }) => `Expected absolute or relative path, got "${ctx.value}`,
-  validation_codec_configResources_relativePathToResourceRelativePath_invalidExtension: (ctx: {
-    resourceInput: RelativePath;
-    allowedExtensions: NonEmptyArray<string>;
-  }) =>
-    `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
-  validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidJsonFile: (ctx: {
-    value: string;
-  }) => `Path "${ctx.value}" doesn't point to valid JSON file`,
-  validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidJsonPath: (ctx: {
-    value: string;
-  }) => `Error retrieving absolute path from "${ctx.value}"`,
-  validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidYamlFile: (ctx: {
-    value: string;
-  }) => `Path "${ctx.value}" doesn't point to valid YAML file`,
-  validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidYamlPath: (ctx: {
-    value: string;
-  }) => `Error retrieving absolute path from "${ctx.value}"`,
-  validation_codec_templateResources_absolutePathToResourceAbsolutePath_invalidExtension: (ctx: {
-    resourceInput: AbsolutePath;
-    allowedExtensions: NonEmptyArray<string>;
-  }) =>
-    `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
-  validation_codec_templateResources_nonEmptyStringToResourceInput_invalidInputData: (ctx: {
-    value: string;
-  }) => `Expected absolute or relative path, got "${ctx.value}`,
-  validation_codec_templateResources_relativePathToResourceRelativePath_invalidExtension: (ctx: {
-    resourceInput: RelativePath;
-    allowedExtensions: NonEmptyArray<string>;
-  }) =>
-    `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
-  validation_codec_templateResources_resourceAbsolutePathToResourceFile_invalidPugFile: (ctx: {
-    value: string;
-  }) => `Path "${ctx.value}" doesn't point to valid .pug file`,
-  validation_codec_templateResources_resourceAbsolutePathToResourceFile_invalidPugPath: (ctx: {
-    value: string;
-  }) => `Error retrieving absolute path from "${ctx.value}"`,
-  validation_customTypes_posix_absolutePath_invalidInputFormat: (ctx: { value: string }) =>
+  validation_fs_schemas_fileSchema_pathIsNotFolder: (ctx: { value: string }) =>
+    `Expected file for input "${ctx.value}"`,
+  validation_fs_schemas_folderSchema_pathIsNotFolder: (ctx: { value: string }) =>
+    `Expected folder for input "${ctx.value}"`,
+  validation_path_customTypes_fileExtension_invalidInput: (ctx: { value: string }) =>
+    `Expected file extension got "${ctx.value}"`,
+  validation_path_customTypes_posix_absolutePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected POSIX absolute path, got "${ctx.value}"`,
-  validation_customTypes_posix_pathFragment_emptyInput: () =>
+  validation_path_customTypes_posix_pathFragment_emptyInput: () =>
     'Expected POSIX path fragment, got ""',
-  validation_customTypes_posix_pathFragment_invalidInputFormat: (ctx: { value: string }) =>
+  validation_path_customTypes_posix_pathFragment_invalidInputFormat: (ctx: { value: string }) =>
     `Expected POSIX path fragment (no '/' characters), got "${ctx.value}"`,
-  validation_customTypes_posix_relativePath_emptyInput: () =>
+  validation_path_customTypes_posix_relativePath_emptyInput: () =>
     'Expected POSIX relative path, got ""',
-  validation_customTypes_posix_relativePath_invalidInputFormat: (ctx: { value: string }) =>
+  validation_path_customTypes_posix_relativePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected POSIX relative path, got "${ctx.value}"`,
-  validation_customTypes_win32_absolutePath_invalidInputFormat: (ctx: { value: string }) =>
+  validation_path_customTypes_win32_absolutePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected Win32 absolute path (no '/' or '\\' characters), got "${ctx.value}"`,
-  validation_customTypes_win32_pathFragment_emptyInput: () =>
+  validation_path_customTypes_win32_pathFragment_emptyInput: () =>
     'Expected Win32 path fragment, got ""',
-  validation_customTypes_win32_pathFragment_invalidInputFormat: (ctx: { value: string }) =>
+  validation_path_customTypes_win32_pathFragment_invalidInputFormat: (ctx: { value: string }) =>
     `Expected Win32 path fragment (no '/' or '\\' characters), got "${ctx.value}"`,
-  validation_customTypes_win32_relativePath_emptyInput: () =>
+  validation_path_customTypes_win32_relativePath_emptyInput: () =>
     'Expected Win32 relative path, got ""',
-  validation_customTypes_win32_relativePath_invalidInputFormat: (ctx: { value: string }) =>
+  validation_path_customTypes_win32_relativePath_invalidInputFormat: (ctx: { value: string }) =>
     `Expected Win32 relative path, got "${ctx.value}"`,
-  validation_factories_absolutePathWithExtension_invalidExtension: (ctx: {
+  validation_path_factories_absolutePathWithExtension_invalidExtension: (ctx: {
     expectedExtensions: NonEmptyArray<string>;
     file: AbsolutePath;
   }) =>
     `Expected ${ctx.expectedExtensions.length === 1 ? `extension "${ctx.expectedExtensions[0]}"` : `one of following extensions: ${renderStringList(ctx.expectedExtensions, null)}`} for file "${ctx.file}"`,
-  validation_factories_relativePathWithExtension_invalidExtension: (ctx: {
+  validation_path_factories_relativePathWithExtension_invalidExtension: (ctx: {
     expectedExtensions: NonEmptyArray<string>;
     file: RelativePath;
   }) =>
     `Expected ${ctx.expectedExtensions.length === 1 ? `extension "${ctx.expectedExtensions[0]}"` : `one of following extensions: ${renderStringList(ctx.expectedExtensions, null)}`} for file "${ctx.file}"`,
-  validation_schemas_fileSchema_pathIsNotFolder: (ctx: { value: string }) =>
-    `Expected file for input "${ctx.value}"`,
-  validation_schemas_folderSchema_pathIsNotFolder: (ctx: { value: string }) =>
-    `Expected folder for input "${ctx.value}"`,
+  validation_resourceFile_config_codecs_resourceAbsolutePathToResourceFile_invalidJsonFile: (ctx: {
+    value: string;
+  }) => `Path "${ctx.value}" doesn't point to valid JSON file`,
+  validation_resourceFile_config_codecs_resourceAbsolutePathToResourceFile_invalidJsonPath: (ctx: {
+    value: string;
+  }) => `Error retrieving absolute path from "${ctx.value}"`,
+  validation_resourceFile_config_codecs_resourceAbsolutePathToResourceFile_invalidYamlFile: (ctx: {
+    value: string;
+  }) => `Path "${ctx.value}" doesn't point to valid YAML file`,
+  validation_resourceFile_config_codecs_resourceAbsolutePathToResourceFile_invalidYamlPath: (ctx: {
+    value: string;
+  }) => `Error retrieving absolute path from "${ctx.value}"`,
+  validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidPugFile: (ctx: {
+    value: string;
+  }) => `Path "${ctx.value}" doesn't point to valid .pug file`,
+  validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidPugPath: (ctx: {
+    value: string;
+  }) => `Error retrieving absolute path from "${ctx.value}"`,
+  validation_resourceReference_config_codecs_absolutePathToResourceAbsolutePath_invalidExtension:
+    (ctx: { resourceInput: AbsolutePath; allowedExtensions: NonEmptyArray<string> }) =>
+      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+  validation_resourceReference_config_codecs_nonEmptyStringToResourceInput_invalidInputData: (ctx: {
+    value: string;
+  }) => `Expected absolute or relative path, got "${ctx.value}`,
+  validation_resourceReference_config_codecs_relativePathToResourceRelativePath_invalidExtension:
+    (ctx: { resourceInput: RelativePath; allowedExtensions: NonEmptyArray<string> }) =>
+      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+  validation_resourceReference_template_codecs_absolutePathToResourceAbsolutePath_invalidExtension:
+    (ctx: { resourceInput: AbsolutePath; allowedExtensions: NonEmptyArray<string> }) =>
+      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+  validation_resourceReference_template_codecs_nonEmptyStringToResourceInput_invalidInputData:
+    (ctx: { value: string }) => `Expected absolute or relative path, got "${ctx.value}`,
+  validation_resourceReference_template_codecs_relativePathToResourceRelativePath_invalidExtension:
+    (ctx: { resourceInput: RelativePath; allowedExtensions: NonEmptyArray<string> }) =>
+      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+  validation_string_customTypes_nonEmptyString_invalidInput: (ctx: { value: string }) =>
+    `Expected non-empty string got "${ctx.value}"`,
 } as const satisfies Record<AppErrorCode, (ctx: any) => string>;
 
 export type MessageContext = {

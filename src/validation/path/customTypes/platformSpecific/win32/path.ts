@@ -15,7 +15,7 @@ const UnbrandedAbsolutePathWin32Schema = z.string().check((ctx) => {
     zodRegisterIssue(
       ctx.value,
       ctx,
-      "validation_customTypes_win32_absolutePath_invalidInputFormat",
+      "validation_path_customTypes_win32_absolutePath_invalidInputFormat",
       { value: ctx.value },
     );
   }
@@ -28,13 +28,13 @@ export type AbsolutePathWin32 = z.output<typeof AbsolutePathWin32Schema>;
 
 const UnbrandedRelativePathWin32Schema = z
   .string()
-  .min(1, { error: errorMessages.validation_customTypes_win32_relativePath_emptyInput() })
+  .min(1, { error: errorMessages.validation_path_customTypes_win32_relativePath_emptyInput() })
   .check((ctx) => {
     if (path.win32.isAbsolute(ctx.value)) {
       zodRegisterIssue(
         ctx.value,
         ctx,
-        "validation_customTypes_win32_relativePath_invalidInputFormat",
+        "validation_path_customTypes_win32_relativePath_invalidInputFormat",
         { value: ctx.value },
       );
     }
@@ -47,13 +47,13 @@ export type RelativePathWin32 = z.output<typeof RelativePathWin32Schema>;
 
 const UnbrandedPathFragmentWin32Schema = z
   .string()
-  .min(1, { error: errorMessages.validation_customTypes_win32_pathFragment_emptyInput() })
+  .min(1, { error: errorMessages.validation_path_customTypes_win32_pathFragment_emptyInput() })
   .check((ctx) => {
     if (path.win32.basename(ctx.value) !== ctx.value) {
       zodRegisterIssue(
         ctx.value,
         ctx,
-        "validation_customTypes_win32_pathFragment_invalidInputFormat",
+        "validation_path_customTypes_win32_pathFragment_invalidInputFormat",
         { value: ctx.value },
       );
     }

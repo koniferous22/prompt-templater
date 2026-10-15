@@ -5,7 +5,7 @@ import { NonEmptyStringSchema } from "../../string/customTypes/string.js";
 
 export const FileExtensionSchema = NonEmptyStringSchema.check((ctx) => {
   if (ctx.value.includes(".")) {
-    zodRegisterIssue(ctx.value, ctx, "validation_customTypes_fileExtension_invalidInput", {
+    zodRegisterIssue(ctx.value, ctx, "validation_path_customTypes_fileExtension_invalidInput", {
       value: ctx.value,
     });
   }

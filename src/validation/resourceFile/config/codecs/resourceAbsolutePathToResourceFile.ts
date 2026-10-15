@@ -36,7 +36,7 @@ export const ConfigResourceFileSchema = z
                   file: jsonFileResult.data,
                 })
               : appErrAsync(
-                  "validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidJsonFile",
+                  "validation_resourceFile_config_codecs_resourceAbsolutePathToResourceFile_invalidJsonFile",
                   {
                     value: path.path,
                   },
@@ -50,7 +50,7 @@ export const ConfigResourceFileSchema = z
                   file: yamlFileResult.data,
                 })
               : appErrAsync(
-                  "validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidYamlFile",
+                  "validation_resourceFile_config_codecs_resourceAbsolutePathToResourceFile_invalidYamlFile",
                   {
                     value: path.path,
                   },
@@ -73,7 +73,7 @@ export const ConfigResourceFileSchema = z
                   path: jsonAbsolutePathResult.data,
                 })
               : appErr(
-                  "validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidJsonPath",
+                  "validation_resourceFile_config_codecs_resourceAbsolutePathToResourceFile_invalidJsonPath",
                   {
                     value: path.file,
                   },
@@ -87,7 +87,7 @@ export const ConfigResourceFileSchema = z
                   path: yamlAbsolutePathResult.data,
                 })
               : appErr(
-                  "validation_codec_configResources_resourceAbsolutePathToResourceFile_invalidYamlPath",
+                  "validation_resourceFile_config_codecs_resourceAbsolutePathToResourceFile_invalidYamlPath",
                   {
                     value: path.file,
                   },

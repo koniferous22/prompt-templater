@@ -76,7 +76,7 @@ const pathDetectionCheckStaticEntries = async (
             }),
           )
           .with({ success: false }, (result) =>
-            appErr("validation_codec_absolutePathToFsStats_invalidInputData", {
+            appErr("validation_fs_codecs_absolutePathToFsStats_invalidInputData", {
               zodError: result.error,
             }),
           )

@@ -6,7 +6,7 @@ export const NonEmptyStringSchema = z
   .string()
   .nonempty({
     error: (iss) =>
-      errorMessages.validation_customTypes_nonEmptyString_invalidInput({
+      errorMessages.validation_string_customTypes_nonEmptyString_invalidInput({
         value: String(iss.input),
       }),
   })

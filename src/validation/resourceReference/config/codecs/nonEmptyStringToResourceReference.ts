@@ -63,7 +63,7 @@ export const NonEmptyStringToConfigResourceReferenceSchema = z.codec(
         zodRegisterIssue(
           nonEmptyString,
           ctx,
-          "validation_codec_configResources_nonEmptyStringToResourceInput_invalidInputData",
+          "validation_resourceReference_config_codecs_nonEmptyStringToResourceInput_invalidInputData",
           {
             value: nonEmptyString,
           },

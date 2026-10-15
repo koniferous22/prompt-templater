@@ -31,7 +31,7 @@ export const RelativePathToConfigResourceRelativePath = z.codec(
         )
         .otherwise(() => {
           return appErr(
-            "validation_codec_configResources_relativePathToResourceRelativePath_invalidExtension",
+            "validation_resourceReference_config_codecs_relativePathToResourceRelativePath_invalidExtension",
             {
               resourceInput: value,
               allowedExtensions: ["json", "yaml", "yml"],

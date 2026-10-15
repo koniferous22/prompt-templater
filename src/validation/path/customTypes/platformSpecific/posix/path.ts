@@ -15,7 +15,7 @@ const UnbrandedAbsolutePathPosixSchema = z.string().check((ctx) => {
     zodRegisterIssue(
       ctx.value,
       ctx,
-      "validation_customTypes_posix_absolutePath_invalidInputFormat",
+      "validation_path_customTypes_posix_absolutePath_invalidInputFormat",
       { value: ctx.value },
     );
   }
@@ -28,13 +28,13 @@ export type AbsolutePathPosix = z.output<typeof AbsolutePathPosixSchema>;
 
 const UnbrandedRelativePathPosixSchema = z
   .string()
-  .min(1, { error: errorMessages.validation_customTypes_posix_relativePath_emptyInput() })
+  .min(1, { error: errorMessages.validation_path_customTypes_posix_relativePath_emptyInput() })
   .check((ctx) => {
     if (path.posix.isAbsolute(ctx.value)) {
       zodRegisterIssue(
         ctx.value,
         ctx,
-        "validation_customTypes_posix_relativePath_invalidInputFormat",
+        "validation_path_customTypes_posix_relativePath_invalidInputFormat",
         { value: ctx.value },
       );
     }
@@ -47,13 +47,13 @@ export type RelativePathPosix = z.output<typeof RelativePathPosixSchema>;
 
 const UnbrandedPathFragmentPosixSchema = z
   .string()
-  .min(1, { error: errorMessages.validation_customTypes_posix_pathFragment_emptyInput() })
+  .min(1, { error: errorMessages.validation_path_customTypes_posix_pathFragment_emptyInput() })
   .check((ctx) => {
     if (path.posix.basename(ctx.value) !== ctx.value) {
       zodRegisterIssue(
         ctx.value,
         ctx,
-        "validation_customTypes_posix_pathFragment_invalidInputFormat",
+        "validation_path_customTypes_posix_pathFragment_invalidInputFormat",
         { value: ctx.value },
       );
     }
