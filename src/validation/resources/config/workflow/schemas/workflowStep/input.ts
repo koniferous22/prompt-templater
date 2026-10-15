@@ -7,6 +7,7 @@ import {
 import { zodUnionFromEnum } from "../../../../../../utils/deps/zod/zodUnionFromEnum.js";
 import { NonEmptyStringSchema } from "../../../../../string/customTypes/string.js";
 import { AbstractWorkflowStepSchema } from "./abstract/abstractWorkflowStep.js";
+import { InputPromptOptionalValidationErrorMessageShorthandSchema } from "../../codecs/shorthands/inputWorkflowStep/optionalValidationErrorMessage.js";
 
 export const inputPromptValidatorToZodSchema = {
   boolean: z.boolean(),
@@ -14,30 +15,10 @@ export const inputPromptValidatorToZodSchema = {
   string: NonEmptyStringSchema,
 } satisfies Record<InquirerInputPromptValidatorType, z.ZodType<any>>;
 
-const InputPromptOptionalValidationErrorMessageSchema = z.object({
-  typeErrorMessage: NonEmptyStringSchema.optional(),
-});
-
 const InputPromptRequiredValidationErrorMessageSchema = z.object({
   requiredErrorMessage: NonEmptyStringSchema.optional(),
   typeErrorMessage: NonEmptyStringSchema.optional(),
 });
-
-// TODO - figure out how to reorganize "shorthand" codecs
-const InputPromptOptionalValidationErrorMessageShorthandSchema = z.codec(
-  z.union([NonEmptyStringSchema.optional(), InputPromptOptionalValidationErrorMessageSchema]),
-  InputPromptOptionalValidationErrorMessageSchema,
-  {
-    decode: (value) => {
-      return typeof value === "string" || typeof value === "undefined"
-        ? {
-            typeErrorMessage: value,
-          }
-        : value;
-    },
-    encode: (value) => InputPromptOptionalValidationErrorMessageSchema.parse(value),
-  },
-);
 
 const BaseOptionalWithDefaultInputPromptValidatorSchema = {
   type: z.literal("optionalWithDefault"),
