@@ -6,8 +6,8 @@ import {
 } from "../../../../../../constants/enums/inquirer/inputPromptValidator.js";
 import { zodUnionFromEnum } from "../../../../../../utils/deps/zod/zodUnionFromEnum.js";
 import { NonEmptyStringSchema } from "../../../../../string/customTypes/string.js";
-import { AbstractWorkflowStepSchema } from "./abstract/abstractWorkflowStep.js";
 import { InputPromptOptionalValidationErrorMessageShorthandSchema } from "../../codecs/shorthands/inputWorkflowStep/optionalValidationErrorMessage.js";
+import { AbstractWorkflowStepSchema } from "./abstract/abstractWorkflowStep.js";
 
 export const inputPromptValidatorToZodSchema = {
   boolean: z.boolean(),

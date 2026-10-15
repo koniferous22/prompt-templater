@@ -1,8 +1,8 @@
 import z from "zod";
 
 import { NonEmptyStringSchema } from "../../../../../string/customTypes/string.js";
-import { AbstractWorkflowStepSchema } from "./abstract/abstractWorkflowStep.js";
 import { EditorPromptValidationShorthandSchema } from "../../codecs/shorthands/editorWorkflowStep/validation.js";
+import { AbstractWorkflowStepSchema } from "./abstract/abstractWorkflowStep.js";
 
 export const EditorWorkflowStepSchema = AbstractWorkflowStepSchema.safeExtend({
   type: z.literal("editor"),

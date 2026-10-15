@@ -1,4 +1,5 @@
 import z from "zod";
+
 import { NonEmptyStringSchema } from "../../../../../../string/customTypes/string.js";
 
 const InputPromptOptionalValidationErrorMessageSchema = z.object({
@@ -19,4 +20,3 @@ export const InputPromptOptionalValidationErrorMessageShorthandSchema = z.codec(
     encode: (value) => InputPromptOptionalValidationErrorMessageSchema.parse(value),
   },
 );
-
