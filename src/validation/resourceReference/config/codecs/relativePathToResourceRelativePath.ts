@@ -29,6 +29,12 @@ export const RelativePathToConfigResourceRelativePath = z.codec(
             path: value,
           }),
         )
+        .with("yml", () =>
+          ok({
+            format: "yaml" as const,
+            path: value,
+          }),
+        )
         .otherwise(() => {
           return appErr(
             "validation_resourceReference_config_codecs_relativePathToResourceRelativePath_invalidExtension",
