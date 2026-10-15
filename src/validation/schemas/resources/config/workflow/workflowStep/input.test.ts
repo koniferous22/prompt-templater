@@ -398,13 +398,13 @@ const testCasesForInputWorkflowStepSchema = [
         message: "Enter something",
         validation: {
           type: "optionalWithDefault",
-          value: "test"
+          value: "test",
         },
       },
-      testCaseDescription: "optionalWithDefault validation without \"validator\" attribute",
+      testCaseDescription: 'optionalWithDefault validation without "validator" attribute',
     },
     testOutcome: {
-      testBehaviourDescription: "succeed with default \"string\" validator",
+      testBehaviourDescription: 'succeed with default "string" validator',
       data: {
         result: true,
       },
