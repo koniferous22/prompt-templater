@@ -297,7 +297,7 @@ const testCasesForCreateFolderWithContentsSchema = [
 
 describe("createFolderWithContentsSchema", () => {
   for (const { testInput, testOutcome } of testCasesForCreateFolderWithContentsSchema) {
-    it(`for "${testInput.testCaseDescription}" parsing should "${testOutcome.testBehaviourDescription}"`, async () => {
+    it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
       const FolderWithContentsSchema = createFolderWithContentsSchema(
         testInput.data.folderWithContentsSchema,
       );

@@ -258,7 +258,7 @@ const testCasesForEditorWorkflowStepSchema = [
 
 describe("EditorWorkflowStepSchema", () => {
   for (const { testInput, testOutcome } of testCasesForEditorWorkflowStepSchema) {
-    it(`for "${testInput.testCaseDescription}" parsing should "${testOutcome.testBehaviourDescription}"`, async () => {
+    it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = EditorWorkflowStepSchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data.result);
     });

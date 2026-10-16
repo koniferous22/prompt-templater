@@ -99,7 +99,7 @@ const testCasesForLongestCommonPathWin32 = [
 
 describe("longestCommonPathPrefixWin32", () => {
   for (const { testInput, testOutcome } of testCasesForLongestCommonPathWin32) {
-    it(`for ${testInput.testCaseDescription} it should "${testOutcome.testBehaviourDescription}"`, async () => {
+    it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const [firstPath, secondPath] = testInput.data;
       assert.equal(longestCommonPathPrefixWin32(firstPath, secondPath), testOutcome.data);
     });

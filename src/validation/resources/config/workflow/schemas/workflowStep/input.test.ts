@@ -425,7 +425,7 @@ const testCasesForInputWorkflowStepSchema = [
 
 describe("InputWorkflowStepSchema", () => {
   for (const { testInput, testOutcome } of testCasesForInputWorkflowStepSchema) {
-    it(`for "${testInput.testCaseDescription}" parsing should "${testOutcome.testBehaviourDescription}"`, async () => {
+    it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = InputWorkflowStepSchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data.result);
     });
