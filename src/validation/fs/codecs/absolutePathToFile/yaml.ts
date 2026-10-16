@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { YamlAbsolutePathSchema } from "../../../path/schemas/pathWithExtensions.js";
+import { YamlAbsolutePathSchema } from "../../../path/schemas/pathWithExtension.js";
 import { FileSchema } from "../../schemas/file.js";
 
 export const YamlFileSchema = z

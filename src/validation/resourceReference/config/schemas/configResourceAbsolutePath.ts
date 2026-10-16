@@ -3,7 +3,7 @@ import z from "zod";
 import {
   JsonAbsolutePathSchema,
   YamlAbsolutePathSchema,
-} from "../../../path/schemas/pathWithExtensions.js";
+} from "../../../path/schemas/pathWithExtension.js";
 
 export const ConfigResourceAbsolutePathSchema = z.discriminatedUnion("format", [
   z.object({

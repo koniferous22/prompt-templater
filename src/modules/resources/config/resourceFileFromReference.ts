@@ -7,7 +7,7 @@ import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
 import {
   JsonAbsolutePathSchema,
   YamlAbsolutePathSchema,
-} from "../../../validation/path/schemas/pathWithExtensions.js";
+} from "../../../validation/path/schemas/pathWithExtension.js";
 import { ConfigResourceFileSchema } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import type { ConfigResourceReference } from "../../../validation/resourceReference/config/schemas/configResourceReference.js";
 import type { WorkspaceContext } from "../../../validation/workspaceContext/schemas/workspaceContext.js";

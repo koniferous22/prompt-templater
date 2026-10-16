@@ -3,7 +3,7 @@ import z from "zod";
 import {
   JsonRelativePathSchema,
   YamlRelativePathSchema,
-} from "../../../path/schemas/pathWithExtensions.js";
+} from "../../../path/schemas/pathWithExtension.js";
 
 export const ConfigResourceRelativePathSchema = z.discriminatedUnion("format", [
   z.object({

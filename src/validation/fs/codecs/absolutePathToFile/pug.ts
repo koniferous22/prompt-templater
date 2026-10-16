@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { PugAbsolutePathSchema } from "../../../path/schemas/pathWithExtensions.js";
+import { PugAbsolutePathSchema } from "../../../path/schemas/pathWithExtension.js";
 import { FileSchema } from "../../schemas/file.js";
 
 export const PugFileSchema = z

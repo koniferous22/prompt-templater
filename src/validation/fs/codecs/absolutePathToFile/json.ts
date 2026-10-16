@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { JsonAbsolutePathSchema } from "../../../path/schemas/pathWithExtensions.js";
+import { JsonAbsolutePathSchema } from "../../../path/schemas/pathWithExtension.js";
 import { FileSchema } from "../../schemas/file.js";
 
 export const JsonFileSchema = z

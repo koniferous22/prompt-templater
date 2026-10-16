@@ -9,7 +9,7 @@ import { YamlFileSchema } from "../../../fs/codecs/absolutePathToFile/yaml.js";
 import {
   JsonAbsolutePathSchema,
   YamlAbsolutePathSchema,
-} from "../../../path/schemas/pathWithExtensions.js";
+} from "../../../path/schemas/pathWithExtension.js";
 import { ConfigResourceAbsolutePathSchema } from "../../../resourceReference/config/schemas/configResourceAbsolutePath.js";
 
 export const ConfigResourceFileSchema = z

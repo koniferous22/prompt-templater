@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { PugAbsolutePathSchema } from "../../../path/schemas/pathWithExtensions.js";
+import { PugAbsolutePathSchema } from "../../../path/schemas/pathWithExtension.js";
 
 export const TemplateResourceAbsolutePathSchema = z.discriminatedUnion("format", [
   z.object({
