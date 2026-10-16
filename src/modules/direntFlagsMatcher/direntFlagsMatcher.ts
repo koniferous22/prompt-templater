@@ -70,7 +70,10 @@ const createDirentFlagsMap = (inputDirents: DirentData[]) => {
       // TODO actual exception
       return errFromZodError(dirEntryNameResult.error);
     }
-    const folderEntryMap = flagsMap.getOrInsert(parentPathResult.data, new Map<PathFragment, DirentFlags>());
+    const folderEntryMap = flagsMap.getOrInsert(
+      parentPathResult.data,
+      new Map<PathFragment, DirentFlags>(),
+    );
     folderEntryMap.set(dirEntryNameResult.data, dirent.direntFlags);
   }
   const result = {
