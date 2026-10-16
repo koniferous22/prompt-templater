@@ -3,7 +3,7 @@ import path, { dirname } from "node:path";
 import { okAsync } from "neverthrow";
 
 import { appErrAsync } from "../../utils/deps/neverthrow/errorFactory.js";
-import { longestCommonPathPrefix } from "../../utils/path/platform-specific/longestCommonPathPrefix.js";
+import { longestCommonPathPrefix } from "../../utils/path/platform-specific/index.js";
 import { AbsolutePathSchema, type AbsolutePath } from "../../validation/path/customTypes/index.js";
 import type { ConfigResourceFile } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import { WorkspaceContextSchema } from "../../validation/workspaceContext/schemas/workspaceContext.js";
