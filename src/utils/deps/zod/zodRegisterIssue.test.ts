@@ -1,13 +1,14 @@
+import assert from "node:assert";
+import { describe, it } from "node:test";
+
 import z from "zod";
 
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
+import { createError } from "../neverthrow/errorFactory.js";
 import type { AppError } from "../neverthrow/types.js";
 import { zodRegisterIssue } from "./zodRegisterIssue.js";
-import { describe, it } from "node:test";
-import { createError } from "../neverthrow/errorFactory.js";
-import assert from "node:assert";
 
-const dummyError1 = createError('dependency_zod_safeParseErrorWithoutIssues', undefined);
+const dummyError1 = createError("dependency_zod_safeParseErrorWithoutIssues", undefined);
 
 const DummyZodSchema = z.union([z.literal(1), z.literal(2)]).check((ctx) => {
   if (ctx.value === 2) {
@@ -39,12 +40,12 @@ const testCasesForZodRegisterIssue = [
         parseResult: false,
         issues: [
           {
-            issueCode: 'custom',
+            issueCode: "custom",
             issueParams: {
               code: dummyError1.code,
               meta: dummyError1.meta,
             },
-          }
+          },
         ],
       },
       testBehaviourDescription: "should fail with matching zod issues",
@@ -64,15 +65,15 @@ const testCasesForZodRegisterIssue = [
           parseResult: false;
           issues: {
             issueCode: z.core.$ZodIssueCode;
-            issueParams: Pick<AppError<AppErrorCode>, 'code' | 'meta'> | null;
+            issueParams: Pick<AppError<AppErrorCode>, "code" | "meta"> | null;
           }[];
         };
     testBehaviourDescription: string;
   };
 }[];
 
-describe('zodRegisterIssue', () => {
-  describe('DummyZodSchema', () => {
+describe("zodRegisterIssue", () => {
+  describe("DummyZodSchema", () => {
     for (const { testInput, testOutcome } of testCasesForZodRegisterIssue) {
       it(`for ${testInput.testCaseDescription} DummyZodSchema ${testOutcome.testBehaviourDescription}`, async () => {
         const parsingResult = DummyZodSchema.safeParse(testInput.data);
@@ -81,14 +82,16 @@ describe('zodRegisterIssue', () => {
           assert.deepEqual(
             parsingResult.success === false && parsingResult.error.issues.map(({ code }) => code),
             testOutcome.data.issues.map(({ issueCode }) => issueCode),
-          )
+          );
           assert.deepEqual(
-            parsingResult.success === false && parsingResult.error.issues.map((issue) => issue.code === 'custom' ? issue.params : null),
+            parsingResult.success === false &&
+              parsingResult.error.issues.map((issue) =>
+                issue.code === "custom" ? issue.params : null,
+              ),
             testOutcome.data.issues.map(({ issueParams }) => issueParams),
-          )
+          );
         }
       });
     }
-
   });
-})
+});

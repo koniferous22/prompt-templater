@@ -1,14 +1,12 @@
+import assert from "node:assert";
+import { describe, it } from "node:test";
+
 import z from "zod";
 
-import type { AppErrorCode } from "../../../constants/errorCodes.js";
-import type { AppError } from "../neverthrow/types.js";
-import { zodRegisterIssue } from "./zodRegisterIssue.js";
-import { describe, it } from "node:test";
 import { createError } from "../neverthrow/errorFactory.js";
-import assert from "node:assert";
 import { zodIssueFromAppError } from "./zodIssueFromAppError.js";
 
-const dummyError1 = createError('dependency_zod_safeParseErrorWithoutIssues', undefined);
+const dummyError1 = createError("dependency_zod_safeParseErrorWithoutIssues", undefined);
 
 const testCasesForZodIssueFromAppError = [
   {
@@ -20,7 +18,7 @@ const testCasesForZodIssueFromAppError = [
           {
             path: [],
             continue: false,
-          }
+          },
         ],
       },
       testCaseDescription: "sample data",
@@ -28,7 +26,7 @@ const testCasesForZodIssueFromAppError = [
     testOutcome: {
       data: {
         result: {
-          code: 'custom',
+          code: "custom",
           path: [],
           message: dummyError1.message,
           input: 1,
@@ -36,8 +34,8 @@ const testCasesForZodIssueFromAppError = [
           params: {
             code: dummyError1.code,
             meta: dummyError1.meta,
-          }
-        }
+          },
+        },
       },
       testBehaviourDescription: "should return mapped zod issue",
     },
@@ -52,17 +50,16 @@ const testCasesForZodIssueFromAppError = [
   testOutcome: {
     data: {
       result: ReturnType<typeof zodIssueFromAppError>;
-    }
+    };
     testBehaviourDescription: string;
   };
 }[];
 
-describe('zodIssueFromAppError', () => {
+describe("zodIssueFromAppError", () => {
   for (const { testInput, testOutcome } of testCasesForZodIssueFromAppError) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const result = zodIssueFromAppError(...testInput.data.params);
       assert.deepEqual(result, testOutcome.data.result);
     });
   }
-})
-
+});
