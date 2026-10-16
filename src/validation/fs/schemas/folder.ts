@@ -1,3 +1,5 @@
+import type z from "zod";
+
 import { zodRegisterIssue } from "../../../utils/deps/zod/zodRegisterIssue.js";
 import { AbsolutePathToFsStatsSchema } from "../codecs/absolutePathToFsStats.js";
 
@@ -13,3 +15,5 @@ export const FolderSchema = AbsolutePathToFsStatsSchema.check((ctx) => {
 })
   .transform(({ absolutePath }) => absolutePath)
   .brand<"Folder">();
+
+export type Folder = z.output<typeof FolderSchema>;
