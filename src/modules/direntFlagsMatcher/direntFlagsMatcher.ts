@@ -7,7 +7,6 @@ import { appErr, createError } from "../../utils/deps/neverthrow/errorFactory.js
 import { errorFromErrorList } from "../../utils/deps/neverthrow/errorList.js";
 import { errFromZodError } from "../../utils/deps/neverthrow/resultFromSafeParseResult.js";
 import type { AppErrorInstance } from "../../utils/deps/neverthrow/types.js";
-import { getOrInsert } from "../../utils/map/getOrInsert.js";
 import type { DirentData } from "../../validation/fs/pipes/dirent.js";
 import {
   AbsolutePathSchema,
@@ -71,11 +70,7 @@ const createDirentFlagsMap = (inputDirents: DirentData[]) => {
       // TODO actual exception
       return errFromZodError(dirEntryNameResult.error);
     }
-    const folderEntryMap = getOrInsert(
-      flagsMap,
-      parentPathResult.data,
-      new Map<PathFragment, DirentFlags>(),
-    );
+    const folderEntryMap = flagsMap.getOrInsert(parentPathResult.data, new Map<PathFragment, DirentFlags>());
     folderEntryMap.set(dirEntryNameResult.data, dirent.direntFlags);
   }
   const result = {
