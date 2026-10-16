@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
 
-import { pathFragmentVariant } from "../../../utils/platform/detectPlatformFeatures.js";
+import { pathFragmentVariant } from "../../../constants/runtime/pathFragmentVariant.js";
 
 export const { AbsolutePathSchema, PathFragmentSchema, RelativePathSchema } = await match(
   pathFragmentVariant,
