@@ -3,7 +3,7 @@ import z from "zod";
 import type { AppErrorCode } from "../../../../constants/errorCodes.js";
 import type { AppError } from "../../../../utils/deps/neverthrow/types.js";
 import { zodRegisterIssue } from "../../../../utils/deps/zod/zodRegisterIssue.js";
-import { AbsolutePathSchema } from "../../../path/customTypes/path.js";
+import { AbsolutePathSchema } from "../../../path/customTypes/index.js";
 import { NonEmptyStringSchema } from "../../../string/customTypes/string.js";
 import { TemplateResourceReferenceSchema } from "../schemas/templateResourceReference.js";
 import { AbsolutePathToTemplateResourceAbsolutePath } from "./absolutePathToResourceAbsolutePath.js";

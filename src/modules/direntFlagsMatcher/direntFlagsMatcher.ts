@@ -15,7 +15,7 @@ import {
   type AbsolutePath,
   type PathFragment,
   type RelativePath,
-} from "../../validation/path/customTypes/path.js";
+} from "../../validation/path/customTypes/index.js";
 
 export type DirentFlags = DirentData["direntFlags"];
 type DirentFlag = keyof DirentFlags;

@@ -15,7 +15,7 @@ import {
   PathFragmentSchema,
   type AbsolutePath,
   type PathFragment,
-} from "../../validation/path/customTypes/path.js";
+} from "../../validation/path/customTypes/index.js";
 import { createDirentFlagsMatcher, type DirentFlagPatterns } from "./direntFlagsMatcher.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

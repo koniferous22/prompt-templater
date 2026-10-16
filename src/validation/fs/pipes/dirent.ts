@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { AbsolutePathSchema, RelativePathSchema } from "../../path/customTypes/path.js";
+import { AbsolutePathSchema, RelativePathSchema } from "../../path/customTypes/index.js";
 import { FsDirentSchema } from "../external/node/fs.js";
 
 const DirentFlagsSchema = z.object({

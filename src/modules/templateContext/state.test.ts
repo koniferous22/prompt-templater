@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import type { Err, Ok, Result } from "neverthrow";
 import { match } from "ts-pattern";
 
-import { AbsolutePathSchema } from "../../validation/path/customTypes/path.js";
+import { AbsolutePathSchema } from "../../validation/path/customTypes/index.js";
 import { ConfigResourceFileSchema } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import { TemplateResourceFileSchema } from "../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
 import { WorkspaceContextSchema } from "../../validation/workspaceContext/schemas/workspaceContext.js";

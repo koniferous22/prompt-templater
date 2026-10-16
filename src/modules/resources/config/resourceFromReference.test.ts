@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { AbsolutePathSchema } from "../../../validation/path/customTypes/path.js";
+import { AbsolutePathSchema } from "../../../validation/path/customTypes/index.js";
 import {
   ConfigResourceReferenceSchema,
   type ConfigResourceReference,

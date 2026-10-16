@@ -4,7 +4,7 @@ import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { FileExtensionSchema, type FileExtension } from "../customTypes/fileExtension.js";
-import { AbsolutePathSchema, type AbsolutePath } from "../customTypes/path.js";
+import { AbsolutePathSchema, type AbsolutePath } from "../customTypes/index.js";
 import { createAbsolutePathWithExtensionSchema } from "./pathWithExtension.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

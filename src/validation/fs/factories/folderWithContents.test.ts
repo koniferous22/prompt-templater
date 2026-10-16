@@ -11,7 +11,7 @@ import {
   type AbsolutePath,
   type PathFragment,
   type RelativePath,
-} from "../../path/customTypes/path.js";
+} from "../../path/customTypes/index.js";
 import { createFolderWithContentsSchema } from "./folderWithContents.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
