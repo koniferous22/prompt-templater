@@ -15,3 +15,5 @@ export const ConfigResourceRelativePathSchema = z.discriminatedUnion("format", [
     path: YamlRelativePathSchema,
   }),
 ]);
+
+export type ConfigResourceRelativePath = z.output<typeof ConfigResourceRelativePathSchema>;

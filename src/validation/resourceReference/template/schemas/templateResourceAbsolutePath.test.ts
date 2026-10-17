@@ -16,7 +16,7 @@ const testCasesForTemplateResourceAbsolutePathSchema = [
         format: "handlebars",
         path: join(__dirname, "../../../../../fixtures/workspace1/templates/test-template.hbs"),
       },
-      testCaseDescription: "valid input",
+      testCaseDescription: "valid .hbs input",
     },
     testOutcome: {
       data: true,
