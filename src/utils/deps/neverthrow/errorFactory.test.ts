@@ -1,6 +1,8 @@
-import { describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+
 import { z, ZodError } from "zod";
+
 import {
   createError,
   createAggregateError,
@@ -65,20 +67,29 @@ const testCasesForCreateAggregateError = [
     testOutcome: {
       data: {
         type: "aggregate" as const,
-        codes: ["dependency_zod_validationError", "dependency_nodeFs_fsReadDirInvalidOuptutShape"] as const,
+        codes: [
+          "dependency_zod_validationError",
+          "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+        ] as const,
       },
       testBehaviourDescription: "returns an AppAggregateErr containing the provided errors",
     },
   },
 ] satisfies {
   testInput: {
-    errors: readonly [AppError<"dependency_zod_validationError">, AppError<"dependency_nodeFs_fsReadDirInvalidOuptutShape">];
+    errors: readonly [
+      AppError<"dependency_zod_validationError">,
+      AppError<"dependency_nodeFs_fsReadDirInvalidOuptutShape">,
+    ];
     testCaseDescription: string;
   };
   testOutcome: {
     data: {
       type: "aggregate";
-      codes: readonly ["dependency_zod_validationError", "dependency_nodeFs_fsReadDirInvalidOuptutShape"];
+      codes: readonly [
+        "dependency_zod_validationError",
+        "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+      ];
     };
     testBehaviourDescription: string;
   };
@@ -162,7 +173,8 @@ const testCasesForAppErrAsync = [
           code: "dependency_nodeFs_fsReadDirInvalidOuptutShape" as const,
         },
       },
-      testBehaviourDescription: "returns a neverthrow errAsync ResultAsync wrapping a plain AppError",
+      testBehaviourDescription:
+        "returns a neverthrow errAsync ResultAsync wrapping a plain AppError",
     },
   },
 ] satisfies {
@@ -208,7 +220,10 @@ const testCasesForAppAggregateErr = [
         isOk: false as const,
         error: {
           type: "aggregate" as const,
-          codes: ["dependency_zod_safeParseErrorWithoutIssues", "dependency_zod_validationError"] as const,
+          codes: [
+            "dependency_zod_safeParseErrorWithoutIssues",
+            "dependency_zod_validationError",
+          ] as const,
         },
       },
       testBehaviourDescription: "returns a neverthrow err Result wrapping an AppAggregateErr",
@@ -227,7 +242,10 @@ const testCasesForAppAggregateErr = [
       isOk: false;
       error: {
         type: "aggregate";
-        codes: readonly ["dependency_zod_safeParseErrorWithoutIssues", "dependency_zod_validationError"];
+        codes: readonly [
+          "dependency_zod_safeParseErrorWithoutIssues",
+          "dependency_zod_validationError",
+        ];
       };
     };
     testBehaviourDescription: string;
@@ -242,12 +260,12 @@ describe("appAggregateErr", () => {
       assert.strictEqual(actual.isOk(), testOutcome.data.isOk);
       assert.ok(actual.isErr());
       assert.strictEqual(actual.error.type, testOutcome.data.error.type);
-      assert.strictEqual(
-        actual.error.errors.length,
-        testOutcome.data.error.codes.length,
-      );
+      assert.strictEqual(actual.error.errors.length, testOutcome.data.error.codes.length);
       testOutcome.data.error.codes.forEach((expectedCode, index) => {
-        assert.strictEqual(actual.error.errors[index] && actual.error.errors[index].code, expectedCode);
+        assert.strictEqual(
+          actual.error.errors[index] && actual.error.errors[index].code,
+          expectedCode,
+        );
       });
     });
   }
@@ -267,7 +285,10 @@ const testCasesForAppAggregateErrAsync = [
         isOk: false as const,
         error: {
           type: "aggregate" as const,
-          codes: ["dependency_nodeFs_fsReadDirInvalidOuptutShape", "dependency_zod_validationError"] as const,
+          codes: [
+            "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+            "dependency_zod_validationError",
+          ] as const,
         },
       },
       testBehaviourDescription:
@@ -276,7 +297,10 @@ const testCasesForAppAggregateErrAsync = [
   },
 ] satisfies {
   testInput: {
-    errors: readonly [AppError<"dependency_nodeFs_fsReadDirInvalidOuptutShape">, AppError<"dependency_zod_validationError">];
+    errors: readonly [
+      AppError<"dependency_nodeFs_fsReadDirInvalidOuptutShape">,
+      AppError<"dependency_zod_validationError">,
+    ];
     testCaseDescription: string;
   };
   testOutcome: {
@@ -284,7 +308,10 @@ const testCasesForAppAggregateErrAsync = [
       isOk: false;
       error: {
         type: "aggregate";
-        codes: readonly ["dependency_nodeFs_fsReadDirInvalidOuptutShape", "dependency_zod_validationError"];
+        codes: readonly [
+          "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+          "dependency_zod_validationError",
+        ];
       };
     };
     testBehaviourDescription: string;
@@ -299,12 +326,12 @@ describe("appAggregateErrAsync", () => {
       assert.strictEqual(actual.isOk(), testOutcome.data.isOk);
       assert.ok(actual.isErr());
       assert.strictEqual(actual.error.type, testOutcome.data.error.type);
-      assert.strictEqual(
-        actual.error.errors.length,
-        testOutcome.data.error.codes.length,
-      );
+      assert.strictEqual(actual.error.errors.length, testOutcome.data.error.codes.length);
       testOutcome.data.error.codes.forEach((expectedCode, index) => {
-        assert.strictEqual(actual.error.errors[index] && actual.error.errors[index].code, expectedCode);
+        assert.strictEqual(
+          actual.error.errors[index] && actual.error.errors[index].code,
+          expectedCode,
+        );
       });
     });
   }
