@@ -1,26 +1,15 @@
-// 4 cases
-// absolute path extension ok
-// absolute path extension nok
-// relative path extension ok
-// relative path extension nok
-
 import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import type { AppErrorCode } from "../../../../constants/errorCodes.js";
-import { type AbsolutePath, AbsolutePathSchema } from "../../../path/customTypes/index.js";
+import { AbsolutePathSchema } from "../../../path/customTypes/index.js";
 import { NonEmptyStringSchema, type NonEmptyString } from "../../../string/customTypes/string.js";
-import {
-  type TemplateResourceAbsolutePath,
-  TemplateResourceAbsolutePathSchema,
-} from "../schemas/templateResourceAbsolutePath.js";
 import {
   TemplateResourceReferenceSchema,
   type TemplateResourceReference,
 } from "../schemas/templateResourceReference.js";
-import { AbsolutePathToTemplateResourceAbsolutePath } from "./absolutePathToResourceAbsolutePath.js";
 import { NonEmptyStringToTemplateResourceReferenceSchema } from "./nonEmptyStringToResourceReference.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -29,7 +18,7 @@ const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtur
 const fixturesWorkspace1Folder = AbsolutePathSchema.parse(
   join(projectFixturesFolder, "workspace1"),
 );
-const testCasesForTemplateResourceFileFromReference = [
+const testCasesForNonEmptyStringToTemplateResourceReferenceSchema = [
   {
     testInput: {
       data: NonEmptyStringSchema.parse(
@@ -119,8 +108,8 @@ const testCasesForTemplateResourceFileFromReference = [
   };
 }[];
 
-describe("AbsolutePathToTemplateResourceAbsolutePath", () => {
-  for (const { testInput, testOutcome } of testCasesForTemplateResourceFileFromReference) {
+describe("NonEmptyStringToTemplateResourceReferenceSchema", () => {
+  for (const { testInput, testOutcome } of testCasesForNonEmptyStringToTemplateResourceReferenceSchema) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = NonEmptyStringToTemplateResourceReferenceSchema.safeParse(
         testInput.data,
