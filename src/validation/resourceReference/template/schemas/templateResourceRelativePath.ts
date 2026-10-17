@@ -8,3 +8,5 @@ export const TemplateResourceRelativePathSchema = z.discriminatedUnion("format",
     path: HandlebarsRelativePathSchema,
   }),
 ]);
+
+export type TemplateResourceRelativePath = z.output<typeof TemplateResourceRelativePathSchema>;
