@@ -89,16 +89,11 @@ export const errorMessages = {
   module_resources_templateResourceFileFromInput_invalidInputHandlebarsRelativePath: (ctx: {
     value: string;
   }) => `Encountered invalid .hbs relative path ${ctx.value} from user input`,
-  module_resources_templateResourceFileFromInput_invalidInputPugRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .pug relative path ${ctx.value} from user input`,
   module_resources_templateResourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
     `Error reading file "${ctx.value}"`,
   module_resources_templateResourceFromResourceFile_invalidHandlebarsContents: (ctx: {
     file: string;
   }) => `File "${ctx.file}" contains invalid handlebars template contents`,
-  module_resources_templateResourceFromResourceFile_invalidPugContents: (ctx: { file: string }) =>
-    `File "${ctx.file}" contains invalid pug template contents`,
   module_resourceContext_createResourceContextFromDeferredWorkspaceContext_invalidWorkflowPath:
     (ctx: { workflowFileInput: string }) =>
       `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
@@ -150,12 +145,6 @@ export const errorMessages = {
     value: string;
   }) => `Path "${ctx.value}" doesn't point to valid YAML file`,
   validation_resourceFile_config_codecs_resourceAbsolutePathToResourceFile_invalidYamlPath: (ctx: {
-    value: string;
-  }) => `Error retrieving absolute path from "${ctx.value}"`,
-  validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidPugFile: (ctx: {
-    value: string;
-  }) => `Path "${ctx.value}" doesn't point to valid .pug file`,
-  validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidPugPath: (ctx: {
     value: string;
   }) => `Error retrieving absolute path from "${ctx.value}"`,
   validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidHandlebarsFile:

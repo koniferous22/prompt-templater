@@ -35,50 +35,6 @@ const testCasesForTemplateResourceFileFromInput = [
         userInput: TemplateResourceReferenceSchema.parse({
           type: "absolute",
           filePath: {
-            format: "pug",
-            path: join(workspaceContext, "templates/test-template.pug"),
-          },
-        }),
-        workspaceContext,
-        templateInput: templateInputFixture,
-      },
-      testCaseDescription: "absolute .pug path",
-    },
-    testOutcome: {
-      data: {
-        renderResult: expectedTemplateRenderingResult,
-      },
-      testBehaviourDescription: "succeed with original absolute path",
-    },
-  },
-  {
-    testInput: {
-      data: {
-        userInput: TemplateResourceReferenceSchema.parse({
-          type: "relative",
-          filePath: {
-            format: "pug",
-            path: "templates/test-template.pug",
-          },
-        }),
-        workspaceContext,
-        templateInput: templateInputFixture,
-      },
-      testCaseDescription: "relative .pug path",
-    },
-    testOutcome: {
-      data: {
-        renderResult: expectedTemplateRenderingResult,
-      },
-      testBehaviourDescription: "succeed with concatenated relative path to workspace context",
-    },
-  },
-  {
-    testInput: {
-      data: {
-        userInput: TemplateResourceReferenceSchema.parse({
-          type: "absolute",
-          filePath: {
             format: "handlebars",
             path: join(workspaceContext, "templates/test-template.hbs"),
           },

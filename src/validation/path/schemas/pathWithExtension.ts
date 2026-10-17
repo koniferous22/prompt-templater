@@ -17,10 +17,6 @@ export const YamlAbsolutePathSchema = createAbsolutePathWithExtensionSchema(
   FileExtensionSchema.parse("yml"),
 ).brand<"YamlAbsolutePath">();
 export type YamlAbsolutePath = z.output<typeof YamlAbsolutePathSchema>;
-export const PugAbsolutePathSchema = createAbsolutePathWithExtensionSchema(
-  FileExtensionSchema.parse("pug"),
-).brand<"PugAbsolutePath">();
-export type PugAbsolutePath = z.output<typeof PugAbsolutePathSchema>;
 export const HandlebarsAbsolutePathSchema = createAbsolutePathWithExtensionSchema(
   FileExtensionSchema.parse("hbs"),
 ).brand<"HandlebarsAbsolutePath">();
@@ -37,10 +33,6 @@ export const YamlRelativePathSchema = createRelativePathWithExtensionSchema(
   FileExtensionSchema.parse("yml"),
 ).brand<"YamlRelativePath">();
 export type YamlRelativePath = z.output<typeof YamlRelativePathSchema>;
-export const PugRelativePathSchema = createRelativePathWithExtensionSchema(
-  FileExtensionSchema.parse("pug"),
-).brand<"PugRelativePath">();
-export type PugRelativePath = z.output<typeof PugRelativePathSchema>;
 export const HandlebarsRelativePathSchema = createRelativePathWithExtensionSchema(
   FileExtensionSchema.parse("hbs"),
 ).brand<"HandlebarsRelativePath">();
@@ -53,9 +45,6 @@ export type JsonFilepath = z.output<typeof JsonFilepathSchema>;
 
 export const YamlFilepathSchema = z.union([YamlAbsolutePathSchema, YamlRelativePathSchema]);
 export type YamlFilepath = z.output<typeof YamlFilepathSchema>;
-
-export const PugFilepathSchema = z.union([PugAbsolutePathSchema, PugRelativePathSchema]);
-export type PugFilepath = z.output<typeof PugFilepathSchema>;
 
 export const HandlebarsFilepathSchema = z.union([
   HandlebarsAbsolutePathSchema,

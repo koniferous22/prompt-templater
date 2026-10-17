@@ -221,8 +221,8 @@ const testCasesForConfigResourceFileFromInput = [
           operationInput: {
             type: "templateResource",
             file: await TemplateResourceFileSchema.parseAsync({
-              format: "pug",
-              path: join(workspaceContext, "templates/test-template.pug"),
+              format: "handlebars",
+              path: join(workspaceContext, "templates/test-template.hbs"),
             }),
           },
           assertOperationResult(result) {
@@ -256,8 +256,8 @@ const testCasesForConfigResourceFileFromInput = [
           operationInput: {
             type: "templateResource",
             file: await TemplateResourceFileSchema.parseAsync({
-              format: "pug",
-              path: join(workspaceContext, "templates/test-template.pug"),
+              format: "handlebars",
+              path: join(workspaceContext, "templates/test-template.hbs"),
             }),
           },
           assertOperationResult(result) {

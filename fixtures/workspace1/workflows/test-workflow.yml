@@ -1,2 +1,2 @@
-templateFile: templates/test-template.pug
+templateFile: templates/test-template.hbs
 steps: []

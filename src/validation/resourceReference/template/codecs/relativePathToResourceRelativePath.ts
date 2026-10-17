@@ -17,9 +17,9 @@ export const RelativePathToTemplateResourceRelativePath = z.codec(
       const extname = path.extname(value);
       const fileExtension = extname.startsWith(".") ? extname.slice(1) : extname;
       const resourceResult = match(fileExtension)
-        .with("pug", () =>
+        .with("hbs", () =>
           ok({
-            format: "pug" as const,
+            format: "handlebars" as const,
             path: value,
           }),
         )
@@ -28,7 +28,7 @@ export const RelativePathToTemplateResourceRelativePath = z.codec(
             "validation_resourceReference_template_codecs_relativePathToResourceRelativePath_invalidExtension",
             {
               resourceInput: value,
-              allowedExtensions: ["pug"],
+              allowedExtensions: ["handlebars"],
             },
           );
         });

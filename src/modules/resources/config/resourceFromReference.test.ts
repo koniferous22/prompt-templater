@@ -26,7 +26,7 @@ const workspaceContext = await WorkspaceContextSchema.parseAsync(
 );
 
 const expectedWorkflowFixture = WorkflowSchema.parse({
-  templateFile: "templates/test-template.pug",
+  templateFile: "templates/test-template.hbs",
   steps: [],
 });
 

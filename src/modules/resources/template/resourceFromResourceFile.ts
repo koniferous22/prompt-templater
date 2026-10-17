@@ -2,7 +2,6 @@ import fs from "node:fs/promises";
 
 import Handlebars from "handlebars";
 import { ok, Result } from "neverthrow";
-import pug from "pug";
 import { match } from "ts-pattern";
 
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
@@ -21,23 +20,12 @@ export const templateResourceFromResourceFile = async (
   Result<
     (value: Record<string, any>) => string,
     | AppError<"module_resources_templateResourceFromResourceFile_errorReadingFile">
-    | AppError<"module_resources_templateResourceFromResourceFile_invalidPugContents">
     | AppError<"module_resources_templateResourceFromResourceFile_invalidHandlebarsContents">
   >
 > => {
   try {
     const rawContents = await fs.readFile(templateResourceFile.file, "utf-8");
     const parseResult = match(templateResourceFile)
-      .with({ format: "pug" }, () => {
-        try {
-          // todo - create adapter layer in case implementing better templating language
-          return ok(pug.compile(rawContents));
-        } catch (e: any) {
-          return appErr("module_resources_templateResourceFromResourceFile_invalidPugContents", {
-            file: templateResourceFile.file,
-          });
-        }
-      })
       .with({ format: "handlebars" }, () => {
         try {
           // todo - create adapter layer in case implementing better templating language

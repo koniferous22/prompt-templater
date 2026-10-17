@@ -4,10 +4,7 @@ import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
-import {
-  HandlebarsAbsolutePathSchema,
-  PugAbsolutePathSchema,
-} from "../../../validation/path/schemas/pathWithExtension.js";
+import { HandlebarsAbsolutePathSchema } from "../../../validation/path/schemas/pathWithExtension.js";
 import { TemplateResourceFileSchema } from "../../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
 import type { TemplateResourceReference } from "../../../validation/resourceReference/template/schemas/templateResourceReference.js";
 import type { WorkspaceContext } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
@@ -20,27 +17,14 @@ export const templateResourceFileFromReference = async (
     .with({ type: "absolute" }, ({ filePath }) => ok(filePath))
     .with({ type: "relative" }, ({ filePath }) =>
       match(filePath)
-        .with({ format: "pug" }, (fp) => {
-          const pugAbsolutePathResult = PugAbsolutePathSchema.safeParse(
-            join(workspaceContext, fp.path),
-          );
-          return pugAbsolutePathResult.success
-            ? ok({
-                format: fp.format,
-                path: pugAbsolutePathResult.data,
-              })
-            : appErr("module_resources_templateResourceFileFromInput_invalidInputPugRelativePath", {
-                value: filePath.path,
-              });
-        })
         .with({ format: "handlebars" }, (fp) => {
-          const pugAbsolutePathResult = HandlebarsAbsolutePathSchema.safeParse(
+          const handlebarsAbsolutePathResult = HandlebarsAbsolutePathSchema.safeParse(
             join(workspaceContext, fp.path),
           );
-          return pugAbsolutePathResult.success
+          return handlebarsAbsolutePathResult.success
             ? ok({
                 format: fp.format,
-                path: pugAbsolutePathResult.data,
+                path: handlebarsAbsolutePathResult.data,
               })
             : appErr(
                 "module_resources_templateResourceFileFromInput_invalidInputHandlebarsRelativePath",
