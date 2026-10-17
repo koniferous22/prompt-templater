@@ -4,8 +4,12 @@ import z from "zod";
 
 import { appErr, appErrAsync } from "../../../../utils/deps/neverthrow/errorFactory.js";
 import { zodIssueFromAppError } from "../../../../utils/deps/zod/zodIssueFromAppError.js";
+import { HandlebarsFileSchema } from "../../../fs/codecs/absolutePathToFile/handlebars.js";
 import { PugFileSchema } from "../../../fs/codecs/absolutePathToFile/pug.js";
-import { PugAbsolutePathSchema } from "../../../path/schemas/pathWithExtension.js";
+import {
+  HandlebarsAbsolutePathSchema,
+  PugAbsolutePathSchema,
+} from "../../../path/schemas/pathWithExtension.js";
 import { TemplateResourceAbsolutePathSchema } from "../../../resourceReference/template/schemas/templateResourceAbsolutePath.js";
 
 export const TemplateResourceFileSchema = z
@@ -15,6 +19,10 @@ export const TemplateResourceFileSchema = z
       z.object({
         format: z.literal("pug"),
         file: PugFileSchema,
+      }),
+      z.object({
+        format: z.literal("handlebars"),
+        file: HandlebarsFileSchema,
       }),
     ]),
     {
@@ -29,6 +37,20 @@ export const TemplateResourceFileSchema = z
                 })
               : appErrAsync(
                   "validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidPugFile",
+                  {
+                    value: path.path,
+                  },
+                );
+          })
+          .with({ format: "handlebars" }, async (path) => {
+            const handlebarsFileResult = await HandlebarsFileSchema.safeParseAsync(path.path);
+            return handlebarsFileResult.success
+              ? ok({
+                  format: path.format,
+                  file: handlebarsFileResult.data,
+                })
+              : appErrAsync(
+                  "validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidHandlebarsFile",
                   {
                     value: path.path,
                   },
@@ -49,6 +71,20 @@ export const TemplateResourceFileSchema = z
               ? ok({
                   format: path.format,
                   path: pugAbsolutePathResult.data,
+                })
+              : appErr(
+                  "validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidHandlebarsPath",
+                  {
+                    value: path.file,
+                  },
+                );
+          })
+          .with({ format: "handlebars" }, (path) => {
+            const handlebarsAbsolutePathResult = HandlebarsAbsolutePathSchema.safeParse(path.file);
+            return handlebarsAbsolutePathResult.success
+              ? ok({
+                  format: path.format,
+                  path: handlebarsAbsolutePathResult.data,
                 })
               : appErr(
                   "validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidPugPath",

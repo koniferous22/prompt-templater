@@ -1,0 +1,11 @@
+Hello {{
+  name
+}} - Status: {{#if (
+  eq status "active"
+)}}Active{{
+  else if (eq status "pending")
+}}Pending{{
+  else if (eq status "inactive")
+}}Inactive{{
+  else
+}}Unknown{{/if}}

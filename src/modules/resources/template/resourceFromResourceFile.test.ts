@@ -54,6 +54,43 @@ const testCasesForTemplateResourceFromResourceFile = [
       testBehaviourDescription: "fail with invalid structure error",
     },
   },
+  {
+    testInput: {
+      data: await TemplateResourceFileSchema.parseAsync({
+        format: "handlebars",
+        path: join(workspaceContext, "templates/test-template.hbs"),
+      }),
+      testCaseDescription: "correct .hbs template file",
+    },
+    testOutcome: {
+      data: {
+        result: true,
+      },
+      testBehaviourDescription: "succeed",
+    },
+  },
+  // TODO - reenable this test case on "handlebars" proper integration
+  // there's a weird library behaviour - syntax errors resultin successful template compilation that only throws errors when attempting to render anything
+  // resolution / workaround
+  // compile template with strict mode disallowed, that missing fields are ignored, and test by rendering with empty object
+  // {
+  //   testInput: {
+  //     data: await TemplateResourceFileSchema.parseAsync({
+  //       format: "handlebars",
+  //       path: join(workspaceContext, "templates/test-bad-syntax.hbs"),
+  //     }),
+  //     testCaseDescription: "syntactically incorrect .hbs template file",
+  //   },
+  //   testOutcome: {
+  //     data: {
+  //       result: false,
+  //       error: createError("module_resources_templateResourceFromResourceFile_errorReadingFile", {
+  //         value: join(workspaceContext, "templates/test-bad-syntax.hbs"),
+  //       }),
+  //     },
+  //     testBehaviourDescription: "fail with invalid structure error",
+  //   },
+  // },
 ] satisfies {
   testInput: {
     data: TemplateResourceFile;

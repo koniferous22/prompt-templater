@@ -10,7 +10,7 @@ import { PugFileSchema, type PugFile } from "./pug.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const testCasesForJsonFileSchema = [
+const testCasesForPugFileSchema = [
   {
     testInput: join(__dirname, "../../../../../fixtures/workspace1/templates/test-template.pug"),
     testOutcome: true,
@@ -37,7 +37,7 @@ const testCasesForJsonFileSchema = [
 }[];
 
 describe("PugFileSchema", () => {
-  for (const { testInput, testOutcome } of testCasesForJsonFileSchema) {
+  for (const { testInput, testOutcome } of testCasesForPugFileSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = await PugFileSchema.safeParseAsync(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);

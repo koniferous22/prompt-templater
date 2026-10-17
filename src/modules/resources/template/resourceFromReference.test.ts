@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { dirname, join } from "node:path";
+import { dirname, format, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -65,6 +65,50 @@ const testCasesForTemplateResourceFileFromInput = [
         templateInput: templateInputFixture,
       },
       testCaseDescription: "relative .pug path",
+    },
+    testOutcome: {
+      data: {
+        renderResult: expectedTemplateRenderingResult,
+      },
+      testBehaviourDescription: "succeed with concatenated relative path to workspace context",
+    },
+  },
+  {
+    testInput: {
+      data: {
+        userInput: TemplateResourceReferenceSchema.parse({
+          type: "absolute",
+          filePath: {
+            format: "handlebars",
+            path: join(workspaceContext, "templates/test-template.hbs"),
+          },
+        }),
+        workspaceContext,
+        templateInput: templateInputFixture,
+      },
+      testCaseDescription: "absolute .hbs path",
+    },
+    testOutcome: {
+      data: {
+        renderResult: expectedTemplateRenderingResult,
+      },
+      testBehaviourDescription: "succeed with original absolute path",
+    },
+  },
+  {
+    testInput: {
+      data: {
+        userInput: TemplateResourceReferenceSchema.parse({
+          type: "relative",
+          filePath: {
+            format: "handlebars",
+            path: "templates/test-template.hbs",
+          },
+        }),
+        workspaceContext,
+        templateInput: templateInputFixture,
+      },
+      testCaseDescription: "relative .hbs path",
     },
     testOutcome: {
       data: {

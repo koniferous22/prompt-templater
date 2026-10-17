@@ -21,6 +21,10 @@ export const PugAbsolutePathSchema = createAbsolutePathWithExtensionSchema(
   FileExtensionSchema.parse("pug"),
 ).brand<"PugAbsolutePath">();
 export type PugAbsolutePath = z.output<typeof PugAbsolutePathSchema>;
+export const HandlebarsAbsolutePathSchema = createAbsolutePathWithExtensionSchema(
+  FileExtensionSchema.parse("hbs"),
+).brand<"HandlebarsAbsolutePath">();
+export type HandlebarsAbsolutePath = z.output<typeof HandlebarsAbsolutePathSchema>;
 
 // Relative Paths
 
@@ -37,6 +41,10 @@ export const PugRelativePathSchema = createRelativePathWithExtensionSchema(
   FileExtensionSchema.parse("pug"),
 ).brand<"PugRelativePath">();
 export type PugRelativePath = z.output<typeof PugRelativePathSchema>;
+export const HandlebarsRelativePathSchema = createRelativePathWithExtensionSchema(
+  FileExtensionSchema.parse("hbs"),
+).brand<"HandlebarsRelativePath">();
+export type HandlebarsRelativePath = z.output<typeof HandlebarsRelativePathSchema>;
 
 // z.union
 
@@ -48,3 +56,9 @@ export type YamlFilepath = z.output<typeof YamlFilepathSchema>;
 
 export const PugFilepathSchema = z.union([PugAbsolutePathSchema, PugRelativePathSchema]);
 export type PugFilepath = z.output<typeof PugFilepathSchema>;
+
+export const HandlebarsFilepathSchema = z.union([
+  HandlebarsAbsolutePathSchema,
+  HandlebarsRelativePathSchema,
+]);
+export type HandlebarsFilepath = z.output<typeof HandlebarsFilepathSchema>;

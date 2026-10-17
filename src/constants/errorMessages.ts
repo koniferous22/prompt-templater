@@ -86,11 +86,17 @@ export const errorMessages = {
     `File "${ctx.file}" contains invalid YAML contents`,
   module_resources_templateResourceFileFromInput_invalidInput: (ctx: { value: string }) =>
     `Expected template resource path ${ctx.value} for user input`,
+  module_resources_templateResourceFileFromInput_invalidInputHandlebarsRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .hbs relative path ${ctx.value} from user input`,
   module_resources_templateResourceFileFromInput_invalidInputPugRelativePath: (ctx: {
     value: string;
   }) => `Encountered invalid .pug relative path ${ctx.value} from user input`,
   module_resources_templateResourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
     `Error reading file "${ctx.value}"`,
+  module_resources_templateResourceFromResourceFile_invalidHandlebarsContents: (ctx: {
+    file: string;
+  }) => `File "${ctx.file}" contains invalid handlebars template contents`,
   module_resources_templateResourceFromResourceFile_invalidPugContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid pug template contents`,
   module_resourceContext_createResourceContextFromDeferredWorkspaceContext_invalidWorkflowPath:
@@ -152,6 +158,10 @@ export const errorMessages = {
   validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidPugPath: (ctx: {
     value: string;
   }) => `Error retrieving absolute path from "${ctx.value}"`,
+  validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidHandlebarsFile:
+    (ctx: { value: string }) => `Path "${ctx.value}" doesn't point to valid .hbs file`,
+  validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidHandlebarsPath:
+    (ctx: { value: string }) => `Error retrieving absolute path from "${ctx.value}"`,
   validation_resourceReference_config_codecs_absolutePathToResourceAbsolutePath_invalidExtension:
     (ctx: { resourceInput: AbsolutePath; allowedExtensions: NonEmptyArray<string> }) =>
       `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,

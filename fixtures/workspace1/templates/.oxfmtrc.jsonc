@@ -1,0 +1,4 @@
+{
+  // Note - formatting breaks "strictEqual" checks on unit tests
+  "ignorePatterns": ["**/*.hbs"],
+}
