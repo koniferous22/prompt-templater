@@ -29,7 +29,7 @@ const testCasesForTemplateResourceFileFromReference = [
   {
     testInput: {
       data: RelativePathSchema.parse("workflows/test-workflow.json"),
-      testCaseDescription: "relative path - not a template",
+      testCaseDescription: "relative path (not a template)",
     },
     testOutcome: {
       data: {

@@ -39,7 +39,7 @@ const testCasesForTemplateResourceFileFromReference = [
       data: AbsolutePathSchema.parse(
         join(fixturesWorkspace1Folder, "workflows/test-workflow.json"),
       ),
-      testCaseDescription: "absolute path - not a template",
+      testCaseDescription: "absolute path (not a template)",
     },
     testOutcome: {
       data: {
