@@ -19,6 +19,7 @@ export const errFromZodError = <T>(zodError: ZodError<T>) => {
         cause: zodError,
       });
     }
+    // Fallback option
     return createError("dependency_zod_validationError", { zodError }, { cause: zodError });
   });
   const error = match(errors)
