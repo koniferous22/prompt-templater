@@ -2,10 +2,10 @@ import { ok } from "neverthrow";
 
 import type { ConfigResourceFile } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import type { WorkspaceContext } from "../../validation/workspaceContext/schemas/workspaceContext.js";
-import { initializeTemplateContext } from "./state.js";
+import { initializeResourceContext } from "./state.js";
 
-export function createTemplateContext(workspaceContext: WorkspaceContext) {
-  const state = initializeTemplateContext(workspaceContext);
+export function createResourceContext(workspaceContext: WorkspaceContext) {
+  const state = initializeResourceContext(workspaceContext);
   return {
     getState() {
       return state.getState();

@@ -11,11 +11,11 @@ import { ConfigResourceFileSchema } from "../../validation/resourceFile/config/c
 import { TemplateResourceFileSchema } from "../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
 import { WorkspaceContextSchema } from "../../validation/workspaceContext/schemas/workspaceContext.js";
 import {
-  initializeTemplateContext,
+  initializeResourceContext,
   loadResource,
-  type TemplateContextState,
-  type TemplateContextAddResourceOperation,
-  type TemplateContextMutationFnResult,
+  type ResourceContextState,
+  type ResourceContextAddResourceOperation,
+  type ResourceContextMutationFnResult,
 } from "./state.js";
 
 // Mini-mutation testing framework
@@ -88,15 +88,15 @@ const workspaceContext = await WorkspaceContextSchema.parseAsync(
 type LoadResourceMutation =
   | {
       type: "mutationWithOptionalAssertion";
-      operationInput: TemplateContextAddResourceOperation;
+      operationInput: ResourceContextAddResourceOperation;
       // optional
       assertOperationResult?: (
-        result: Ok<TemplateContextMutationFnResult, never> | Err<any, any>,
+        result: Ok<ResourceContextMutationFnResult, never> | Err<any, any>,
       ) => any;
     }
   | {
       type: "stateAssertion";
-      assertState: (state: TemplateContextState) => any;
+      assertState: (state: ResourceContextState) => any;
     };
 
 // Todo - adjust this factory if necessary
@@ -105,7 +105,7 @@ const loadResourceOperationFactory = (operation: LoadResourceMutation): LoadReso
 };
 
 const loadResourceTestCaseFactory = createMutationTestCaseFactory(
-  () => initializeTemplateContext(workspaceContext).getState(),
+  () => initializeResourceContext(workspaceContext).getState(),
   loadResourceOperationFactory,
   async (sequenceItem, initialState) => {
     await match(sequenceItem)

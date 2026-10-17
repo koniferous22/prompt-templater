@@ -26,7 +26,7 @@ export type AppErrorCode =
   | "module_resources_templateResourceFileFromInput_invalidInput"
   | "module_resources_templateResourceFromResourceFile_errorReadingFile"
   | "module_resources_templateResourceFromResourceFile_invalidPugContents"
-  | "module_templateContext_createTemplateContextFromDeferredWorkspaceContext_invalidWorkflowPath"
+  | "module_resourceContext_createResourceContextFromDeferredWorkspaceContext_invalidWorkflowPath"
   | "validation_fs_codecs_absolutePathToFsStats_invalidInputData"
   | "validation_fs_schemas_fileSchema_pathIsNotFolder"
   | "validation_fs_schemas_folderSchema_pathIsNotFolder"

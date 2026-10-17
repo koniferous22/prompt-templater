@@ -93,7 +93,7 @@ export const errorMessages = {
     `Error reading file "${ctx.value}"`,
   module_resources_templateResourceFromResourceFile_invalidPugContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid pug template contents`,
-  module_templateContext_createTemplateContextFromDeferredWorkspaceContext_invalidWorkflowPath:
+  module_resourceContext_createResourceContextFromDeferredWorkspaceContext_invalidWorkflowPath:
     (ctx: { workflowFileInput: string }) =>
       `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
   validation_fs_codecs_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>

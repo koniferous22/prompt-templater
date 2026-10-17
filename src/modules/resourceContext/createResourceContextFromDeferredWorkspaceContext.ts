@@ -9,9 +9,9 @@ import {
 } from "../deferredInputContext/deferredInputContext.js";
 import { configResourceFileFromAbsolutePath } from "../resources/config/resourceFileFromAbsolutePath.js";
 import { detectWorkspaceContextFromCliInput } from "../workspaceContext/detectWorkspaceContext.js";
-import { createTemplateContext } from "./createTemplateContext.js";
+import { createResourceContext } from "./createResourceContext.js";
 
-export async function createTemplateContextFromDeferredWorkspaceContext(
+export async function createResourceContextFromDeferredWorkspaceContext(
   workflowResourcePath: ConfigResourceAbsolutePath,
   deferredContextOpts: DeferredContextOpts,
 ) {
@@ -20,7 +20,7 @@ export async function createTemplateContextFromDeferredWorkspaceContext(
   const workflowResult = await configResourceFileFromAbsolutePath(workflowAbsolutePath);
   if (!workflowResult.isOk()) {
     return appErrAsync(
-      "module_templateContext_createTemplateContextFromDeferredWorkspaceContext_invalidWorkflowPath",
+      "module_resourceContext_createResourceContextFromDeferredWorkspaceContext_invalidWorkflowPath",
       {
         workflowFileInput: workflowAbsolutePath.path,
       },
@@ -50,19 +50,19 @@ export async function createTemplateContextFromDeferredWorkspaceContext(
   if (!resolvedDeferredContext.isOk()) {
     return resolvedDeferredContext;
   }
-  // Build template context and include all items
-  const templateContext = createTemplateContext(detectContextResult.value);
-  const addWorkflowResult = await templateContext.addWorkflow(workflowResult.value);
+  // Build resource context and include all items
+  const resourceContext = createResourceContext(detectContextResult.value);
+  const addWorkflowResult = await resourceContext.addWorkflow(workflowResult.value);
   if (!addWorkflowResult.isOk()) {
     return addWorkflowResult;
   }
   if (resolvedDeferredContext.value.workflowPreset !== undefined) {
-    const addWorkflowPresetResult = await templateContext.addWorkflowPreset(
+    const addWorkflowPresetResult = await resourceContext.addWorkflowPreset(
       resolvedDeferredContext.value.workflowPreset,
     );
     if (!addWorkflowPresetResult.isOk()) {
       return addWorkflowPresetResult;
     }
   }
-  return ok(templateContext);
+  return ok(resourceContext);
 }

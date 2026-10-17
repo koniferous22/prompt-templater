@@ -26,7 +26,7 @@ const initState = (workspaceContext: WorkspaceContext) => {
           File,
           {
             templateResourceFile: TemplateResourceFile;
-            template: (templateContext: Record<string, any>) => string;
+            template: (resourceContext: Record<string, any>) => string;
           }
         >(),
       },
@@ -36,8 +36,8 @@ const initState = (workspaceContext: WorkspaceContext) => {
   return state;
 };
 
-export type TemplateContextState = ReturnType<typeof initState>;
-export type TemplateContextAddResourceOperation =
+export type ResourceContextState = ReturnType<typeof initState>;
+export type ResourceContextAddResourceOperation =
   | {
       type: "configResource";
       configResourceType: ConfigResourceType;
@@ -52,14 +52,14 @@ export type TemplateContextAddResourceOperation =
       // TYPE TBD
       file: any;
     };
-export type TemplateContextMutationFnResult = {
-  state: TemplateContextState;
-  enqueuedOperations: TemplateContextAddResourceOperation[];
+export type ResourceContextMutationFnResult = {
+  state: ResourceContextState;
+  enqueuedOperations: ResourceContextAddResourceOperation[];
 };
 
 export const loadResource = async (
-  state: TemplateContextState,
-  operation: TemplateContextAddResourceOperation,
+  state: ResourceContextState,
+  operation: ResourceContextAddResourceOperation,
 ) => {
   return match(operation)
     .with({ type: "configResource" }, async (value) => {
@@ -68,7 +68,7 @@ export const loadResource = async (
         return ok({
           state,
           enqueuedOperations: [],
-        } satisfies TemplateContextMutationFnResult);
+        } satisfies ResourceContextMutationFnResult);
       }
       // 1 - Load file
       const loadingResult = await configResourceFromResourceFile("workflow", value.file);
@@ -96,7 +96,7 @@ export const loadResource = async (
             file: templateFileReferenceResult.value,
           },
         ],
-      } satisfies TemplateContextMutationFnResult);
+      } satisfies ResourceContextMutationFnResult);
     })
     .with({ type: "templateResource" }, async (value) => {
       if (state.resources.templateResources.templates.has(value.file.file)) {
@@ -104,7 +104,7 @@ export const loadResource = async (
         return ok({
           state,
           enqueuedOperations: [],
-        } satisfies TemplateContextMutationFnResult);
+        } satisfies ResourceContextMutationFnResult);
       }
       // 1 - Load file
       const loadingResult = await templateResourceFromResourceFile(value.file);
@@ -119,24 +119,24 @@ export const loadResource = async (
       return ok({
         state,
         enqueuedOperations: [],
-      } satisfies TemplateContextMutationFnResult);
+      } satisfies ResourceContextMutationFnResult);
     })
     .with({ type: "listResource" }, async (value) => {
       // WIP - Noop
       return ok({
         state,
         enqueuedOperations: [],
-      } satisfies TemplateContextMutationFnResult);
+      } satisfies ResourceContextMutationFnResult);
     })
     .exhaustive();
 };
 
 const addResource = async (
-  initState: TemplateContextState,
-  operation: TemplateContextAddResourceOperation,
+  initState: ResourceContextState,
+  operation: ResourceContextAddResourceOperation,
 ) => {
-  const queue: TemplateContextAddResourceOperation[] = [operation];
-  let currentOperation: TemplateContextAddResourceOperation | null = queue.shift() ?? null;
+  const queue: ResourceContextAddResourceOperation[] = [operation];
+  let currentOperation: ResourceContextAddResourceOperation | null = queue.shift() ?? null;
   let state = initState;
   while (currentOperation !== null) {
     const result = await loadResource(initState, currentOperation);
@@ -150,13 +150,13 @@ const addResource = async (
   return ok(state);
 };
 
-export const initializeTemplateContext = (workspaceContext: WorkspaceContext) => {
+export const initializeResourceContext = (workspaceContext: WorkspaceContext) => {
   let state = initState(workspaceContext);
   return {
     getState() {
       return state;
     },
-    async addResource(operation: TemplateContextAddResourceOperation) {
+    async addResource(operation: ResourceContextAddResourceOperation) {
       const addResourceResult = await addResource(state, operation);
       if (!addResourceResult.isOk()) {
         return addResourceResult;
