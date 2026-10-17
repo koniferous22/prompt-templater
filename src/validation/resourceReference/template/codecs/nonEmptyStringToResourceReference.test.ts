@@ -45,7 +45,7 @@ const testCasesForNonEmptyStringToTemplateResourceReferenceSchema = [
       data: NonEmptyStringSchema.parse(
         join(fixturesWorkspace1Folder, "workflows/test-workflow.json"),
       ),
-      testCaseDescription: "absolute path - not a template",
+      testCaseDescription: "absolute path (not a template)",
     },
     testOutcome: {
       data: {
@@ -78,7 +78,7 @@ const testCasesForNonEmptyStringToTemplateResourceReferenceSchema = [
   {
     testInput: {
       data: NonEmptyStringSchema.parse("workflows/test-workflow.json"),
-      testCaseDescription: "relative path - not a template",
+      testCaseDescription: "relative path (not a template)",
     },
     testOutcome: {
       data: {
@@ -109,7 +109,10 @@ const testCasesForNonEmptyStringToTemplateResourceReferenceSchema = [
 }[];
 
 describe("NonEmptyStringToTemplateResourceReferenceSchema", () => {
-  for (const { testInput, testOutcome } of testCasesForNonEmptyStringToTemplateResourceReferenceSchema) {
+  for (const {
+    testInput,
+    testOutcome,
+  } of testCasesForNonEmptyStringToTemplateResourceReferenceSchema) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = NonEmptyStringToTemplateResourceReferenceSchema.safeParse(
         testInput.data,
