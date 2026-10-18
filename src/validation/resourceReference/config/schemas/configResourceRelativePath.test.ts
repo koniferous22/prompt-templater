@@ -1,9 +1,13 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
+import { expectTypeOf } from "expect-type";
 import type z from "zod";
 
-import { ConfigResourceRelativePathSchema } from "./configResourceRelativePath.js";
+import {
+  ConfigResourceRelativePathSchema,
+  type ConfigResourceRelativePath,
+} from "./configResourceRelativePath.js";
 
 const testCasesForConfigResourceRelativePathSchema = [
   {
@@ -48,6 +52,9 @@ describe("ConfigResourceRelativePathSchema", () => {
     it(`for ${testInput.testCaseDescription} parsing ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = ConfigResourceRelativePathSchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<ConfigResourceRelativePath>();
+      }
     });
   }
 });

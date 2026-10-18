@@ -3,9 +3,10 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import { expectTypeOf } from "expect-type";
 import type z from "zod";
 
-import { FolderSchema } from "./folder.js";
+import { FolderSchema, type Folder } from "./folder.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -36,6 +37,9 @@ describe("FolderSchema", () => {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = await FolderSchema.safeParseAsync(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<Folder>();
+      }
     });
   }
 });

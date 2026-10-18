@@ -1,9 +1,13 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import { expectTypeOf } from "expect-type";
+import { match } from "ts-pattern";
 import { z, ZodError } from "zod";
 
+import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import { errFromZodError, resultFromSafeParseResult } from "./resultFromSafeParseResult.js";
+import type { AppAggregateErr, AppError } from "./types.js";
 
 const DummyZodSchema = z
   .union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)])
@@ -170,6 +174,14 @@ describe("errFromZodError", () => {
           );
         });
       }
+      match(actualError)
+        .with({ type: "plain" }, (plainError) =>
+          expectTypeOf(plainError).toExtend<AppError<AppErrorCode>>(),
+        )
+        .with({ type: "aggregate" }, (aggregateError) =>
+          expectTypeOf(aggregateError).toExtend<AppAggregateErr>(),
+        )
+        .exhaustive();
     });
   }
 });
@@ -298,6 +310,16 @@ describe("resultFromSafeParseResult", () => {
             );
           });
         }
+      }
+      if (actualResult.isErr()) {
+        match(actualResult.error)
+          .with({ type: "plain" }, (plainError) =>
+            expectTypeOf(plainError).toExtend<AppError<AppErrorCode>>(),
+          )
+          .with({ type: "aggregate" }, (aggregateError) =>
+            expectTypeOf(aggregateError).toExtend<AppAggregateErr>(),
+          )
+          .exhaustive();
       }
     });
   }

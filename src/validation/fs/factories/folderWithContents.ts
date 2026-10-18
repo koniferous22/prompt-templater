@@ -164,3 +164,5 @@ export const createFolderWithContentsSchema = (opts: CreateFolderWithContentsSch
     }
   }).brand<"FolderWithContents">();
 };
+
+export type FolderWithContents = z.output<ReturnType<typeof createFolderWithContentsSchema>>;

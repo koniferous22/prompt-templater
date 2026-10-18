@@ -1,5 +1,7 @@
 import path from "node:path";
 
+import type z from "zod";
+
 import type { NonEmptyArray } from "../../../utils/array/isNonEmptyArray.js";
 import { zodRegisterIssue } from "../../../utils/deps/zod/zodRegisterIssue.js";
 import type { FileExtension } from "../customTypes/fileExtension.js";
@@ -25,6 +27,9 @@ export const createAbsolutePathWithExtensionSchema = (
     }
   }).brand<"AbsolutePathWithExtension">();
 };
+export type AbsolutePathWithExtension = z.output<
+  ReturnType<typeof createAbsolutePathWithExtensionSchema>
+>;
 
 export const createRelativePathWithExtensionSchema = (
   ...extensions: NonEmptyArray<FileExtension>
@@ -46,3 +51,6 @@ export const createRelativePathWithExtensionSchema = (
     }
   }).brand<"RelativePathWithExtension">();
 };
+export type RelativePathWithExtension = z.output<
+  ReturnType<typeof createRelativePathWithExtensionSchema>
+>;

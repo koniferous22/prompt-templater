@@ -3,9 +3,13 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import { expectTypeOf } from "expect-type";
 import type z from "zod";
 
-import { ConfigResourceAbsolutePathSchema } from "./configResourceAbsolutePath.js";
+import {
+  ConfigResourceAbsolutePathSchema,
+  type ConfigResourceAbsolutePath,
+} from "./configResourceAbsolutePath.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -52,6 +56,9 @@ describe("ConfigResourceAbsolutePathSchema", () => {
     it(`for ${testInput.testCaseDescription} parsing ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = ConfigResourceAbsolutePathSchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<ConfigResourceAbsolutePath>();
+      }
     });
   }
 });

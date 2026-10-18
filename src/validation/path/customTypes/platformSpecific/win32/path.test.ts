@@ -1,12 +1,16 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import { expectTypeOf } from "expect-type";
 import type z from "zod";
 
 import {
   AbsolutePathWin32Schema,
   PathFragmentWin32Schema,
   RelativePathWin32Schema,
+  type AbsolutePathWin32,
+  type PathFragmentWin32,
+  type RelativePathWin32,
 } from "./path.js";
 
 const testCasesForAbsolutePathWin32Schema = [
@@ -144,6 +148,9 @@ describe("AbsolutePathWin32Schema", () => {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = AbsolutePathWin32Schema.safeParse(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<AbsolutePathWin32>();
+      }
     });
   }
 });
@@ -243,6 +250,9 @@ describe("RelativePathWin32Schema", () => {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = RelativePathWin32Schema.safeParse(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<RelativePathWin32>();
+      }
     });
   }
 });
@@ -330,6 +340,9 @@ describe("PathFragmentWin32Schema", () => {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = PathFragmentWin32Schema.safeParse(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<PathFragmentWin32>();
+      }
     });
   }
 });

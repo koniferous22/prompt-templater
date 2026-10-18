@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import { expectTypeOf } from "expect-type";
+
 import type { AppErrorCode } from "../../../../constants/errorCodes.js";
 import { type RelativePath, RelativePathSchema } from "../../../path/customTypes/index.js";
 import {
@@ -66,6 +68,7 @@ describe("RelativePathToTemplateResourceRelativePath", () => {
       if (testOutcome.data.result === true) {
         assert.ok(parsingResult.success);
         assert.deepEqual(parsingResult.data, testOutcome.data.value);
+        expectTypeOf(parsingResult.data).toEqualTypeOf<TemplateResourceRelativePath>();
       } else {
         assert.ok(!parsingResult.success);
         assert.strictEqual(parsingResult.error.issues.length, 1);

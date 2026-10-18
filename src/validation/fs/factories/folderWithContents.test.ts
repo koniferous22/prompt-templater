@@ -3,6 +3,8 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import { expectTypeOf } from "expect-type";
+
 import type { DirentFlagPatterns } from "../../../modules/direntFlagsMatcher/direntFlagsMatcher.js";
 import {
   AbsolutePathSchema,
@@ -12,7 +14,7 @@ import {
   type PathFragment,
   type RelativePath,
 } from "../../path/customTypes/index.js";
-import { createFolderWithContentsSchema } from "./folderWithContents.js";
+import { createFolderWithContentsSchema, type FolderWithContents } from "./folderWithContents.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));
@@ -306,6 +308,9 @@ describe("createFolderWithContentsSchema", () => {
         testInput.data.rootFolder,
       );
       assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<FolderWithContents>();
+      }
     });
   }
 });

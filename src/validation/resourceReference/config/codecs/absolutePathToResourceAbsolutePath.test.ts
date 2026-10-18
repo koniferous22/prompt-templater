@@ -3,6 +3,8 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import { expectTypeOf } from "expect-type";
+
 import type { AppErrorCode } from "../../../../constants/errorCodes.js";
 import { type AbsolutePath, AbsolutePathSchema } from "../../../path/customTypes/index.js";
 import {
@@ -92,6 +94,7 @@ describe("AbsolutePathToConfigResourceAbsolutePath", () => {
       if (testOutcome.data.result === true) {
         assert.ok(parsingResult.success);
         assert.deepEqual(parsingResult.data, testOutcome.data.value);
+        expectTypeOf(parsingResult.data).toEqualTypeOf<ConfigResourceAbsolutePath>();
       } else {
         assert.ok(!parsingResult.success);
         assert.strictEqual(parsingResult.error.issues.length, 1);

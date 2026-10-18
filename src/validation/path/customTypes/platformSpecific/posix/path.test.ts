@@ -1,12 +1,16 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import { expectTypeOf } from "expect-type";
 import type z from "zod";
 
 import {
   AbsolutePathPosixSchema,
   PathFragmentPosixSchema,
   RelativePathPosixSchema,
+  type AbsolutePathPosix,
+  type PathFragmentPosix,
+  type RelativePathPosix,
 } from "./path.js";
 
 const testCasesForAbsolutePathPosixSchema = [
@@ -32,6 +36,9 @@ describe("AbsolutePathPosixSchema", () => {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = AbsolutePathPosixSchema.safeParse(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<AbsolutePathPosix>();
+      }
     });
   }
 });
@@ -59,6 +66,9 @@ describe("RelativePathPosixSchema", () => {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = RelativePathPosixSchema.safeParse(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<RelativePathPosix>();
+      }
     });
   }
 });
@@ -86,6 +96,9 @@ describe("PathFragmentPosixSchema", () => {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = PathFragmentPosixSchema.safeParse(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<PathFragmentPosix>();
+      }
     });
   }
 });

@@ -3,9 +3,10 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import { expectTypeOf } from "expect-type";
 import type z from "zod";
 
-import { FileSchema } from "./file.js";
+import { FileSchema, type File } from "./file.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -36,6 +37,9 @@ describe("FileSchema", () => {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = await FileSchema.safeParseAsync(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<File>();
+      }
     });
   }
 });

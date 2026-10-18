@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import { expectTypeOf } from "expect-type";
 import type z from "zod";
 
-import { FileExtensionSchema } from "./fileExtension.js";
+import { FileExtensionSchema, type FileExtension } from "./fileExtension.js";
 
 const testCasesForFileExtensionSchema = [
   {
@@ -44,6 +45,9 @@ describe("FileExtensionSchema", () => {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = FileExtensionSchema.safeParse(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<FileExtension>();
+      }
     });
   }
 });

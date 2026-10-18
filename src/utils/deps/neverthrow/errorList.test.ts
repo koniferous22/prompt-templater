@@ -1,13 +1,14 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import { expectTypeOf } from "expect-type";
 import { err, type Err } from "neverthrow";
 import { match } from "ts-pattern";
 
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import { createError } from "./errorFactory.js";
 import { errorFromErrorList, resultFromErrorList } from "./errorList.js";
-import type { AppError } from "./types.js";
+import type { AppAggregateErr, AppError, AppErrorInstance } from "./types.js";
 
 const errorStandalone1 = createError(
   "module_direntFlagsMatcher_createDirentFlagsMapFailed",
@@ -88,10 +89,12 @@ describe("errorFromErrorList", () => {
         .with({ type: "plain" }, () => {
           assert.strictEqual(result.type, "plain");
           assert.deepStrictEqual(result, testOutcome.data.error);
+          expectTypeOf(result).toExtend<AppError<AppErrorCode>>();
         })
         .with({ type: "aggregate" }, () => {
           assert.strictEqual(result.type, "aggregate");
           assert.deepStrictEqual(result.errors, testOutcome.data.errors);
+          expectTypeOf(result).toExtend<AppAggregateErr>();
         })
         .exhaustive();
     });
@@ -177,10 +180,12 @@ describe("resultFromErrorList", () => {
         .with({ type: "plain" }, () => {
           assert.strictEqual(result.error.type, "plain");
           assert.deepStrictEqual(result.error, testOutcome.data.error);
+          expectTypeOf(result.error).toExtend<AppError<AppErrorCode>>();
         })
         .with({ type: "aggregate" }, () => {
           assert.strictEqual(result.error.type, "aggregate");
           assert.deepStrictEqual(result.error.errors, testOutcome.data.errors);
+          expectTypeOf(result.error).toExtend<AppAggregateErr>();
         })
         .exhaustive();
     });

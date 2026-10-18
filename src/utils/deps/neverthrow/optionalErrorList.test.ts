@@ -1,13 +1,14 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import { expectTypeOf } from "expect-type";
 import { err, type Err } from "neverthrow";
 import { match } from "ts-pattern";
 
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import { createError } from "./errorFactory.js";
 import { errorFromOptionalErrorList, resultFromOptionalErrorList } from "./optionalErrorList.js";
-import type { AppError, OptionalAppErrors } from "./types.js";
+import type { AppAggregateErr, AppError, OptionalAppErrors } from "./types.js";
 
 const errorStandalone1 = createError(
   "module_direntFlagsMatcher_createDirentFlagsMapFailed",
@@ -113,6 +114,17 @@ describe("errorFromOptionalErrorList", () => {
             result && result.type === "aggregate" && result.errors,
             testOutcome.data && testOutcome.data.errors,
           );
+        })
+        .exhaustive();
+      match(result)
+        .with(null, (nullResult) => {
+          expectTypeOf(nullResult).toEqualTypeOf<null>();
+        })
+        .with({ type: "plain" }, (plainErrorResult) => {
+          expectTypeOf(plainErrorResult).toExtend<AppError<AppErrorCode>>();
+        })
+        .with({ type: "aggregate" }, (aggregateErrorResult) => {
+          expectTypeOf(aggregateErrorResult).toExtend<AppAggregateErr>();
         })
         .exhaustive();
     });
@@ -232,6 +244,16 @@ describe("resultFromOptionalErrorList", () => {
           );
         })
         .exhaustive();
+      result.isOk()
+        ? expectTypeOf(result.value).toEqualTypeOf<null>()
+        : match(result.error)
+            .with({ type: "plain" }, (plainErrorResult) =>
+              expectTypeOf(plainErrorResult).toExtend<AppError<AppErrorCode>>(),
+            )
+            .with({ type: "aggregate" }, (aggregateErrorResult) =>
+              expectTypeOf(aggregateErrorResult).toExtend<AppAggregateErr>(),
+            )
+            .exhaustive();
     });
   }
 });

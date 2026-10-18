@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import { expectTypeOf } from "expect-type";
 import { z, ZodError } from "zod";
 
+import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import {
   createError,
   createAggregateError,
@@ -51,6 +53,7 @@ describe("createError", () => {
 
       assert.strictEqual(actual.type, testOutcome.data.type);
       assert.strictEqual(actual.code, testOutcome.data.code);
+      expectTypeOf(actual).toEqualTypeOf<AppError<"dependency_zod_safeParseErrorWithoutIssues">>();
     });
   }
 });
@@ -105,6 +108,7 @@ describe("createAggregateError", () => {
       testOutcome.data.codes.forEach((expectedCode, index) => {
         assert.strictEqual(actual.errors[index] && actual.errors[index].code, expectedCode);
       });
+      expectTypeOf(actual).toExtend<AppAggregateErr>();
     });
   }
 });
@@ -153,6 +157,7 @@ describe("appErr", () => {
       assert.ok(actual.isErr());
       assert.strictEqual(actual.error.type, testOutcome.data.error.type);
       assert.strictEqual(actual.error.code, testOutcome.data.error.code);
+      expectTypeOf(actual.error).toExtend<AppError<AppErrorCode>>();
     });
   }
 });
@@ -202,6 +207,7 @@ describe("appErrAsync", () => {
       assert.ok(actual.isErr());
       assert.strictEqual(actual.error.type, testOutcome.data.error.type);
       assert.strictEqual(actual.error.code, testOutcome.data.error.code);
+      expectTypeOf(actual.error).toExtend<AppError<AppErrorCode>>();
     });
   }
 });
@@ -267,6 +273,7 @@ describe("appAggregateErr", () => {
           expectedCode,
         );
       });
+      expectTypeOf(actual.error).toExtend<AppAggregateErr>();
     });
   }
 });
@@ -333,6 +340,7 @@ describe("appAggregateErrAsync", () => {
           expectedCode,
         );
       });
+      expectTypeOf(actual.error).toExtend<AppAggregateErr>();
     });
   }
 });
