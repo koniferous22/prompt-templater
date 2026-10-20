@@ -1,105 +1,107 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
+
 import type z from "zod";
+
 import { NonEmptyStringSchema } from "../../../../string/customTypes/string.js";
 import { EditorPromptValidationShorthandSchema } from "./editorPrompt.js";
 
 const testCasesForEditorPromptValidationShorthandSchema = [
   {
     testInput: {
-      data: 'optional',
-      testCaseDescription: 'string literal "optional"'
+      data: "optional",
+      testCaseDescription: 'string literal "optional"',
     },
     testOutcome: {
       data: {
         result: true,
         parsedValue: {
-          type: 'optional',
+          type: "optional",
         },
       },
-      testBehaviourDescription: 'should succeed with undefined error message override'
+      testBehaviourDescription: "should succeed with undefined error message override",
     },
   },
   {
     testInput: {
-      data: 'required',
+      data: "required",
       testCaseDescription: 'string literal "required"',
     },
     testOutcome: {
       data: {
         result: true,
         parsedValue: {
-          type: 'required',
+          type: "required",
         },
       },
-      testBehaviourDescription: 'should succeed with undefined error message override'
+      testBehaviourDescription: "should succeed with undefined error message override",
     },
   },
   {
     testInput: {
       data: {
-        type: 'optional',
-        error: 'error message override'
+        type: "optional",
+        error: "error message override",
       },
-      testCaseDescription: 'full object input with "optional" validation type'
+      testCaseDescription: 'full object input with "optional" validation type',
     },
     testOutcome: {
       data: {
         result: true,
         parsedValue: {
-          type: 'optional',
+          type: "optional",
           error: {
-            typeErrorMessage: NonEmptyStringSchema.parse('error message override'),
+            typeErrorMessage: NonEmptyStringSchema.parse("error message override"),
           },
         },
       },
-      testBehaviourDescription: 'should succeed with overridden error message'
+      testBehaviourDescription: "should succeed with overridden error message",
     },
   },
   {
     testInput: {
       data: {
-        type: 'required',
+        type: "required",
         error: {
-          requiredErrorMessage: 'error message override'
-        }
+          requiredErrorMessage: "error message override",
+        },
       },
-      testCaseDescription: 'full object input with "required" validation type'
+      testCaseDescription: 'full object input with "required" validation type',
     },
     testOutcome: {
       data: {
         result: true,
         parsedValue: {
-          type: 'required',
+          type: "required",
           error: {
-            requiredErrorMessage: NonEmptyStringSchema.parse('error message override'),
+            requiredErrorMessage: NonEmptyStringSchema.parse("error message override"),
           },
         },
       },
-      testBehaviourDescription: 'should succeed with overridden error message'
+      testBehaviourDescription: "should succeed with overridden error message",
     },
   },
   {
     testInput: {
       data: {
-        type: 'optionalWithDefault',
-        value: 'default string',
-        error: 'error message override'
+        type: "optionalWithDefault",
+        value: "default string",
+        error: "error message override",
       },
-      testCaseDescription: 'full object input with "required" validation type'
+      testCaseDescription: 'full object input with "required" validation type',
     },
     testOutcome: {
       data: {
         result: true,
         parsedValue: {
-          type: 'optionalWithDefault',
-          value: NonEmptyStringSchema.parse('default string'),
+          type: "optionalWithDefault",
+          value: NonEmptyStringSchema.parse("default string"),
           error: {
-            typeErrorMessage: NonEmptyStringSchema.parse('error message override'),
+            typeErrorMessage: NonEmptyStringSchema.parse("error message override"),
           },
         },
       },
-      testBehaviourDescription: 'should succeed with overridden error message'
+      testBehaviourDescription: "should succeed with overridden error message",
     },
   },
 ] satisfies {
@@ -109,15 +111,15 @@ const testCasesForEditorPromptValidationShorthandSchema = [
   };
   testOutcome: {
     data:
-    | {
-      result: true;
-      parsedValue: z.output<typeof EditorPromptValidationShorthandSchema>;
-    }
-    | {
-      result: false;
-    }
+      | {
+          result: true;
+          parsedValue: z.output<typeof EditorPromptValidationShorthandSchema>;
+        }
+      | {
+          result: false;
+        };
     testBehaviourDescription: string;
-  }
+  };
 }[];
 
 describe("EditorPromptValidationShorthandSchema", () => {
