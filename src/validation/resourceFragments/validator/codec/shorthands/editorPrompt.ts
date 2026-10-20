@@ -1,7 +1,7 @@
 import z from "zod";
 
-import { NonEmptyStringSchema } from "../../../../../../string/customTypes/string.js";
-import { EditorPromptOptionalValidationErrorMessageShorthandSchema } from "./optionalValidationErrorMessage.js";
+import { NonEmptyStringSchema } from "../../../../string/customTypes/string.js";
+import { EditorPromptOptionalValidationErrorMessageShorthandSchema } from "./errorMessages/editorPromptOptionalValidation.js";
 
 const EditorPromptRequiredValidationErrorMessageSchema = z.object({
   requiredErrorMessage: NonEmptyStringSchema.optional(),

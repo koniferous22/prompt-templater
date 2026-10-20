@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { NonEmptyStringSchema } from "../../../../../../string/customTypes/string.js";
+import { NonEmptyStringSchema } from "../../../../../string/customTypes/string.js";
 
 const InputPromptOptionalValidationErrorMessageSchema = z.object({
   typeErrorMessage: NonEmptyStringSchema.optional(),
