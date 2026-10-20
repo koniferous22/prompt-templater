@@ -31,6 +31,7 @@ export type AppErrorCode =
   | "validation_fs_schemas_fileSchema_pathIsNotFolder"
   | "validation_fs_schemas_folderSchema_pathIsNotFolder"
   | "validation_fs_schemas_direntSchema_invalidInputFormat"
+  | "validation_number_customTypes_nonNegativeInteger_invalidInput"
   | "validation_path_customTypes_fileExtension_invalidInput"
   | "validation_path_customTypes_posix_absolutePath_invalidInputFormat"
   | "validation_path_customTypes_posix_pathFragment_emptyInput"

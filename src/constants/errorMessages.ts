@@ -105,6 +105,8 @@ export const errorMessages = {
     `Expected file for input "${ctx.value}"`,
   validation_fs_schemas_folderSchema_pathIsNotFolder: (ctx: { value: string }) =>
     `Expected folder for input "${ctx.value}"`,
+  validation_number_customTypes_nonNegativeInteger_invalidInput: (ctx: { value: string }) =>
+    `Expected non-negative integer got "${ctx.value}"`,
   validation_path_customTypes_fileExtension_invalidInput: (ctx: { value: string }) =>
     `Expected file extension got "${ctx.value}"`,
   validation_path_customTypes_posix_absolutePath_invalidInputFormat: (ctx: { value: string }) =>
