@@ -1,7 +1,7 @@
 import { z, type ZodError } from "zod";
 
 import type { NonEmptyArray } from "../utils/array/isNonEmptyArray.js";
-import type { DirentFlagsData } from "../validation/fs/pipes/dirent.js";
+import type { DirentFlags } from "../validation/fs/schemas/dirent.js";
 import type { AbsolutePath, RelativePath } from "../validation/path/customTypes/index.js";
 import type { AppErrorCode } from "./errorCodes.js";
 
@@ -58,7 +58,7 @@ export const errorMessages = {
     parentPath: AbsolutePath;
   }) => `Expected "${ctx.pattern}" to be located in folder "${ctx.parentPath}"`,
   module_direntFlagsMatcher_unmatchedDirentFlag: (ctx: {
-    direntFlag: keyof DirentFlagsData;
+    direntFlag: keyof DirentFlags;
     expected: boolean;
     actual: boolean;
     path: AbsolutePath;
@@ -98,6 +98,8 @@ export const errorMessages = {
     (ctx: { workflowFileInput: string }) =>
       `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
   validation_fs_codecs_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
+    `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
+  validation_fs_schemas_direntSchema_invalidInputFormat: (ctx: { zodError: ZodError<any>}) =>
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
   validation_fs_schemas_fileSchema_pathIsNotFolder: (ctx: { value: string }) =>
     `Expected file for input "${ctx.value}"`,

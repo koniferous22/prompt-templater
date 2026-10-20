@@ -9,7 +9,7 @@ import z from "zod";
 import type { AppErrorCode } from "../../constants/errorCodes.js";
 import { createError } from "../../utils/deps/neverthrow/errorFactory.js";
 import type { AppError } from "../../utils/deps/neverthrow/types.js";
-import { DirentSchema } from "../../validation/fs/pipes/dirent.js";
+import { DirentFromDirentObjectSchema } from "../../validation/fs/schemas/direntFromDirentObject.js";
 import {
   AbsolutePathSchema,
   PathFragmentSchema,
@@ -185,7 +185,7 @@ describe("direntFlagsMatcher", () => {
         testInput.data.options,
       );
       const folderContents = await readdir(testInput.data.inputFolderPath, { withFileTypes: true });
-      const dirents = z.array(DirentSchema).parse(folderContents);
+      const dirents = z.array(DirentFromDirentObjectSchema).parse(folderContents);
       const result = direntFlagsMatcher(dirents);
 
       assert.strictEqual(result.isOk(), testOutcome.data.ok);

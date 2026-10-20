@@ -3,7 +3,7 @@ import { join } from "node:path";
 
 import { ok, err, Result } from "neverthrow";
 import { match } from "ts-pattern";
-import z from "zod";
+import { z } from "zod";
 
 import {
   createDirentFlagsMatcher,
@@ -15,7 +15,8 @@ import { resultFromErrorList } from "../../../utils/deps/neverthrow/errorList.js
 import { zodIssueFromAppError } from "../../../utils/deps/zod/zodIssueFromAppError.js";
 import type { AbsolutePath, PathFragment, RelativePath } from "../../path/customTypes/index.js";
 import { AbsolutePathToFsStatsSchema } from "../codecs/absolutePathToFsStats.js";
-import { DirentSchema } from "../pipes/dirent.js";
+import { DirentSchema } from "../schemas/dirent.js";
+import { DirentFromDirentObjectSchema } from "../schemas/direntFromDirentObject.js";
 import { FolderSchema } from "../schemas/folder.js";
 
 type CreateFolderWithContentsSchemaOpts =
@@ -40,7 +41,7 @@ const pathDetectionReadDir = async (
 ) => {
   try {
     const files = await fs.readdir(parentFolder, { withFileTypes: true, recursive });
-    const folderContentsResult = z.array(DirentSchema).safeParse(files);
+    const folderContentsResult = z.array(DirentFromDirentObjectSchema).safeParse(files);
     if (!folderContentsResult.success) {
       return appErr("dependency_nodeFs_fsReadDirInvalidOuptutShape", undefined);
     }
@@ -84,17 +85,23 @@ const pathDetectionCheckStaticEntries = async (
       )
       .with({ status: "rejected" }, () => appErr("dependency_zod_awaitingAsyncDecode", {}))
       .exhaustive();
-    return statsResult.isErr()
-      ? err(statsResult.error)
-      : ok({
-          parentPath: parentFolder,
-          name: statsResult.value.entry,
-          direntFlags: {
-            isDirectory: statsResult.value.stats.fsStats.isDirectory(),
-            isFile: statsResult.value.stats.fsStats.isFile(),
-            isSymlink: statsResult.value.stats.fsStats.isSymbolicLink(),
-          },
-        } satisfies z.output<typeof DirentSchema>);
+    if (!statsResult.isOk()) {
+      return err(statsResult.error);
+    }
+    const direntResult = DirentSchema.safeParse({
+      parentPath: parentFolder,
+      name: statsResult.value.entry,
+      direntFlags: {
+        isDirectory: statsResult.value.stats.fsStats.isDirectory(),
+        isFile: statsResult.value.stats.fsStats.isFile(),
+        isSymlink: statsResult.value.stats.fsStats.isSymbolicLink(),
+      },
+    });
+    return direntResult.success
+      ? ok(direntResult.data) :
+        appErr("validation_fs_schemas_direntSchema_invalidInputFormat", {
+          zodError: direntResult.error,
+        });
   });
   const errors = results.filter((result) => result.isErr());
   if (isNonEmptyArray(errors)) {

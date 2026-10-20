@@ -7,7 +7,7 @@ import { appErr, createError } from "../../utils/deps/neverthrow/errorFactory.js
 import { errorFromErrorList } from "../../utils/deps/neverthrow/errorList.js";
 import { errFromZodError } from "../../utils/deps/neverthrow/resultFromSafeParseResult.js";
 import type { AppErrorInstance } from "../../utils/deps/neverthrow/types.js";
-import type { DirentData } from "../../validation/fs/pipes/dirent.js";
+import type { Dirent, DirentFlags } from "../../validation/fs/schemas/dirent.js";
 import {
   AbsolutePathSchema,
   PathFragmentSchema,
@@ -16,7 +16,6 @@ import {
   type RelativePath,
 } from "../../validation/path/customTypes/index.js";
 
-export type DirentFlags = DirentData["direntFlags"];
 type DirentFlag = keyof DirentFlags;
 
 type DirentFlagPattern = boolean | "any";
@@ -57,7 +56,7 @@ export const validateDirentFlags = (
 };
 
 // Map construction
-const createDirentFlagsMap = (inputDirents: DirentData[]) => {
+const createDirentFlagsMap = (inputDirents: Dirent[]) => {
   const flagsMap = new Map<AbsolutePath, Map<PathFragment, DirentFlags>>();
   for (const dirent of inputDirents) {
     const parentPathResult = AbsolutePathSchema.safeParse(dirent.parentPath);
@@ -105,7 +104,7 @@ export const createDirentFlagsMatcher =
       failOnExtraItems: false,
     },
   ) =>
-  (inputDirents: DirentData[]) => {
+  (inputDirents: Dirent[]) => {
     const direntsMatchingAbsPath = inputDirents.filter((dirent) =>
       dirent.parentPath.startsWith(folderPath),
     );
