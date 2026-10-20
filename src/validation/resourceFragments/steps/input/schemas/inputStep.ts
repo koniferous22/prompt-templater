@@ -3,11 +3,11 @@ import z from "zod";
 import {
   InquirerInputPromptValidator,
   type InquirerInputPromptValidatorType,
-} from "../../../../../../constants/enums/inquirer/inputPromptValidator.js";
-import { zodUnionFromEnum } from "../../../../../../utils/deps/zod/zodUnionFromEnum.js";
-import { InputPromptOptionalValidationErrorMessageShorthandSchema } from "../../../../../resourceFragments/validator/codec/shorthands/errorMessages/inputPromptOptionalValidation.js";
-import { NonEmptyStringSchema } from "../../../../../string/customTypes/string.js";
-import { AbstractWorkflowStepSchema } from "./abstract/abstractWorkflowStep.js";
+} from "../../../../../constants/enums/inquirer/inputPromptValidator.js";
+import { zodUnionFromEnum } from "../../../../../utils/deps/zod/zodUnionFromEnum.js";
+import { NonEmptyStringSchema } from "../../../../string/customTypes/string.js";
+import { InputPromptOptionalValidationErrorMessageShorthandSchema } from "../../../validator/codec/shorthands/errorMessages/inputPromptOptionalValidation.js";
+import { AbstractWorkflowStepSchema } from "../../abstract/schemas/abstractWorkflowStep.js";
 
 export const inputPromptValidatorToZodSchema = {
   boolean: z.boolean(),
