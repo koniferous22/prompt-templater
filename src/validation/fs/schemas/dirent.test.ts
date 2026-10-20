@@ -31,7 +31,7 @@ const testCasesForDirentSchema = [
       data: {
         result: true,
       },
-      testBehaviourDescription: "succeed with original absolute path",
+      testBehaviourDescription: "succeed",
     },
   },
 ] satisfies {

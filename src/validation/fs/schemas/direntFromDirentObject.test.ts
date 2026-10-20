@@ -41,7 +41,7 @@ const testCasesForDirentObjectToDirentSchema = [
           },
         }),
       },
-      testBehaviourDescription: "succeed with original absolute path",
+      testBehaviourDescription: "succeed",
     },
   },
   {
@@ -72,7 +72,7 @@ const testCasesForDirentObjectToDirentSchema = [
           },
         }),
       },
-      testBehaviourDescription: "succeed with original absolute path",
+      testBehaviourDescription: "succeed",
     },
   },
 ] satisfies {
