@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 
 import type z from "zod";
 
-import { EditorWorkflowStepSchema } from "./editorStep.js";
+import { EditorWorkflowStepSchema } from "./editorWorkflowStep.js";
 
 const testCasesForEditorWorkflowStepSchema = [
   {

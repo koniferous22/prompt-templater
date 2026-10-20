@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 
 import type z from "zod";
 
-import { InputWorkflowStepSchema } from "./inputStep.js";
+import { InputWorkflowStepSchema } from "./inputWorkflowStep.js";
 
 const testCasesForInputWorkflowStepSchema = [
   {
