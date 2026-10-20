@@ -3,11 +3,12 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
+import { expectTypeOf } from "expect-type";
 import type z from "zod";
 
 import { AbsolutePathSchema } from "../../../validation/path/customTypes/index.js";
 import { RelativePathSchema } from "../../path/customTypes/platformSpecific/posix/path.js";
-import { DirentSchema } from "../schemas/dirent.js";
+import { DirentSchema, type Dirent } from "../schemas/dirent.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));
@@ -51,6 +52,9 @@ describe("DirentSchema", () => {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = DirentSchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      if (parsingResult.success) {
+        expectTypeOf(parsingResult.data).toEqualTypeOf<Dirent>();
+      }
     });
   }
 });
