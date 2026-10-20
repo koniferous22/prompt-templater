@@ -20,6 +20,7 @@ const testCasesForDirentObjectToDirentSchema = [
           const result = new fs.Dirent(
             // @ts-expect-error
             "package.json",
+            // note - constant from `libuv` - "UV_DIRENT_FILE"
             1,
           );
           result.parentPath = projectRoot;
@@ -51,6 +52,7 @@ const testCasesForDirentObjectToDirentSchema = [
           const result = new fs.Dirent(
             // @ts-expect-error
             "fixtures",
+            // note - constant from `libuv` - "UV_DIRENT_DIR"
             2,
           );
           result.parentPath = projectRoot;
