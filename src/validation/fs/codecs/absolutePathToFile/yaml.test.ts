@@ -10,7 +10,7 @@ import { YamlFileSchema, type YamlFile } from "./yaml.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const testCasesForFileSchema = [
+const testCasesForYamlFileSchema = [
   {
     testInput: join(__dirname, "../../../../../fixtures/workspace1/workflows/test-workflow.yml"),
     testOutcome: true,
@@ -37,7 +37,7 @@ const testCasesForFileSchema = [
 }[];
 
 describe("YamlFileSchema", () => {
-  for (const { testInput, testOutcome } of testCasesForFileSchema) {
+  for (const { testInput, testOutcome } of testCasesForYamlFileSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = await YamlFileSchema.safeParseAsync(testInput);
       assert.strictEqual(parsingResult.success, testOutcome);
