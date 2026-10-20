@@ -2,13 +2,14 @@ import assert from "node:assert";
 import { describe, it } from "node:test";
 
 import type z from "zod";
+
 import { AbstractWorkflowStepSchema } from "./abstractWorkflowStep.js";
 
 const testCasesForAbstractWorkflowStepSchema = [
   {
     testInput: {
       data: {
-        id: 'stepId',
+        id: "stepId",
       },
       testCaseDescription: "input without target variable override",
     },
@@ -22,8 +23,8 @@ const testCasesForAbstractWorkflowStepSchema = [
   {
     testInput: {
       data: {
-        id: 'stepId',
-        targetVariable: 'targetVariable'
+        id: "stepId",
+        targetVariable: "targetVariable",
       },
       testCaseDescription: "input with target variable override",
     },
@@ -55,4 +56,3 @@ describe("AbstractWorkflowStepSchema", () => {
     });
   }
 });
-
