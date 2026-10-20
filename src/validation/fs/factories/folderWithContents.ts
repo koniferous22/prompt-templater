@@ -98,8 +98,8 @@ const pathDetectionCheckStaticEntries = async (
       },
     });
     return direntResult.success
-      ? ok(direntResult.data) :
-        appErr("validation_fs_schemas_direntSchema_invalidInputFormat", {
+      ? ok(direntResult.data)
+      : appErr("validation_fs_schemas_direntSchema_invalidInputFormat", {
           zodError: direntResult.error,
         });
   });

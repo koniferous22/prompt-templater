@@ -9,7 +9,6 @@ import { RelativePathSchema } from "../../path/customTypes/platformSpecific/posi
 import { DirentSchema, type Dirent } from "../schemas/dirent.js";
 import { DirentFromDirentObjectSchema } from "./direntFromDirentObject.js";
 
-
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));
 

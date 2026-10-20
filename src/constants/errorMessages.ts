@@ -99,7 +99,7 @@ export const errorMessages = {
       `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
   validation_fs_codecs_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
-  validation_fs_schemas_direntSchema_invalidInputFormat: (ctx: { zodError: ZodError<any>}) =>
+  validation_fs_schemas_direntSchema_invalidInputFormat: (ctx: { zodError: ZodError<any> }) =>
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
   validation_fs_schemas_fileSchema_pathIsNotFolder: (ctx: { value: string }) =>
     `Expected file for input "${ctx.value}"`,
