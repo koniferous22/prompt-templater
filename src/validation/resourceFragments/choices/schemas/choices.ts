@@ -9,7 +9,7 @@ import { TermResourceReferenceSchema } from "../../../resourceReference/term/sch
 import { NonEmptyStringSchema } from "../../../string/customTypes/string.js";
 
 const BaseSelectPromptLiteralChoicesValueTypeSchema = z.object({
-  type: z.literal("plainFile"),
+  type: z.literal("literal"),
 });
 
 const SelectPromptLiteralChoicesValueTypeMapper = {

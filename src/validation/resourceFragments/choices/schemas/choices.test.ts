@@ -11,7 +11,7 @@ const testCasesForChoicesSchema = [
       data: {
         type: "literalValues",
         values: {
-          type: "plainFile",
+          type: "literal",
           valueType: "boolean",
           values: [true, false],
         },
@@ -30,7 +30,7 @@ const testCasesForChoicesSchema = [
       data: {
         type: "literalValues",
         values: {
-          type: "plainFile",
+          type: "literal",
           valueType: "boolean",
           values: true,
         },
@@ -50,7 +50,7 @@ const testCasesForChoicesSchema = [
       data: {
         type: "literalValues",
         values: {
-          type: "plainFile",
+          type: "literal",
           valueType: "number",
           values: [1, 2.5, -3],
         },
@@ -69,7 +69,7 @@ const testCasesForChoicesSchema = [
       data: {
         type: "literalValues",
         values: {
-          type: "plainFile",
+          type: "literal",
           valueType: "number",
           values: 42,
         },
@@ -89,7 +89,7 @@ const testCasesForChoicesSchema = [
       data: {
         type: "literalValues",
         values: {
-          type: "plainFile",
+          type: "literal",
           valueType: "string",
           values: ["foo", "bar"],
         },
@@ -108,7 +108,7 @@ const testCasesForChoicesSchema = [
       data: {
         type: "literalValues",
         values: {
-          type: "plainFile",
+          type: "literal",
           valueType: "string",
           values: "baz",
         },
