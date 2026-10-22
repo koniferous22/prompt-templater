@@ -172,6 +172,9 @@ export const errorMessages = {
   validation_resourceReference_template_codecs_relativePathToResourceRelativePath_invalidExtension:
     (ctx: { resourceInput: RelativePath; allowedExtensions: NonEmptyArray<string> }) =>
       `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+  validation_resourceReference_term_codecs_nonEmptyStringToResourceInput_invalidInputData: (ctx: {
+    value: string;
+  }) => `Expected absolute or relative path, got "${ctx.value}`,
   validation_string_customTypes_nonEmptyString_invalidInput: (ctx: { value: string }) =>
     `Expected non-empty string got "${ctx.value}"`,
 } as const satisfies Record<AppErrorCode, (ctx: any) => string>;

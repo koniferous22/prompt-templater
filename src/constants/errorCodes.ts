@@ -57,4 +57,5 @@ export type AppErrorCode =
   | "validation_resourceReference_template_codecs_absolutePathToResourceAbsolutePath_invalidExtension"
   | "validation_resourceReference_template_codecs_nonEmptyStringToResourceInput_invalidInputData"
   | "validation_resourceReference_template_codecs_relativePathToResourceRelativePath_invalidExtension"
+  | "validation_resourceReference_term_codecs_nonEmptyStringToResourceInput_invalidInputData"
   | "validation_string_customTypes_nonEmptyString_invalidInput";
