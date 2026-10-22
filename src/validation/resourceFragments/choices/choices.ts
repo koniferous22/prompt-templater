@@ -1,9 +1,9 @@
 import z from "zod";
 
 import {
-  InquirerSelectPromptValueType,
-  type InquirerSelectPromptValueTypeType,
-} from "../../../constants/enums/inquirer/selectPromptValueType.js";
+  WorkflowStepChoicesValueType,
+  type WorkflowStepChoicesValueTypeType,
+} from "../../../constants/enums/workflowStep/choicesValueType.js";
 import { wrapNonEmptyInputLiteralIntoArray } from "../../../utils/array/wrapNonEmptyInputLiteralIntoArray.js";
 import { FileSchema } from "../../fs/schemas/file.js";
 import { NonEmptyStringSchema } from "../../string/customTypes/string.js";

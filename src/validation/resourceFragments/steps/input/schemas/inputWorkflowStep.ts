@@ -1,9 +1,9 @@
 import z from "zod";
 
 import {
-  InquirerInputPromptValidator,
-  type InquirerInputPromptValidatorType,
-} from "../../../../../constants/enums/inquirer/inputPromptValidator.js";
+  WorkflowStepInputPromptValidator,
+  type WorkflowStepInputPromptValidatorType,
+} from "../../../../../constants/enums/workflowStep/inputPromptValidator.js";
 import { zodUnionFromEnum } from "../../../../../utils/deps/zod/zodUnionFromEnum.js";
 import { NonEmptyStringSchema } from "../../../../string/customTypes/string.js";
 import { InputPromptOptionalValidationErrorMessageShorthandSchema } from "../../../validator/codec/shorthands/errorMessages/inputPromptOptionalValidation.js";
@@ -13,7 +13,7 @@ export const inputPromptValidatorToZodSchema = {
   boolean: z.boolean(),
   number: z.number(),
   string: NonEmptyStringSchema,
-} satisfies Record<InquirerInputPromptValidatorType, z.ZodType<any>>;
+} satisfies Record<WorkflowStepInputPromptValidatorType, z.ZodType<any>>;
 
 const InputPromptRequiredValidationErrorMessageSchema = z.object({
   requiredErrorMessage: NonEmptyStringSchema.optional(),
@@ -27,12 +27,12 @@ const BaseOptionalWithDefaultInputPromptValidatorSchema = {
 const InputPromptValidationSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("optional"),
-    validator: zodUnionFromEnum(InquirerInputPromptValidator).prefault("string"),
+    validator: zodUnionFromEnum(WorkflowStepInputPromptValidator).prefault("string"),
     error: InputPromptOptionalValidationErrorMessageShorthandSchema.optional(),
   }),
   z.object({
     type: z.literal("required"),
-    validator: zodUnionFromEnum(InquirerInputPromptValidator).prefault("string"),
+    validator: zodUnionFromEnum(WorkflowStepInputPromptValidator).prefault("string"),
     error: InputPromptRequiredValidationErrorMessageSchema.optional(),
   }),
   z.discriminatedUnion("validator", [

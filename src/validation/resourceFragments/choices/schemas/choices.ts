@@ -1,9 +1,9 @@
 import z from "zod";
 
 import {
-  InquirerSelectPromptValueType,
-  type InquirerSelectPromptValueTypeType,
-} from "../../../../constants/enums/inquirer/selectPromptValueType.js";
+  WorkflowStepChoicesValueType,
+  type WorkflowStepChoicesValueTypeType,
+} from "../../../../constants/enums/workflowStep/choicesValueType.js";
 import { wrapNonEmptyInputLiteralIntoArray } from "../../../../utils/array/wrapNonEmptyInputLiteralIntoArray.js";
 import { TermResourceReferenceSchema } from "../../../resourceReference/term/schemas/termResourceReference.js";
 import { NonEmptyStringSchema } from "../../../string/customTypes/string.js";
@@ -13,27 +13,25 @@ const BaseSelectPromptLiteralChoicesValueTypeSchema = z.object({
 });
 
 const SelectPromptLiteralChoicesValueTypeMapper = {
-  [InquirerSelectPromptValueType.Boolean]: BaseSelectPromptLiteralChoicesValueTypeSchema.safeExtend(
-    {
-      valueType: z.literal(InquirerSelectPromptValueType.Boolean),
-      values: z.preprocess((value) => {
-        return wrapNonEmptyInputLiteralIntoArray(value);
-      }, z.array(z.boolean())),
-    },
-  ),
-  [InquirerSelectPromptValueType.Number]: BaseSelectPromptLiteralChoicesValueTypeSchema.safeExtend({
-    valueType: z.literal(InquirerSelectPromptValueType.Number),
+  [WorkflowStepChoicesValueType.Boolean]: BaseSelectPromptLiteralChoicesValueTypeSchema.safeExtend({
+    valueType: z.literal(WorkflowStepChoicesValueType.Boolean),
+    values: z.preprocess((value) => {
+      return wrapNonEmptyInputLiteralIntoArray(value);
+    }, z.array(z.boolean())),
+  }),
+  [WorkflowStepChoicesValueType.Number]: BaseSelectPromptLiteralChoicesValueTypeSchema.safeExtend({
+    valueType: z.literal(WorkflowStepChoicesValueType.Number),
     values: z.preprocess((value) => {
       return wrapNonEmptyInputLiteralIntoArray(value);
     }, z.array(z.number())),
   }),
-  [InquirerSelectPromptValueType.String]: BaseSelectPromptLiteralChoicesValueTypeSchema.safeExtend({
-    valueType: z.literal(InquirerSelectPromptValueType.String),
+  [WorkflowStepChoicesValueType.String]: BaseSelectPromptLiteralChoicesValueTypeSchema.safeExtend({
+    valueType: z.literal(WorkflowStepChoicesValueType.String),
     values: z.preprocess((value) => {
       return wrapNonEmptyInputLiteralIntoArray(value);
     }, z.array(NonEmptyStringSchema)),
   }),
-} as const satisfies Record<InquirerSelectPromptValueTypeType, z.ZodObject>;
+} as const satisfies Record<WorkflowStepChoicesValueTypeType, z.ZodObject>;
 
 type LiteralChoiceValueMapperSchemaType =
   (typeof SelectPromptLiteralChoicesValueTypeMapper)[keyof typeof SelectPromptLiteralChoicesValueTypeMapper];
