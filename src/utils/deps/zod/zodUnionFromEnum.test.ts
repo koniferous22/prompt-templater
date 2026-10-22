@@ -44,7 +44,7 @@ describe("zodUnionFromEnum", () => {
     const schema = zodUnionFromEnum(TestEnum);
 
     // Compile-time check: fails type-checking if inference is wrong
-    const parsed: z.infer<typeof schema> = schema.parse("valueA");
+    const parsed: z.output<typeof schema> = schema.parse("valueA");
     const asEnumType: TestEnumType = parsed;
 
     assert.equal(asEnumType, "valueA");
