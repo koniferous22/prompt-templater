@@ -1,7 +1,15 @@
 import z from "zod";
 
 import { NonEmptyStringToTemplateResourceReferenceSchema } from "../../../../resourceReference/template/codecs/nonEmptyStringToResourceReference.js";
-import { WorkflowStepSchema } from "./workflowStep.js";
+import { EditorWorkflowStepSchema } from "../../../../resourceFragments/steps/editor/schemas/editorWorkflowStep.js";
+import { InputWorkflowStepSchema } from "../../../../resourceFragments/steps/input/schemas/inputWorkflowStep.js";
+import { SelectWorkflowStepSchema } from "../../../../resourceFragments/steps/select/codecs/selectWorkflowStep.js";
+
+const WorkflowStepSchema = z.discriminatedUnion("type", [
+  EditorWorkflowStepSchema,
+  InputWorkflowStepSchema,
+  SelectWorkflowStepSchema,
+]);
 
 export const WorkflowSchema = z
   .object({
