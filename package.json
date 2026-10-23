@@ -39,7 +39,7 @@
   "devEngines": {
     "packageManager": {
       "name": "bun",
-      "version": ">=1.0.0 <2.0.0",
+      "version": "1.4.4",
       "onFail": "error"
     },
     "runtime": {
@@ -48,5 +48,5 @@
       "onFail": "error"
     }
   },
-  "packageManager": "bun@1.4.3"
+  "packageManager": "bun@1.4.4"
 }
