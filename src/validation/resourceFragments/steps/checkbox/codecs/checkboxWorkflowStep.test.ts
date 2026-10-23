@@ -1104,7 +1104,8 @@ const testCasesForSelectWorkflowStepSchema = [
           values: [3, 5],
         },
       },
-      testCaseDescription: "checkbox workflow step, with explicit literal choices having number type",
+      testCaseDescription:
+        "checkbox workflow step, with explicit literal choices having number type",
     },
     testOutcome: {
       data: {
@@ -1253,7 +1254,8 @@ const testCasesForSelectWorkflowStepSchema = [
           values: ["string1", "string2"],
         },
       },
-      testCaseDescription: "checkbox workflow step, with explicit literal choices having string type",
+      testCaseDescription:
+        "checkbox workflow step, with explicit literal choices having string type",
     },
     testOutcome: {
       data: {
@@ -1714,4 +1716,3 @@ describe("CheckboxWorkflowStepSchema", () => {
     });
   }
 });
-
