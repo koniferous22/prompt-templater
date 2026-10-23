@@ -102,6 +102,7 @@ const testCasesForChoicesInputSchema = [
       testBehaviourDescription: "succeed",
     },
   },
+  // Conflicts with treatment of strings as reference
   {
     testInput: {
       data: 1,
@@ -129,13 +130,13 @@ const testCasesForChoicesInputSchema = [
   {
     testInput: {
       data: "string1",
-      testCaseDescription: "single string literal (converted to array)",
+      testCaseDescription: "edge case of single string literal",
     },
     testOutcome: {
       data: {
         result: true,
       },
-      testBehaviourDescription: "succeed",
+      testBehaviourDescription: "succeed, with string being interpreted as reference (TODO)",
     },
   },
   {

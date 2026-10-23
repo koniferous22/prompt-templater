@@ -14,10 +14,7 @@ import { AbsolutePathSchema, RelativePathSchema } from "../../../path/customType
 import { JsonFilepathSchema, YamlFilepathSchema } from "../../../path/schemas/pathWithExtension.js";
 import { SelectorSchema } from "../../../resourceFile/term/schemas/selector.js";
 import { NonEmptyStringToTermResourceReferenceSchema } from "../../../resourceReference/term/codecs/nonEmptyStringToResourceReference.js";
-import {
-  PlainFileTermReferenceOptionsInputSchema,
-  PlainFileTermReferenceOptionsSchema,
-} from "../../../resourceReference/term/schemas/plainFileReferenceOptions.js";
+import { PlainFileTermReferenceOptionsInputSchema } from "../../../resourceReference/term/schemas/plainFileReferenceOptions.js";
 import { NonEmptyStringSchema } from "../../../string/customTypes/string.js";
 
 const ChoicesToArrayOfLiteralsSchemaMapper = {
@@ -29,10 +26,8 @@ const ChoicesToArrayOfLiteralsSchemaMapper = {
     (value) => wrapNonEmptyInputLiteralIntoArray(value),
     z.array(z.number()),
   ),
-  [WorkflowStepChoicesValueType.String]: z.preprocess(
-    (value) => wrapNonEmptyInputLiteralIntoArray(value),
-    z.array(NonEmptyStringSchema),
-  ),
+  // Note - plain string cannot be preprocessed by being converted into array, as it's used for
+  [WorkflowStepChoicesValueType.String]: z.array(NonEmptyStringSchema),
 } as const satisfies Record<WorkflowStepChoicesValueTypeType, z.ZodType>;
 
 const ChoicesToRecordOfLiteralsSchemaMapper = {
