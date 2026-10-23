@@ -38,11 +38,9 @@ export const SelectWorkflowStepSchema = z.codec(
           return {
             type: "literalValues" as const,
             values: {
-              type: "literal" as const,
-              format: "array" as const,
+              ...choicesAsArrayLiterals,
               // injected from scope above
               valueType,
-              values: choicesAsArrayLiterals,
             },
           };
         })
@@ -51,11 +49,9 @@ export const SelectWorkflowStepSchema = z.codec(
           return {
             type: "literalValues" as const,
             values: {
-              type: "literal" as const,
-              format: "record" as const,
+              ...choicesAsRecordLiterals,
               // injected from scope above
               valueType,
-              values: choicesAsRecordLiterals,
             },
           };
         })
