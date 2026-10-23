@@ -76,7 +76,7 @@ export const main = async () => {
     programName: "prompt-templater-v1",
     contexts: [envContext],
     help: "option",
-    brief: message`Templating clipboard util for making prompt typing more efficient`,
+    brief: message`"prompt-templater" ~ interactive templating util for quick text composition`,
   });
   const resourceContextResult = await resolveResourceContext(cliInput);
   if (!resourceContextResult.isOk()) {
