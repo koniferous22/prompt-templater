@@ -3,6 +3,8 @@ import { z, type ZodError } from "zod";
 import type { NonEmptyArray } from "../utils/array/isNonEmptyArray.js";
 import type { DirentFlags } from "../validation/fs/schemas/dirent.js";
 import type { AbsolutePath, RelativePath } from "../validation/path/customTypes/index.js";
+import type { JsonFilepath } from "../validation/path/schemas/pathWithExtension.js";
+import type { NonEmptyString } from "../validation/string/customTypes/string.js";
 import type { AppErrorCode } from "./errorCodes.js";
 
 const createRenderItemList =
@@ -155,6 +157,15 @@ export const errorMessages = {
     (ctx: { value: string }) => `Path "${ctx.value}" doesn't point to valid .hbs file`,
   validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidHandlebarsPath:
     (ctx: { value: string }) => `Error retrieving absolute path from "${ctx.value}"`,
+  validation_resourceFragments_steps_select_codecs_selectorWorkflowStep_invalidJsonFileFragment:
+    (ctx: { selectWorkflowStepId: string; jsonFilePath: string }) =>
+      `Select step with id: "${ctx.selectWorkflowStepId}" contains invalid json choices reference with path "${ctx.jsonFilePath}"`,
+  validation_resourceFragments_steps_select_codecs_selectorWorkflowStep_invalidPlainFileFragment:
+    (ctx: { selectWorkflowStepId: string; plainFilePath: string }) =>
+      `Select step with id: "${ctx.selectWorkflowStepId}" contains invalid plaintext choices reference with path "${ctx.plainFilePath}"`,
+  validation_resourceFragments_steps_select_codecs_selectorWorkflowStep_invalidYamlFileFragment:
+    (ctx: { selectWorkflowStepId: string; yamlFilePath: string }) =>
+      `Select step with id: "${ctx.selectWorkflowStepId}" contains invalid yaml choices reference with path "${ctx.yamlFilePath}"`,
   validation_resourceReference_config_codecs_absolutePathToResourceAbsolutePath_invalidExtension:
     (ctx: { resourceInput: AbsolutePath; allowedExtensions: NonEmptyArray<string> }) =>
       `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,

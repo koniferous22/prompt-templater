@@ -2,6 +2,7 @@ import { match } from "ts-pattern";
 import z from "zod";
 
 import { WorkflowStepChoicesValueType } from "../../../../../constants/enums/workflowStep/choicesValueType.js";
+import { zodRegisterIssue } from "../../../../../utils/deps/zod/zodRegisterIssue.js";
 import { zodUnionFromEnum } from "../../../../../utils/deps/zod/zodUnionFromEnum.js";
 import { WorkflowChoicesFragmentToTermResourceReference } from "../../../../resourceReference/term/codecs/workflowChoicesFragmentToResourceReference.js";
 import { NonEmptyStringSchema } from "../../../../string/customTypes/string.js";
@@ -27,7 +28,7 @@ export const SelectWorkflowStepSchema = z.codec(
   SelectWorkflowStepInputSchema,
   SelectWorkflowStepOuptutSchema,
   {
-    decode: ({ valueType, choices: choicesAsLiterals, ...rest }) => {
+    decode: ({ valueType, choices: choicesAsLiterals, ...rest }, ctx) => {
       const choicesResult = match(choicesAsLiterals)
         .returnType<z.output<typeof ChoicesSchema>>()
         .with({ type: "reference" }, (choicesAsReference) => {
@@ -59,7 +60,15 @@ export const SelectWorkflowStepSchema = z.codec(
           const jsonReferenceResult =
             WorkflowChoicesFragmentToTermResourceReference.safeParse(choicesAsJsonFile);
           if (!jsonReferenceResult.success) {
-            // TODO - define error code and all that stuff
+            zodRegisterIssue(
+              choicesAsJsonFile,
+              ctx,
+              "validation_resourceFragments_steps_select_codecs_selectorWorkflowStep_invalidJsonFileFragment",
+              {
+                selectWorkflowStepId: rest.id,
+                jsonFilePath: choicesAsJsonFile.file,
+              },
+            );
             return z.NEVER;
           }
           return {
@@ -71,7 +80,15 @@ export const SelectWorkflowStepSchema = z.codec(
           const yamlReferenceResult =
             WorkflowChoicesFragmentToTermResourceReference.safeDecode(choicesAsYamlFile);
           if (!yamlReferenceResult.success) {
-            // TODO - define error code and all that stuff
+            zodRegisterIssue(
+              choicesAsYamlFile,
+              ctx,
+              "validation_resourceFragments_steps_select_codecs_selectorWorkflowStep_invalidYamlFileFragment",
+              {
+                selectWorkflowStepId: rest.id,
+                yamlFilePath: choicesAsYamlFile.file,
+              },
+            );
             return z.NEVER;
           }
           return {
@@ -83,7 +100,15 @@ export const SelectWorkflowStepSchema = z.codec(
           const plainReferenceResult =
             WorkflowChoicesFragmentToTermResourceReference.safeParse(choicesAsPlainFile);
           if (!plainReferenceResult.success) {
-            // TODO - define error code and all that stuff
+            zodRegisterIssue(
+              choicesAsPlainFile,
+              ctx,
+              "validation_resourceFragments_steps_select_codecs_selectorWorkflowStep_invalidPlainFileFragment",
+              {
+                selectWorkflowStepId: rest.id,
+                plainFilePath: choicesAsPlainFile.file,
+              },
+            );
             return z.NEVER;
           }
           return {
