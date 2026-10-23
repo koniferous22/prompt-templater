@@ -75,6 +75,10 @@ const testCasesForTermResourceRelativePathSchema = [
       data: {
         format: "plaintext",
         path: "fixtures/workspace1/terms/test-term.txt",
+        options: {
+          failOnEmptyLines: true,
+          trimWhitespace: true,
+        },
       },
       testCaseDescription: "valid plaintext input",
     },

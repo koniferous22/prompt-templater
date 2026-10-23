@@ -12,6 +12,7 @@ const testCasesForChoicesSchema = [
         type: "literalValues",
         values: {
           type: "literal",
+          format: "array",
           valueType: "boolean",
           values: [true, false],
         },
@@ -31,26 +32,7 @@ const testCasesForChoicesSchema = [
         type: "literalValues",
         values: {
           type: "literal",
-          valueType: "boolean",
-          values: true,
-        },
-      },
-      testCaseDescription:
-        "literalValues with boolean valueType and single boolean (preprocessed to array)",
-    },
-    testOutcome: {
-      testBehaviourDescription: "succeed",
-      data: {
-        result: true,
-      },
-    },
-  },
-  {
-    testInput: {
-      data: {
-        type: "literalValues",
-        values: {
-          type: "literal",
+          format: "array",
           valueType: "number",
           values: [1, 2.5, -3],
         },
@@ -70,26 +52,7 @@ const testCasesForChoicesSchema = [
         type: "literalValues",
         values: {
           type: "literal",
-          valueType: "number",
-          values: 42,
-        },
-      },
-      testCaseDescription:
-        "literalValues with number valueType and single number (preprocessed to array)",
-    },
-    testOutcome: {
-      testBehaviourDescription: "succeed",
-      data: {
-        result: true,
-      },
-    },
-  },
-  {
-    testInput: {
-      data: {
-        type: "literalValues",
-        values: {
-          type: "literal",
+          format: "array",
           valueType: "string",
           values: ["foo", "bar"],
         },
@@ -109,12 +72,62 @@ const testCasesForChoicesSchema = [
         type: "literalValues",
         values: {
           type: "literal",
-          valueType: "string",
-          values: "baz",
+          format: "record",
+          valueType: "boolean",
+          values: {
+            true: "label for true",
+            false: "label for false",
+          },
         },
       },
-      testCaseDescription:
-        "literalValues with string valueType and single non-empty string (preprocessed to array)",
+      testCaseDescription: "literalValues with boolean valueType and array of booleans",
+    },
+    testOutcome: {
+      testBehaviourDescription: "succeed",
+      data: {
+        result: true,
+      },
+    },
+  },
+  {
+    testInput: {
+      data: {
+        type: "literalValues",
+        values: {
+          type: "literal",
+          format: "record",
+          valueType: "number",
+          values: {
+            1: "label for 1",
+            2.5: "label for 2.5",
+            [-3]: "label for -3",
+          },
+        },
+      },
+      testCaseDescription: "literalValues with number valueType and array of numbers",
+    },
+    testOutcome: {
+      testBehaviourDescription: "succeed",
+      data: {
+        result: true,
+      },
+    },
+  },
+  {
+    testInput: {
+      data: {
+        type: "literalValues",
+        values: {
+          type: "literal",
+          format: "record",
+          valueType: "string",
+          values: {
+            foo: "label for foo",
+            bar: "label for bar",
+          },
+        },
+      },
+      testCaseDescription: "literalValues with string valueType and array of non-empty strings",
     },
     testOutcome: {
       testBehaviourDescription: "succeed",
@@ -132,6 +145,10 @@ const testCasesForChoicesSchema = [
           filePath: {
             format: "plaintext",
             path: "/absolute/posix/path",
+            options: {
+              failOnEmptyLines: true,
+              trimWhitespace: true,
+            },
           },
         },
       },
@@ -199,6 +216,10 @@ const testCasesForChoicesSchema = [
           filePath: {
             format: "plaintext",
             path: "relative/posix/path",
+            options: {
+              failOnEmptyLines: true,
+              trimWhitespace: true,
+            },
           },
         },
       },

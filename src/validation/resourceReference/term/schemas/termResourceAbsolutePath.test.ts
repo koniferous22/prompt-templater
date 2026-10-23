@@ -75,6 +75,10 @@ const testCasesForTermResourceAbsolutePathSchema = [
       data: {
         format: "plaintext",
         path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.txt"),
+        options: {
+          failOnEmptyLines: true,
+          trimWhitespace: true,
+        },
       },
       testCaseDescription: "valid plaintext input",
     },

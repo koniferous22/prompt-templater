@@ -73,6 +73,10 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
           filePath: {
             format: "plaintext",
             path: join(fixturesWorkspace1Folder, "terms/test-term.txt"),
+            options: {
+              failOnEmptyLines: true,
+              trimWhitespace: true,
+            },
           },
         }),
       },
@@ -132,6 +136,10 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
           filePath: {
             format: "plaintext",
             path: "terms/test-term.txt",
+            options: {
+              failOnEmptyLines: true,
+              trimWhitespace: true,
+            },
           },
         }),
       },

@@ -4,6 +4,7 @@ import { match } from "ts-pattern";
 import z from "zod";
 
 import { RelativePathSchema } from "../../../path/customTypes/index.js";
+import { PlainFileTermReferenceOptionsInputSchema } from "../schemas/plainFileReferenceOptions.js";
 import { TermResourceRelativePathSchema } from "../schemas/termResourceRelativePath.js";
 
 export const RelativePathToTermResourceRelativePath = z.codec(
@@ -32,7 +33,8 @@ export const RelativePathToTermResourceRelativePath = z.codec(
         .otherwise(() => ({
           format: "plaintext" as const,
           path: value,
-          selector: [],
+          // fallback to default options
+          options: PlainFileTermReferenceOptionsInputSchema.parse(undefined),
         }));
     },
     encode: (value) => {

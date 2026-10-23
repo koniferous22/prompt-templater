@@ -64,6 +64,10 @@ const testCasesForTermResourceFileFromReference = [
         value: TermResourceAbsolutePathSchema.parse({
           format: "plaintext",
           path: join(fixturesWorkspace1Folder, "terms/test-term.txt"),
+          options: {
+            failOnEmptyLines: true,
+            trimWhitespace: true,
+          },
         }),
       },
       testBehaviourDescription: "succeed with original absolute path",

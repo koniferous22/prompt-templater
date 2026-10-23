@@ -4,6 +4,7 @@ import { match } from "ts-pattern";
 import z from "zod";
 
 import { AbsolutePathSchema } from "../../../path/customTypes/index.js";
+import { PlainFileTermReferenceOptionsInputSchema } from "../schemas/plainFileReferenceOptions.js";
 import { TermResourceAbsolutePathSchema } from "../schemas/termResourceAbsolutePath.js";
 
 export const AbsolutePathToTermResourceAbsolutePath = z.codec(
@@ -34,7 +35,8 @@ export const AbsolutePathToTermResourceAbsolutePath = z.codec(
           .otherwise(() => ({
             format: "plaintext" as const,
             path: value,
-            selector: [],
+            // fallback to default options
+            options: PlainFileTermReferenceOptionsInputSchema.parse(undefined),
           }))
       );
     },

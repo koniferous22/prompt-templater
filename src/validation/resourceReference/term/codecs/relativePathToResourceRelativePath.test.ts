@@ -14,7 +14,7 @@ const testCasesForTermResourceFileFromReference = [
   {
     testInput: {
       data: RelativePathSchema.parse("terms/test-term.json"),
-      testCaseDescription: "absolute path with .json term extension",
+      testCaseDescription: "relative path with .json term extension",
     },
     testOutcome: {
       data: {
@@ -25,13 +25,13 @@ const testCasesForTermResourceFileFromReference = [
           selector: [],
         }),
       },
-      testBehaviourDescription: "succeed with original absolute path",
+      testBehaviourDescription: "succeed with original relative path",
     },
   },
   {
     testInput: {
       data: RelativePathSchema.parse("terms/test-term.yml"),
-      testCaseDescription: "absolute path with .yml term extension",
+      testCaseDescription: "relative path with .yml term extension",
     },
     testOutcome: {
       data: {
@@ -42,13 +42,13 @@ const testCasesForTermResourceFileFromReference = [
           selector: [],
         }),
       },
-      testBehaviourDescription: "succeed with original absolute path",
+      testBehaviourDescription: "succeed with original relative path",
     },
   },
   {
     testInput: {
       data: RelativePathSchema.parse("terms/test-term.txt"),
-      testCaseDescription: "absolute path with plaintext as fallback",
+      testCaseDescription: "relative path with plaintext as fallback",
     },
     testOutcome: {
       data: {
@@ -56,9 +56,13 @@ const testCasesForTermResourceFileFromReference = [
         value: TermResourceRelativePathSchema.parse({
           format: "plaintext",
           path: "terms/test-term.txt",
+          options: {
+            failOnEmptyLines: true,
+            trimWhitespace: true,
+          },
         }),
       },
-      testBehaviourDescription: "succeed with original absolute path",
+      testBehaviourDescription: "succeed with original relative path",
     },
   },
 ] satisfies {
