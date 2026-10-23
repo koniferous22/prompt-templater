@@ -22,7 +22,7 @@ const testCasesForTermResourceFileFromReference = [
         value: TermResourceRelativePathSchema.parse({
           format: "json",
           path: "terms/test-term.json",
-          selector: [],
+          selector: null,
         }),
       },
       testBehaviourDescription: "succeed with original relative path",
@@ -39,7 +39,7 @@ const testCasesForTermResourceFileFromReference = [
         value: TermResourceRelativePathSchema.parse({
           format: "yaml",
           path: "terms/test-term.yml",
-          selector: [],
+          selector: null,
         }),
       },
       testBehaviourDescription: "succeed with original relative path",

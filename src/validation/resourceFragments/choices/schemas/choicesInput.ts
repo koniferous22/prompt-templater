@@ -54,22 +54,24 @@ export const ChoicesInputSchema = z.union([
         Array.isArray(literalValues.values)
           ? {
               ...literalValues,
+              // Additional value, to distinguish between shape formats
               format: "array" as const,
             }
           : {
               ...literalValues,
+              // Additional value, to distinguish between shape formats
               format: "record" as const,
             },
       ),
     z.object({
       type: z.literal("jsonFile"),
       file: JsonFilepathSchema,
-      selector: SelectorSchema.nullable(),
+      selector: SelectorSchema.nullable().prefault(() => null),
     }),
     z.object({
       type: z.literal("yamlFile"),
       file: YamlFilepathSchema,
-      selector: SelectorSchema.nullable(),
+      selector: SelectorSchema.nullable().prefault(() => null),
     }),
     z.object({
       type: z.literal("plainFile"),

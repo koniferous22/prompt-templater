@@ -19,17 +19,17 @@ export const AbsolutePathToTermResourceAbsolutePath = z.codec(
           .with("json", () => ({
             format: "json" as const,
             path: value,
-            selector: [],
+            selector: null,
           }))
           .with("yaml", () => ({
             format: "yaml" as const,
             path: value,
-            selector: [],
+            selector: null,
           }))
           .with("yml", () => ({
             format: "yaml" as const,
             path: value,
-            selector: [],
+            selector: null,
           }))
           // Fallback - extension not matching above is treated as plaintext
           .otherwise(() => ({

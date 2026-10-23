@@ -33,7 +33,7 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
           filePath: {
             format: "json",
             path: join(fixturesWorkspace1Folder, "terms/test-term.json"),
-            selector: [],
+            selector: null,
           },
         }),
       },
@@ -53,7 +53,7 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
           filePath: {
             format: "yaml",
             path: join(fixturesWorkspace1Folder, "terms/test-term.yml"),
-            selector: [],
+            selector: null,
           },
         }),
       },
@@ -96,7 +96,7 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
           filePath: {
             format: "json",
             path: "terms/test-term.json",
-            selector: [],
+            selector: null,
           },
         }),
       },
@@ -116,7 +116,7 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
           filePath: {
             format: "yaml",
             path: "terms/test-term.yml",
-            selector: [],
+            selector: null,
           },
         }),
       },

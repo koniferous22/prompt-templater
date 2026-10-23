@@ -18,17 +18,17 @@ export const RelativePathToTermResourceRelativePath = z.codec(
         .with("json", () => ({
           format: "json" as const,
           path: value,
-          selector: [],
+          selector: null,
         }))
         .with("yaml", () => ({
           format: "yaml" as const,
           path: value,
-          selector: [],
+          selector: null,
         }))
         .with("yml", () => ({
           format: "yaml" as const,
           path: value,
-          selector: [],
+          selector: null,
         }))
         .otherwise(() => ({
           format: "plaintext" as const,

@@ -30,7 +30,7 @@ const testCasesForTermResourceFileFromReference = [
         value: TermResourceAbsolutePathSchema.parse({
           format: "json",
           path: join(fixturesWorkspace1Folder, "terms/test-term.json"),
-          selector: [],
+          selector: null,
         }),
       },
       testBehaviourDescription: "succeed with original absolute path",
@@ -47,7 +47,7 @@ const testCasesForTermResourceFileFromReference = [
         value: TermResourceAbsolutePathSchema.parse({
           format: "yaml",
           path: join(fixturesWorkspace1Folder, "terms/test-term.yml"),
-          selector: [],
+          selector: null,
         }),
       },
       testBehaviourDescription: "succeed with original absolute path",
