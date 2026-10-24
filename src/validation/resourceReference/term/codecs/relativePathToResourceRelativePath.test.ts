@@ -58,6 +58,7 @@ const testCasesForTermResourceFileFromReference = [
           path: "terms/test-term.txt",
           options: {
             failOnEmptyLines: true,
+            failOnEmptyLastLine: false,
             trimWhitespace: true,
           },
         }),

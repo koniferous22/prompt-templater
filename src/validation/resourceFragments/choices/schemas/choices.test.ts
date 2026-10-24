@@ -147,6 +147,7 @@ const testCasesForChoicesSchema = [
             path: "/absolute/posix/path",
             options: {
               failOnEmptyLines: true,
+              failOnEmptyLastLine: false,
               trimWhitespace: true,
             },
           },
@@ -218,6 +219,7 @@ const testCasesForChoicesSchema = [
             path: "relative/posix/path",
             options: {
               failOnEmptyLines: true,
+              failOnEmptyLastLine: false,
               trimWhitespace: true,
             },
           },

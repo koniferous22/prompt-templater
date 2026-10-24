@@ -77,6 +77,7 @@ const testCasesForTermResourceRelativePathSchema = [
         path: "fixtures/workspace1/terms/test-term.txt",
         options: {
           failOnEmptyLines: true,
+          failOnEmptyLastLine: false,
           trimWhitespace: true,
         },
       },

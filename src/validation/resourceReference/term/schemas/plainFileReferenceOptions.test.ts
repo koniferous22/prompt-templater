@@ -10,6 +10,7 @@ const testCasesForPlainFileReferenceOptionsSchema = [
     testInput: {
       data: {
         failOnEmptyLines: false,
+        failOnEmptyLastLine: false,
         trimWhitespace: false,
       },
       testCaseDescription: "object with parsing options",

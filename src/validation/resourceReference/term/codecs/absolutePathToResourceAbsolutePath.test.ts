@@ -66,6 +66,7 @@ const testCasesForTermResourceFileFromReference = [
           path: join(fixturesWorkspace1Folder, "terms/test-term.txt"),
           options: {
             failOnEmptyLines: true,
+            failOnEmptyLastLine: false,
             trimWhitespace: true,
           },
         }),
