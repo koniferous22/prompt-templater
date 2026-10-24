@@ -5,8 +5,8 @@ import type { File } from "../../validation/fs/schemas/file.js";
 import type { ConfigResourceFile } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import type { TemplateResourceFile } from "../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
 import type { WorkspaceContext } from "../../validation/workspaceContext/schemas/workspaceContext.js";
+import type { ConfigResourceType } from "../resources/config/factories/resourceFactories.js";
 import { configResourceFromResourceFile } from "../resources/config/resourceFromResourceFile.js";
-import type { ConfigResourceType } from "../resources/config/types/resourceTypes.js";
 import { templateResourceFromResourceFile } from "../resources/template/resourceFromResourceFile.js";
 import { templateResourceFileFromReference } from "../resources/template/utils/resourceFileFromReference.js";
 

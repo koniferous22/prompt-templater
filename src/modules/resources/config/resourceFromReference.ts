@@ -2,11 +2,11 @@ import { ok } from "neverthrow";
 
 import type { ConfigResourceReference } from "../../../validation/resourceReference/config/schemas/configResourceReference.js";
 import type { WorkspaceContext } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
-import { configResourceFromResourceFile } from "./resourceFromResourceFile.js";
 import type {
   ConfigResourceSchemaByResourceType,
   ConfigResourceType,
-} from "./types/resourceTypes.js";
+} from "./factories/resourceFactories.js";
+import { configResourceFromResourceFile } from "./resourceFromResourceFile.js";
 import { configResourceFileFromReference } from "./utils/resourceFileFromReference.js";
 
 export const configResourceFromReference = async <

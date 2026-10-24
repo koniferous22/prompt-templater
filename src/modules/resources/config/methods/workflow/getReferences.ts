@@ -1,6 +1,6 @@
 import type z from "zod";
 
-import type { ConfigResourceSchemaByResourceType } from "../../types/resourceTypes.js";
+import type { ConfigResourceSchemaByResourceType } from "../../factories/resourceFactories.js";
 
 export const workflowResourceGetReferences = (
   workflow: z.output<ConfigResourceSchemaByResourceType<"workflow">>,

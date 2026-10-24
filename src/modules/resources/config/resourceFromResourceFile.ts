@@ -13,7 +13,7 @@ import {
   type ConfigResourceSchemaByResourceType,
   type ConfigResourceType,
   type ConfigResourceTypes,
-} from "./types/resourceTypes.js";
+} from "./factories/resourceFactories.js";
 
 export const configResourceFromResourceFile = async <
   ConfigResourceT extends ConfigResourceType,
