@@ -3,8 +3,6 @@ import { z, type ZodError } from "zod";
 import type { NonEmptyArray } from "../utils/array/isNonEmptyArray.js";
 import type { DirentFlags } from "../validation/fs/schemas/dirent.js";
 import type { AbsolutePath, RelativePath } from "../validation/path/customTypes/index.js";
-import type { JsonFilepath } from "../validation/path/schemas/pathWithExtension.js";
-import type { NonEmptyString } from "../validation/string/customTypes/string.js";
 import type { AppErrorCode } from "./errorCodes.js";
 
 const createRenderItemList =
@@ -96,6 +94,17 @@ export const errorMessages = {
   module_resources_template_resourceFromResourceFile_invalidHandlebarsContents: (ctx: {
     file: string;
   }) => `File "${ctx.file}" contains invalid handlebars template contents`,
+  module_resources_term_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
+    `Expected term resource path ${ctx.value} for user input`,
+  module_resources_term_resourceFileFromReference_invalidInputJsonRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .json relative path ${ctx.value} from user input`,
+  module_resources_term_resourceFileFromReference_invalidInputPlaintextRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid relative path ${ctx.value} from user input`,
+  module_resources_term_resourceFileFromReference_invalidInputYamlRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
   module_resourceContext_createResourceContextFromDeferredWorkspaceContext_invalidWorkflowPath:
     (ctx: { workflowFileInput: string }) =>
       `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
