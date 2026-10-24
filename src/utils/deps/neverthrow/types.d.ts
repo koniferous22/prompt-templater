@@ -1,5 +1,5 @@
-import type { AppErrorCode } from "../../../constants/errorCodes.js";
-import type { MessageContext } from "../../../constants/errorMessages.js";
+import type { AppErrorCode } from "../../../constants/errorCodes.ts";
+import type { MessageContext } from "../../../constants/errorMessages.ts";
 
 export type AppError<C extends AppErrorCode> = {
   readonly type: "plain";
