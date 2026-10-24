@@ -27,7 +27,7 @@ export const templateResourceFileFromReference = async (
                 path: handlebarsAbsolutePathResult.data,
               })
             : appErr(
-                "module_resources_templateResourceFileFromInput_invalidInputHandlebarsRelativePath",
+                "module_resources_template_resourceFileFromReference_invalidInputHandlebarsRelativePath",
                 {
                   value: filePath.path,
                 },
@@ -44,7 +44,7 @@ export const templateResourceFileFromReference = async (
   );
   return resourceAbsolutePathResult.success
     ? ok(resourceAbsolutePathResult.data)
-    : appErr("module_resources_templateResourceFileFromInput_invalidInput", {
+    : appErr("module_resources_template_resourceFileFromReference_invalidInput", {
         value: resourceAbsolutePathReferenceResult.value.path,
       });
 };

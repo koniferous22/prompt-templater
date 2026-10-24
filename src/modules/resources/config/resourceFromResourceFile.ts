@@ -27,10 +27,10 @@ export const configResourceFromResourceFile = async <
 ): Promise<
   Result<
     ConfigResource,
-    | AppError<"module_resources_configResourceFromResourceFile_errorReadingFile">
-    | AppError<"module_resources_configResourceFromResourceFile_invalidJsonContents">
-    | AppError<"module_resources_configResourceFromResourceFile_invalidStructure">
-    | AppError<"module_resources_configResourceFromResourceFile_invalidYamlContents">
+    | AppError<"module_resources_config_resourceFromResourceFile_errorReadingFile">
+    | AppError<"module_resources_config_resourceFromResourceFile_invalidJsonContents">
+    | AppError<"module_resources_config_resourceFromResourceFile_invalidStructure">
+    | AppError<"module_resources_config_resourceFromResourceFile_invalidYamlContents">
   >
 > => {
   try {
@@ -40,7 +40,7 @@ export const configResourceFromResourceFile = async <
         try {
           return ok(JSON.parse(rawContents));
         } catch (e: any) {
-          return appErr("module_resources_configResourceFromResourceFile_invalidJsonContents", {
+          return appErr("module_resources_config_resourceFromResourceFile_invalidJsonContents", {
             file: configResourceFile.file,
           });
         }
@@ -49,7 +49,7 @@ export const configResourceFromResourceFile = async <
         try {
           return ok(YAML.parse(rawContents));
         } catch (e: any) {
-          return appErr("module_resources_configResourceFromResourceFile_invalidYamlContents", {
+          return appErr("module_resources_config_resourceFromResourceFile_invalidYamlContents", {
             file: configResourceFile.file,
           });
         }
@@ -61,7 +61,7 @@ export const configResourceFromResourceFile = async <
     const validationResult = configResourceSchemas[type].safeDecode(parseResult.value);
     if (!validationResult.success) {
       return appErr(
-        "module_resources_configResourceFromResourceFile_invalidStructure",
+        "module_resources_config_resourceFromResourceFile_invalidStructure",
         {
           file: configResourceFile.file,
           zodError: validationResult.error,
@@ -77,7 +77,7 @@ export const configResourceFromResourceFile = async <
       .exhaustive();
     return ok(resource);
   } catch (err: unknown) {
-    return appErr("module_resources_configResourceFromResourceFile_errorReadingFile", {
+    return appErr("module_resources_config_resourceFromResourceFile_errorReadingFile", {
       value: configResourceFile.file,
     });
   }

@@ -51,7 +51,7 @@ const testCasesForTemplateResourceFromResourceFile = [
   //   testOutcome: {
   //     data: {
   //       result: false,
-  //       error: createError("module_resources_templateResourceFromResourceFile_errorReadingFile", {
+  //       error: createError("module_resources_template_resourceFromResourceFile_errorReadingFile", {
   //         value: join(workspaceContext, "templates/test-bad-syntax.hbs"),
   //       }),
   //     },

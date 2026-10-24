@@ -19,8 +19,8 @@ export const templateResourceFromResourceFile = async (
 ): Promise<
   Result<
     (value: Record<string, any>) => string,
-    | AppError<"module_resources_templateResourceFromResourceFile_errorReadingFile">
-    | AppError<"module_resources_templateResourceFromResourceFile_invalidHandlebarsContents">
+    | AppError<"module_resources_template_resourceFromResourceFile_errorReadingFile">
+    | AppError<"module_resources_template_resourceFromResourceFile_invalidHandlebarsContents">
   >
 > => {
   try {
@@ -32,7 +32,7 @@ export const templateResourceFromResourceFile = async (
           return ok(Handlebars.compile(rawContents));
         } catch (e: any) {
           return appErr(
-            "module_resources_templateResourceFromResourceFile_invalidHandlebarsContents",
+            "module_resources_template_resourceFromResourceFile_invalidHandlebarsContents",
             {
               file: templateResourceFile.file,
             },
@@ -45,7 +45,7 @@ export const templateResourceFromResourceFile = async (
     }
     return ok(parseResult.value);
   } catch (err: unknown) {
-    return appErr("module_resources_templateResourceFromResourceFile_errorReadingFile", {
+    return appErr("module_resources_template_resourceFromResourceFile_errorReadingFile", {
       value: templateResourceFile.file,
     });
   }

@@ -66,34 +66,34 @@ export const errorMessages = {
     path: AbsolutePath;
   }) =>
     `Encountered incorrect dirent flag "${ctx.direntFlag}" for "${ctx.path}"; expected - "${ctx.expected}", actual - "${ctx.actual}"`,
-  module_resources_configResourceFileFromAbsolutePath_invalidInput: (ctx: { value: string }) =>
+  module_resources_config_resourceFileFromAbsolutePath_invalidInput: (ctx: { value: string }) =>
     `Expected config resource path ${ctx.value} for user input`,
-  module_resources_configResourceFileFromInput_invalidInput: (ctx: { value: string }) =>
+  module_resources_config_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
     `Expected config resource path ${ctx.value} for user input`,
-  module_resources_configResourceFileFromInput_invalidInputJsonRelativePath: (ctx: {
+  module_resources_config_resourceFileFromReference_invalidInputJsonRelativePath: (ctx: {
     value: string;
   }) => `Encountered invalid .json relative path ${ctx.value} from user input`,
-  module_resources_configResourceFileFromInput_invalidInputYamlRelativePath: (ctx: {
+  module_resources_config_resourceFileFromReference_invalidInputYamlRelativePath: (ctx: {
     value: string;
   }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
-  module_resources_configResourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
+  module_resources_config_resourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
     `Error reading file "${ctx.value}"`,
-  module_resources_configResourceFromResourceFile_invalidJsonContents: (ctx: { file: string }) =>
+  module_resources_config_resourceFromResourceFile_invalidJsonContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid JSON contents`,
-  module_resources_configResourceFromResourceFile_invalidStructure: (ctx: {
+  module_resources_config_resourceFromResourceFile_invalidStructure: (ctx: {
     file: string;
     zodError: ZodError<any>;
   }) => `File "${ctx.file}" contains invalid data\n${z.prettifyError(ctx.zodError)}`,
-  module_resources_configResourceFromResourceFile_invalidYamlContents: (ctx: { file: string }) =>
+  module_resources_config_resourceFromResourceFile_invalidYamlContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid YAML contents`,
-  module_resources_templateResourceFileFromInput_invalidInput: (ctx: { value: string }) =>
+  module_resources_template_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
     `Expected template resource path ${ctx.value} for user input`,
-  module_resources_templateResourceFileFromInput_invalidInputHandlebarsRelativePath: (ctx: {
+  module_resources_template_resourceFileFromReference_invalidInputHandlebarsRelativePath: (ctx: {
     value: string;
   }) => `Encountered invalid .hbs relative path ${ctx.value} from user input`,
-  module_resources_templateResourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
+  module_resources_template_resourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
     `Error reading file "${ctx.value}"`,
-  module_resources_templateResourceFromResourceFile_invalidHandlebarsContents: (ctx: {
+  module_resources_template_resourceFromResourceFile_invalidHandlebarsContents: (ctx: {
     file: string;
   }) => `File "${ctx.file}" contains invalid handlebars template contents`,
   module_resourceContext_createResourceContextFromDeferredWorkspaceContext_invalidWorkflowPath:
