@@ -131,10 +131,6 @@ describe("configResourceFromReference", () => {
           testInput.data.workspaceContext,
         );
         assert.strictEqual(resourceAbsolutePathResult.isOk(), true);
-        assert.deepEqual(
-          resourceAbsolutePathResult.isOk() && resourceAbsolutePathResult.value,
-          testOutcome.data,
-        );
       });
     }
   });

@@ -2,8 +2,8 @@ import { ok } from "neverthrow";
 
 import type { TemplateResourceReference } from "../../../validation/resourceReference/template/schemas/templateResourceReference.js";
 import type { WorkspaceContext } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
-import { templateResourceFileFromReference } from "./resourceFileFromReference.js";
 import { templateResourceFromResourceFile } from "./resourceFromResourceFile.js";
+import { templateResourceFileFromReference } from "./utils/resourceFileFromReference.js";
 
 export const templateResourceFromReference = async (
   resourceReference: TemplateResourceReference,

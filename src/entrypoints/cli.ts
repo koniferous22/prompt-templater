@@ -6,7 +6,7 @@ import { cliArgsParser, type CliArgs } from "../modules/optique/cliArgs.js";
 import { envContext } from "../modules/optique/context/env.js";
 import { createResourceContext } from "../modules/resourceContext/createResourceContext.js";
 import { createResourceContextFromDeferredWorkspaceContext } from "../modules/resourceContext/createResourceContextFromDeferredWorkspaceContext.js";
-import { configResourceFileFromReference } from "../modules/resources/config/resourceFileFromReference.js";
+import { configResourceFileFromReference } from "../modules/resources/config/utils/resourceFileFromReference.js";
 import { appErrAsync } from "../utils/deps/neverthrow/errorFactory.js";
 import { resultFromOptionalErrorList } from "../utils/deps/neverthrow/optionalErrorList.js";
 import type { WorkspaceContext } from "../validation/workspaceContext/schemas/workspaceContext.js";

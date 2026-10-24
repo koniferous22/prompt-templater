@@ -3,11 +3,11 @@ import { join } from "node:path";
 import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 
-import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
-import { HandlebarsAbsolutePathSchema } from "../../../validation/path/schemas/pathWithExtension.js";
-import { TemplateResourceFileSchema } from "../../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
-import type { TemplateResourceReference } from "../../../validation/resourceReference/template/schemas/templateResourceReference.js";
-import type { WorkspaceContext } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
+import { appErr } from "../../../../utils/deps/neverthrow/errorFactory.js";
+import { HandlebarsAbsolutePathSchema } from "../../../../validation/path/schemas/pathWithExtension.js";
+import { TemplateResourceFileSchema } from "../../../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
+import type { TemplateResourceReference } from "../../../../validation/resourceReference/template/schemas/templateResourceReference.js";
+import type { WorkspaceContext } from "../../../../validation/workspaceContext/schemas/workspaceContext.js";
 
 export const templateResourceFileFromReference = async (
   resourceReference: TemplateResourceReference,

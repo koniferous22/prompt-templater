@@ -6,9 +6,9 @@ import type { ConfigResourceFile } from "../../validation/resourceFile/config/co
 import type { TemplateResourceFile } from "../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
 import type { WorkspaceContext } from "../../validation/workspaceContext/schemas/workspaceContext.js";
 import { configResourceFromResourceFile } from "../resources/config/resourceFromResourceFile.js";
-import type { ConfigResourceType } from "../resources/config/resourceTypes.js";
-import { templateResourceFileFromReference } from "../resources/template/resourceFileFromReference.js";
+import type { ConfigResourceType } from "../resources/config/types/resourceTypes.js";
 import { templateResourceFromResourceFile } from "../resources/template/resourceFromResourceFile.js";
+import { templateResourceFileFromReference } from "../resources/template/utils/resourceFileFromReference.js";
 
 const initState = (workspaceContext: WorkspaceContext) => {
   const state = {
@@ -48,8 +48,7 @@ export type ResourceContextAddResourceOperation =
       file: TemplateResourceFile;
     }
   | {
-      type: "listResource";
-      // TYPE TBD
+      type: "termResource";
       file: any;
     };
 export type ResourceContextMutationFnResult = {
@@ -71,22 +70,25 @@ export const loadResource = async (
         } satisfies ResourceContextMutationFnResult);
       }
       // 1 - Load file
-      const loadingResult = await configResourceFromResourceFile("workflow", value.file);
-      if (!loadingResult.isOk()) {
-        return loadingResult;
+      const loadResourceResult = await configResourceFromResourceFile("workflow", value.file);
+      if (!loadResourceResult.isOk()) {
+        return loadResourceResult;
       }
+      const resource = loadResourceResult.value;
+      const resourceReferences = resource.getReferences();
       // 2 - Process references
       const templateFileReferenceResult = await templateResourceFileFromReference(
-        loadingResult.value.templateFile,
+        resourceReferences.template,
         state.workspaceContext,
       );
       if (!templateFileReferenceResult.isOk()) {
         return templateFileReferenceResult;
       }
+
       // 3 - update state
       state.resources.configResources.workflows.set(value.file.file, {
         configResourceFile: value.file,
-        contents: loadingResult.value,
+        contents: loadResourceResult.value,
       });
       return ok({
         state,
@@ -121,7 +123,7 @@ export const loadResource = async (
         enqueuedOperations: [],
       } satisfies ResourceContextMutationFnResult);
     })
-    .with({ type: "listResource" }, async (value) => {
+    .with({ type: "termResource" }, async (value) => {
       // WIP - Noop
       return ok({
         state,

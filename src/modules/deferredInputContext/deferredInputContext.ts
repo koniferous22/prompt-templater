@@ -5,8 +5,8 @@ import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
 import { resultFromOptionalErrorList } from "../../utils/deps/neverthrow/optionalErrorList.js";
 import type { ConfigResourceReference } from "../../validation/resourceReference/config/schemas/configResourceReference.js";
 import type { WorkspaceContext } from "../../validation/workspaceContext/schemas/workspaceContext.js";
-import { configResourceFileFromAbsolutePath } from "../resources/config/resourceFileFromAbsolutePath.js";
-import { configResourceFileFromReference } from "../resources/config/resourceFileFromReference.js";
+import { configResourceFileFromAbsolutePath } from "../resources/config/utils/resourceFileFromAbsolutePath.js";
+import { configResourceFileFromReference } from "../resources/config/utils/resourceFileFromReference.js";
 
 export type DeferredContextOpts = {
   workflowPreset: ConfigResourceReference | undefined;

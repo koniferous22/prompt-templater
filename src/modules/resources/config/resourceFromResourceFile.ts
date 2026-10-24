@@ -3,19 +3,22 @@ import fs from "node:fs/promises";
 import { YAML } from "bun";
 import { ok, Result } from "neverthrow";
 import { match } from "ts-pattern";
-import type z from "zod";
 
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
 import type { AppError } from "../../../utils/deps/neverthrow/types.js";
 import type { ConfigResourceFile } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import {
-  configResourceTypes,
+  configResourceFactories,
+  configResourceSchemas,
   type ConfigResourceSchemaByResourceType,
   type ConfigResourceType,
-} from "./resourceTypes.js";
+  type ConfigResourceTypes,
+} from "./types/resourceTypes.js";
 
 export const configResourceFromResourceFile = async <
   ConfigResourceT extends ConfigResourceType,
+  ConfigResource extends ConfigResourceTypes[ConfigResourceT] =
+    ConfigResourceTypes[ConfigResourceT],
   ConfigResourceSchema extends ConfigResourceSchemaByResourceType<ConfigResourceT> =
     ConfigResourceSchemaByResourceType<ConfigResourceT>,
 >(
@@ -23,7 +26,7 @@ export const configResourceFromResourceFile = async <
   configResourceFile: ConfigResourceFile,
 ): Promise<
   Result<
-    z.output<ConfigResourceSchema>,
+    ConfigResource,
     | AppError<"module_resources_configResourceFromResourceFile_errorReadingFile">
     | AppError<"module_resources_configResourceFromResourceFile_invalidJsonContents">
     | AppError<"module_resources_configResourceFromResourceFile_invalidStructure">
@@ -55,21 +58,24 @@ export const configResourceFromResourceFile = async <
     if (!parseResult.isOk()) {
       return parseResult;
     }
-    const validationResult = configResourceTypes[type].safeDecode(parseResult.value);
+    const validationResult = configResourceSchemas[type].safeDecode(parseResult.value);
     if (!validationResult.success) {
+      return appErr(
+        "module_resources_configResourceFromResourceFile_invalidStructure",
+        {
+          file: configResourceFile.file,
+          zodError: validationResult.error,
+        },
+        {
+          cause: validationResult.error,
+        },
+      );
     }
-    return validationResult.success
-      ? ok(validationResult.data)
-      : appErr(
-          "module_resources_configResourceFromResourceFile_invalidStructure",
-          {
-            file: configResourceFile.file,
-            zodError: validationResult.error,
-          },
-          {
-            cause: validationResult.error,
-          },
-        );
+    const resourceData = validationResult.data;
+    const resource = match(type as ConfigResourceType)
+      .with("workflow", () => configResourceFactories.workflow(resourceData) as ConfigResource)
+      .exhaustive();
+    return ok(resource);
   } catch (err: unknown) {
     return appErr("module_resources_configResourceFromResourceFile_errorReadingFile", {
       value: configResourceFile.file,

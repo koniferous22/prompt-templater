@@ -7,7 +7,7 @@ import {
   createDeferredContext,
   type DeferredContextOpts,
 } from "../deferredInputContext/deferredInputContext.js";
-import { configResourceFileFromAbsolutePath } from "../resources/config/resourceFileFromAbsolutePath.js";
+import { configResourceFileFromAbsolutePath } from "../resources/config/utils/resourceFileFromAbsolutePath.js";
 import { detectWorkspaceContextFromCliInput } from "../workspaceContext/detectWorkspaceContext.js";
 import { createResourceContext } from "./createResourceContext.js";
 
