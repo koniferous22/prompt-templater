@@ -47,8 +47,7 @@ export const TermResourceFileSchema = z
                   file: jsonFileResult.data,
                   selector: path.selector,
                 })
-              :
-                appErrAsync(
+              : appErrAsync(
                   "validation_resourceFile_term_codecs_resourceAbsolutePathToResourceFile_invalidJsonFile",
                   {
                     value: path.path,
@@ -63,8 +62,7 @@ export const TermResourceFileSchema = z
                   file: yamlFileResult.data,
                   selector: path.selector,
                 })
-              :
-                appErrAsync(
+              : appErrAsync(
                   "validation_resourceFile_term_codecs_resourceAbsolutePathToResourceFile_invalidYamlFile",
                   {
                     value: path.path,
@@ -79,8 +77,7 @@ export const TermResourceFileSchema = z
                   file: yamlFileResult.data,
                   options: path.options,
                 })
-              : 
-                appErrAsync(
+              : appErrAsync(
                   "validation_resourceFile_term_codecs_resourceAbsolutePathToResourceFile_invalidPlaintextFile",
                   {
                     value: path.path,

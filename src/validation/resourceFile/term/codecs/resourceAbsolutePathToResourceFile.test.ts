@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { expectTypeOf } from "expect-type";
 
 import { AbsolutePathSchema } from "../../../path/customTypes/index.js";
+import { PlainFileTermReferenceOptionsInputSchema } from "../../../resourceReference/term/schemas/plainFileReferenceOptions.js";
 import {
   TermResourceAbsolutePathSchema,
   type TermResourceAbsolutePath,
@@ -14,7 +15,6 @@ import {
   TermResourceFileSchema,
   type TermResourceFile,
 } from "./resourceAbsolutePathToResourceFile.js";
-import { PlainFileTermReferenceOptionsInputSchema } from "../../../resourceReference/term/schemas/plainFileReferenceOptions.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -78,10 +78,7 @@ const testCasesForTermResourceFileSchema = [
       data: TermResourceAbsolutePathSchema.parse({
         format: "yaml",
         path: AbsolutePathSchema.parse(
-          join(
-            __dirname,
-            "../../../../../fixtures/non-existing-workspace/terms/test-term.yml",
-          ),
+          join(__dirname, "../../../../../fixtures/non-existing-workspace/terms/test-term.yml"),
         ),
         selector: null,
       }),
@@ -99,10 +96,7 @@ const testCasesForTermResourceFileSchema = [
       data: TermResourceAbsolutePathSchema.parse({
         format: "json",
         path: AbsolutePathSchema.parse(
-          join(
-            __dirname,
-            "../../../../../fixtures/non-existing-workspace/terms/test-term.json",
-          ),
+          join(__dirname, "../../../../../fixtures/non-existing-workspace/terms/test-term.json"),
         ),
         selector: null,
       }),
@@ -120,10 +114,7 @@ const testCasesForTermResourceFileSchema = [
       data: TermResourceAbsolutePathSchema.parse({
         format: "plaintext",
         path: AbsolutePathSchema.parse(
-          join(
-            __dirname,
-            "../../../../../fixtures/non-existing-workspace/terms/test-term.txt",
-          ),
+          join(__dirname, "../../../../../fixtures/non-existing-workspace/terms/test-term.txt"),
         ),
         options: PlainFileTermReferenceOptionsInputSchema.parse(undefined),
       }),
@@ -135,7 +126,7 @@ const testCasesForTermResourceFileSchema = [
         result: false,
       },
     },
-  }
+  },
 ] satisfies {
   testInput: {
     data: TermResourceAbsolutePath;
@@ -160,4 +151,3 @@ describe("TermResourceFileSchema", () => {
     });
   }
 });
-
