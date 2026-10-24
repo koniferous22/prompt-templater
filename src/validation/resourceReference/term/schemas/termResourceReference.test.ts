@@ -107,8 +107,7 @@ const testCasesForTermResourceReferenceSchema = [
           format: "plaintext",
           path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.txt"),
           options: {
-            failOnEmptyLines: true,
-            failOnEmptyLastLine: false,
+            emptyLines: "allowTrailing",
             trimWhitespace: true,
           },
         },
@@ -196,8 +195,7 @@ const testCasesForTermResourceReferenceSchema = [
           format: "plaintext",
           path: "fixtures/workspace1/terms/test-term.txt",
           options: {
-            failOnEmptyLines: true,
-            failOnEmptyLastLine: false,
+            emptyLines: "allowTrailing",
             trimWhitespace: true,
           },
         },

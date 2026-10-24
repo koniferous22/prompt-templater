@@ -1649,8 +1649,7 @@ const testCasesForSelectWorkflowStepSchema = [
           type: "plainFile",
           file: "/absolute/path/to/term.txt",
           options: {
-            failOnEmptyLines: false,
-            failOnEmptyLastLine: false,
+            emptyLines: "allowTrailing",
             trimWhitespace: false,
           },
         },
@@ -1675,8 +1674,7 @@ const testCasesForSelectWorkflowStepSchema = [
                 format: "plaintext",
                 path: AbsolutePathSchema.parse("/absolute/path/to/term.txt"),
                 options: {
-                  failOnEmptyLines: false,
-                  failOnEmptyLastLine: false,
+                  emptyLines: "allowTrailing",
                   trimWhitespace: false,
                 },
               },

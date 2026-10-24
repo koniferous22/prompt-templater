@@ -9,8 +9,7 @@ const testCasesForPlainFileReferenceOptionsSchema = [
   {
     testInput: {
       data: {
-        failOnEmptyLines: false,
-        failOnEmptyLastLine: false,
+        emptyLines: "allowTrailing",
         trimWhitespace: false,
       },
       testCaseDescription: "object with parsing options",
