@@ -8,8 +8,8 @@ import {
   type RelativePath,
 } from "../../../path/customTypes/index.js";
 import { JsonFilepathSchema, YamlFilepathSchema } from "../../../path/schemas/pathWithExtension.js";
-import { SelectorSchema } from "../../../resourceFile/term/schemas/selector.js";
 import { PlainFileTermReferenceOptionsInputSchema } from "../schemas/plainFileReferenceOptions.js";
+import { SelectorSchema } from "../schemas/selector.js";
 import { TermResourceReferenceSchema } from "../schemas/termResourceReference.js";
 
 const WorkflowChoicesFragmentSchema = z.discriminatedUnion("type", [

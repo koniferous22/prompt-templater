@@ -12,9 +12,9 @@ import {
 import { BooleanStringSchema } from "../../../boolean/schemas/booleanString.js";
 import { AbsolutePathSchema, RelativePathSchema } from "../../../path/customTypes/index.js";
 import { JsonFilepathSchema, YamlFilepathSchema } from "../../../path/schemas/pathWithExtension.js";
-import { SelectorSchema } from "../../../resourceFile/term/schemas/selector.js";
 import { NonEmptyStringToTermResourceReferenceSchema } from "../../../resourceReference/term/codecs/nonEmptyStringToResourceReference.js";
 import { PlainFileTermReferenceOptionsInputSchema } from "../../../resourceReference/term/schemas/plainFileReferenceOptions.js";
+import { SelectorSchema } from "../../../resourceReference/term/schemas/selector.js";
 import { NonEmptyStringSchema } from "../../../string/customTypes/string.js";
 
 const ChoicesToArrayOfLiteralsSchemaMapper = {

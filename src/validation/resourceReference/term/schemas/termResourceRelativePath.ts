@@ -5,8 +5,8 @@ import {
   JsonRelativePathSchema,
   YamlRelativePathSchema,
 } from "../../../path/schemas/pathWithExtension.js";
-import { SelectorSchema } from "../../../resourceFile/term/schemas/selector.js";
 import { PlainFileTermReferenceOptionsSchema } from "./plainFileReferenceOptions.js";
+import { SelectorSchema } from "./selector.js";
 
 export const TermResourceRelativePathSchema = z.discriminatedUnion("format", [
   z.object({

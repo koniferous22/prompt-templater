@@ -4,7 +4,7 @@ import { describe, it } from "node:test";
 import type z from "zod";
 
 import { AbsolutePathSchema, RelativePathSchema } from "../../../path/customTypes/index.js";
-import { SelectorSchema } from "../../../resourceFile/term/schemas/selector.js";
+import { SelectorSchema } from "../schemas/selector.js";
 import { WorkflowChoicesFragmentToTermResourceReference } from "./workflowChoicesFragmentToResourceReference.js";
 
 const testCasesForPlainFileReferenceOptionsSchema = [

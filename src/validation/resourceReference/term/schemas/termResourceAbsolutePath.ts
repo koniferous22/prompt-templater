@@ -5,8 +5,8 @@ import {
   JsonAbsolutePathSchema,
   YamlAbsolutePathSchema,
 } from "../../../path/schemas/pathWithExtension.js";
-import { SelectorSchema } from "../../../resourceFile/term/schemas/selector.js";
 import { PlainFileTermReferenceOptionsSchema } from "./plainFileReferenceOptions.js";
+import { SelectorSchema } from "./selector.js";
 
 export const TermResourceAbsolutePathSchema = z.discriminatedUnion("format", [
   z.object({
