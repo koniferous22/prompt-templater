@@ -157,6 +157,30 @@ export const errorMessages = {
     (ctx: { value: string }) => `Path "${ctx.value}" doesn't point to valid .hbs file`,
   validation_resourceFile_template_codecs_resourceAbsolutePathToResourceFile_invalidHandlebarsPath:
     (ctx: { value: string }) => `Error retrieving absolute path from "${ctx.value}"`,
+  validation_resourceFile_term_codecs_resourceAbsolutePathToResourceFile_invalidJsonFile: (ctx: {
+    value: string;
+  }) => `Path "${ctx.value}" doesn't point to valid JSON file`,
+  validation_resourceFile_term_codecs_resourceAbsolutePathToResourceFile_invalidJsonPath: (ctx: {
+    value: string;
+  }) => `Error retrieving absolute path from "${ctx.value}"`,
+  validation_resourceFile_term_codecs_resourceAbsolutePathToResourceFile_invalidJsonSelector: (ctx: {
+    value: (string | number)[] | null;
+  }) => `Error retrieving selector for JSON file from ${JSON.stringify(ctx.value)}`,
+  validation_resourceFile_term_codecs_resourceAbsolutePathToResourceFile_invalidPlaintextFile: (ctx: {
+    value: string;
+  }) => `Path "${ctx.value}" doesn't point to valid file`,
+  validation_resourceFile_term_codecs_resourceAbsolutePathToResourceFile_invalidPlaintextPath: (ctx: {
+    value: string;
+  }) => `Error retrieving absolute path from "${ctx.value}"`,
+  validation_resourceFile_term_codecs_resourceAbsolutePathToResourceFile_invalidYamlFile: (ctx: {
+    value: string;
+  }) => `Path "${ctx.value}" doesn't point to valid YAML file`,
+  validation_resourceFile_term_codecs_resourceAbsolutePathToResourceFile_invalidYamlPath: (ctx: {
+    value: string;
+  }) => `Error retrieving absolute path from "${ctx.value}"`,
+  validation_resourceFile_term_codecs_resourceAbsolutePathToResourceFile_invalidYamlSelector: (ctx: {
+    value: (string | number)[] | null;
+  }) => `Error retrieving selector for YAML file from ${JSON.stringify(ctx.value)}`,
   validation_resourceFragments_steps_select_codecs_selectorWorkflowStep_invalidJsonFileFragment:
     (ctx: { selectWorkflowStepId: string; jsonFilePath: string }) =>
       `Select step with id: "${ctx.selectWorkflowStepId}" contains invalid json choices reference with path "${ctx.jsonFilePath}"`,
