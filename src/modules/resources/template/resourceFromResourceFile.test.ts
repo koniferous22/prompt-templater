@@ -3,7 +3,6 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { createError } from "../../../utils/deps/neverthrow/errorFactory.js";
 import type { AppErrorInstance } from "../../../utils/deps/neverthrow/types.js";
 import { AbsolutePathSchema } from "../../../validation/path/customTypes/index.js";
 import {
