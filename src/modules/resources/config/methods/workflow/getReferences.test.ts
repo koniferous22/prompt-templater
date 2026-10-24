@@ -1,15 +1,18 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { WorkflowSchema, type Workflow } from "../../../../../validation/resources/config/workflow/schemas/workflow.js";
-import { workflowResourceGetReferences } from "./getReferences.js";
+
 import { NonEmptyStringToTemplateResourceReferenceSchema } from "../../../../../validation/resourceReference/template/codecs/nonEmptyStringToResourceReference.js";
 import type { TemplateResourceReference } from "../../../../../validation/resourceReference/template/schemas/templateResourceReference.js";
-import type { TermResourceReference } from "../../../../../validation/resourceReference/term/schemas/termResourceReference.js";
 import { NonEmptyStringToTermResourceReferenceSchema } from "../../../../../validation/resourceReference/term/codecs/nonEmptyStringToResourceReference.js";
+import type { TermResourceReference } from "../../../../../validation/resourceReference/term/schemas/termResourceReference.js";
+import {
+  WorkflowSchema,
+  type Workflow,
+} from "../../../../../validation/resources/config/workflow/schemas/workflow.js";
+import { workflowResourceGetReferences } from "./getReferences.js";
 
 const testCasesForWorkflowResourceGetReferences = [
   {
-
     testInput: {
       data: {
         workflow: WorkflowSchema.parse({
@@ -22,15 +25,16 @@ const testCasesForWorkflowResourceGetReferences = [
     testOutcome: {
       data: {
         result: {
-          template: NonEmptyStringToTemplateResourceReferenceSchema.parse("templates/test-template.hbs"),
+          template: NonEmptyStringToTemplateResourceReferenceSchema.parse(
+            "templates/test-template.hbs",
+          ),
           terms: [],
-        }
+        },
       },
       testBehaviourDescription: "succeed",
     },
   },
   {
-
     testInput: {
       data: {
         workflow: WorkflowSchema.parse({
@@ -51,17 +55,16 @@ const testCasesForWorkflowResourceGetReferences = [
     testOutcome: {
       data: {
         result: {
-          template: NonEmptyStringToTemplateResourceReferenceSchema.parse("templates/test-template.hbs"),
-          terms: [
-            NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json"),
-          ],
-        }
+          template: NonEmptyStringToTemplateResourceReferenceSchema.parse(
+            "templates/test-template.hbs",
+          ),
+          terms: [NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json")],
+        },
       },
       testBehaviourDescription: "succeed",
     },
   },
   {
-
     testInput: {
       data: {
         workflow: WorkflowSchema.parse({
@@ -82,17 +85,16 @@ const testCasesForWorkflowResourceGetReferences = [
     testOutcome: {
       data: {
         result: {
-          template: NonEmptyStringToTemplateResourceReferenceSchema.parse("templates/test-template.hbs"),
-          terms: [
-            NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json"),
-          ],
-        }
+          template: NonEmptyStringToTemplateResourceReferenceSchema.parse(
+            "templates/test-template.hbs",
+          ),
+          terms: [NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json")],
+        },
       },
       testBehaviourDescription: "succeed",
     },
   },
   {
-
     testInput: {
       data: {
         workflow: WorkflowSchema.parse({
@@ -110,8 +112,8 @@ const testCasesForWorkflowResourceGetReferences = [
               type: "input",
               message: "enter input",
               validation: {
-                type: "optional"
-              }
+                type: "optional",
+              },
             },
             {
               id: "step3",
@@ -128,12 +130,14 @@ const testCasesForWorkflowResourceGetReferences = [
     testOutcome: {
       data: {
         result: {
-          template: NonEmptyStringToTemplateResourceReferenceSchema.parse("templates/test-template.hbs"),
+          template: NonEmptyStringToTemplateResourceReferenceSchema.parse(
+            "templates/test-template.hbs",
+          ),
           terms: [
             NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json"),
             NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json"),
           ],
-        }
+        },
       },
       testBehaviourDescription: "succeed with preserved duplicates",
     },
@@ -148,10 +152,10 @@ const testCasesForWorkflowResourceGetReferences = [
   testOutcome: {
     data: {
       result: {
-        template: TemplateResourceReference,
-        terms: TermResourceReference[],
+        template: TemplateResourceReference;
+        terms: TermResourceReference[];
       };
-    }
+    };
     testBehaviourDescription: string;
   };
 }[];
