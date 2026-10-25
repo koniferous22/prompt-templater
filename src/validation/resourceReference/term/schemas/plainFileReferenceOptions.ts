@@ -2,7 +2,8 @@ import z from "zod";
 
 const EmptyLinesOptionsSchema = z.union([
   z.literal("allow"),
-  z.literal("allowTrailing"),
+  z.literal("skip"),
+  z.literal("skipTrailing"),
   z.literal("fail"),
 ]);
 
@@ -13,7 +14,7 @@ export const PlainFileTermReferenceOptionsSchema = z.object({
 
 export const PlainFileTermReferenceOptionsInputSchema = z
   .object({
-    emptyLines: EmptyLinesOptionsSchema.prefault(() => "allowTrailing"),
+    emptyLines: EmptyLinesOptionsSchema.prefault(() => "skipTrailing"),
     trimWhitespace: z.boolean().prefault(() => true),
   } satisfies {
     [key in keyof typeof PlainFileTermReferenceOptionsSchema.shape]: z.ZodPrefault<

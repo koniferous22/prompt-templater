@@ -57,7 +57,7 @@ const testCasesForTermResourceFileFromReference = [
           format: "plaintext",
           path: "terms/test-term.txt",
           options: {
-            emptyLines: "allowTrailing",
+            emptyLines: "skipTrailing",
             trimWhitespace: true,
           },
         }),

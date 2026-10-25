@@ -93,7 +93,7 @@ const testCasesForPlainFileReferenceOptionsSchema = [
         type: "plainFile",
         file: AbsolutePathSchema.parse("/absolute/path/to/term.txt"),
         options: {
-          emptyLines: "allowTrailing",
+          emptyLines: "skipTrailing",
           trimWhitespace: true,
         },
       },
@@ -191,7 +191,7 @@ const testCasesForPlainFileReferenceOptionsSchema = [
         type: "plainFile",
         file: RelativePathSchema.parse("path/to/term.txt"),
         options: {
-          emptyLines: "allowTrailing",
+          emptyLines: "skipTrailing",
           trimWhitespace: true,
         },
       },
