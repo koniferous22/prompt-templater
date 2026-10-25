@@ -76,6 +76,7 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
             options: {
               whitespaceLines: "skipTrailing",
               trimWhitespace: true,
+              strict: false,
             },
           },
         }),
@@ -139,6 +140,7 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
             options: {
               whitespaceLines: "skipTrailing",
               trimWhitespace: true,
+              strict: false,
             },
           },
         }),

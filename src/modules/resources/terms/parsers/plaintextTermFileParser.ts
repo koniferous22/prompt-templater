@@ -22,7 +22,10 @@ type ParserErrorType =
   | AppError<"module_resources_term_plaintextTermFileParser_parsedWhitespaceLines">;
 
 const createProcessingCallbackFromOptions = (
-  options: z.output<typeof PlainFileTermReferenceOptionsSchema>,
+  options: Pick<
+    z.output<typeof PlainFileTermReferenceOptionsSchema>,
+    "trimWhitespace" | "whitespaceLines"
+  >,
 ): ((
   nonEmptyLineChunk: NonEmptyLineChunk,
   context: { lastParsedLine: number; filepath: File },
@@ -237,7 +240,11 @@ const createProcessingCallbackFromOptions = (
 };
 
 const readPlaintextFileLines = appErrAsyncFromThrowable(
-  async (file: File, lineCallback: ReturnType<typeof createProcessingCallbackFromOptions>) => {
+  async (
+    file: File,
+    lineCallback: ReturnType<typeof createProcessingCallbackFromOptions>,
+    options: { strict: boolean },
+  ) => {
     const lines: string[] = [];
     // TODO - narrow down potential list of errors types
     const parserErrors: ParserErrorType[] = [];
@@ -252,6 +259,13 @@ const readPlaintextFileLines = appErrAsyncFromThrowable(
       });
       if (result.errors !== undefined && result.errors.length > 0) {
         parserErrors.push(...result.errors);
+        if (options.strict) {
+          // Fail asap if strict mode has been set
+          return {
+            lines,
+            errors: parserErrors,
+          };
+        }
       }
       const parsedLineCount =
         nonEmptyLineBuffer.type === "eof"
@@ -288,6 +302,7 @@ export const plaintextTermFileParser = async (
   const linesResult = await readPlaintextFileLines(
     inputFile,
     createProcessingCallbackFromOptions(options),
+    options,
   );
   if (!linesResult.isOk()) {
     return linesResult;

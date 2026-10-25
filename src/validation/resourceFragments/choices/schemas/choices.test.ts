@@ -148,6 +148,7 @@ const testCasesForChoicesSchema = [
             options: {
               whitespaceLines: "skipTrailing",
               trimWhitespace: true,
+              strict: false,
             },
           },
         },
@@ -219,6 +220,7 @@ const testCasesForChoicesSchema = [
             options: {
               whitespaceLines: "skipTrailing",
               trimWhitespace: true,
+              strict: false,
             },
           },
         },

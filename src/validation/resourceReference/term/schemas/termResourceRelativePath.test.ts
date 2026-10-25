@@ -78,6 +78,7 @@ const testCasesForTermResourceRelativePathSchema = [
         options: {
           whitespaceLines: "skipTrailing",
           trimWhitespace: true,
+          strict: false,
         },
       },
       testCaseDescription: "valid plaintext input",

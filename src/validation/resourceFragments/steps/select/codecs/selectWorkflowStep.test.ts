@@ -1651,6 +1651,7 @@ const testCasesForSelectWorkflowStepSchema = [
           options: {
             whitespaceLines: "skipTrailing",
             trimWhitespace: false,
+            strict: false,
           },
         },
       },
@@ -1676,6 +1677,7 @@ const testCasesForSelectWorkflowStepSchema = [
                 options: {
                   whitespaceLines: "skipTrailing",
                   trimWhitespace: false,
+                  strict: false,
                 },
               },
             }),

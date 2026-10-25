@@ -67,6 +67,7 @@ const testCasesForTermResourceFileFromReference = [
           options: {
             whitespaceLines: "skipTrailing",
             trimWhitespace: true,
+            strict: false,
           },
         }),
       },

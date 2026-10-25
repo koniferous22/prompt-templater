@@ -83,7 +83,7 @@ const fixtures = {
 >;
 
 const configurations: {
-  configuration: z.output<typeof PlainFileTermReferenceOptionsSchema>;
+  configuration: Omit<z.output<typeof PlainFileTermReferenceOptionsSchema>, "strict">;
   fixtureTreatment: Record<
     keyof typeof fixtures,
     | {
@@ -370,10 +370,10 @@ const testCasesForPlaintextFileParser = configurations.flatMap(
 describe("plaintextTermFileParser", () => {
   for (const { testInput, testOutcome } of testCasesForPlaintextFileParser) {
     it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
-      const result = await plaintextTermFileParser(
-        testInput.data.inputFile,
-        testInput.data.configuration,
-      );
+      const result = await plaintextTermFileParser(testInput.data.inputFile, {
+        ...testInput.data.configuration,
+        strict: false,
+      });
       if (testOutcome.data.success === true) {
         assert.ok(result.isOk());
         assert.deepEqual(result.value, testOutcome.data.parsedLines);

@@ -11,6 +11,7 @@ const testCasesForPlainFileReferenceOptionsSchema = [
       data: {
         whitespaceLines: "skipTrailing",
         trimWhitespace: false,
+        strict: false,
       },
       testCaseDescription: "object with parsing options",
     },

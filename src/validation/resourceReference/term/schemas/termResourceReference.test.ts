@@ -109,6 +109,7 @@ const testCasesForTermResourceReferenceSchema = [
           options: {
             whitespaceLines: "skipTrailing",
             trimWhitespace: true,
+            strict: false,
           },
         },
       },
@@ -197,6 +198,7 @@ const testCasesForTermResourceReferenceSchema = [
           options: {
             whitespaceLines: "skipTrailing",
             trimWhitespace: true,
+            strict: false,
           },
         },
       },
