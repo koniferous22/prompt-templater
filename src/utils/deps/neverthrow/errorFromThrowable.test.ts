@@ -17,7 +17,7 @@ const testCasesForErrorFromOptionalErrorList = [
         errorHandler: (err) => {
           if (err instanceof Error) {
             if (err.message === "test error") {
-              return createError("dependency_nodeFs_fsReadDirInvalidOuptutShape", undefined);
+              return createError("dependency_nodeFs_fsReadDir_invalidOuptutShape", undefined);
             }
             return createError("dependency_zod_safeParseErrorWithoutIssues", undefined);
           }
@@ -29,7 +29,7 @@ const testCasesForErrorFromOptionalErrorList = [
     testOutcome: {
       data: {
         result: false,
-        errorCode: "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+        errorCode: "dependency_nodeFs_fsReadDir_invalidOuptutShape",
       },
       testBehaviourDescription: "return error with correct error code",
     },
@@ -43,7 +43,7 @@ const testCasesForErrorFromOptionalErrorList = [
         errorHandler: (err) => {
           if (err instanceof Error) {
             if (err.message === "test error") {
-              return createError("dependency_nodeFs_fsReadDirInvalidOuptutShape", undefined);
+              return createError("dependency_nodeFs_fsReadDir_invalidOuptutShape", undefined);
             }
             return createError("dependency_zod_safeParseErrorWithoutIssues", undefined);
           }

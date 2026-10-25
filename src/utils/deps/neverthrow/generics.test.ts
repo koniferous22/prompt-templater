@@ -6,11 +6,15 @@ import type { AppAggregateErr, AppError, AppErrorInstance } from "./types.js";
 
 type Test1Input = [
   undefined,
-  AppError<"dependency_nodeFs_fsReadDirInvalidOuptutShape">,
+  AppError<"dependency_nodeFs_fsReadDir_invalidOuptutShape">,
   undefined,
-  AppError<"dependency_nodeFs_fsReadDirOperationFailed">,
+  AppError<"dependency_nodeFs_fsReadDir_operationFailed">,
 ];
-type Test2Input = [undefined, AppError<"dependency_nodeFs_fsReadDirInvalidOuptutShape">, undefined];
+type Test2Input = [
+  undefined,
+  AppError<"dependency_nodeFs_fsReadDir_invalidOuptutShape">,
+  undefined,
+];
 type Test3Input = [undefined, undefined];
 
 type Test1Result = AppErrorFromOptionalAppErrors<AppErrorCode, Test1Input>;
@@ -21,13 +25,13 @@ expectTypeOf<Test1Result>().toEqualTypeOf<
   AppAggregateErr<
     AppErrorCode,
     [
-      AppError<"dependency_nodeFs_fsReadDirInvalidOuptutShape">,
-      AppError<"dependency_nodeFs_fsReadDirOperationFailed">,
+      AppError<"dependency_nodeFs_fsReadDir_invalidOuptutShape">,
+      AppError<"dependency_nodeFs_fsReadDir_operationFailed">,
     ]
   >
 >();
 expectTypeOf<Test2Result>().toEqualTypeOf<
-  AppError<"dependency_nodeFs_fsReadDirInvalidOuptutShape">
+  AppError<"dependency_nodeFs_fsReadDir_invalidOuptutShape">
 >();
 expectTypeOf<Test3Result>().toEqualTypeOf<null>();
 

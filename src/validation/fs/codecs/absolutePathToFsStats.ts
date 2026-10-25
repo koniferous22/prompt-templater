@@ -9,7 +9,7 @@ import { AbsolutePathSchema } from "../../path/customTypes/index.js";
 // Note - Following doesn't work because of `private` constructor
 // export const FsStatsSchema = z.instanceof(fs.Stats);
 const FsStatsSchema = z.custom<fs.Stats>((val): val is fs.Stats => val instanceof fs.Stats, {
-  error: errorMessages.dependency_nodeFs_fsStatInvalidOutputShape(),
+  error: errorMessages.dependency_nodeFs_fsStat_invalidOutputShape(),
 });
 
 const CodecOutputSchema = z.object({
@@ -26,7 +26,7 @@ export const AbsolutePathToFsStatsSchema = z.codec(AbsolutePathSchema, CodecOutp
         fsStats,
       };
     } catch (err: any) {
-      zodRegisterIssue(absolutePath, ctx, "dependency_nodeFs_fsStatOperationFailed", {
+      zodRegisterIssue(absolutePath, ctx, "dependency_nodeFs_fsStat_operationFailed", {
         value: absolutePath,
         errorMessage: err.message,
       });

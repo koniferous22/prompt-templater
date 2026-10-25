@@ -18,7 +18,7 @@ type NonEmptyLineChunk = AwaitedFromGenerator<
 >;
 
 type ParserErrorType =
-  | AppError<"dependency_nodeFs_fsReadDirInvalidOuptutShape">
+  | AppError<"dependency_nodeFs_fsReadDir_invalidOuptutShape">
   | AppError<"module_resources_term_plaintextTermFileParser_parsedWhitespaceLines">;
 
 const createProcessingCallbackFromOptions = (

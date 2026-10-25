@@ -28,7 +28,7 @@ const DummyZodSchema = z
         path: [],
         message: "custom error",
         params: {
-          code: "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+          code: "dependency_nodeFs_fsReadDir_invalidOuptutShape",
           meta: { value: 3 },
         },
       });
@@ -47,7 +47,7 @@ const DummyZodSchema = z
         path: [],
         message: "custom error",
         params: {
-          code: "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+          code: "dependency_nodeFs_fsReadDir_invalidOuptutShape",
           meta: { value: 4 },
         },
       });
@@ -98,7 +98,7 @@ const testCasesForErrFromZodError = [
         result: false as const,
         error: {
           type: "plain" as const,
-          code: "dependency_nodeFs_fsReadDirInvalidOuptutShape" as const,
+          code: "dependency_nodeFs_fsReadDir_invalidOuptutShape" as const,
         },
       },
       testBehaviourDescription: "returns a plain app error with custom code",
@@ -116,7 +116,7 @@ const testCasesForErrFromZodError = [
           type: "aggregate" as const,
           codes: [
             "dependency_zod_validationError",
-            "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+            "dependency_nodeFs_fsReadDir_invalidOuptutShape",
           ] as const,
         },
       },
@@ -137,13 +137,13 @@ const testCasesForErrFromZodError = [
             code:
               | "dependency_zod_safeParseErrorWithoutIssues"
               | "dependency_zod_validationError"
-              | "dependency_nodeFs_fsReadDirInvalidOuptutShape";
+              | "dependency_nodeFs_fsReadDir_invalidOuptutShape";
           }
         | {
             type: "aggregate";
             codes: readonly (
               | "dependency_zod_validationError"
-              | "dependency_nodeFs_fsReadDirInvalidOuptutShape"
+              | "dependency_nodeFs_fsReadDir_invalidOuptutShape"
             )[];
           };
     };
@@ -226,7 +226,7 @@ const testCasesForResultFromSafeParseResult = [
         result: false as const,
         error: {
           type: "plain" as const,
-          code: "dependency_nodeFs_fsReadDirInvalidOuptutShape" as const,
+          code: "dependency_nodeFs_fsReadDir_invalidOuptutShape" as const,
         },
       },
       testBehaviourDescription: "returns a plain app error with custom code",
@@ -244,7 +244,7 @@ const testCasesForResultFromSafeParseResult = [
           type: "aggregate" as const,
           codes: [
             "dependency_zod_validationError",
-            "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+            "dependency_nodeFs_fsReadDir_invalidOuptutShape",
           ] as const,
         },
       },
@@ -269,13 +269,13 @@ const testCasesForResultFromSafeParseResult = [
                 type: "plain";
                 code:
                   | "dependency_zod_validationError"
-                  | "dependency_nodeFs_fsReadDirInvalidOuptutShape";
+                  | "dependency_nodeFs_fsReadDir_invalidOuptutShape";
               }
             | {
                 type: "aggregate";
                 codes: readonly (
                   | "dependency_zod_validationError"
-                  | "dependency_nodeFs_fsReadDirInvalidOuptutShape"
+                  | "dependency_nodeFs_fsReadDir_invalidOuptutShape"
                 )[];
               };
         };

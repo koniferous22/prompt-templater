@@ -1,9 +1,9 @@
 export type AppErrorCode =
   | "dependency_nodeFs_fsCreateReadStream_unableToOpenForReading"
-  | "dependency_nodeFs_fsReadDirInvalidOuptutShape"
-  | "dependency_nodeFs_fsReadDirOperationFailed"
-  | "dependency_nodeFs_fsStatInvalidOutputShape"
-  | "dependency_nodeFs_fsStatOperationFailed"
+  | "dependency_nodeFs_fsReadDir_invalidOuptutShape"
+  | "dependency_nodeFs_fsReadDir_operationFailed"
+  | "dependency_nodeFs_fsStat_invalidOutputShape"
+  | "dependency_nodeFs_fsStat_operationFailed"
   | "dependency_zod_awaitingAsyncDecode"
   | "dependency_zod_safeParseErrorWithoutIssues"
   | "dependency_zod_validationError"

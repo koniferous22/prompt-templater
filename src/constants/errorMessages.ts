@@ -52,13 +52,16 @@ export const errorMessages = {
     value: string;
     errorMessage: string;
   }) => `Error reading file ${ctx.value} - received error "${ctx.errorMessage}"`,
-  dependency_nodeFs_fsReadDirInvalidOuptutShape: () =>
+  dependency_nodeFs_fsReadDir_invalidOuptutShape: () =>
     'unexpected output of fs.readdir from node:fs, expected array of "Dirent" class',
-  dependency_nodeFs_fsReadDirOperationFailed: (ctx: { rootFolder: string; errorMessage: string }) =>
+  dependency_nodeFs_fsReadDir_operationFailed: (ctx: {
+    rootFolder: string;
+    errorMessage: string;
+  }) =>
     `fs.listDir operation failed on root folder "${ctx.rootFolder}" with message "${ctx.errorMessage}"`,
-  dependency_nodeFs_fsStatInvalidOutputShape: () =>
+  dependency_nodeFs_fsStat_invalidOutputShape: () =>
     'unexpected output of fs.stat from node:fs, expected "Stats" class',
-  dependency_nodeFs_fsStatOperationFailed: (ctx: { value: string; errorMessage: string }) =>
+  dependency_nodeFs_fsStat_operationFailed: (ctx: { value: string; errorMessage: string }) =>
     `fs.stat operation failed on entry "${ctx.value}" with message "${ctx.errorMessage}"`,
   dependency_zod_awaitingAsyncDecode: (ctx: { errorMessage?: string }) =>
     `Encountered error when awaiting asynchronous zod parsing - ${ctx.errorMessage}`,

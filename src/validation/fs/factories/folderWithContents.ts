@@ -43,11 +43,11 @@ const pathDetectionReadDir = async (
     const files = await fs.readdir(parentFolder, { withFileTypes: true, recursive });
     const folderContentsResult = z.array(DirentFromDirentObjectSchema).safeParse(files);
     if (!folderContentsResult.success) {
-      return appErr("dependency_nodeFs_fsReadDirInvalidOuptutShape", undefined);
+      return appErr("dependency_nodeFs_fsReadDir_invalidOuptutShape", undefined);
     }
     return ok(folderContentsResult.data);
   } catch (error: any) {
-    return appErr("dependency_nodeFs_fsReadDirOperationFailed", {
+    return appErr("dependency_nodeFs_fsReadDir_operationFailed", {
       rootFolder: parentFolder,
       errorMessage: error.message,
     });

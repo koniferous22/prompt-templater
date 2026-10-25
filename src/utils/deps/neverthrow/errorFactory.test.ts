@@ -63,7 +63,7 @@ const testCasesForCreateAggregateError = [
     testInput: {
       errors: [
         createError("dependency_zod_validationError", { zodError: sampleZodError }),
-        createError("dependency_nodeFs_fsReadDirInvalidOuptutShape", undefined),
+        createError("dependency_nodeFs_fsReadDir_invalidOuptutShape", undefined),
       ] as const,
       testCaseDescription: "two plain AppErrors",
     },
@@ -72,7 +72,7 @@ const testCasesForCreateAggregateError = [
         type: "aggregate" as const,
         codes: [
           "dependency_zod_validationError",
-          "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+          "dependency_nodeFs_fsReadDir_invalidOuptutShape",
         ] as const,
       },
       testBehaviourDescription: "returns an AppAggregateErr containing the provided errors",
@@ -82,7 +82,7 @@ const testCasesForCreateAggregateError = [
   testInput: {
     errors: readonly [
       AppError<"dependency_zod_validationError">,
-      AppError<"dependency_nodeFs_fsReadDirInvalidOuptutShape">,
+      AppError<"dependency_nodeFs_fsReadDir_invalidOuptutShape">,
     ];
     testCaseDescription: string;
   };
@@ -91,7 +91,7 @@ const testCasesForCreateAggregateError = [
       type: "aggregate";
       codes: readonly [
         "dependency_zod_validationError",
-        "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+        "dependency_nodeFs_fsReadDir_invalidOuptutShape",
       ];
     };
     testBehaviourDescription: string;
@@ -165,17 +165,17 @@ describe("appErr", () => {
 const testCasesForAppErrAsync = [
   {
     testInput: {
-      code: "dependency_nodeFs_fsReadDirInvalidOuptutShape" as const,
+      code: "dependency_nodeFs_fsReadDir_invalidOuptutShape" as const,
       meta: { value: 99 },
       opts: undefined,
-      testCaseDescription: "dependency_nodeFs_fsReadDirInvalidOuptutShape without opts",
+      testCaseDescription: "dependency_nodeFs_fsReadDir_invalidOuptutShape without opts",
     },
     testOutcome: {
       data: {
         isOk: false as const,
         error: {
           type: "plain" as const,
-          code: "dependency_nodeFs_fsReadDirInvalidOuptutShape" as const,
+          code: "dependency_nodeFs_fsReadDir_invalidOuptutShape" as const,
         },
       },
       testBehaviourDescription:
@@ -184,7 +184,7 @@ const testCasesForAppErrAsync = [
   },
 ] satisfies {
   testInput: {
-    code: "dependency_nodeFs_fsReadDirInvalidOuptutShape";
+    code: "dependency_nodeFs_fsReadDir_invalidOuptutShape";
     meta: { value: number };
     opts: undefined;
     testCaseDescription: string;
@@ -192,7 +192,7 @@ const testCasesForAppErrAsync = [
   testOutcome: {
     data: {
       isOk: false;
-      error: { type: "plain"; code: "dependency_nodeFs_fsReadDirInvalidOuptutShape" };
+      error: { type: "plain"; code: "dependency_nodeFs_fsReadDir_invalidOuptutShape" };
     };
     testBehaviourDescription: string;
   };
@@ -282,7 +282,7 @@ const testCasesForAppAggregateErrAsync = [
   {
     testInput: {
       errors: [
-        createError("dependency_nodeFs_fsReadDirInvalidOuptutShape", undefined),
+        createError("dependency_nodeFs_fsReadDir_invalidOuptutShape", undefined),
         createError("dependency_zod_validationError", { zodError: sampleZodError }),
       ] as const,
       testCaseDescription: "two plain AppErrors",
@@ -293,7 +293,7 @@ const testCasesForAppAggregateErrAsync = [
         error: {
           type: "aggregate" as const,
           codes: [
-            "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+            "dependency_nodeFs_fsReadDir_invalidOuptutShape",
             "dependency_zod_validationError",
           ] as const,
         },
@@ -305,7 +305,7 @@ const testCasesForAppAggregateErrAsync = [
 ] satisfies {
   testInput: {
     errors: readonly [
-      AppError<"dependency_nodeFs_fsReadDirInvalidOuptutShape">,
+      AppError<"dependency_nodeFs_fsReadDir_invalidOuptutShape">,
       AppError<"dependency_zod_validationError">,
     ];
     testCaseDescription: string;
@@ -316,7 +316,7 @@ const testCasesForAppAggregateErrAsync = [
       error: {
         type: "aggregate";
         codes: readonly [
-          "dependency_nodeFs_fsReadDirInvalidOuptutShape",
+          "dependency_nodeFs_fsReadDir_invalidOuptutShape",
           "dependency_zod_validationError",
         ];
       };
