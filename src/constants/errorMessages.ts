@@ -5,7 +5,35 @@ import type { DirentFlags } from "../validation/fs/schemas/dirent.js";
 import type { AbsolutePath, RelativePath } from "../validation/path/customTypes/index.js";
 import type { AppErrorCode } from "./errorCodes.js";
 
-const createRenderItemList =
+const countDigits = (n: number) => Math.floor(Math.log10(n)) + 1;
+
+const formatTextLines = (
+  lines: string[],
+  startingLineNumber: number,
+  options: { truncatedLength: number; lineCount: number } = { truncatedLength: 50, lineCount: 3 },
+) => {
+  const digitCount = countDigits(startingLineNumber + lines.length - 1);
+  const formatTextLine = (line: string, lineNumber: number) =>
+    line.length > options.truncatedLength
+      ? `${lineNumber} > ${line.slice(0, options.truncatedLength)}...`
+      : line;
+  const [first, ...rest] = lines;
+  if (!first) {
+    return "";
+  }
+  if (rest.length === 0) {
+    return `\`${formatTextLine(first, startingLineNumber)}\``;
+  }
+  const formattedLines = lines
+    .slice(0, options.lineCount)
+    .map((line, index) => formatTextLine(line, startingLineNumber + index));
+  if (lines.length > options.lineCount) {
+    formattedLines.push("...");
+  }
+  return `\`\`\`\n${formattedLines.join("\n")}\n\`\`\``;
+};
+
+const createFormatItemList =
   <T>(renderItem: (item: T) => string) =>
   (items: [T, ...T[]], truncatedLength: number | null = 2): string => {
     const shouldTruncate = truncatedLength !== null && items.length > truncatedLength;
@@ -15,7 +43,7 @@ const createRenderItemList =
     return displayedItems.join(", ");
   };
 
-const renderStringList = createRenderItemList<string>((x: string) => x);
+const formatStringList = createFormatItemList<string>((x: string) => x);
 
 // TODO - often encountering circular references, because zod issue formatting reuses `errorMessages` as well
 
@@ -52,7 +80,7 @@ export const errorMessages = {
     expectedFolderPath: AbsolutePath;
     extraItems: [string, ...string[]];
   }) =>
-    `Encountered unmatched entries from expected folder path "${ctx.expectedFolderPath}" - ${renderStringList(ctx.extraItems)}`,
+    `Encountered unmatched entries from expected folder path "${ctx.expectedFolderPath}" - ${formatStringList(ctx.extraItems)}`,
   module_direntFlagsMatcher_patternNotFound: (ctx: {
     pattern: RelativePath;
     parentPath: AbsolutePath;
@@ -64,6 +92,9 @@ export const errorMessages = {
     path: AbsolutePath;
   }) =>
     `Encountered incorrect dirent flag "${ctx.direntFlag}" for "${ctx.path}"; expected - "${ctx.expected}", actual - "${ctx.actual}"`,
+  module_resourceContext_createResourceContextFromDeferredWorkspaceContext_invalidWorkflowPath:
+    (ctx: { workflowFileInput: string }) =>
+      `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
   module_resources_config_resourceFileFromAbsolutePath_invalidInput: (ctx: { value: string }) =>
     `Expected config resource path ${ctx.value} for user input`,
   module_resources_config_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
@@ -105,9 +136,15 @@ export const errorMessages = {
   module_resources_term_resourceFileFromReference_invalidInputYamlRelativePath: (ctx: {
     value: string;
   }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
-  module_resourceContext_createResourceContextFromDeferredWorkspaceContext_invalidWorkflowPath:
-    (ctx: { workflowFileInput: string }) =>
-      `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
+  module_resources_term_plaintextTermFileParser_parsedWhitespaceLines: (ctx: {
+    lines: string[];
+    startingLineNumber: number;
+    filepath: string;
+  }) => {
+    const shouldUseEmptyAdjective = ctx.lines.every((line) => line === "");
+    const shouldUsePlural = ctx.lines.length > 1;
+    return `File "${ctx.filepath}" contains ${shouldUseEmptyAdjective ? "empty" : "whitespace"} ${shouldUsePlural ? "lines starting with line" : "line"} ${ctx.startingLineNumber}\n\`${formatTextLines(ctx.lines, ctx.startingLineNumber)}\``;
+  },
   validation_fs_codecs_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
   validation_fs_schemas_direntSchema_invalidInputFormat: (ctx: { zodError: ZodError<any> }) =>
@@ -144,12 +181,12 @@ export const errorMessages = {
     expectedExtensions: NonEmptyArray<string>;
     file: AbsolutePath;
   }) =>
-    `Expected ${ctx.expectedExtensions.length === 1 ? `extension "${ctx.expectedExtensions[0]}"` : `one of following extensions: ${renderStringList(ctx.expectedExtensions, null)}`} for file "${ctx.file}"`,
+    `Expected ${ctx.expectedExtensions.length === 1 ? `extension "${ctx.expectedExtensions[0]}"` : `one of following extensions: ${formatStringList(ctx.expectedExtensions, null)}`} for file "${ctx.file}"`,
   validation_path_factories_relativePathWithExtension_invalidExtension: (ctx: {
     expectedExtensions: NonEmptyArray<string>;
     file: RelativePath;
   }) =>
-    `Expected ${ctx.expectedExtensions.length === 1 ? `extension "${ctx.expectedExtensions[0]}"` : `one of following extensions: ${renderStringList(ctx.expectedExtensions, null)}`} for file "${ctx.file}"`,
+    `Expected ${ctx.expectedExtensions.length === 1 ? `extension "${ctx.expectedExtensions[0]}"` : `one of following extensions: ${formatStringList(ctx.expectedExtensions, null)}`} for file "${ctx.file}"`,
   validation_resourceFile_config_codecs_resourceAbsolutePathToResourceFile_invalidJsonFile: (ctx: {
     value: string;
   }) => `Path "${ctx.value}" doesn't point to valid JSON file`,
@@ -199,21 +236,21 @@ export const errorMessages = {
       `Select step with id: "${ctx.selectWorkflowStepId}" contains invalid yaml choices reference with path "${ctx.yamlFilePath}"`,
   validation_resourceReference_config_codecs_absolutePathToResourceAbsolutePath_invalidExtension:
     (ctx: { resourceInput: AbsolutePath; allowedExtensions: NonEmptyArray<string> }) =>
-      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${formatStringList(ctx.allowedExtensions, null)})`,
   validation_resourceReference_config_codecs_nonEmptyStringToResourceInput_invalidInputData: (ctx: {
     value: string;
   }) => `Expected absolute or relative path, got "${ctx.value}`,
   validation_resourceReference_config_codecs_relativePathToResourceRelativePath_invalidExtension:
     (ctx: { resourceInput: RelativePath; allowedExtensions: NonEmptyArray<string> }) =>
-      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${formatStringList(ctx.allowedExtensions, null)})`,
   validation_resourceReference_template_codecs_absolutePathToResourceAbsolutePath_invalidExtension:
     (ctx: { resourceInput: AbsolutePath; allowedExtensions: NonEmptyArray<string> }) =>
-      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${formatStringList(ctx.allowedExtensions, null)})`,
   validation_resourceReference_template_codecs_nonEmptyStringToResourceInput_invalidInputData:
     (ctx: { value: string }) => `Expected absolute or relative path, got "${ctx.value}`,
   validation_resourceReference_template_codecs_relativePathToResourceRelativePath_invalidExtension:
     (ctx: { resourceInput: RelativePath; allowedExtensions: NonEmptyArray<string> }) =>
-      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${renderStringList(ctx.allowedExtensions, null)})`,
+      `Input value "${ctx.resourceInput}" contains invalid file extension (supported: ${formatStringList(ctx.allowedExtensions, null)})`,
   validation_resourceReference_term_codecs_nonEmptyStringToResourceInput_invalidInputData: (ctx: {
     value: string;
   }) => `Expected absolute or relative path, got "${ctx.value}`,
