@@ -37,11 +37,11 @@ export const errorFromOptionalErrorList = <
 export const resultFromOptionalErrorList = <
   ErrorCodes extends AppErrorCode = AppErrorCode,
   OptionalErrorTypes extends [
-    Err<never, AppError<AppErrorCode>> | undefined,
-    ...(Err<never, AppError<AppErrorCode>> | undefined)[],
+    Err<unknown, AppError<AppErrorCode>> | undefined,
+    ...(Err<unknown, AppError<AppErrorCode>> | undefined)[],
   ] = [
-    Err<never, AppError<AppErrorCode>> | undefined,
-    ...(Err<never, AppError<AppErrorCode>> | undefined)[],
+    Err<unknown, AppError<AppErrorCode>> | undefined,
+    ...(Err<unknown, AppError<AppErrorCode>> | undefined)[],
   ],
 >(
   ...optionalErrors: OptionalErrorTypes
