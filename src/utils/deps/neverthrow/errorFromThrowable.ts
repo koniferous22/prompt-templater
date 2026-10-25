@@ -10,8 +10,12 @@ export const appErrAsyncFromThrowable = <
   ErrorCode extends AppErrorCode = AppErrorCode,
 >(
   fn: (...args: Args) => Promise<ReturnType>,
-  errorFn?: (err: unknown) => AppError<ErrorCode>,
+  errorFn?: (err: unknown, ...args: Args) => AppError<ErrorCode>,
 ): ((...args: Args) => ResultAsync<ReturnType, AppError<ErrorCode>>) => {
-  const result = ResultAsync.fromThrowable(fn, errorFn);
-  return result;
+  return (...args: Args) => {
+    const wrappedErrorFunction = errorFn && ((err: unknown) => errorFn(err, ...args));
+    const cb = ResultAsync.fromThrowable(fn, wrappedErrorFunction);
+    const result = cb(...args);
+    return result;
+  };
 };

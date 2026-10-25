@@ -48,6 +48,10 @@ const formatStringList = createFormatItemList<string>((x: string) => x);
 // TODO - often encountering circular references, because zod issue formatting reuses `errorMessages` as well
 
 export const errorMessages = {
+  dependency_nodeFs_fsCreateReadStream_unableToOpenForReading: (ctx: {
+    value: string;
+    errorMessage: string;
+  }) => `Error reading file ${ctx.value} - received error "${ctx.errorMessage}"`,
   dependency_nodeFs_fsReadDirInvalidOuptutShape: () =>
     'unexpected output of fs.readdir from node:fs, expected array of "Dirent" class',
   dependency_nodeFs_fsReadDirOperationFailed: (ctx: { rootFolder: string; errorMessage: string }) =>

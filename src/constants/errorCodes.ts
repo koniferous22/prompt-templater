@@ -1,4 +1,5 @@
 export type AppErrorCode =
+  | "dependency_nodeFs_fsCreateReadStream_unableToOpenForReading"
   | "dependency_nodeFs_fsReadDirInvalidOuptutShape"
   | "dependency_nodeFs_fsReadDirOperationFailed"
   | "dependency_nodeFs_fsStatInvalidOutputShape"

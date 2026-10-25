@@ -267,12 +267,17 @@ const readPlaintextFileLines = appErrAsyncFromThrowable(
       errors: parserErrors,
     };
   },
-  (error: unknown) => {
-    // TODO - proper error + inject message from the cause
-    return createError("dependency_nodeFs_fsStatOperationFailed", {
-      value: "asdf",
-      errorMessage: "adsf",
-    });
+  (error: unknown, file: File) => {
+    return createError(
+      "dependency_nodeFs_fsCreateReadStream_unableToOpenForReading",
+      {
+        value: file,
+        errorMessage: (error as Error).message,
+      },
+      {
+        cause: error,
+      },
+    );
   },
 );
 
