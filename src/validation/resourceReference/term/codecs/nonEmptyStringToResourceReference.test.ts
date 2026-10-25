@@ -74,7 +74,7 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
             format: "plaintext",
             path: join(fixturesWorkspace1Folder, "terms/test-term.txt"),
             options: {
-              emptyLines: "skipTrailing",
+              whitespaceLines: "skipTrailing",
               trimWhitespace: true,
             },
           },
@@ -137,7 +137,7 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
             format: "plaintext",
             path: "terms/test-term.txt",
             options: {
-              emptyLines: "skipTrailing",
+              whitespaceLines: "skipTrailing",
               trimWhitespace: true,
             },
           },

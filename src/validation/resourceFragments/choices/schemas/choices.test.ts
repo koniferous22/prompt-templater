@@ -146,7 +146,7 @@ const testCasesForChoicesSchema = [
             format: "plaintext",
             path: "/absolute/posix/path",
             options: {
-              emptyLines: "skipTrailing",
+              whitespaceLines: "skipTrailing",
               trimWhitespace: true,
             },
           },
@@ -217,7 +217,7 @@ const testCasesForChoicesSchema = [
             format: "plaintext",
             path: "relative/posix/path",
             options: {
-              emptyLines: "skipTrailing",
+              whitespaceLines: "skipTrailing",
               trimWhitespace: true,
             },
           },

@@ -76,7 +76,7 @@ const testCasesForTermResourceRelativePathSchema = [
         format: "plaintext",
         path: "fixtures/workspace1/terms/test-term.txt",
         options: {
-          emptyLines: "skipTrailing",
+          whitespaceLines: "skipTrailing",
           trimWhitespace: true,
         },
       },

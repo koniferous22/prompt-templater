@@ -65,7 +65,7 @@ const testCasesForTermResourceFileFromReference = [
           format: "plaintext",
           path: join(fixturesWorkspace1Folder, "terms/test-term.txt"),
           options: {
-            emptyLines: "skipTrailing",
+            whitespaceLines: "skipTrailing",
             trimWhitespace: true,
           },
         }),

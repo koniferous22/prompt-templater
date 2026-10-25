@@ -1651,7 +1651,7 @@ const testCasesForSelectWorkflowStepSchema = [
           type: "plainFile",
           file: "/absolute/path/to/term.txt",
           options: {
-            emptyLines: "skipTrailing",
+            whitespaceLines: "skipTrailing",
             trimWhitespace: false,
           },
         },
@@ -1676,7 +1676,7 @@ const testCasesForSelectWorkflowStepSchema = [
                 format: "plaintext",
                 path: AbsolutePathSchema.parse("/absolute/path/to/term.txt"),
                 options: {
-                  emptyLines: "skipTrailing",
+                  whitespaceLines: "skipTrailing",
                   trimWhitespace: false,
                 },
               },

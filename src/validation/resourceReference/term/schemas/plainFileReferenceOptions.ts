@@ -8,13 +8,13 @@ const EmptyLinesOptionsSchema = z.union([
 ]);
 
 export const PlainFileTermReferenceOptionsSchema = z.object({
-  emptyLines: EmptyLinesOptionsSchema,
+  whitespaceLines: EmptyLinesOptionsSchema,
   trimWhitespace: z.boolean(),
 });
 
 export const PlainFileTermReferenceOptionsInputSchema = z
   .object({
-    emptyLines: EmptyLinesOptionsSchema.prefault(() => "skipTrailing"),
+    whitespaceLines: EmptyLinesOptionsSchema.prefault(() => "skipTrailing"),
     trimWhitespace: z.boolean().prefault(() => true),
   } satisfies {
     [key in keyof typeof PlainFileTermReferenceOptionsSchema.shape]: z.ZodPrefault<
