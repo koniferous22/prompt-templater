@@ -25,9 +25,11 @@ const testCasesForWorkflowResourceGetReferences = [
     testOutcome: {
       data: {
         result: {
-          template: NonEmptyStringToTemplateResourceReferenceSchema.parse(
-            "templates/test-template.hbs",
-          ),
+          template: {
+            reference: NonEmptyStringToTemplateResourceReferenceSchema.parse(
+              "templates/test-template.hbs",
+            ),
+          },
           terms: [],
         },
       },
@@ -55,10 +57,17 @@ const testCasesForWorkflowResourceGetReferences = [
     testOutcome: {
       data: {
         result: {
-          template: NonEmptyStringToTemplateResourceReferenceSchema.parse(
-            "templates/test-template.hbs",
-          ),
-          terms: [NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json")],
+          template: {
+            reference: NonEmptyStringToTemplateResourceReferenceSchema.parse(
+              "templates/test-template.hbs",
+            ),
+          },
+          terms: [
+            {
+              reference: NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json"),
+              termType: "string",
+            },
+          ],
         },
       },
       testBehaviourDescription: "succeed",
@@ -85,10 +94,17 @@ const testCasesForWorkflowResourceGetReferences = [
     testOutcome: {
       data: {
         result: {
-          template: NonEmptyStringToTemplateResourceReferenceSchema.parse(
-            "templates/test-template.hbs",
-          ),
-          terms: [NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json")],
+          template: {
+            reference: NonEmptyStringToTemplateResourceReferenceSchema.parse(
+              "templates/test-template.hbs",
+            ),
+          },
+          terms: [
+            {
+              reference: NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json"),
+              termType: "string",
+            },
+          ],
         },
       },
       testBehaviourDescription: "succeed",
@@ -130,12 +146,20 @@ const testCasesForWorkflowResourceGetReferences = [
     testOutcome: {
       data: {
         result: {
-          template: NonEmptyStringToTemplateResourceReferenceSchema.parse(
-            "templates/test-template.hbs",
-          ),
+          template: {
+            reference: NonEmptyStringToTemplateResourceReferenceSchema.parse(
+              "templates/test-template.hbs",
+            ),
+          },
           terms: [
-            NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json"),
-            NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json"),
+            {
+              reference: NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json"),
+              termType: "string",
+            },
+            {
+              reference: NonEmptyStringToTermResourceReferenceSchema.parse("terms/test-term.json"),
+              termType: "string",
+            },
           ],
         },
       },
@@ -151,10 +175,7 @@ const testCasesForWorkflowResourceGetReferences = [
   };
   testOutcome: {
     data: {
-      result: {
-        template: TemplateResourceReference;
-        terms: TermResourceReference[];
-      };
+      result: ReturnType<typeof workflowResourceGetReferences>;
     };
     testBehaviourDescription: string;
   };

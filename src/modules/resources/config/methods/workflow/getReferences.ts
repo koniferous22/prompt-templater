@@ -5,7 +5,9 @@ import type { ConfigResourceSchemaByResourceType } from "../../factories/resourc
 export const workflowResourceGetReferences = (
   workflow: z.output<ConfigResourceSchemaByResourceType<"workflow">>,
 ) => {
-  const templateReference = workflow.templateFile;
+  const templateReference = {
+    reference: workflow.templateFile,
+  };
   const termReferences = workflow.steps
     .map((step) => {
       if (step.type !== "checkbox" && step.type !== "select") {
@@ -14,7 +16,10 @@ export const workflowResourceGetReferences = (
       if (step.choices.type !== "reference") {
         return null;
       }
-      return step.choices.reference;
+      return {
+        reference: step.choices.reference,
+        termType: step.valueType,
+      };
     })
     .filter((reference) => reference !== null);
   return {

@@ -78,7 +78,7 @@ export const loadResource = async (
       const resourceReferences = resource.getReferences();
       // 2 - Process references
       const templateFileReferenceResult = await templateResourceFileFromReference(
-        resourceReferences.template,
+        resourceReferences.template.reference,
         state.workspaceContext,
       );
       if (!templateFileReferenceResult.isOk()) {
