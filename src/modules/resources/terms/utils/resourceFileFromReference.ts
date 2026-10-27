@@ -32,7 +32,7 @@ export const termResourceFileFromReference = async (
                 selector: fp.selector,
               })
             : appErr(
-                "module_resources_term_resourceFileFromReference_invalidInputJsonRelativePath",
+                "module_resources_term_utils_resourceFileFromReference_invalidInputJsonRelativePath",
                 {
                   value: filePath.path,
                 },
@@ -49,7 +49,7 @@ export const termResourceFileFromReference = async (
                 selector: fp.selector,
               })
             : appErr(
-                "module_resources_term_resourceFileFromReference_invalidInputYamlRelativePath",
+                "module_resources_term_utils_resourceFileFromReference_invalidInputYamlRelativePath",
                 {
                   value: filePath.path,
                 },
@@ -66,7 +66,7 @@ export const termResourceFileFromReference = async (
                 options: fp.options,
               })
             : appErr(
-                "module_resources_term_resourceFileFromReference_invalidInputPlaintextRelativePath",
+                "module_resources_term_utils_resourceFileFromReference_invalidInputPlaintextRelativePath",
                 {
                   value: filePath.path,
                 },
@@ -83,7 +83,7 @@ export const termResourceFileFromReference = async (
   );
   return resourceAbsolutePathResult.success
     ? ok(resourceAbsolutePathResult.data)
-    : appErr("module_resources_term_resourceFileFromReference_invalidInput", {
+    : appErr("module_resources_term_utils_resourceFileFromReference_invalidInput", {
         value: resourceAbsolutePathReferenceResult.value.path,
       });
 };

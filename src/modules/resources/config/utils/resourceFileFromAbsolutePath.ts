@@ -12,7 +12,7 @@ export const configResourceFileFromAbsolutePath = async (
     await ConfigResourceFileSchema.safeParseAsync(resourceAbsolutePath);
   return resourceAbsolutePathResult.success
     ? ok(resourceAbsolutePathResult.data)
-    : appErr("module_resources_config_resourceFileFromAbsolutePath_invalidInput", {
+    : appErr("module_resources_config_utils_resourceFileFromAbsolutePath_invalidInput", {
         value: resourceAbsolutePath.path,
       });
 };

@@ -107,16 +107,6 @@ export const errorMessages = {
     file: string;
     zodError: ZodError<any>;
   }) => `File "${ctx.file}" contains invalid data\n${z.prettifyError(ctx.zodError)}`,
-  module_resources_config_resourceFileFromAbsolutePath_invalidInput: (ctx: { value: string }) =>
-    `Expected config resource path ${ctx.value} for user input`,
-  module_resources_config_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
-    `Expected config resource path ${ctx.value} for user input`,
-  module_resources_config_resourceFileFromReference_invalidInputJsonRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .json relative path ${ctx.value} from user input`,
-  module_resources_config_resourceFileFromReference_invalidInputYamlRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
   module_resources_config_resourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
     `Error reading file "${ctx.value}"`,
   module_resources_config_resourceFromResourceFile_invalidJsonContents: (ctx: { file: string }) =>
@@ -133,6 +123,17 @@ export const errorMessages = {
   module_resources_template_resourceFromResourceFile_invalidHandlebarsContents: (ctx: {
     file: string;
   }) => `File "${ctx.file}" contains invalid handlebars template contents`,
+  module_resources_config_utils_resourceFileFromAbsolutePath_invalidInput: (ctx: {
+    value: string;
+  }) => `Expected config resource path ${ctx.value} for user input`,
+  module_resources_config_utils_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
+    `Expected config resource path ${ctx.value} for user input`,
+  module_resources_config_utils_resourceFileFromReference_invalidInputJsonRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .json relative path ${ctx.value} from user input`,
+  module_resources_config_utils_resourceFileFromReference_invalidInputYamlRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
   module_resources_term_factories_createTerm_invalidInputData: (ctx: {
     file: string;
     zodError: ZodError<any>;
@@ -146,23 +147,23 @@ export const errorMessages = {
     const shouldUsePlural = ctx.lines.length > 1;
     return `File "${ctx.filepath}" contains ${shouldUseEmptyAdjective ? "empty" : "whitespace"} ${shouldUsePlural ? "lines starting with line" : "line"} ${ctx.startingLineNumber}\n\`${formatTextLines(ctx.lines, ctx.startingLineNumber)}\``;
   },
-  module_resources_term_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
-    `Expected term resource path ${ctx.value} for user input`,
-  module_resources_term_resourceFileFromReference_invalidInputJsonRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .json relative path ${ctx.value} from user input`,
-  module_resources_term_resourceFileFromReference_invalidInputPlaintextRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid relative path ${ctx.value} from user input`,
-  module_resources_term_resourceFileFromReference_invalidInputYamlRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
   module_resources_term_resourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
     `Error reading file "${ctx.value}"`,
   module_resources_term_resourceFromResourceFile_invalidJsonContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid JSON contents`,
   module_resources_term_resourceFromResourceFile_invalidYamlContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid YAML contents`,
+  module_resources_term_utils_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
+    `Expected term resource path ${ctx.value} for user input`,
+  module_resources_term_utils_resourceFileFromReference_invalidInputJsonRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .json relative path ${ctx.value} from user input`,
+  module_resources_term_utils_resourceFileFromReference_invalidInputPlaintextRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid relative path ${ctx.value} from user input`,
+  module_resources_term_utils_resourceFileFromReference_invalidInputYamlRelativePath: (ctx: {
+    value: string;
+  }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
   module_resources_term_utils_retrieveTermDataBySelector_arrayIndexOutOfRange: (ctx: {
     file: string;
     selector: (string | number)[];

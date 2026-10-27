@@ -30,7 +30,7 @@ export const configResourceFileFromReference = async (
                 path: jsonAbsolutePathResult.data,
               })
             : appErr(
-                "module_resources_config_resourceFileFromReference_invalidInputJsonRelativePath",
+                "module_resources_config_utils_resourceFileFromReference_invalidInputJsonRelativePath",
                 {
                   value: filePath.path,
                 },
@@ -46,7 +46,7 @@ export const configResourceFileFromReference = async (
                 path: yamlAbsolutePathResult.data,
               })
             : appErr(
-                "module_resources_config_resourceFileFromReference_invalidInputYamlRelativePath",
+                "module_resources_config_utils_resourceFileFromReference_invalidInputYamlRelativePath",
                 {
                   value: filePath.path,
                 },
@@ -63,7 +63,7 @@ export const configResourceFileFromReference = async (
   );
   return resourceAbsolutePathResult.success
     ? ok(resourceAbsolutePathResult.data)
-    : appErr("module_resources_config_resourceFileFromReference_invalidInput", {
+    : appErr("module_resources_config_utils_resourceFileFromReference_invalidInput", {
         value: resourceAbsolutePathReferenceResult.value.path,
       });
 };
