@@ -18,8 +18,7 @@ type NonEmptyLineChunk = AwaitedFromGenerator<
 >;
 
 type ParserErrorType =
-  | AppError<"dependency_nodeFs_fsReadDir_invalidOuptutShape">
-  | AppError<"module_resources_term_plaintextTermFileParser_parsedWhitespaceLines">;
+  AppError<"module_resources_term_parsers_plaintextTermFileParser_parsedWhitespaceLines">;
 
 const createProcessingCallbackFromOptions = (
   options: Pick<
@@ -71,11 +70,14 @@ const createProcessingCallbackFromOptions = (
         const errors: ParserErrorType[] = [];
         if (chunk.whitespaceLines.length > 0) {
           errors.push(
-            createError("module_resources_term_plaintextTermFileParser_parsedWhitespaceLines", {
-              startingLineNumber: context.lastParsedLine + 1,
-              lines: chunk.whitespaceLines,
-              filepath: context.filepath,
-            }),
+            createError(
+              "module_resources_term_parsers_plaintextTermFileParser_parsedWhitespaceLines",
+              {
+                startingLineNumber: context.lastParsedLine + 1,
+                lines: chunk.whitespaceLines,
+                filepath: context.filepath,
+              },
+            ),
           );
         }
         const currentLine = chunk.line.trim();
@@ -95,7 +97,7 @@ const createProcessingCallbackFromOptions = (
               chunk.trailingWhitespaceLines.length > 0
                 ? [
                     createError(
-                      "module_resources_term_plaintextTermFileParser_parsedWhitespaceLines",
+                      "module_resources_term_parsers_plaintextTermFileParser_parsedWhitespaceLines",
                       {
                         startingLineNumber: context.lastParsedLine + 1,
                         lines: chunk.trailingWhitespaceLines,
@@ -109,11 +111,14 @@ const createProcessingCallbackFromOptions = (
         const errors: ParserErrorType[] = [];
         if (chunk.whitespaceLines.length > 0) {
           errors.push(
-            createError("module_resources_term_plaintextTermFileParser_parsedWhitespaceLines", {
-              startingLineNumber: context.lastParsedLine + 1,
-              lines: chunk.whitespaceLines,
-              filepath: context.filepath,
-            }),
+            createError(
+              "module_resources_term_parsers_plaintextTermFileParser_parsedWhitespaceLines",
+              {
+                startingLineNumber: context.lastParsedLine + 1,
+                lines: chunk.whitespaceLines,
+                filepath: context.filepath,
+              },
+            ),
           );
         }
         const currentLine = chunk.line.trim();
@@ -184,11 +189,14 @@ const createProcessingCallbackFromOptions = (
         const errors: ParserErrorType[] = [];
         if (chunk.whitespaceLines.length > 0) {
           errors.push(
-            createError("module_resources_term_plaintextTermFileParser_parsedWhitespaceLines", {
-              startingLineNumber: context.lastParsedLine + 1,
-              lines: chunk.whitespaceLines,
-              filepath: context.filepath,
-            }),
+            createError(
+              "module_resources_term_parsers_plaintextTermFileParser_parsedWhitespaceLines",
+              {
+                startingLineNumber: context.lastParsedLine + 1,
+                lines: chunk.whitespaceLines,
+                filepath: context.filepath,
+              },
+            ),
           );
         }
         const currentLine = chunk.line;
@@ -208,7 +216,7 @@ const createProcessingCallbackFromOptions = (
               chunk.trailingWhitespaceLines.length > 0
                 ? [
                     createError(
-                      "module_resources_term_plaintextTermFileParser_parsedWhitespaceLines",
+                      "module_resources_term_parsers_plaintextTermFileParser_parsedWhitespaceLines",
                       {
                         startingLineNumber: context.lastParsedLine + 1,
                         lines: chunk.trailingWhitespaceLines,
@@ -222,11 +230,14 @@ const createProcessingCallbackFromOptions = (
         const errors: ParserErrorType[] = [];
         if (chunk.whitespaceLines.length > 0) {
           errors.push(
-            createError("module_resources_term_plaintextTermFileParser_parsedWhitespaceLines", {
-              startingLineNumber: context.lastParsedLine + 1,
-              lines: chunk.whitespaceLines,
-              filepath: context.filepath,
-            }),
+            createError(
+              "module_resources_term_parsers_plaintextTermFileParser_parsedWhitespaceLines",
+              {
+                startingLineNumber: context.lastParsedLine + 1,
+                lines: chunk.whitespaceLines,
+                filepath: context.filepath,
+              },
+            ),
           );
         }
         const currentLine = chunk.line;
@@ -309,6 +320,9 @@ export const plaintextTermFileParser = async (
   }
   const { lines, errors } = linesResult.value;
   const [firstError, ...rest] = errors;
-  const parserResult = errorFromOptionalErrorList(firstError, ...rest);
+  const parserResult = errorFromOptionalErrorList<(typeof errors)[number]["code"]>(
+    firstError,
+    ...rest,
+  );
   return parserResult === null ? ok(lines) : err(parserResult);
 };

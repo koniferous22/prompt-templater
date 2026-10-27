@@ -1,8 +1,9 @@
 import { z, type ZodError } from "zod";
 
-import type { NonEmptyArray } from "../utils/array/isNonEmptyArray.js";
+import type { NonEmptyArray } from "../validation/array/factories/nonEmptyArray.js";
 import type { DirentFlags } from "../validation/fs/schemas/dirent.js";
 import type { AbsolutePath, RelativePath } from "../validation/path/customTypes/index.js";
+import type { TermValueType } from "../validation/resources/term/term/factories/termByTermType.js";
 import type { AppErrorCode } from "./errorCodes.js";
 
 const countDigits = (n: number) => Math.floor(Math.log10(n)) + 1;
@@ -132,6 +133,17 @@ export const errorMessages = {
   module_resources_template_resourceFromResourceFile_invalidHandlebarsContents: (ctx: {
     file: string;
   }) => `File "${ctx.file}" contains invalid handlebars template contents`,
+  module_resources_term_factories_createTerm_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
+    `Invalid term input\n${z.prettifyError(ctx.zodError)}`,
+  module_resources_term_parsers_plaintextTermFileParser_parsedWhitespaceLines: (ctx: {
+    lines: string[];
+    startingLineNumber: number;
+    filepath: string;
+  }) => {
+    const shouldUseEmptyAdjective = ctx.lines.every((line) => line === "");
+    const shouldUsePlural = ctx.lines.length > 1;
+    return `File "${ctx.filepath}" contains ${shouldUseEmptyAdjective ? "empty" : "whitespace"} ${shouldUsePlural ? "lines starting with line" : "line"} ${ctx.startingLineNumber}\n\`${formatTextLines(ctx.lines, ctx.startingLineNumber)}\``;
+  },
   module_resources_term_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
     `Expected term resource path ${ctx.value} for user input`,
   module_resources_term_resourceFileFromReference_invalidInputJsonRelativePath: (ctx: {
@@ -143,15 +155,37 @@ export const errorMessages = {
   module_resources_term_resourceFileFromReference_invalidInputYamlRelativePath: (ctx: {
     value: string;
   }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
-  module_resources_term_plaintextTermFileParser_parsedWhitespaceLines: (ctx: {
-    lines: string[];
-    startingLineNumber: number;
-    filepath: string;
-  }) => {
-    const shouldUseEmptyAdjective = ctx.lines.every((line) => line === "");
-    const shouldUsePlural = ctx.lines.length > 1;
-    return `File "${ctx.filepath}" contains ${shouldUseEmptyAdjective ? "empty" : "whitespace"} ${shouldUsePlural ? "lines starting with line" : "line"} ${ctx.startingLineNumber}\n\`${formatTextLines(ctx.lines, ctx.startingLineNumber)}\``;
-  },
+  module_resources_term_resourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
+    `Error reading file "${ctx.value}"`,
+  module_resources_term_resourceFromResourceFile_invalidJsonContents: (ctx: { file: string }) =>
+    `File "${ctx.file}" contains invalid JSON contents`,
+  module_resources_term_resourceFromResourceFile_invalidYamlContents: (ctx: { file: string }) =>
+    `File "${ctx.file}" contains invalid YAML contents`,
+  module_resources_term_utils_retrieveTermDataBySelector_arrayIndexOutOfRange: (ctx: {
+    file: string;
+    selector: (string | number)[];
+    faillingSegment: string | number;
+    faillingSegmentIndex: number;
+  }) =>
+    `Error retrieving term contents via selector from "${ctx.file}" via ${JSON.stringify(ctx.selector)} - array index out of range - failed on segment ${ctx.faillingSegment} at selector index ${ctx.faillingSegmentIndex}`,
+  module_resources_term_utils_retrieveTermDataBySelector_invalidPath: (ctx: {
+    file: string;
+    selector: (string | number)[];
+    faillingSegment: string | number;
+    faillingSegmentIndex: number;
+    expected: "array" | "object";
+    actual: string;
+  }) =>
+    `Error retrieving term contents via selector from "${ctx.file}" via ${JSON.stringify(ctx.selector)} - expected ${ctx.expected}, got "${ctx.actual}" - failed on segment ${ctx.faillingSegment} at selector index ${ctx.faillingSegmentIndex}`,
+  module_resources_term_utils_retrieveTermDataBySelector_keyNotFoundInObject: (ctx: {
+    file: string;
+    selector: (string | number)[];
+    faillingSegment: string | number;
+    faillingSegmentIndex: number;
+  }) =>
+    `Error retrieving term contents via selector from "${ctx.file}" via ${JSON.stringify(ctx.selector)} - key not found in the object - failed on segment ${ctx.faillingSegment} at selector index ${ctx.faillingSegmentIndex}`,
+  validation_array_factories_createNonEmptyArraySchema_invalidInput: () =>
+    "Received invalid input for non-empty array",
   validation_fs_codecs_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
   validation_fs_schemas_direntSchema_invalidInputFormat: (ctx: { zodError: ZodError<any> }) =>
@@ -261,6 +295,9 @@ export const errorMessages = {
   validation_resourceReference_term_codecs_nonEmptyStringToResourceInput_invalidInputData: (ctx: {
     value: string;
   }) => `Expected absolute or relative path, got "${ctx.value}`,
+  validation_resources_term_factories_termByTermType_createTermFromRecordInputByTermTypeCodec_invalidValueType:
+    (ctx: { stringifiedValue: string; termType: TermValueType }) =>
+      `Encountered invalid value when parsing term from record - "${ctx.stringifiedValue}", expected value type "${ctx.termType}"`,
   validation_string_customTypes_nonEmptyString_invalidInput: (ctx: { value: string }) =>
     `Expected non-empty string got "${ctx.value}"`,
 } as const satisfies Record<AppErrorCode, (ctx: any) => string>;

@@ -237,6 +237,18 @@ const testCasesForCreateFolderWithContentsSchema = [
             [RelativePathSchema.parse("terms/test-term.yml"), fileDirentFlagsPattern],
             [RelativePathSchema.parse("terms/test-term.json"), fileDirentFlagsPattern],
             [RelativePathSchema.parse("terms/test-term.txt"), fileDirentFlagsPattern],
+            [RelativePathSchema.parse("terms/test-term-bad-syntax.json"), fileDirentFlagsPattern],
+            [RelativePathSchema.parse("terms/test-term-bad-syntax.yml"), fileDirentFlagsPattern],
+            [
+              RelativePathSchema.parse("terms/test-term-bad-nested-syntax.json"),
+              fileDirentFlagsPattern,
+            ],
+            [
+              RelativePathSchema.parse("terms/test-term-bad-nested-syntax.yml"),
+              fileDirentFlagsPattern,
+            ],
+            [RelativePathSchema.parse("terms/test-term-nested.yml"), fileDirentFlagsPattern],
+            [RelativePathSchema.parse("terms/test-term-nested.json"), fileDirentFlagsPattern],
             [
               RelativePathSchema.parse("terms/plaintext-parser-test-fixture-1--normal-file.txt"),
               fileDirentFlagsPattern,
@@ -274,8 +286,14 @@ const testCasesForCreateFolderWithContentsSchema = [
             [PathFragmentSchema.parse("workflows"), directoryDirentFlagsPattern],
             [RelativePathSchema.parse("workflows/test-workflow.yml"), fileDirentFlagsPattern],
             [RelativePathSchema.parse("workflows/test-workflow.json"), fileDirentFlagsPattern],
-            [RelativePathSchema.parse("workflows/test-bad-syntax.yml"), fileDirentFlagsPattern],
-            [RelativePathSchema.parse("workflows/test-bad-syntax.json"), fileDirentFlagsPattern],
+            [
+              RelativePathSchema.parse("workflows/test-workflow-bad-syntax.yml"),
+              fileDirentFlagsPattern,
+            ],
+            [
+              RelativePathSchema.parse("workflows/test-workflow-bad-syntax.json"),
+              fileDirentFlagsPattern,
+            ],
             [PathFragmentSchema.parse("workflow-presets"), directoryDirentFlagsPattern],
             [
               RelativePathSchema.parse("workflow-presets/test-workflow-preset.yml"),

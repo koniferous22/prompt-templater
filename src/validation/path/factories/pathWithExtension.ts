@@ -2,8 +2,8 @@ import path from "node:path";
 
 import type z from "zod";
 
-import type { NonEmptyArray } from "../../../utils/array/isNonEmptyArray.js";
 import { zodRegisterIssue } from "../../../utils/deps/zod/zodRegisterIssue.js";
+import type { NonEmptyArray } from "../../array/factories/nonEmptyArray.js";
 import type { FileExtension } from "../customTypes/fileExtension.js";
 import { AbsolutePathSchema, RelativePathSchema } from "../customTypes/index.js";
 

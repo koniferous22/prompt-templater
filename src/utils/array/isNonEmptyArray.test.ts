@@ -1,6 +1,7 @@
 import { expectTypeOf } from "expect-type";
 
-import { isNonEmptyArray, type NonEmptyArray } from "./isNonEmptyArray.js";
+import type { NonEmptyArray } from "../../validation/array/factories/nonEmptyArray.js";
+import { isNonEmptyArray } from "./isNonEmptyArray.js";
 
 const exampleArray = [] as number[];
 

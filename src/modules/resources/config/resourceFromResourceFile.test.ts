@@ -41,6 +41,25 @@ const testCasesForConfigResourceFromResourceFile = [
   {
     testInput: {
       data: await ConfigResourceFileSchema.parseAsync({
+        format: "json",
+        path: join(workspaceContext, "workflows/test-workflow-bad-syntax.json"),
+      }),
+      testCaseDescription: "syntactically incorrect .json workflow resource file",
+    },
+    testOutcome: {
+      data: {
+        result: false,
+        error: createError("module_resources_config_resourceFromResourceFile_invalidStructure", {
+          file: join(workspaceContext, "workflows/test-workflow-bad-syntax.json"),
+          zodError: new ZodError([]),
+        }),
+      },
+      testBehaviourDescription: "fail with invalid structure error",
+    },
+  },
+  {
+    testInput: {
+      data: await ConfigResourceFileSchema.parseAsync({
         format: "yaml",
         path: join(workspaceContext, "workflows/test-workflow.yml"),
       }),
@@ -56,27 +75,8 @@ const testCasesForConfigResourceFromResourceFile = [
   {
     testInput: {
       data: await ConfigResourceFileSchema.parseAsync({
-        format: "json",
-        path: join(workspaceContext, "workflows/test-bad-syntax.json"),
-      }),
-      testCaseDescription: "syntactically incorrect .json workflow resource file",
-    },
-    testOutcome: {
-      data: {
-        result: false,
-        error: createError("module_resources_config_resourceFromResourceFile_invalidStructure", {
-          file: join(workspaceContext, "workflows/test-bad-syntax.json"),
-          zodError: new ZodError([]),
-        }),
-      },
-      testBehaviourDescription: "fail with invalid structure error",
-    },
-  },
-  {
-    testInput: {
-      data: await ConfigResourceFileSchema.parseAsync({
         format: "yaml",
-        path: join(workspaceContext, "workflows/test-bad-syntax.yml"),
+        path: join(workspaceContext, "workflows/test-workflow-bad-syntax.yml"),
       }),
       testCaseDescription: "syntactically incorrect .yaml workflow resource file",
     },
@@ -84,7 +84,7 @@ const testCasesForConfigResourceFromResourceFile = [
       data: {
         result: false,
         error: createError("module_resources_config_resourceFromResourceFile_invalidStructure", {
-          file: join(workspaceContext, "workflows/test-bad-syntax.json"),
+          file: join(workspaceContext, "workflows/test-workflow-bad-syntax.json"),
           zodError: new ZodError([]),
         }),
       },
