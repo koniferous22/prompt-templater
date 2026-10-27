@@ -1,4 +1,4 @@
-import { ok } from "neverthrow";
+import { Ok, ok } from "neverthrow";
 import z from "zod";
 
 import { appErr } from "../../../../utils/deps/neverthrow/errorFactory.js";
@@ -12,7 +12,7 @@ import {
   StringTermFromStringRecordSchema,
 } from "../../../../validation/resources/term/term/codecs/term.js";
 import type {
-  Term,
+  TermData,
   TermValueType,
 } from "../../../../validation/resources/term/term/factories/termByTermType.js";
 import { termToInquirerOptions } from "../methods/term/toInquirerOptions.js";
@@ -36,7 +36,7 @@ const createTerm = <TermType extends TermValueType>(
       zodError: termResult.error,
     });
   }
-  const state = termResult.data as Term<TermType>;
+  const state = termResult.data as TermData<TermType>;
   const term = {
     getState: () => state,
     toInquirerOptions: () => termToInquirerOptions(state),
@@ -44,6 +44,15 @@ const createTerm = <TermType extends TermValueType>(
   return ok(term);
 };
 
-export const termFactories = {
+export const termResourceFactories = {
   term: createTerm,
+};
+
+export type TermResourceTypes = {
+  [key in keyof typeof termResourceFactories]: Extract<
+    ReturnType<(typeof termResourceFactories)[key]>,
+    Ok<any, any>
+  > extends Ok<infer Wrapped, any>
+    ? Wrapped
+    : never;
 };

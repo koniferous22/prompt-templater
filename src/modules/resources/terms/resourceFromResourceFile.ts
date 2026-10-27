@@ -8,7 +8,7 @@ import { createError } from "../../../utils/deps/neverthrow/errorFactory.js";
 import { appErrAsyncFromThrowable } from "../../../utils/deps/neverthrow/errorFromThrowable.js";
 import type { TermResourceFile } from "../../../validation/resourceFile/term/codecs/resourceAbsolutePathToResourceFile.js";
 import type { TermValueType } from "../../../validation/resources/term/term/factories/termByTermType.js";
-import { termFactories } from "./factories/resourceFactories.js";
+import { termResourceFactories } from "./factories/resourceFactories.js";
 import { plaintextTermFileParser } from "./parsers/plaintextTermFileParser.js";
 import { retrieveTermDataBySelector } from "./utils/retrieveDataBySelector.js";
 
@@ -76,7 +76,7 @@ export const termResourceFromResourceFile = async <TermType extends TermValueTyp
   if (!fileContentsParseResult.isOk()) {
     return fileContentsParseResult as Result<never, typeof fileContentsParseResult.error>;
   }
-  return termFactories.term<TermType>(termType, fileContentsParseResult.value, {
+  return termResourceFactories.term<TermType>(termType, fileContentsParseResult.value, {
     file: termResourceFile.file,
   });
 };

@@ -5,7 +5,7 @@ import type z from "zod";
 
 import { AbsolutePathSchema } from "../../../../validation/path/customTypes/index.js";
 import type { TermValueType } from "../../../../validation/resources/term/term/factories/termByTermType.js";
-import { termFactories, type termSchemasByTermType } from "./resourceFactories.js";
+import { termResourceFactories, type termSchemasByTermType } from "./resourceFactories.js";
 
 type CreateTermInput<TermType extends TermValueType> = {
   termType: TermType;
@@ -105,7 +105,7 @@ const testCasesCreateTerm = [
 describe("termFactories.term", () => {
   for (const { testInput, testOutcome } of testCasesCreateTerm) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
-      const result = termFactories.term(testInput.data.termType, testInput.data.inputData, {
+      const result = termResourceFactories.term(testInput.data.termType, testInput.data.inputData, {
         file: AbsolutePathSchema.parse("/example/absolute/path"),
       });
       assert.strictEqual(result.isOk(), testOutcome.data);
