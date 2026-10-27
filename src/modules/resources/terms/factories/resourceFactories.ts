@@ -2,6 +2,7 @@ import { ok } from "neverthrow";
 import z from "zod";
 
 import { appErr } from "../../../../utils/deps/neverthrow/errorFactory.js";
+import type { AbsolutePath } from "../../../../validation/path/customTypes/index.js";
 import {
   BooleanTermFromBooleanArraySchema,
   BooleanTermFromBooleanRecordSchema,
@@ -25,11 +26,13 @@ export const termSchemasByTermType = {
 const createTerm = <TermType extends TermValueType>(
   termType: TermType,
   inputData: z.input<(typeof termSchemasByTermType)[TermType]>,
+  context: { file: AbsolutePath },
 ) => {
   const termSchema = termSchemasByTermType[termType];
   const termResult = termSchema.safeParse(inputData);
   if (!termResult.success) {
     return appErr("module_resources_term_factories_createTerm_invalidInputData", {
+      file: context.file,
       zodError: termResult.error,
     });
   }

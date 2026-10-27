@@ -49,7 +49,7 @@ const testCasesForConfigResourceFromResourceFile = [
     testOutcome: {
       data: {
         result: false,
-        error: createError("module_resources_config_resourceFromResourceFile_invalidStructure", {
+        error: createError("module_resources_config_factories_createWorkflow_invalidInputData", {
           file: join(workspaceContext, "workflows/test-workflow-bad-syntax.json"),
           zodError: new ZodError([]),
         }),
@@ -83,7 +83,7 @@ const testCasesForConfigResourceFromResourceFile = [
     testOutcome: {
       data: {
         result: false,
-        error: createError("module_resources_config_resourceFromResourceFile_invalidStructure", {
+        error: createError("module_resources_config_factories_createWorkflow_invalidInputData", {
           file: join(workspaceContext, "workflows/test-workflow-bad-syntax.json"),
           zodError: new ZodError([]),
         }),

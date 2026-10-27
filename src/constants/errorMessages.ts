@@ -103,6 +103,10 @@ export const errorMessages = {
   module_resourceContext_createResourceContextFromDeferredWorkspaceContext_invalidWorkflowPath:
     (ctx: { workflowFileInput: string }) =>
       `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
+  module_resources_config_factories_createWorkflow_invalidInputData: (ctx: {
+    file: string;
+    zodError: ZodError<any>;
+  }) => `File "${ctx.file}" contains invalid data\n${z.prettifyError(ctx.zodError)}`,
   module_resources_config_resourceFileFromAbsolutePath_invalidInput: (ctx: { value: string }) =>
     `Expected config resource path ${ctx.value} for user input`,
   module_resources_config_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
@@ -117,10 +121,6 @@ export const errorMessages = {
     `Error reading file "${ctx.value}"`,
   module_resources_config_resourceFromResourceFile_invalidJsonContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid JSON contents`,
-  module_resources_config_resourceFromResourceFile_invalidStructure: (ctx: {
-    file: string;
-    zodError: ZodError<any>;
-  }) => `File "${ctx.file}" contains invalid data\n${z.prettifyError(ctx.zodError)}`,
   module_resources_config_resourceFromResourceFile_invalidYamlContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid YAML contents`,
   module_resources_template_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
@@ -133,8 +133,10 @@ export const errorMessages = {
   module_resources_template_resourceFromResourceFile_invalidHandlebarsContents: (ctx: {
     file: string;
   }) => `File "${ctx.file}" contains invalid handlebars template contents`,
-  module_resources_term_factories_createTerm_invalidInputData: (ctx: { zodError: ZodError<any> }) =>
-    `Invalid term input\n${z.prettifyError(ctx.zodError)}`,
+  module_resources_term_factories_createTerm_invalidInputData: (ctx: {
+    file: string;
+    zodError: ZodError<any>;
+  }) => `File "${ctx.file}" contains invalid data\n${z.prettifyError(ctx.zodError)}`,
   module_resources_term_parsers_plaintextTermFileParser_parsedWhitespaceLines: (ctx: {
     lines: string[];
     startingLineNumber: number;

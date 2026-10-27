@@ -1,16 +1,15 @@
 import fs from "node:fs/promises";
 
 import { YAML } from "bun";
-import { ok, Result } from "neverthrow";
+import { Result } from "neverthrow";
 import { match } from "ts-pattern";
 
-import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
+import { createError } from "../../../utils/deps/neverthrow/errorFactory.js";
+import { appErrAsyncFromThrowable } from "../../../utils/deps/neverthrow/errorFromThrowable.js";
 import type { AppError } from "../../../utils/deps/neverthrow/types.js";
 import type { ConfigResourceFile } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import {
   configResourceFactories,
-  configResourceSchemas,
-  type ConfigResourceSchemaByResourceType,
   type ConfigResourceType,
   type ConfigResourceTypes,
 } from "./factories/resourceFactories.js";
@@ -19,8 +18,6 @@ export const configResourceFromResourceFile = async <
   ConfigResourceT extends ConfigResourceType,
   ConfigResource extends ConfigResourceTypes[ConfigResourceT] =
     ConfigResourceTypes[ConfigResourceT],
-  ConfigResourceSchema extends ConfigResourceSchemaByResourceType<ConfigResourceT> =
-    ConfigResourceSchemaByResourceType<ConfigResourceT>,
 >(
   type: ConfigResourceT,
   configResourceFile: ConfigResourceFile,
@@ -29,56 +26,65 @@ export const configResourceFromResourceFile = async <
     ConfigResource,
     | AppError<"module_resources_config_resourceFromResourceFile_errorReadingFile">
     | AppError<"module_resources_config_resourceFromResourceFile_invalidJsonContents">
-    | AppError<"module_resources_config_resourceFromResourceFile_invalidStructure">
+    | AppError<"module_resources_config_factories_createWorkflow_invalidInputData">
     | AppError<"module_resources_config_resourceFromResourceFile_invalidYamlContents">
   >
 > => {
-  try {
-    const rawContents = await fs.readFile(configResourceFile.file, "utf-8");
-    const parseResult = match(configResourceFile)
-      .with({ format: "json" }, () => {
-        try {
-          return ok(JSON.parse(rawContents));
-        } catch (e: any) {
-          return appErr("module_resources_config_resourceFromResourceFile_invalidJsonContents", {
-            file: configResourceFile.file,
-          });
-        }
-      })
-      .with({ format: "yaml" }, () => {
-        try {
-          return ok(YAML.parse(rawContents));
-        } catch (e: any) {
-          return appErr("module_resources_config_resourceFromResourceFile_invalidYamlContents", {
-            file: configResourceFile.file,
-          });
-        }
-      })
-      .exhaustive();
-    if (!parseResult.isOk()) {
-      return parseResult;
-    }
-    const validationResult = configResourceSchemas[type].safeDecode(parseResult.value);
-    if (!validationResult.success) {
-      return appErr(
-        "module_resources_config_resourceFromResourceFile_invalidStructure",
-        {
-          file: configResourceFile.file,
-          zodError: validationResult.error,
-        },
-        {
-          cause: validationResult.error,
-        },
-      );
-    }
-    const resourceData = validationResult.data;
-    const resource = match(type as ConfigResourceType)
-      .with("workflow", () => configResourceFactories.workflow(resourceData) as ConfigResource)
-      .exhaustive();
-    return ok(resource);
-  } catch (err: unknown) {
-    return appErr("module_resources_config_resourceFromResourceFile_errorReadingFile", {
-      value: configResourceFile.file,
-    });
+  const fileReadResult = await appErrAsyncFromThrowable(
+    async () => {
+      return fs.readFile(configResourceFile.file, "utf-8");
+    },
+    () => {
+      return createError("module_resources_config_resourceFromResourceFile_errorReadingFile", {
+        value: configResourceFile.file,
+      });
+    },
+  )();
+  if (!fileReadResult.isOk()) {
+    return fileReadResult as Result<never, typeof fileReadResult.error>;
   }
+  const rawContents = fileReadResult.value;
+  const fileContentsParseResult = await match(configResourceFile)
+    .with({ format: "json" }, () => {
+      return appErrAsyncFromThrowable(
+        async () => {
+          return JSON.parse(rawContents);
+        },
+        () => {
+          return createError(
+            "module_resources_config_resourceFromResourceFile_invalidJsonContents",
+            {
+              file: configResourceFile.file,
+            },
+          );
+        },
+      )();
+    })
+    .with({ format: "yaml" }, () => {
+      return appErrAsyncFromThrowable(
+        async () => {
+          return YAML.parse(rawContents);
+        },
+        () => {
+          return createError(
+            "module_resources_config_resourceFromResourceFile_invalidYamlContents",
+            {
+              file: configResourceFile.file,
+            },
+          );
+        },
+      )();
+    })
+    .exhaustive();
+  if (!fileContentsParseResult.isOk()) {
+    return fileContentsParseResult as Result<never, typeof fileContentsParseResult.error>;
+  }
+  // @ts-expect-error
+  return match(type as ConfigResourceType)
+    .with("workflow", () =>
+      configResourceFactories.workflow(fileContentsParseResult.value, {
+        file: configResourceFile.file,
+      }),
+    )
+    .exhaustive();
 };

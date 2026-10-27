@@ -76,5 +76,7 @@ export const termResourceFromResourceFile = async <TermType extends TermValueTyp
   if (!fileContentsParseResult.isOk()) {
     return fileContentsParseResult as Result<never, typeof fileContentsParseResult.error>;
   }
-  return termFactories.term<TermType>(termType, fileContentsParseResult.value);
+  return termFactories.term<TermType>(termType, fileContentsParseResult.value, {
+    file: termResourceFile.file,
+  });
 };
