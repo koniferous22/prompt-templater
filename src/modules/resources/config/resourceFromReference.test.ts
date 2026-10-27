@@ -30,7 +30,7 @@ const expectedWorkflowFixture = WorkflowSchema.parse({
   steps: [],
 });
 
-const testCasesForConfigResourceFileFromReference = [
+const testCasesForConfigResourceFromReference = [
   {
     testInput: {
       data: {
@@ -123,14 +123,14 @@ const testCasesForConfigResourceFileFromReference = [
 
 describe("configResourceFromReference", () => {
   describe("Workflow", () => {
-    for (const { testInput, testOutcome } of testCasesForConfigResourceFileFromReference) {
+    for (const { testInput, testOutcome } of testCasesForConfigResourceFromReference) {
       it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
-        const resourceAbsolutePathResult = await configResourceFromReference(
+        const configResource = await configResourceFromReference(
           "workflow",
           testInput.data.userInput,
           testInput.data.workspaceContext,
         );
-        assert.strictEqual(resourceAbsolutePathResult.isOk(), true);
+        assert.strictEqual(configResource.isOk(), true);
       });
     }
   });

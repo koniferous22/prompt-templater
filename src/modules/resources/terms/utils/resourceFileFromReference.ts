@@ -13,7 +13,7 @@ import { TermResourceFileSchema } from "../../../../validation/resourceFile/term
 import type { TermResourceReference } from "../../../../validation/resourceReference/term/schemas/termResourceReference.js";
 import type { WorkspaceContext } from "../../../../validation/workspaceContext/schemas/workspaceContext.js";
 
-export const configResourceFileFromReference = async (
+export const termResourceFileFromReference = async (
   resourceReference: TermResourceReference,
   workspaceContext: WorkspaceContext,
 ) => {

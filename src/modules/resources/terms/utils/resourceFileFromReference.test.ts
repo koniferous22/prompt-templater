@@ -17,7 +17,7 @@ import {
   WorkspaceContextSchema,
   type WorkspaceContext,
 } from "../../../../validation/workspaceContext/schemas/workspaceContext.js";
-import { configResourceFileFromReference } from "./resourceFileFromReference.js";
+import { termResourceFileFromReference } from "./resourceFileFromReference.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../../"));
@@ -57,6 +57,30 @@ const testCasesForTermResourceFileFromReference = [
         userInput: TermResourceReferenceSchema.parse({
           type: "absolute",
           filePath: {
+            format: "json",
+            path: join(workspaceContext, "terms/test-term-nested.json"),
+            selector: [0, "someAttribute"],
+          },
+        }),
+        workspaceContext,
+      },
+      testCaseDescription: "absolute .json path with selector",
+    },
+    testOutcome: {
+      data: await TermResourceFileSchema.parseAsync({
+        format: "json",
+        path: join(workspaceContext, "terms/test-term-nested.json"),
+        selector: [0, "someAttribute"],
+      }),
+      testBehaviourDescription: "succeed with original absolute path",
+    },
+  },
+  {
+    testInput: {
+      data: {
+        userInput: TermResourceReferenceSchema.parse({
+          type: "absolute",
+          filePath: {
             format: "yaml",
             path: join(workspaceContext, "terms/test-term.yml"),
             selector: null,
@@ -71,6 +95,30 @@ const testCasesForTermResourceFileFromReference = [
         format: "yaml",
         path: join(workspaceContext, "terms/test-term.yml"),
         selector: null,
+      }),
+      testBehaviourDescription: "succeed with original absolute path",
+    },
+  },
+  {
+    testInput: {
+      data: {
+        userInput: TermResourceReferenceSchema.parse({
+          type: "absolute",
+          filePath: {
+            format: "yaml",
+            path: join(workspaceContext, "terms/test-term-nested.yml"),
+            selector: ["someAttribute", 0, "someNestedAttribute"],
+          },
+        }),
+        workspaceContext,
+      },
+      testCaseDescription: "absolute .yaml path with selector",
+    },
+    testOutcome: {
+      data: await TermResourceFileSchema.parseAsync({
+        format: "yaml",
+        path: join(workspaceContext, "terms/test-term-nested.yml"),
+        selector: ["someAttribute", 0, "someNestedAttribute"],
       }),
       testBehaviourDescription: "succeed with original absolute path",
     },
@@ -129,6 +177,30 @@ const testCasesForTermResourceFileFromReference = [
         userInput: TermResourceReferenceSchema.parse({
           type: "relative",
           filePath: {
+            format: "json",
+            path: "terms/test-term-nested.json",
+            selector: [0, "someAttribute"],
+          },
+        }),
+        workspaceContext,
+      },
+      testCaseDescription: "relative .json path with selector",
+    },
+    testOutcome: {
+      data: await TermResourceFileSchema.parseAsync({
+        format: "json",
+        path: join(workspaceContext, "terms/test-term-nested.json"),
+        selector: [0, "someAttribute"],
+      }),
+      testBehaviourDescription: "succeed with concatenated relative path to workspace context",
+    },
+  },
+  {
+    testInput: {
+      data: {
+        userInput: TermResourceReferenceSchema.parse({
+          type: "relative",
+          filePath: {
             format: "yaml",
             path: "terms/test-term.yml",
             selector: null,
@@ -143,6 +215,30 @@ const testCasesForTermResourceFileFromReference = [
         format: "yaml",
         path: join(workspaceContext, "terms/test-term.yml"),
         selector: null,
+      }),
+      testBehaviourDescription: "succeed with concatenated relative path to workspace context",
+    },
+  },
+  {
+    testInput: {
+      data: {
+        userInput: TermResourceReferenceSchema.parse({
+          type: "relative",
+          filePath: {
+            format: "yaml",
+            path: "terms/test-term-nested.yml",
+            selector: ["someAttribute", 0, "someNestedAttribute"],
+          },
+        }),
+        workspaceContext,
+      },
+      testCaseDescription: "relative .yaml path with selector",
+    },
+    testOutcome: {
+      data: await TermResourceFileSchema.parseAsync({
+        format: "yaml",
+        path: join(workspaceContext, "terms/test-term-nested.yml"),
+        selector: ["someAttribute", 0, "someNestedAttribute"],
       }),
       testBehaviourDescription: "succeed with concatenated relative path to workspace context",
     },
@@ -188,7 +284,7 @@ const testCasesForTermResourceFileFromReference = [
 describe("termResourceFileFromReference", () => {
   for (const { testInput, testOutcome } of testCasesForTermResourceFileFromReference) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
-      const resourceAbsolutePathResult = await configResourceFileFromReference(
+      const resourceAbsolutePathResult = await termResourceFileFromReference(
         testInput.data.userInput,
         testInput.data.workspaceContext,
       );
