@@ -6,7 +6,7 @@ import {
   createTermByTermTypeSchema,
   createTermFromArrayInputByTermTypeCodec,
   createTermFromRecordInputByTermTypeCodec,
-  type Term,
+  type TermData,
   type TermInputArrayValue,
   type TermInputRecordValue,
   type TermValueType,
@@ -14,12 +14,12 @@ import {
 
 type CreateTermTestValidCase<TermType extends TermValueType> = {
   termType: TermType;
-  values: Term<TermType>;
+  values: TermData<TermType>;
 };
 
 type CreateTermTestInvalidCase = {
   termType: TermValueType;
-  values: Term<TermValueType>;
+  values: TermData<TermValueType>;
 };
 
 const testCasesForCreateTermByTermTypeSchema = [

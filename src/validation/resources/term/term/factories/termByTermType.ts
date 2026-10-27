@@ -57,7 +57,7 @@ export type TermInputRecordValue<TermType extends TermValueType> = z.input<
   (typeof termFromRecordInputSchemasByTermType)[TermType]
 >;
 
-export type Term<TermType extends TermValueType> = z.output<
+export type TermData<TermType extends TermValueType> = z.output<
   ReturnType<typeof createTermByTermTypeSchema<TermType>>
 >;
 

@@ -4,7 +4,7 @@ import { describe, it } from "node:test";
 import { expectTypeOf } from "expect-type";
 import z from "zod";
 
-import type { Term, TermValueType } from "../factories/termByTermType.js";
+import type { TermData, TermValueType } from "../factories/termByTermType.js";
 import { BooleanTermSchema, NumericTermSchema, StringTermSchema } from "./term.js";
 
 const testCasesForBooleanTermSchema = [
@@ -54,7 +54,7 @@ describe("BooleanTermSchema", () => {
       const parsingResult = BooleanTermSchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data);
       if (parsingResult.success) {
-        expectTypeOf(parsingResult.data).toEqualTypeOf<Term<"boolean">>();
+        expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"boolean">>();
       }
     });
   }
@@ -107,7 +107,7 @@ describe("NumericTermSchema", () => {
       const parsingResult = NumericTermSchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data);
       if (parsingResult.success) {
-        expectTypeOf(parsingResult.data).toEqualTypeOf<Term<"number">>();
+        expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"number">>();
       }
     });
   }
@@ -160,7 +160,7 @@ describe("StringTermSchema", () => {
       const parsingResult = StringTermSchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data);
       if (parsingResult.success) {
-        expectTypeOf(parsingResult.data).toEqualTypeOf<Term<"string">>();
+        expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"string">>();
       }
     });
   }

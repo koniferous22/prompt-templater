@@ -4,7 +4,7 @@ import { describe, it } from "node:test";
 import { expectTypeOf } from "expect-type";
 import z from "zod";
 
-import type { Term } from "../factories/termByTermType.js";
+import type { TermData } from "../factories/termByTermType.js";
 import {
   BooleanTermFromBooleanArraySchema,
   NumericTermFromNumericArraySchema,
@@ -52,7 +52,7 @@ describe("BooleanTermFromBooleanArraySchema", () => {
       const parsingResult = BooleanTermFromBooleanArraySchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data);
       if (parsingResult.success) {
-        expectTypeOf(parsingResult.data).toEqualTypeOf<Term<"boolean">>();
+        expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"boolean">>();
       }
     });
   }
@@ -96,7 +96,7 @@ describe("NumericTermFromNumericArraySchema", () => {
       const parsingResult = NumericTermFromNumericArraySchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data);
       if (parsingResult.success) {
-        expectTypeOf(parsingResult.data).toEqualTypeOf<Term<"number">>();
+        expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"number">>();
       }
     });
   }
@@ -140,7 +140,7 @@ describe("StringTermFromStringArraySchema", () => {
       const parsingResult = StringTermFromStringArraySchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data);
       if (parsingResult.success) {
-        expectTypeOf(parsingResult.data).toEqualTypeOf<Term<"string">>();
+        expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"string">>();
       }
     });
   }
@@ -184,7 +184,7 @@ describe("BooleanTermFromBooleanRecordSchema", () => {
       const parsingResult = BooleanTermFromBooleanRecordSchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data);
       if (parsingResult.success) {
-        expectTypeOf(parsingResult.data).toEqualTypeOf<Term<"boolean">>();
+        expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"boolean">>();
       }
     });
   }
@@ -228,7 +228,7 @@ describe("NumericTermFromNumericRecordSchema", () => {
       const parsingResult = NumericTermFromNumericRecordSchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data);
       if (parsingResult.success) {
-        expectTypeOf(parsingResult.data).toEqualTypeOf<Term<"number">>();
+        expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"number">>();
       }
     });
   }
@@ -272,7 +272,7 @@ describe("StringTermFromStringRecordSchema", () => {
       const parsingResult = StringTermFromStringRecordSchema.safeParse(testInput.data);
       assert.strictEqual(parsingResult.success, testOutcome.data);
       if (parsingResult.success) {
-        expectTypeOf(parsingResult.data).toEqualTypeOf<Term<"string">>();
+        expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"string">>();
       }
     });
   }
