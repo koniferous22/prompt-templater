@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { ZodError } from "zod";
 
+import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import { createError } from "../../../utils/deps/neverthrow/errorFactory.js";
 import type { AppErrorInstance } from "../../../utils/deps/neverthrow/types.js";
 import { AbsolutePathSchema } from "../../../validation/path/customTypes/index.js";
@@ -49,10 +50,7 @@ const testCasesForConfigResourceFromResourceFile = [
     testOutcome: {
       data: {
         result: false,
-        error: createError("module_resources_config_factories_createWorkflow_invalidInputData", {
-          file: join(workspaceContext, "workflows/test-workflow-bad-syntax.json"),
-          zodError: new ZodError([]),
-        }),
+        errorCode: "module_resources_config_factories_createWorkflow_invalidInputData",
       },
       testBehaviourDescription: "fail with invalid structure error",
     },
@@ -83,10 +81,7 @@ const testCasesForConfigResourceFromResourceFile = [
     testOutcome: {
       data: {
         result: false,
-        error: createError("module_resources_config_factories_createWorkflow_invalidInputData", {
-          file: join(workspaceContext, "workflows/test-workflow-bad-syntax.json"),
-          zodError: new ZodError([]),
-        }),
+        errorCode: "module_resources_config_factories_createWorkflow_invalidInputData",
       },
       testBehaviourDescription: "fail with invalid structure error",
     },
@@ -103,7 +98,7 @@ const testCasesForConfigResourceFromResourceFile = [
         }
       | {
           result: false;
-          error: AppErrorInstance;
+          errorCode: AppErrorCode;
         };
     testBehaviourDescription: string;
   };
@@ -118,7 +113,7 @@ describe("configResourceFromResourceFile - Workflow", () => {
         // Compare only error code
         assert.strictEqual(
           resourceResult.isErr() && resourceResult.error.code,
-          testOutcome.data.error.code,
+          testOutcome.data.errorCode,
         );
       }
     });
