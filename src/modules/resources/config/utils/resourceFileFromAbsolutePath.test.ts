@@ -70,11 +70,8 @@ describe("configResourceFileFromAbsolutePath", () => {
   for (const { testInput, testOutcome } of testCasesForConfigResourceFileFromAbsolutePath) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const resourceAbsolutePathResult = await configResourceFileFromAbsolutePath(testInput.data);
-      assert.strictEqual(resourceAbsolutePathResult.isOk(), true);
-      assert.deepEqual(
-        resourceAbsolutePathResult.isOk() && resourceAbsolutePathResult.value,
-        testOutcome.data,
-      );
+      assert.ok(resourceAbsolutePathResult.isOk());
+      assert.deepEqual(resourceAbsolutePathResult.value, testOutcome.data);
     });
   }
 });

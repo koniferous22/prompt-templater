@@ -108,7 +108,11 @@ describe("termFactories.term", () => {
       const result = termResourceFactories.term(testInput.data.termType, testInput.data.inputData, {
         file: AbsolutePathSchema.parse("/example/absolute/path"),
       });
-      assert.strictEqual(result.isOk(), testOutcome.data);
+      if (testOutcome.data) {
+        assert.ok(result.isOk());
+      } else {
+        assert.ok(result.isErr());
+      }
     });
   }
 });

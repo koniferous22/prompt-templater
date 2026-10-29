@@ -188,10 +188,11 @@ describe("direntFlagsMatcher", () => {
       const dirents = z.array(DirentFromDirentObjectSchema).parse(folderContents);
       const result = direntFlagsMatcher(dirents);
 
-      assert.strictEqual(result.isOk(), testOutcome.data.ok);
-      if (result.isOk()) {
+      if (testOutcome.data.ok === true) {
+        assert.ok(result.isOk());
         assert.strictEqual(result.value, testOutcome.data.value);
       } else {
+        assert.ok(result.isErr());
         assert.deepStrictEqual(result.error, testOutcome.data.errors);
       }
     });

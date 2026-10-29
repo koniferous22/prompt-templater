@@ -175,7 +175,7 @@ describe("resultFromErrorList", () => {
   for (const { testInput, testOutcome } of testCasesForResultFromErrorList) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, () => {
       const result = resultFromErrorList(...testInput.data);
-      assert.strictEqual(result.isOk(), false);
+      assert.ok(result.isErr());
       match(testOutcome.data)
         .with({ type: "plain" }, () => {
           assert.strictEqual(result.error.type, "plain");

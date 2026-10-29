@@ -79,12 +79,13 @@ describe("templateResourceFromResourceFile - template", () => {
   for (const { testInput, testOutcome } of testCasesForTemplateResourceFromResourceFile) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const resourceResult = await templateResourceFromResourceFile(testInput.data);
-      assert.strictEqual(resourceResult.isOk(), testOutcome.data.result);
-      // @ts-expect-error, remove when fixing the test expecting incorrect syntax
-      if (testOutcome.data.result === false) {
+      if (testOutcome.data.result === true) {
+        assert.ok(resourceResult.isOk());
+      } else {
+        assert.ok(resourceResult.isErr());
         // Compare only error code
         assert.strictEqual(
-          resourceResult.isErr() && resourceResult.error.code,
+          resourceResult.error.code,
           // @ts-expect-error, remove when fixing the test expecting incorrect syntax
           testOutcome.data.error.code,
         );

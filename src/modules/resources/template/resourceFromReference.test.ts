@@ -100,10 +100,9 @@ describe("templateResourceFromInput", () => {
       if (!resourceAbsolutePathResult.isOk()) {
         console.error(resourceAbsolutePathResult.error);
       }
-      assert.strictEqual(resourceAbsolutePathResult.isOk(), true);
+      assert.ok(resourceAbsolutePathResult.isOk());
       assert.strictEqual(
-        resourceAbsolutePathResult.isOk() &&
-          resourceAbsolutePathResult.value(testInput.data.templateInput),
+        resourceAbsolutePathResult.value(testInput.data.templateInput),
         testOutcome.data.renderResult,
       );
     });

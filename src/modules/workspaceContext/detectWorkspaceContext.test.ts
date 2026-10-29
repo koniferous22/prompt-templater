@@ -83,9 +83,11 @@ describe("detectWorkspaceContextFromCliInput", () => {
         workflow: testInput.data.workflowFile,
         workflowPreset: testInput.data.workflowPresetFile ?? undefined,
       });
-      assert.strictEqual(result.isOk(), testOutcome.data.result);
       if (testOutcome.data.result === true) {
-        assert.strictEqual(result.isOk() && result.value, testOutcome.data.value);
+        assert.ok(result.isOk());
+        assert.strictEqual(result.value, testOutcome.data.value);
+      } else {
+        assert.ok(result.isErr());
       }
     });
   }

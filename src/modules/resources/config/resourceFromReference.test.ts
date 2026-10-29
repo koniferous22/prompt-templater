@@ -130,7 +130,7 @@ describe("configResourceFromReference", () => {
           testInput.data.userInput,
           testInput.data.workspaceContext,
         );
-        assert.strictEqual(configResource.isOk(), true);
+        assert.ok(configResource.isOk());
       });
     }
   });

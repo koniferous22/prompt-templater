@@ -156,7 +156,6 @@ describe("errFromZodError", () => {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, () => {
       const actualResult = errFromZodError(testInput.data);
 
-      assert.strictEqual(actualResult.isOk(), testOutcome.data.result);
       assert.ok(actualResult.isErr());
 
       const actualError = actualResult.error;
@@ -287,8 +286,6 @@ describe("resultFromSafeParseResult", () => {
   for (const { testInput, testOutcome } of testCasesForResultFromSafeParseResult) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, () => {
       const actualResult = resultFromSafeParseResult(testInput.data);
-
-      assert.strictEqual(actualResult.isOk(), testOutcome.data.result);
 
       if (testOutcome.data.result === true) {
         assert.ok(actualResult.isOk());

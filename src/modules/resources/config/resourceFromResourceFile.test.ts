@@ -108,13 +108,12 @@ describe("configResourceFromResourceFile - Workflow", () => {
   for (const { testInput, testOutcome } of testCasesForConfigResourceFromResourceFile) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const resourceResult = await configResourceFromResourceFile("workflow", testInput.data);
-      assert.strictEqual(resourceResult.isOk(), testOutcome.data.result);
-      if (testOutcome.data.result === false) {
+      if (testOutcome.data.result === true) {
+        assert.ok(resourceResult.isOk());
+      } else {
+        assert.ok(resourceResult.isErr());
         // Compare only error code
-        assert.strictEqual(
-          resourceResult.isErr() && resourceResult.error.code,
-          testOutcome.data.errorCode,
-        );
+        assert.strictEqual(resourceResult.error.code, testOutcome.data.errorCode);
       }
     });
   }

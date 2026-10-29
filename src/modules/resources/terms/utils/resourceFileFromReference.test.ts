@@ -288,11 +288,8 @@ describe("termResourceFileFromReference", () => {
         testInput.data.userInput,
         testInput.data.workspaceContext,
       );
-      assert.strictEqual(resourceAbsolutePathResult.isOk(), true);
-      assert.deepEqual(
-        resourceAbsolutePathResult.isOk() && resourceAbsolutePathResult.value,
-        testOutcome.data,
-      );
+      assert.ok(resourceAbsolutePathResult.isOk());
+      assert.deepEqual(resourceAbsolutePathResult.value, testOutcome.data);
     });
   }
 });

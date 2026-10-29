@@ -224,22 +224,22 @@ describe("resultFromOptionalErrorList", () => {
       const result = resultFromOptionalErrorList(...testInput.data);
       match(testOutcome.data)
         .with(null, () => {
-          assert.strictEqual(result.isOk(), true);
-          assert.strictEqual(result.isOk() && result.value, null);
+          assert.ok(result.isOk());
+          assert.strictEqual(result.value, null);
         })
         .with({ type: "plain" }, () => {
-          assert.strictEqual(result.isOk(), false);
-          assert.strictEqual(result.isErr() && result.error.type, "plain");
+          assert.ok(result.isErr());
+          assert.strictEqual(result.error.type, "plain");
           assert.deepStrictEqual(
-            result.isErr() && result.error.type === "plain" && result.error,
+            result.error.type === "plain" && result.error,
             testOutcome.data && testOutcome.data.error,
           );
         })
         .with({ type: "aggregate" }, () => {
-          assert.strictEqual(result.isOk(), false);
-          assert.strictEqual(result.isErr() && result.error.type, "aggregate");
+          assert.ok(result.isErr());
+          assert.strictEqual(result.error.type, "aggregate");
           assert.deepStrictEqual(
-            result.isErr() && result.error.type === "aggregate" && result.error.errors,
+            result.error.type === "aggregate" && result.error.errors,
             testOutcome.data && testOutcome.data.errors,
           );
         })

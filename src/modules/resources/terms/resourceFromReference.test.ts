@@ -301,7 +301,7 @@ describe("termResourceFromReference", () => {
         testInput.data.workspaceContext,
         testInput.data.termType,
       );
-      assert.strictEqual(configResource.isOk(), true);
+      assert.ok(configResource.isOk());
     });
   }
 });

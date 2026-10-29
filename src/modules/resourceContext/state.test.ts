@@ -144,14 +144,12 @@ const testCasesForConfigResourceFileFromInput = [
             }),
           },
           assertOperationResult(result) {
-            assert.strictEqual(result.isOk(), true, "expected successful result");
-            if (result.isOk()) {
-              assert.strictEqual(
-                result.value.enqueuedOperations.length,
-                1,
-                "expected result to contain 1 enqueued operation",
-              );
-            }
+            assert.ok(result.isOk(), "expected successful result");
+            assert.strictEqual(
+              result.value.enqueuedOperations.length,
+              1,
+              "expected result to contain 1 enqueued operation",
+            );
           },
         },
         {
@@ -180,14 +178,12 @@ const testCasesForConfigResourceFileFromInput = [
             }),
           },
           assertOperationResult(result) {
-            assert.strictEqual(result.isOk(), true, "expected successful result");
-            if (result.isOk()) {
-              assert.strictEqual(
-                result.value.enqueuedOperations.length,
-                0,
-                "expected result to contain 0 enqueued operations",
-              );
-            }
+            assert.ok(result.isOk(), "expected successful result");
+            assert.strictEqual(
+              result.value.enqueuedOperations.length,
+              0,
+              "expected result to contain 0 enqueued operations",
+            );
           },
         },
         {
@@ -226,14 +222,12 @@ const testCasesForConfigResourceFileFromInput = [
             }),
           },
           assertOperationResult(result) {
-            assert.strictEqual(result.isOk(), true, "expected successful result");
-            if (result.isOk()) {
-              assert.strictEqual(
-                result.value.enqueuedOperations.length,
-                0,
-                "expected result to contain 0 enqueued operations",
-              );
-            }
+            assert.ok(result.isOk(), "expected successful result");
+            assert.strictEqual(
+              result.value.enqueuedOperations.length,
+              0,
+              "expected result to contain 0 enqueued operations",
+            );
           },
         },
         {
@@ -261,14 +255,12 @@ const testCasesForConfigResourceFileFromInput = [
             }),
           },
           assertOperationResult(result) {
-            assert.strictEqual(result.isOk(), true, "expected successful result");
-            if (result.isOk()) {
-              assert.strictEqual(
-                result.value.enqueuedOperations.length,
-                0,
-                "expected result to contain 0 enqueued operations",
-              );
-            }
+            assert.ok(result.isOk(), "expected successful result");
+            assert.strictEqual(
+              result.value.enqueuedOperations.length,
+              0,
+              "expected result to contain 0 enqueued operations",
+            );
           },
         },
         {

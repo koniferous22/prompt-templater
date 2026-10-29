@@ -153,7 +153,6 @@ describe("appErr", () => {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, () => {
       const actual = appErr(testInput.code, testInput.meta, testInput.opts);
 
-      assert.strictEqual(actual.isOk(), testOutcome.data.isOk);
       assert.ok(actual.isErr());
       assert.strictEqual(actual.error.type, testOutcome.data.error.type);
       assert.strictEqual(actual.error.code, testOutcome.data.error.code);
@@ -203,7 +202,6 @@ describe("appErrAsync", () => {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const actual = await appErrAsync(testInput.code, undefined, testInput.opts);
 
-      assert.strictEqual(actual.isOk(), testOutcome.data.isOk);
       assert.ok(actual.isErr());
       assert.strictEqual(actual.error.type, testOutcome.data.error.type);
       assert.strictEqual(actual.error.code, testOutcome.data.error.code);
@@ -263,7 +261,6 @@ describe("appAggregateErr", () => {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, () => {
       const actual = appAggregateErr(...testInput.errors);
 
-      assert.strictEqual(actual.isOk(), testOutcome.data.isOk);
       assert.ok(actual.isErr());
       assert.strictEqual(actual.error.type, testOutcome.data.error.type);
       assert.strictEqual(actual.error.errors.length, testOutcome.data.error.codes.length);
@@ -330,7 +327,6 @@ describe("appAggregateErrAsync", () => {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const actual = await appAggregateErrAsync(...testInput.errors);
 
-      assert.strictEqual(actual.isOk(), testOutcome.data.isOk);
       assert.ok(actual.isErr());
       assert.strictEqual(actual.error.type, testOutcome.data.error.type);
       assert.strictEqual(actual.error.errors.length, testOutcome.data.error.codes.length);

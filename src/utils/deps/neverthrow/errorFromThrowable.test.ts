@@ -88,8 +88,10 @@ describe("appErrAsyncFromThrowable", () => {
         testInput.data.errorHandler,
       );
       const result = await resultFn();
-      assert.strictEqual(result.isOk(), testOutcome.data.result);
-      if (testOutcome.data.result === false) {
+      if (testOutcome.data.result === true) {
+        assert.ok(result.isOk());
+      } else {
+        assert.ok(result.isErr());
         assert.strictEqual(result.isErr() && result.error.code, testOutcome.data.errorCode);
       }
     });
