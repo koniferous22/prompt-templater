@@ -15,7 +15,6 @@ import type {
   TermData,
   TermValueType,
 } from "../../../../validation/resources/term/term/factories/termByTermType.js";
-import { termToInquirerOptions } from "../methods/term/toInquirerOptions.js";
 
 export const termSchemasByTermType = {
   boolean: z.union([BooleanTermFromBooleanArraySchema, BooleanTermFromBooleanRecordSchema]),
@@ -39,7 +38,6 @@ const createTerm = <TermType extends TermValueType>(
   const state = termResult.data as TermData<TermType>;
   const term = {
     getState: () => state,
-    toInquirerOptions: () => termToInquirerOptions(state),
   };
   return ok(term);
 };
