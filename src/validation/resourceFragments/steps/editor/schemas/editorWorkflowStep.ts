@@ -9,3 +9,5 @@ export const EditorWorkflowStepSchema = AbstractWorkflowStepSchema.safeExtend({
   message: NonEmptyStringSchema,
   validation: EditorPromptValidationShorthandSchema,
 });
+
+export type EditorWorkflowStep = z.output<typeof EditorWorkflowStepSchema>;

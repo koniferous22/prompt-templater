@@ -63,3 +63,5 @@ export const InputWorkflowStepSchema = AbstractWorkflowStepSchema.safeExtend({
   message: NonEmptyStringSchema,
   validation: InputPromptValidationSchema,
 });
+
+export type InputWorkflowStep = z.output<typeof InputWorkflowStepSchema>;

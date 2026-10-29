@@ -40,6 +40,7 @@ export type AppErrorCode =
   | "module_resources_term_utils_retrieveTermDataBySelector_arrayIndexOutOfRange"
   | "module_resources_term_utils_retrieveTermDataBySelector_invalidPath"
   | "module_resources_term_utils_retrieveTermDataBySelector_keyNotFoundInObject"
+  | "module_templateVariableSpecs_createTemplateVariableSpecsFromWorkflowData_duplicateVariable"
   | "validation_array_factories_createNonEmptyArraySchema_invalidInput"
   | "validation_fs_codecs_absolutePathToFsStats_invalidInputData"
   | "validation_fs_schemas_fileSchema_pathIsNotFolder"

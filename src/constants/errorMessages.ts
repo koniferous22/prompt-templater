@@ -187,6 +187,9 @@ export const errorMessages = {
     faillingSegmentIndex: number;
   }) =>
     `Error retrieving term contents via selector from "${ctx.file}" via ${JSON.stringify(ctx.selector)} - key not found in the object - failed on segment ${ctx.faillingSegment} at selector index ${ctx.faillingSegmentIndex}`,
+  module_templateVariableSpecs_createTemplateVariableSpecsFromWorkflowData_duplicateVariable:
+    (ctx: { variableName: string; workflow: string; stepId: string }) =>
+      `Workflow "${ctx.workflow}" contains duplicate variable "${ctx.variableName}" encountered at step "${ctx.stepId}"`,
   validation_array_factories_createNonEmptyArraySchema_invalidInput: () =>
     "Received invalid input for non-empty array",
   validation_fs_codecs_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>

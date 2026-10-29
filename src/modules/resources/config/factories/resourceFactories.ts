@@ -4,8 +4,8 @@ import type z from "zod";
 import { appErr } from "../../../../utils/deps/neverthrow/errorFactory.js";
 import type { AbsolutePath } from "../../../../validation/path/customTypes/index.js";
 import { WorkflowSchema } from "../../../../validation/resources/config/workflow/schemas/workflow.js";
+import { createTemplateVariableSpecsFromWorkflowData } from "../../../templateVariableSpecs/createTemplateVariableSpecsFromWorkflowData.js";
 import { workflowResourceGetReferences } from "../methods/workflow/getReferences.js";
-import { workflowResourceGetTemplateVariableContextSpecs } from "../methods/workflow/getTemplateVariableContextSpecs.js";
 
 export const configResourceSchemas = {
   workflow: WorkflowSchema,
@@ -32,7 +32,8 @@ const createWorkflow = (
   const workflow = {
     getWorkflowData: () => state,
     getReferences: () => workflowResourceGetReferences(state),
-    getTemplateVariableContextSpecs: () => workflowResourceGetTemplateVariableContextSpecs(state),
+    getTemplateVariableContextSpecs: () =>
+      createTemplateVariableSpecsFromWorkflowData(state, { file: context.file }),
   };
   return ok(workflow);
 };
