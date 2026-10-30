@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import type { Err, Ok, Result } from "neverthrow";
+import type { Err, Ok } from "neverthrow";
 import { match } from "ts-pattern";
 
 import { AbsolutePathSchema } from "../../validation/path/customTypes/index.js";
@@ -21,7 +21,8 @@ import {
 // Mini-mutation testing framework
 
 type MutationTestCaseFactory<
-  StateFactory extends () => any,
+  StateDependencies extends any,
+  StateFactory extends (dependencies: StateDependencies) => any,
   SequenceItemFactory extends (arg: any) => any,
   ProcessSequenceItem extends (
     arg: ReturnType<SequenceItemFactory>,
@@ -34,7 +35,8 @@ type MutationTestCaseFactory<
 };
 
 const createMutationTestCaseFactory = <
-  StateFactory extends () => any,
+  StateDependencies extends any,
+  StateFactory extends (dependencies: StateDependencies) => any,
   SequenceItemFactory extends (arg: any) => any,
   ProcessSequenceItem extends (
     arg: ReturnType<SequenceItemFactory>,
@@ -44,10 +46,18 @@ const createMutationTestCaseFactory = <
   initState: StateFactory,
   sequenceItemFactory: SequenceItemFactory,
   processSequenceItem: ProcessSequenceItem,
-): MutationTestCaseFactory<StateFactory, SequenceItemFactory, ProcessSequenceItem> => {
-  const factory: MutationTestCaseFactory<StateFactory, SequenceItemFactory, ProcessSequenceItem> = (
-    sequenceItemInputs,
-  ) => {
+): MutationTestCaseFactory<
+  StateDependencies,
+  StateFactory,
+  SequenceItemFactory,
+  ProcessSequenceItem
+> => {
+  const factory: MutationTestCaseFactory<
+    StateDependencies,
+    StateFactory,
+    SequenceItemFactory,
+    ProcessSequenceItem
+  > = (sequenceItemInputs) => {
     return {
       initState,
       sequence: sequenceItemInputs.map(sequenceItemFactory),
@@ -58,19 +68,26 @@ const createMutationTestCaseFactory = <
 };
 
 const runMutationTestCase = async <
-  StateFactory extends () => any,
+  StateDependencies extends any,
+  StateFactory extends (dependencies: StateDependencies) => any,
   SequenceItemFactory extends (arg: any) => any,
   ProcessSequenceItem extends (
     arg: ReturnType<SequenceItemFactory>,
     state: ReturnType<StateFactory>,
   ) => void | Promise<void>,
 >(
+  stateDependencies: StateDependencies,
   testCase: ReturnType<
-    MutationTestCaseFactory<StateFactory, SequenceItemFactory, ProcessSequenceItem>
+    MutationTestCaseFactory<
+      StateDependencies,
+      StateFactory,
+      SequenceItemFactory,
+      ProcessSequenceItem
+    >
   >,
 ): Promise<void> => {
   const { initState, processSequenceItem, sequence } = testCase;
-  const state = initState();
+  const state = initState(stateDependencies);
   for (const sequenceItem of sequence) {
     await processSequenceItem(sequenceItem, state);
   }
@@ -279,11 +296,11 @@ const testCasesForConfigResourceFileFromInput = [
           },
         },
       ]),
-      testCaseDescription: "repeated load of workflow resource",
+      testCaseDescription: "repeated load of template resource",
     },
     testOutcome: {
       data: null,
-      testBehaviourDescription: "should have only 1 loaded workflow",
+      testBehaviourDescription: "should have only 1 loaded template",
     },
   },
 ] satisfies {
@@ -300,7 +317,7 @@ const testCasesForConfigResourceFileFromInput = [
 describe("state - loadResource", () => {
   for (const { testInput, testOutcome } of testCasesForConfigResourceFileFromInput) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
-      await runMutationTestCase(testInput.data);
+      await runMutationTestCase(undefined, testInput.data);
     });
   }
 });
