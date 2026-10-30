@@ -16,7 +16,7 @@ const formatTextLines = (
   const digitCount = countDigits(startingLineNumber + lines.length - 1);
   const formatTextLine = (line: string, lineNumber: number) =>
     line.length > options.truncatedLength
-      ? `${lineNumber} > ${line.slice(0, options.truncatedLength)}...`
+      ? `${String(lineNumber).padStart(digitCount)} > ${line.slice(0, options.truncatedLength)}...`
       : line;
   const [first, ...rest] = lines;
   if (!first) {
