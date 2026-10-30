@@ -21,8 +21,7 @@ import {
 // Mini-mutation testing framework
 
 type MutationTestCaseFactory<
-  StateDependencies extends any,
-  StateFactory extends (dependencies: StateDependencies) => any,
+  StateFactory extends (arg?: any) => any,
   SequenceItemFactory extends (arg: any) => any,
   ProcessSequenceItem extends (
     arg: ReturnType<SequenceItemFactory>,
@@ -35,8 +34,7 @@ type MutationTestCaseFactory<
 };
 
 const createMutationTestCaseFactory = <
-  StateDependencies extends any,
-  StateFactory extends (dependencies: StateDependencies) => any,
+  StateFactory extends (arg?: any) => any,
   SequenceItemFactory extends (arg: any) => any,
   ProcessSequenceItem extends (
     arg: ReturnType<SequenceItemFactory>,
@@ -46,18 +44,10 @@ const createMutationTestCaseFactory = <
   initState: StateFactory,
   sequenceItemFactory: SequenceItemFactory,
   processSequenceItem: ProcessSequenceItem,
-): MutationTestCaseFactory<
-  StateDependencies,
-  StateFactory,
-  SequenceItemFactory,
-  ProcessSequenceItem
-> => {
-  const factory: MutationTestCaseFactory<
-    StateDependencies,
-    StateFactory,
-    SequenceItemFactory,
-    ProcessSequenceItem
-  > = (sequenceItemInputs) => {
+): MutationTestCaseFactory<StateFactory, SequenceItemFactory, ProcessSequenceItem> => {
+  const factory: MutationTestCaseFactory<StateFactory, SequenceItemFactory, ProcessSequenceItem> = (
+    sequenceItemInputs,
+  ) => {
     return {
       initState,
       sequence: sequenceItemInputs.map(sequenceItemFactory),
@@ -68,22 +58,16 @@ const createMutationTestCaseFactory = <
 };
 
 const runMutationTestCase = async <
-  StateDependencies extends any,
-  StateFactory extends (dependencies: StateDependencies) => any,
+  StateFactory extends (arg?: any) => any,
   SequenceItemFactory extends (arg: any) => any,
   ProcessSequenceItem extends (
     arg: ReturnType<SequenceItemFactory>,
     state: ReturnType<StateFactory>,
   ) => void | Promise<void>,
 >(
-  stateDependencies: StateDependencies,
+  stateDependencies: Parameters<StateFactory>[0],
   testCase: ReturnType<
-    MutationTestCaseFactory<
-      StateDependencies,
-      StateFactory,
-      SequenceItemFactory,
-      ProcessSequenceItem
-    >
+    MutationTestCaseFactory<StateFactory, SequenceItemFactory, ProcessSequenceItem>
   >,
 ): Promise<void> => {
   const { initState, processSequenceItem, sequence } = testCase;

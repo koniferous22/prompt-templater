@@ -187,6 +187,17 @@ export const errorMessages = {
     faillingSegmentIndex: number;
   }) =>
     `Error retrieving term contents via selector from "${ctx.file}" via ${JSON.stringify(ctx.selector)} - key not found in the object - failed on segment ${ctx.faillingSegment} at selector index ${ctx.faillingSegmentIndex}`,
+  module_templateVariableContext_resolveValuesStrict_unintializedState: (ctx: {
+    missingFields: [string, ...string[]];
+  }) => `Uninitialized template context fields: ${formatStringList(ctx.missingFields)}`,
+  module_templateVariableContext_setValue_keyNotFound: (ctx: { variableName: string }) =>
+    `Attempting to non-existing variable "${ctx.variableName}"`,
+  module_templateVariableContext_setValue_invalidValueType: (ctx: {
+    variableName: string;
+    stringifiedValue: string;
+    expectedType: string;
+  }) =>
+    `Attempting to set variable "${ctx.variableName}" of type "${ctx.expectedType}" to value  ${ctx.stringifiedValue}`,
   module_templateVariableSpecs_createTemplateVariableSpecsFromWorkflowData_duplicateVariable:
     (ctx: { variableName: string; workflow: string; stepId: string }) =>
       `Workflow "${ctx.workflow}" contains duplicate variable "${ctx.variableName}" encountered at step "${ctx.stepId}"`,

@@ -228,11 +228,11 @@ describe("createTemplateVariableSpecsFromWorkflowData", () => {
       if (testOutcome.data.createTemplateVariableSpecsResult.result === true) {
         assert.ok(templateVariableSpecsResult.isOk());
         if (testOutcome.data.createTemplateVariableSpecsResult.zodSchemaParseResult !== null) {
-          const builtZodSchema = templateVariableSpecsResult.value.buildZodSchema();
-          const builtZodSchemaParseResult = builtZodSchema.safeParse(
+          const generatedZodSchema = templateVariableSpecsResult.value.getZodSchema();
+          const generatedZodSchemaParseResult = generatedZodSchema.safeParse(
             testInput.data.furtherSchemaTestingInput,
           );
-          assert.ok(builtZodSchemaParseResult.success);
+          assert.ok(generatedZodSchemaParseResult.success);
         }
       } else {
         assert.ok(templateVariableSpecsResult.isErr());

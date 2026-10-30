@@ -1,12 +1,16 @@
+import { createTemplateVariableContext } from "../../templateVariableContext/factories/factory.js";
 import { templateVariableSpecsBuildZodSchema } from "../methods/buildZodSchema.js";
 
-type PrimitiveVariableTypeToLiteralType = {
+export type SpecsToTypescriptMapper = {
   boolean: boolean;
+  booleanOrUndefined: boolean | undefined;
   number: number;
+  numberOrUndefined: number | undefined;
   string: string;
+  stringOrUndefined: string | undefined;
 };
 
-type PrimitiveVariableType = keyof PrimitiveVariableTypeToLiteralType;
+type PrimitiveVariableType = "boolean" | "number" | "string";
 
 type TemplateVariableSpecAbstractPrimitive<VariableType extends PrimitiveVariableType> = {
   specType: "primitive";
@@ -24,7 +28,7 @@ export type TemplateVariableSpecPrimitive =
           }
         | {
             modifierType: "optionalWithDefault";
-            defaultValue: PrimitiveVariableTypeToLiteralType["string"];
+            defaultValue: SpecsToTypescriptMapper["string"];
           };
     })
   | (TemplateVariableSpecAbstractPrimitive<"number"> & {
@@ -37,7 +41,7 @@ export type TemplateVariableSpecPrimitive =
           }
         | {
             modifierType: "optionalWithDefault";
-            defaultValue: PrimitiveVariableTypeToLiteralType["number"];
+            defaultValue: SpecsToTypescriptMapper["number"];
           };
     })
   | (TemplateVariableSpecAbstractPrimitive<"boolean"> & {
@@ -50,7 +54,7 @@ export type TemplateVariableSpecPrimitive =
           }
         | {
             modifierType: "optionalWithDefault";
-            defaultValue: PrimitiveVariableTypeToLiteralType["boolean"];
+            defaultValue: SpecsToTypescriptMapper["boolean"];
           };
     });
 
@@ -83,10 +87,10 @@ export const createTemplateVariableSpecs = <const Specs extends TemplateVariable
   inputSpecs: Specs,
 ) => {
   const state = inputSpecs;
+  const zodSchema = templateVariableSpecsBuildZodSchema(state);
   return {
     getSpecs: () => state,
-    buildZodSchema: () => templateVariableSpecsBuildZodSchema(state),
-    // TBD
-    createTemplateVariableContext: () => null,
+    getZodSchema: () => zodSchema,
+    createTemplateVariableContext: () => createTemplateVariableContext(state, zodSchema.def.shape),
   };
 };
