@@ -1,0 +1,15 @@
+{
+  "templateFile": "template/test-template",
+  "steps": [
+    {
+      "id": "selectStep",
+      "type": "select",
+      "message": "pick an option",
+      "valueType": "string",
+      "choices": {
+        "type": "jsonFile",
+        "file": "terms/test-term.json"
+      }
+    }
+  ]
+}

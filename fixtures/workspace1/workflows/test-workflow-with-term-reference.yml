@@ -1,0 +1,9 @@
+templateFile: templates/test-template.hbs
+steps:
+  - type: select
+    id: selectStep
+    message: pick an option
+    valueType: string
+    choices:
+      type: jsonFile
+      file: terms/test-term.json

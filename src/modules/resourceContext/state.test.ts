@@ -9,6 +9,7 @@ import { match } from "ts-pattern";
 import { AbsolutePathSchema } from "../../validation/path/customTypes/index.js";
 import { ConfigResourceFileSchema } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import { TemplateResourceFileSchema } from "../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
+import { TermResourceFileSchema } from "../../validation/resourceFile/term/codecs/resourceAbsolutePathToResourceFile.js";
 import { WorkspaceContextSchema } from "../../validation/workspaceContext/schemas/workspaceContext.js";
 import {
   initializeResourceContext,
@@ -285,6 +286,130 @@ const testCasesForConfigResourceFileFromInput = [
     testOutcome: {
       data: null,
       testBehaviourDescription: "should have only 1 loaded template",
+    },
+  },
+  {
+    testInput: {
+      data: loadResourceTestCaseFactory([
+        {
+          type: "mutationWithOptionalAssertion",
+          operationInput: {
+            type: "termResource",
+            file: await TermResourceFileSchema.parseAsync({
+              format: "json",
+              path: join(workspaceContext, "terms/test-term-nested.json"),
+              selector: [0, "someAttribute"],
+            }),
+            valueType: "string",
+          },
+          assertOperationResult(result) {
+            assert.ok(result.isOk(), "expected successful result");
+            assert.strictEqual(
+              result.value.enqueuedOperations.length,
+              0,
+              "expected result to contain 0 enqueued operations",
+            );
+          },
+        },
+        {
+          type: "stateAssertion",
+          assertState(state) {
+            assert.strictEqual(
+              state.resources.termResources.terms.size,
+              1,
+              "expected 1 term to be loaded",
+            );
+            assert.strictEqual(
+              state.resources.configResources.workflows.size,
+              0,
+              "expected rest of the state not to be polluted",
+            );
+          },
+        },
+        {
+          type: "mutationWithOptionalAssertion",
+          operationInput: {
+            type: "termResource",
+            file: await TermResourceFileSchema.parseAsync({
+              format: "json",
+              path: join(workspaceContext, "terms/test-term-nested.json"),
+              selector: [0, "someAttribute"],
+            }),
+            valueType: "string",
+          },
+          assertOperationResult(result) {
+            assert.ok(result.isOk(), "expected successful result");
+            assert.strictEqual(
+              result.value.enqueuedOperations.length,
+              0,
+              "expected result to contain 0 enqueued operations",
+            );
+          },
+        },
+        {
+          type: "stateAssertion",
+          assertState(state) {
+            assert.strictEqual(
+              state.resources.termResources.terms.size,
+              1,
+              "expected 1 term to be loaded",
+            );
+            assert.strictEqual(
+              state.resources.configResources.workflows.size,
+              0,
+              "expected rest of the state not to be polluted",
+            );
+          },
+        },
+      ]),
+      testCaseDescription: "repeated load of template resource",
+    },
+    testOutcome: {
+      data: null,
+      testBehaviourDescription: "should have only 1 loaded term",
+    },
+  },
+  {
+    testInput: {
+      data: loadResourceTestCaseFactory([
+        {
+          type: "mutationWithOptionalAssertion",
+          operationInput: {
+            type: "configResource",
+            configResourceType: "workflow",
+            file: await ConfigResourceFileSchema.parseAsync({
+              format: "yaml",
+              path: join(workspaceContext, "workflows/test-workflow-with-term-reference.yml"),
+            }),
+          },
+          assertOperationResult(result) {
+            if (result.isErr()) {
+              console.error(result.error);
+            }
+            assert.ok(result.isOk(), "expected successful result");
+            assert.strictEqual(
+              result.value.enqueuedOperations.length,
+              2,
+              "expected result to contain 2 enqueued operation",
+            );
+            assert.strictEqual(
+              result.value.enqueuedOperations.length,
+              2,
+              "expected result to contain 2 enqueued operations",
+            );
+            assert.deepEqual(
+              result.value.enqueuedOperations.map(({ type }) => type),
+              ["templateResource", "termResource"],
+              "expected result to contain enqueued operations for template and term",
+            );
+          },
+        },
+      ]),
+      testCaseDescription: "workflow with term references",
+    },
+    testOutcome: {
+      data: null,
+      testBehaviourDescription: "should enqueue encountered term resources",
     },
   },
 ] satisfies {
