@@ -103,6 +103,16 @@ export const errorMessages = {
   module_resourceContext_createResourceContextFromDeferredWorkspaceContext_invalidWorkflowPath:
     (ctx: { workflowFileInput: string }) =>
       `Received invalid workflow file "${ctx.workflowFileInput}" from user input`,
+  module_resourceContext_loadWorkflow_workflowNotFound: (ctx: { workflow: string }) =>
+    `No loaded workflow "${ctx.workflow}" found"`,
+  module_resourceContext_loadTemplate_workflowNotFound: (ctx: { workflow: string }) =>
+    `No loaded workflow "${ctx.workflow}" found"`,
+  module_resourceContext_loadTemplate_stateContainsInvalidWorkflow: (ctx: { workflow: string }) =>
+    `Invalid state - found workflow reference "${ctx.workflow}" that isn't mapped to any internal resource"`,
+  module_resourceContext_loadTemplate_templateNotFound: (ctx: { template: string }) =>
+    `No loaded workflow "${ctx.template}" found"`,
+  module_resourceContext_state_invalidResourceFilePath: (ctx: { value: string }) =>
+    `Attempting to load resource that resolved in invalid absolute path "${ctx.value}"`,
   module_resources_config_factories_createWorkflow_invalidInputData: (ctx: {
     file: string;
     zodError: ZodError<any>;

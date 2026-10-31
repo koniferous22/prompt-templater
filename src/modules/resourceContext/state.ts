@@ -3,12 +3,14 @@ import { match } from "ts-pattern";
 
 import type { AppErrorCode } from "../../constants/errorCodes.js";
 import { isNonEmptyArray } from "../../utils/array/isNonEmptyArray.js";
+import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
 import { errorFromErrorList } from "../../utils/deps/neverthrow/errorList.js";
 import type { AppError } from "../../utils/deps/neverthrow/types.js";
 import type { File } from "../../validation/fs/schemas/file.js";
-import type { ConfigResourceFile } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
-import type { TemplateResourceFile } from "../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
-import type { TermResourceFile } from "../../validation/resourceFile/term/codecs/resourceAbsolutePathToResourceFile.js";
+import { AbsolutePathSchema, type AbsolutePath } from "../../validation/path/customTypes/index.js";
+import { type ConfigResourceFile } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
+import { type TemplateResourceFile } from "../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
+import { type TermResourceFile } from "../../validation/resourceFile/term/codecs/resourceAbsolutePathToResourceFile.js";
 import type {
   TermData,
   TermValueType,
@@ -52,6 +54,18 @@ const initState = (workspaceContext: WorkspaceContext) => {
             template: (resourceContext: Record<string, any>) => string;
           }
         >(),
+      },
+    },
+    referenceMapping: {
+      configReferences: {
+        workflows: new Map<AbsolutePath, File>(),
+        workflowPresets: new Map<AbsolutePath, File>(),
+      },
+      termReferences: {
+        terms: new Map<AbsolutePath, File>(),
+      },
+      templateReferences: {
+        templates: new Map<AbsolutePath, File>(),
       },
     },
     workspaceContext,
@@ -146,12 +160,22 @@ export const loadResource = async (
       if (isNonEmptyArray(errors)) {
         return err(errorFromErrorList(...errors));
       }
-
       // 3 - update state - mark workflow as loaded
       state.resources.configResources.workflows.set(value.file.file, {
         configResourceFile: value.file,
         resource: loadResourceResult.value,
       });
+      // 4 - update state - update reference mapping
+      const absolutePathResult = AbsolutePathSchema.safeParse(value.file.file);
+      if (!absolutePathResult.success) {
+        return appErr("module_resourceContext_state_invalidResourceFilePath", {
+          value: value.file.file,
+        });
+      }
+      state.referenceMapping.configReferences.workflows.set(
+        absolutePathResult.data,
+        value.file.file,
+      );
       return ok({
         state,
         enqueuedOperations: [
@@ -185,11 +209,22 @@ export const loadResource = async (
       if (!loadingResult.isOk()) {
         return loadingResult;
       }
-      // 2 - update state
+      // 2 - update state - mark template as loaded
       state.resources.templateResources.templates.set(value.file.file, {
         templateResourceFile: value.file,
         template: loadingResult.value,
       });
+      // 3 - update state - update reference mapping
+      const absolutePathResult = AbsolutePathSchema.safeParse(value.file.file);
+      if (!absolutePathResult.success) {
+        return appErr("module_resourceContext_state_invalidResourceFilePath", {
+          value: value.file.file,
+        });
+      }
+      state.referenceMapping.templateReferences.templates.set(
+        absolutePathResult.data,
+        value.file.file,
+      );
       return ok({
         state,
         enqueuedOperations: [],
@@ -212,6 +247,14 @@ export const loadResource = async (
         termResourceFile: value.file,
         resource: loadingResult.value,
       });
+      // 3 - update state - update reference mapping
+      const absolutePathResult = AbsolutePathSchema.safeParse(value.file.file);
+      if (!absolutePathResult.success) {
+        return appErr("module_resourceContext_state_invalidResourceFilePath", {
+          value: value.file.file,
+        });
+      }
+      state.referenceMapping.termReferences.terms.set(absolutePathResult.data, value.file.file);
       return ok({
         state,
         enqueuedOperations: [],
