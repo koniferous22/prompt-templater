@@ -4,16 +4,12 @@ import { describe, it } from "node:test";
 import type z from "zod";
 
 import type { AppErrorCode } from "../../constants/errorCodes.js";
-import { AbsolutePathSchema, type AbsolutePath } from "../../validation/path/customTypes/index.js";
+import { AbsolutePathSchema } from "../../validation/path/customTypes/index.js";
 import type { WorkflowSchema } from "../../validation/resources/config/workflow/schemas/workflow.js";
 import { NonEmptyStringSchema } from "../../validation/string/customTypes/string.js";
 import { createTemplateVariableSpecsFromWorkflowData } from "./createTemplateVariableSpecsFromWorkflowData.js";
 
 const testCasesForCreateTemplateVariableSpecsFromWorkflowData = [
-  // Test cases
-  // * duplicate id
-  // * duplicate targetVariable
-  // * ok - returns object + schema input
   {
     testInput: {
       data: {
