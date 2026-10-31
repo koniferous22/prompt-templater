@@ -1,6 +1,6 @@
 import { z, type ZodError } from "zod";
 
-import type { NonEmptyArray } from "../validation/array/factories/nonEmptyArray.js";
+import type { NonEmptyArray } from "../validation/array/higher-order/nonEmptyArray.js";
 import type { DirentFlags } from "../validation/fs/schemas/dirent.js";
 import type { AbsolutePath, RelativePath } from "../validation/path/customTypes/index.js";
 import type { TermValueType } from "../validation/resources/term/term/factories/termByTermType.js";

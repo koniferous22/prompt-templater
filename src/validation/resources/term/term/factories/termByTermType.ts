@@ -3,7 +3,7 @@ import z from "zod";
 import type { WorkflowStepChoicesValueTypeType } from "../../../../../constants/enums/workflowStep/choicesValueType.js";
 import { createError } from "../../../../../utils/deps/neverthrow/errorFactory.js";
 import { zodIssueFromAppError } from "../../../../../utils/deps/zod/zodIssueFromAppError.js";
-import { createNonEmptyArraySchema } from "../../../../array/factories/nonEmptyArray.js";
+import { createNonEmptyArraySchema } from "../../../../array/higher-order/nonEmptyArray.js";
 import { BooleanStringSchema } from "../../../../boolean/schemas/booleanString.js";
 import {
   NonEmptyStringSchema,
