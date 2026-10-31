@@ -62,7 +62,7 @@ export const detectWorkspaceContextFromCliInput = async (cliInput: {
       return okAsync(parseResult.data);
     }
   }
-  return appErrAsync("module_detectWorkspaceContext_noContextFound", {
+  return appErrAsync("module_workspaceContext_detectWorkspaceContextFromCliInput_noContextFound", {
     workflowFile: workflow.file,
     workflowPresetFile: workflowPreset?.file,
   });

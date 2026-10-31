@@ -73,7 +73,7 @@ export const errorMessages = {
   entrypoint_cli_unableToDetectContext: (ctx: { workflowFileInput: string }) =>
     `Unable to detect workspace context from workflow file "${ctx.workflowFileInput}"`,
   module_deferredInputContext_rejectedValue: () => "Error detecting workspace context",
-  module_detectWorkspaceContext_noContextFound: (ctx: {
+  module_workspaceContext_detectWorkspaceContextFromCliInput_noContextFound: (ctx: {
     workflowFile: AbsolutePath;
     workflowPresetFile?: AbsolutePath | undefined;
   }) =>
@@ -115,9 +115,6 @@ export const errorMessages = {
     `File "${ctx.file}" contains invalid YAML contents`,
   module_resources_template_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
     `Expected template resource path ${ctx.value} for user input`,
-  module_resources_template_resourceFileFromReference_invalidInputHandlebarsRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .hbs relative path ${ctx.value} from user input`,
   module_resources_template_resourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
     `Error reading file "${ctx.value}"`,
   module_resources_template_resourceFromResourceFile_invalidHandlebarsContents: (ctx: {
@@ -128,12 +125,6 @@ export const errorMessages = {
   }) => `Expected config resource path ${ctx.value} for user input`,
   module_resources_config_utils_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
     `Expected config resource path ${ctx.value} for user input`,
-  module_resources_config_utils_resourceFileFromReference_invalidInputJsonRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .json relative path ${ctx.value} from user input`,
-  module_resources_config_utils_resourceFileFromReference_invalidInputYamlRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
   module_resources_term_factories_createTerm_invalidInputData: (ctx: {
     file: string;
     zodError: ZodError<any>;
@@ -155,15 +146,6 @@ export const errorMessages = {
     `File "${ctx.file}" contains invalid YAML contents`,
   module_resources_term_utils_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
     `Expected term resource path ${ctx.value} for user input`,
-  module_resources_term_utils_resourceFileFromReference_invalidInputJsonRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .json relative path ${ctx.value} from user input`,
-  module_resources_term_utils_resourceFileFromReference_invalidInputPlaintextRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid relative path ${ctx.value} from user input`,
-  module_resources_term_utils_resourceFileFromReference_invalidInputYamlRelativePath: (ctx: {
-    value: string;
-  }) => `Encountered invalid .yaml relative path ${ctx.value} from user input`,
   module_resources_term_utils_retrieveTermDataBySelector_arrayIndexOutOfRange: (ctx: {
     file: string;
     selector: (string | number)[];
@@ -201,6 +183,10 @@ export const errorMessages = {
   module_templateVariableSpecs_createTemplateVariableSpecsFromWorkflowData_duplicateVariable:
     (ctx: { variableName: string; workflow: string; stepId: string }) =>
       `Workflow "${ctx.workflow}" contains duplicate variable "${ctx.variableName}" encountered at step "${ctx.stepId}"`,
+  module_workspaceContext_resolveWorkspaceResourcePath_resolveWorkspaceResourceReference_invalidRelativePath:
+    (ctx: { value: string }) => `Encountered invalid relative path ${ctx.value} from user input`,
+  module_workspaceContext_resolveWorkspaceResourcePath_resolveWorkspaceResourceRelativePath_invalidRelativePath:
+    (ctx: { value: string }) => `Encountered invalid relative path ${ctx.value} from user input`,
   validation_array_factories_createNonEmptyArraySchema_invalidInput: () =>
     "Received invalid input for non-empty array",
   validation_fs_codecs_absolutePathToFsStats_invalidInputData: (ctx: { zodError: ZodError<any> }) =>

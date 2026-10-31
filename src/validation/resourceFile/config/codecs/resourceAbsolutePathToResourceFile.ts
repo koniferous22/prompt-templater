@@ -63,6 +63,7 @@ export const ConfigResourceFileSchema = z
         }
         return result.value;
       },
+      // Note - "encode" doesn't work because of use of `.transform` within FileSchema
       encode: (value, ctx) => {
         const result = match(value)
           .with({ format: "json" }, (path) => {

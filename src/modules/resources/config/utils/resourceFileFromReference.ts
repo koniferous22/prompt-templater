@@ -1,16 +1,11 @@
-import { join } from "node:path";
-
 import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 
 import { appErr } from "../../../../utils/deps/neverthrow/errorFactory.js";
-import {
-  JsonAbsolutePathSchema,
-  YamlAbsolutePathSchema,
-} from "../../../../validation/path/schemas/pathWithExtension.js";
 import { ConfigResourceFileSchema } from "../../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import type { ConfigResourceReference } from "../../../../validation/resourceReference/config/schemas/configResourceReference.js";
 import type { WorkspaceContext } from "../../../../validation/workspaceContext/schemas/workspaceContext.js";
+import { resolveWorkspaceResourceRelativePath } from "../../../workspaceContext/resolveWorkspaceResourcePath.js";
 
 export const configResourceFileFromReference = async (
   resourceReference: ConfigResourceReference,
@@ -21,36 +16,22 @@ export const configResourceFileFromReference = async (
     .with({ type: "relative" }, ({ filePath }) =>
       match(filePath)
         .with({ format: "json" }, (fp) => {
-          const jsonAbsolutePathResult = JsonAbsolutePathSchema.safeParse(
-            join(workspaceContext, fp.path),
-          );
-          return jsonAbsolutePathResult.success
-            ? ok({
+          return resolveWorkspaceResourceRelativePath(workspaceContext, fp.path).andThen(
+            (jsonAbsolutePath) =>
+              ok({
                 format: fp.format,
-                path: jsonAbsolutePathResult.data,
-              })
-            : appErr(
-                "module_resources_config_utils_resourceFileFromReference_invalidInputJsonRelativePath",
-                {
-                  value: filePath.path,
-                },
-              );
+                path: jsonAbsolutePath,
+              }),
+          );
         })
         .with({ format: "yaml" }, (fp) => {
-          const yamlAbsolutePathResult = YamlAbsolutePathSchema.safeParse(
-            join(workspaceContext, fp.path),
-          );
-          return yamlAbsolutePathResult.success
-            ? ok({
+          return resolveWorkspaceResourceRelativePath(workspaceContext, fp.path).andThen(
+            (yamlAbsolutePath) =>
+              ok({
                 format: fp.format,
-                path: yamlAbsolutePathResult.data,
-              })
-            : appErr(
-                "module_resources_config_utils_resourceFileFromReference_invalidInputYamlRelativePath",
-                {
-                  value: filePath.path,
-                },
-              );
+                path: yamlAbsolutePath,
+              }),
+          );
         })
         .exhaustive(),
     )
