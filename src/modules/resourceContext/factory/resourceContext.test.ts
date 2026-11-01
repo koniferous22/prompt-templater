@@ -3,29 +3,29 @@ import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import type { AppErrorCode } from "../../constants/errorCodes.js";
-import { AbsolutePathSchema } from "../../validation/path/customTypes/index.js";
+import type { AppErrorCode } from "../../../constants/errorCodes.js";
+import { AbsolutePathSchema } from "../../../validation/path/customTypes/index.js";
 import {
   ConfigResourceFileSchema,
   type ConfigResourceFile,
-} from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
+} from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import {
   ConfigResourceReferenceSchema,
   type ConfigResourceReference,
-} from "../../validation/resourceReference/config/schemas/configResourceReference.js";
+} from "../../../validation/resourceReference/config/schemas/configResourceReference.js";
 import {
   TemplateResourceReferenceSchema,
   type TemplateResourceReference,
-} from "../../validation/resourceReference/template/schemas/templateResourceReference.js";
+} from "../../../validation/resourceReference/template/schemas/templateResourceReference.js";
 import {
   TermResourceReferenceSchema,
   type TermResourceReference,
-} from "../../validation/resourceReference/term/schemas/termResourceReference.js";
-import { WorkspaceContextSchema } from "../../validation/workspaceContext/schemas/workspaceContext.js";
-import { createResourceContext } from "./createResourceContext.js";
+} from "../../../validation/resourceReference/term/schemas/termResourceReference.js";
+import { WorkspaceContextSchema } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
+import { createResourceContext } from "./resourceContext.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../"));
+const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
 const workspaceContext = await WorkspaceContextSchema.parseAsync(
   join(projectFixturesFolder, "workspace1"),

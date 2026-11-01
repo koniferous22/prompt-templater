@@ -1,31 +1,31 @@
 import { err, Ok, ok } from "neverthrow";
 import { match } from "ts-pattern";
 
-import type { AppErrorCode } from "../../constants/errorCodes.js";
-import { isNonEmptyArray } from "../../utils/array/isNonEmptyArray.js";
-import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
-import { errorFromErrorList } from "../../utils/deps/neverthrow/errorList.js";
-import type { AppError } from "../../utils/deps/neverthrow/types.js";
-import type { File } from "../../validation/fs/schemas/file.js";
-import { AbsolutePathSchema, type AbsolutePath } from "../../validation/path/customTypes/index.js";
-import { type ConfigResourceFile } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
-import { type TemplateResourceFile } from "../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
-import { type TermResourceFile } from "../../validation/resourceFile/term/codecs/resourceAbsolutePathToResourceFile.js";
-import type {
-  TermData,
-  TermValueType,
-} from "../../validation/resources/term/term/factories/termByTermType.js";
-import type { WorkspaceContext } from "../../validation/workspaceContext/schemas/workspaceContext.js";
+import type { AppErrorCode } from "../../../constants/errorCodes.js";
+import { isNonEmptyArray } from "../../../utils/array/isNonEmptyArray.js";
+import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
+import { errorFromErrorList } from "../../../utils/deps/neverthrow/errorList.js";
+import type { AppError } from "../../../utils/deps/neverthrow/types.js";
+import type { File } from "../../../validation/fs/schemas/file.js";
+import {
+  AbsolutePathSchema,
+  type AbsolutePath,
+} from "../../../validation/path/customTypes/index.js";
+import { type ConfigResourceFile } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
+import { type TemplateResourceFile } from "../../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
+import { type TermResourceFile } from "../../../validation/resourceFile/term/codecs/resourceAbsolutePathToResourceFile.js";
+import type { TermValueType } from "../../../validation/resources/term/term/factories/termByTermType.js";
+import type { WorkspaceContext } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 import type {
   ConfigResourceType,
   ConfigResourceTypes,
-} from "../resources/config/factories/resourceFactories.js";
-import { configResourceFromResourceFile } from "../resources/config/resourceFromResourceFile.js";
-import { templateResourceFromResourceFile } from "../resources/template/resourceFromResourceFile.js";
-import { templateResourceFileFromReference } from "../resources/template/utils/resourceFileFromReference.js";
-import type { TermResourceTypes } from "../resources/terms/factories/resourceFactories.js";
-import { termResourceFromResourceFile } from "../resources/terms/resourceFromResourceFile.js";
-import { termResourceFileFromReference } from "../resources/terms/utils/resourceFileFromReference.js";
+} from "../../resources/config/factories/resourceFactories.js";
+import { configResourceFromResourceFile } from "../../resources/config/resourceFromResourceFile.js";
+import { templateResourceFromResourceFile } from "../../resources/template/resourceFromResourceFile.js";
+import { templateResourceFileFromReference } from "../../resources/template/utils/resourceFileFromReference.js";
+import type { TermResourceTypes } from "../../resources/terms/factories/resourceFactories.js";
+import { termResourceFromResourceFile } from "../../resources/terms/resourceFromResourceFile.js";
+import { termResourceFileFromReference } from "../../resources/terms/utils/resourceFileFromReference.js";
 
 const initState = (workspaceContext: WorkspaceContext) => {
   const state = {

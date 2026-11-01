@@ -1,12 +1,12 @@
 import { err, ok } from "neverthrow";
 
-import { appErr } from "../../utils/deps/neverthrow/errorFactory.js";
-import type { ConfigResourceFile } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
-import type { ConfigResourceReference } from "../../validation/resourceReference/config/schemas/configResourceReference.js";
-import type { TemplateResourceReference } from "../../validation/resourceReference/template/schemas/templateResourceReference.js";
-import type { TermResourceReference } from "../../validation/resourceReference/term/schemas/termResourceReference.js";
-import type { WorkspaceContext } from "../../validation/workspaceContext/schemas/workspaceContext.js";
-import { resolveWorkspaceResourceReference } from "../workspaceContext/resolveWorkspaceResourcePath.js";
+import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
+import type { ConfigResourceFile } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
+import type { ConfigResourceReference } from "../../../validation/resourceReference/config/schemas/configResourceReference.js";
+import type { TemplateResourceReference } from "../../../validation/resourceReference/template/schemas/templateResourceReference.js";
+import type { TermResourceReference } from "../../../validation/resourceReference/term/schemas/termResourceReference.js";
+import type { WorkspaceContext } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
+import { resolveWorkspaceResourceReference } from "../../workspaceContext/resolveWorkspaceResourcePath.js";
 import { initializeResourceContext } from "./state.js";
 
 export function createResourceContext(workspaceContext: WorkspaceContext) {

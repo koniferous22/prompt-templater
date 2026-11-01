@@ -6,11 +6,11 @@ import { fileURLToPath } from "node:url";
 import type { Err, Ok } from "neverthrow";
 import { match } from "ts-pattern";
 
-import { AbsolutePathSchema } from "../../validation/path/customTypes/index.js";
-import { ConfigResourceFileSchema } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
-import { TemplateResourceFileSchema } from "../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
-import { TermResourceFileSchema } from "../../validation/resourceFile/term/codecs/resourceAbsolutePathToResourceFile.js";
-import { WorkspaceContextSchema } from "../../validation/workspaceContext/schemas/workspaceContext.js";
+import { AbsolutePathSchema } from "../../../validation/path/customTypes/index.js";
+import { ConfigResourceFileSchema } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
+import { TemplateResourceFileSchema } from "../../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
+import { TermResourceFileSchema } from "../../../validation/resourceFile/term/codecs/resourceAbsolutePathToResourceFile.js";
+import { WorkspaceContextSchema } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 import {
   initializeResourceContext,
   loadResource,
@@ -81,7 +81,7 @@ const runMutationTestCase = async <
 // Mini-mutation testing framework end
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../"));
+const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
 const workspaceContext = await WorkspaceContextSchema.parseAsync(
   join(projectFixturesFolder, "workspace1"),
@@ -383,9 +383,6 @@ const testCasesForConfigResourceFileFromInput = [
             }),
           },
           assertOperationResult(result) {
-            if (result.isErr()) {
-              console.error(result.error);
-            }
             assert.ok(result.isOk(), "expected successful result");
             assert.strictEqual(
               result.value.enqueuedOperations.length,

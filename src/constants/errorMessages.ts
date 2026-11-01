@@ -70,8 +70,6 @@ export const errorMessages = {
     `Encountered "zod" error with no attached issues`,
   dependency_zod_validationError: (ctx: { zodError: ZodError<any> }) =>
     `Encountered "zod" validation error\n${z.prettifyError(ctx.zodError)}`,
-  entrypoint_cli_unableToDetectContext: (ctx: { workflowFileInput: string }) =>
-    `Unable to detect workspace context from workflow file "${ctx.workflowFileInput}"`,
   module_deferredInputContext_rejectedValue: () => "Error detecting workspace context",
   module_workspaceContext_detectWorkspaceContextFromCliInput_noContextFound: (ctx: {
     workflowFile: AbsolutePath;
@@ -177,6 +175,9 @@ export const errorMessages = {
     faillingSegmentIndex: number;
   }) =>
     `Error retrieving term contents via selector from "${ctx.file}" via ${JSON.stringify(ctx.selector)} - key not found in the object - failed on segment ${ctx.faillingSegment} at selector index ${ctx.faillingSegmentIndex}`,
+  module_session_createSessionFromCliInput_unableToDetectContext: (ctx: {
+    workflowFileInput: string;
+  }) => `Unable to detect workspace context from workflow file "${ctx.workflowFileInput}"`,
   module_templateVariableContext_resolveValuesStrict_unintializedState: (ctx: {
     missingFields: [string, ...string[]];
   }) => `Uninitialized template context fields: ${formatStringList(ctx.missingFields)}`,

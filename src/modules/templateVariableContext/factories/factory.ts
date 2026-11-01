@@ -155,3 +155,8 @@ export const createTemplateVariableContext = <
   };
   return object;
 };
+
+export type TemplateVariableContext<
+  Specs extends TemplateVariableSpecs,
+  ZodSchemas extends { [key in keyof Specs]: TemplateVariableSpecToZodSchema<Specs[key]> },
+> = ReturnType<typeof createTemplateVariableContext<Specs, ZodSchemas>>;

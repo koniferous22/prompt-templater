@@ -97,9 +97,6 @@ describe("templateResourceFromInput", () => {
         testInput.data.userInput,
         testInput.data.workspaceContext,
       );
-      if (!resourceAbsolutePathResult.isOk()) {
-        console.error(resourceAbsolutePathResult.error);
-      }
       assert.ok(resourceAbsolutePathResult.isOk());
       assert.strictEqual(
         resourceAbsolutePathResult.value(testInput.data.templateInput),

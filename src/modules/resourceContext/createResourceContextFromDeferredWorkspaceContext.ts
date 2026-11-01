@@ -9,7 +9,7 @@ import {
 } from "../deferredInputContext/deferredInputContext.js";
 import { configResourceFileFromAbsolutePath } from "../resources/config/utils/resourceFileFromAbsolutePath.js";
 import { detectWorkspaceContextFromCliInput } from "../workspaceContext/detectWorkspaceContext.js";
-import { createResourceContext } from "./createResourceContext.js";
+import { createResourceContext } from "./factory/resourceContext.js";
 
 export async function createResourceContextFromDeferredWorkspaceContext(
   workflowResourcePath: ConfigResourceAbsolutePath,

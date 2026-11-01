@@ -4,14 +4,15 @@ import { zod } from "@optique/zod";
 import z from "zod";
 
 import { NonEmptyStringToConfigResourceReferenceSchema } from "../../../validation/resourceReference/config/codecs/nonEmptyStringToResourceReference.js";
-import { ConfigResourceReferenceSchema } from "../../../validation/resourceReference/config/schemas/configResourceReference.js";
-
-export type WorkspaceContextPath = z.output<typeof NonEmptyStringToConfigResourceReferenceSchema>;
+import {
+  ConfigResourceReferenceSchema,
+  type ConfigResourceReference,
+} from "../../../validation/resourceReference/config/schemas/configResourceReference.js";
 
 export const positionalArgsParser = map(
   seq(
     argument(
-      zod<WorkspaceContextPath>(NonEmptyStringToConfigResourceReferenceSchema, {
+      zod<ConfigResourceReference>(NonEmptyStringToConfigResourceReferenceSchema, {
         placeholder: ConfigResourceReferenceSchema.parse({
           type: "relative",
           filePath: {
@@ -30,7 +31,7 @@ export const positionalArgsParser = map(
     ),
     optional(
       argument(
-        zod<WorkspaceContextPath>(NonEmptyStringToConfigResourceReferenceSchema, {
+        zod<ConfigResourceReference>(NonEmptyStringToConfigResourceReferenceSchema, {
           placeholder: ConfigResourceReferenceSchema.parse({
             type: "relative",
             filePath: {
@@ -55,8 +56,8 @@ export const positionalArgsParser = map(
 ) as Parser<
   "sync",
   {
-    workflow: WorkspaceContextPath;
-    workflowPreset?: WorkspaceContextPath;
+    workflow: ConfigResourceReference;
+    workflowPreset?: ConfigResourceReference;
   },
   unknown
 >;
