@@ -2,9 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import { NonEmptyStringToTemplateResourceReferenceSchema } from "../../../../../validation/resourceReference/template/codecs/nonEmptyStringToResourceReference.js";
-import type { TemplateResourceReference } from "../../../../../validation/resourceReference/template/schemas/templateResourceReference.js";
 import { NonEmptyStringToTermResourceReferenceSchema } from "../../../../../validation/resourceReference/term/codecs/nonEmptyStringToResourceReference.js";
-import type { TermResourceReference } from "../../../../../validation/resourceReference/term/schemas/termResourceReference.js";
 import {
   WorkflowSchema,
   type Workflow,

@@ -8,7 +8,7 @@ import { match } from "ts-pattern";
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import { createError } from "./errorFactory.js";
 import { errorFromErrorList, resultFromErrorList } from "./errorList.js";
-import type { AppAggregateErr, AppError, AppErrorInstance } from "./types.js";
+import type { AppAggregateErr, AppError } from "./types.js";
 
 const errorStandalone1 = createError(
   "module_direntFlagsMatcher_createDirentFlagsMapFailed",

@@ -316,7 +316,7 @@ describe("createResourceContext", () => {
     }
   });
   describe("loadTerm", () => {
-    for (const { testInput, testOutcome } of testCasesForLoadTemplate) {
+    for (const { testInput, testOutcome } of testCasesForLoadTerm) {
       it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
         const resourceContext = createResourceContext(workspaceContext);
         // Prepare resource context
@@ -324,12 +324,12 @@ describe("createResourceContext", () => {
           const addWorkflowResult = await resourceContext.addWorkflow(workflowFile);
           assert.ok(addWorkflowResult.isOk());
         }
-        const loadTemplateResult = resourceContext.loadTemplate(testInput.data.templateReference);
+        const loadTermResult = resourceContext.loadTerm(testInput.data.termReference);
         if (testOutcome.data.result === true) {
-          assert.ok(loadTemplateResult.isOk());
+          assert.ok(loadTermResult.isOk());
         } else {
-          assert.ok(loadTemplateResult.isErr());
-          assert.strictEqual(loadTemplateResult.error.code, testOutcome.data.errorCode);
+          assert.ok(loadTermResult.isErr());
+          assert.strictEqual(loadTermResult.error.code, testOutcome.data.errorCode);
         }
       });
     }

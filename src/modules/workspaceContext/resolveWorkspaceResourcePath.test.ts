@@ -4,7 +4,6 @@ import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 import { dirname } from "path";
 
-import { expectTypeOf } from "expect-type";
 import type z from "zod";
 
 import {

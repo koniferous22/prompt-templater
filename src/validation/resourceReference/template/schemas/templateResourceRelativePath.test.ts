@@ -1,7 +1,5 @@
 import assert from "node:assert";
-import { dirname } from "node:path";
 import { describe, it } from "node:test";
-import { fileURLToPath } from "node:url";
 
 import { expectTypeOf } from "expect-type";
 import type z from "zod";

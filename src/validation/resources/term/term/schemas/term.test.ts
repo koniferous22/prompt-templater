@@ -4,7 +4,7 @@ import { describe, it } from "node:test";
 import { expectTypeOf } from "expect-type";
 import z from "zod";
 
-import type { TermData, TermValueType } from "../factories/termByTermType.js";
+import type { TermData } from "../factories/termByTermType.js";
 import { BooleanTermSchema, NumericTermSchema, StringTermSchema } from "./term.js";
 
 const testCasesForBooleanTermSchema = [

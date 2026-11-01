@@ -1,4 +1,4 @@
-import assert, { ok } from "node:assert/strict";
+import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
@@ -8,10 +8,7 @@ import { match } from "ts-pattern";
 
 import type { AppErrorCode } from "../../constants/errorCodes.js";
 import { AbsolutePathSchema } from "../../validation/path/customTypes/index.js";
-import {
-  ConfigResourceFileSchema,
-  type ConfigResourceFile,
-} from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
+import { ConfigResourceFileSchema } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import { NonEmptyStringToConfigResourceReferenceSchema } from "../../validation/resourceReference/config/codecs/nonEmptyStringToResourceReference.js";
 import {
   NonEmptyStringSchema,
@@ -21,7 +18,6 @@ import {
   WorkspaceContextSchema,
   type WorkspaceContext,
 } from "../../validation/workspaceContext/schemas/workspaceContext.js";
-import type { configResourceFileFromReference } from "../resources/config/utils/resourceFileFromReference.js";
 import { createDeferredContext, type DeferredContextOpts } from "./deferredInputContext.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

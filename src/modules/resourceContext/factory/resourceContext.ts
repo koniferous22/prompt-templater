@@ -1,4 +1,4 @@
-import { err, ok } from "neverthrow";
+import { ok } from "neverthrow";
 
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
 import type { ConfigResourceFile } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";

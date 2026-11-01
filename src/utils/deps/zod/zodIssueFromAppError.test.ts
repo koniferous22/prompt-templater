@@ -1,8 +1,6 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import z from "zod";
-
 import { createError } from "../neverthrow/errorFactory.js";
 import { zodIssueFromAppError } from "./zodIssueFromAppError.js";
 

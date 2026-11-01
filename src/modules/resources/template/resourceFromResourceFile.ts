@@ -44,7 +44,7 @@ export const templateResourceFromResourceFile = async (
       return parseResult;
     }
     return ok(parseResult.value);
-  } catch (err: unknown) {
+  } catch (_: unknown) {
     return appErr("module_resources_template_resourceFromResourceFile_errorReadingFile", {
       value: templateResourceFile.file,
     });
