@@ -12,7 +12,6 @@ export type DeferredContextOpts = {
   workflowPreset: ConfigResourceReference | undefined;
 };
 
-// Extract this as utility if this is usable somewhere else
 export const createDeferredContext = async (opts: DeferredContextOpts) => {
   const workflowPreset = await match(opts.workflowPreset)
     .with(undefined, () => undefined)
@@ -64,9 +63,27 @@ export const createDeferredContext = async (opts: DeferredContextOpts) => {
       workflowPreset: workflowPresetResult.value,
     });
   };
+  type StateResovedValues = {
+    [key in keyof typeof state]: Extract<
+      Exclude<(typeof state)[key], undefined>,
+      { type: "resolved" }
+    >;
+  };
   return ok({
     getState() {
       return state;
+    },
+    getPlainState(): Partial<{
+      [key in keyof StateResovedValues]: StateResovedValues[key]["value"];
+    }> {
+      return Object.fromEntries(
+        Object.entries(state)
+          .filter(([, value]) => value?.type === "resolved")
+          .map(([key, value]) => [
+            key,
+            (value as Extract<typeof value, { type: "resolved" }>).value,
+          ]),
+      );
     },
     async resolve(workspaceContext: WorkspaceContext) {
       const result = await resolveDeferredContext(state, workspaceContext);
