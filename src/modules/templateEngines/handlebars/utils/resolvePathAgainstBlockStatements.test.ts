@@ -10,7 +10,7 @@ const testCasesForResolvePathAgainstHbsBlockStatements = [
     testInput: {
       data: {
         pathExpr: null,
-        blockChain: [],
+        blockStatementStack: [],
       },
       testCaseDescription: "null pathExpr",
     },
@@ -32,7 +32,7 @@ const testCasesForResolvePathAgainstHbsBlockStatements = [
           original: "@key",
           loc: { source: "source", start: { line: 1, column: 1 }, end: { line: 1, column: 5 } },
         },
-        blockChain: [
+        blockStatementStack: [
           {
             helper: "each",
             resolvedSelector: ["items"],
@@ -60,9 +60,9 @@ const testCasesForResolvePathAgainstHbsBlockStatements = [
           original: "name",
           loc: { source: "source", start: { line: 1, column: 8 }, end: { line: 1, column: 12 } },
         },
-        blockChain: [],
+        blockStatementStack: [],
       },
-      testCaseDescription: "simple path with empty blockChain",
+      testCaseDescription: "simple path with empty blockStatementStack",
     },
     testOutcome: {
       testBehaviourDescription: "return the parts as selector",
@@ -82,7 +82,7 @@ const testCasesForResolvePathAgainstHbsBlockStatements = [
           original: "this",
           loc: { source: "source", start: { line: 2, column: 3 }, end: { line: 2, column: 7 } },
         },
-        blockChain: [],
+        blockStatementStack: [],
       },
       testCaseDescription: "pathExpr with only 'this' part and empty chain",
     },
@@ -104,7 +104,7 @@ const testCasesForResolvePathAgainstHbsBlockStatements = [
           original: "firstName",
           loc: { source: "source", start: { line: 3, column: 5 }, end: { line: 3, column: 14 } },
         },
-        blockChain: [
+        blockStatementStack: [
           {
             helper: "with",
             resolvedSelector: ["person"],
@@ -132,7 +132,7 @@ const testCasesForResolvePathAgainstHbsBlockStatements = [
           original: "../name",
           loc: { source: "source", start: { line: 5, column: 10 }, end: { line: 5, column: 17 } },
         },
-        blockChain: [
+        blockStatementStack: [
           {
             helper: "each",
             resolvedSelector: ["items"],
@@ -160,7 +160,7 @@ const testCasesForResolvePathAgainstHbsBlockStatements = [
           original: "../name",
           loc: { source: "source", start: { line: 6, column: 12 }, end: { line: 6, column: 19 } },
         },
-        blockChain: [
+        blockStatementStack: [
           {
             helper: "with",
             resolvedSelector: ["person"],
@@ -193,7 +193,7 @@ const testCasesForResolvePathAgainstHbsBlockStatements = [
           original: "../../rootProp",
           loc: { source: "source", start: { line: 8, column: 4 }, end: { line: 8, column: 18 } },
         },
-        blockChain: [
+        blockStatementStack: [
           {
             helper: "with",
             resolvedSelector: ["a"],
@@ -226,7 +226,7 @@ const testCasesForResolvePathAgainstHbsBlockStatements = [
           original: "this.title",
           loc: { source: "source", start: { line: 4, column: 7 }, end: { line: 4, column: 17 } },
         },
-        blockChain: [
+        blockStatementStack: [
           {
             helper: "each",
             resolvedSelector: ["items"],
@@ -254,7 +254,7 @@ const testCasesForResolvePathAgainstHbsBlockStatements = [
           original: "this",
           loc: { source: "source", start: { line: 9, column: 2 }, end: { line: 9, column: 6 } },
         },
-        blockChain: [
+        blockStatementStack: [
           {
             helper: "with",
             resolvedSelector: ["person"],
@@ -275,7 +275,7 @@ const testCasesForResolvePathAgainstHbsBlockStatements = [
   testInput: {
     data: {
       pathExpr: hbs.AST.PathExpression | null;
-      blockChain: LocatedPathExpression["blockStatementStack"];
+      blockStatementStack: LocatedPathExpression["blockStatementStack"];
     };
     testCaseDescription: string;
   };
@@ -292,7 +292,7 @@ describe("resolvePathAgainstHbsBlockStatements", () => {
     it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
       const result = resolvePathAgainstHbsBlockStatements(
         testInput.data.pathExpr,
-        testInput.data.blockChain,
+        testInput.data.blockStatementStack,
       );
       assert.deepStrictEqual(result, testOutcome.data.result);
     });
