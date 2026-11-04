@@ -178,6 +178,15 @@ export const errorMessages = {
   module_session_createSessionFromCliInput_unableToDetectContext: (ctx: {
     workflowFileInput: string;
   }) => `Unable to detect workspace context from workflow file "${ctx.workflowFileInput}"`,
+  module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstStatement:
+    (ctx: { statementType: string; location: hbs.AST.SourceLocation }) =>
+      `prompt-templater-v1 doesn't support handlebars "${ctx.statementType}" statement type (${JSON.stringify(ctx.location)})`,
+  module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstBlockHelper:
+    (ctx: { blockHelper: string; location: hbs.AST.SourceLocation }) =>
+      `Encountered unsupported block helper "${ctx.blockHelper}" (${JSON.stringify(ctx.location)})`,
+  module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unexpectedAstStatement:
+    (ctx: { statementType: string; location: hbs.AST.SourceLocation }) =>
+      `Encountered unexpected statement "${ctx.statementType}" (${JSON.stringify(ctx.location)})`,
   module_templateVariableContext_resolveValuesStrict_unintializedState: (ctx: {
     missingFields: [string, ...string[]];
   }) => `Uninitialized template context fields: ${formatStringList(ctx.missingFields)}`,

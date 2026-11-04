@@ -1,0 +1,141 @@
+import { Err, ok, Result } from "neverthrow";
+import { match } from "ts-pattern";
+
+import {
+  HandlebarsAstSupportedBlockHelper,
+  HandlebarsAstSupportedStatement,
+  HandlebarsAstUnsupportedStatement,
+} from "../../../../constants/enums/templateEngines/handlebars/ast.js";
+import { isNonEmptyArray } from "../../../../utils/array/isNonEmptyArray.js";
+import { appErr } from "../../../../utils/deps/neverthrow/errorFactory.js";
+import type { AppError } from "../../../../utils/deps/neverthrow/types.js";
+import { zodUnionFromEnum } from "../../../../utils/deps/zod/zodUnionFromEnum.js";
+import type { PathExpressionTreeNode } from "./types.js";
+
+type BuildPathExpressionTreeErrorType =
+  | AppError<"module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstBlockHelper">
+  | AppError<"module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstStatement">
+  | AppError<"module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unexpectedAstStatement">;
+
+export function buildHandlebarsPathExpressionTree(
+  ast: hbs.AST.Program,
+): Result<PathExpressionTreeNode[], BuildPathExpressionTreeErrorType> {
+  const result: PathExpressionTreeNode[] = [];
+
+  for (const stmt of ast.body) {
+    const mappedStatementResult = mapStatement(stmt);
+    if (mappedStatementResult.isErr()) {
+      return mappedStatementResult as Err<any, typeof mappedStatementResult.error>;
+    }
+    if (mappedStatementResult.value !== null) {
+      result.push(mappedStatementResult.value);
+    }
+  }
+
+  return ok(result);
+}
+
+const HandlebarsAstSupportedStatementSchema = zodUnionFromEnum(HandlebarsAstSupportedStatement);
+const HandlebarsAstUnsupportedStatementSchema = zodUnionFromEnum(HandlebarsAstUnsupportedStatement);
+const HandlebarsAstSupportedBlockHelperSchema = zodUnionFromEnum(HandlebarsAstSupportedBlockHelper);
+
+function mapStatement(
+  statement: hbs.AST.Statement,
+): Result<PathExpressionTreeNode | null, BuildPathExpressionTreeErrorType> {
+  const unsupportedStatementResult = HandlebarsAstUnsupportedStatementSchema.safeParse(
+    statement.type,
+  );
+  if (unsupportedStatementResult.success) {
+    return appErr(
+      "module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstStatement",
+      {
+        statementType: statement.type,
+        location: statement.loc,
+      },
+    );
+  }
+  const supportedStatementResult = HandlebarsAstSupportedStatementSchema.safeParse(statement.type);
+  if (!supportedStatementResult.success) {
+    return appErr(
+      "module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unexpectedAstStatement",
+      {
+        statementType: statement.type,
+        location: statement.loc,
+      },
+    );
+  }
+  return match({ type: supportedStatementResult.data, statement })
+    .with({ type: "CommentStatement" }, () => {
+      return ok(null);
+    })
+    .with({ type: "ContentStatement" }, () => {
+      return ok(null);
+    })
+    .with({ type: "MustacheStatement" }, () => {
+      const mustacheStatement = statement as hbs.AST.MustacheStatement;
+      const path =
+        mustacheStatement.path && mustacheStatement.path.type === "PathExpression"
+          ? (mustacheStatement.path as hbs.AST.PathExpression)
+          : null;
+      return ok({
+        kind: "mustache",
+        path,
+        params: mustacheStatement.params ?? [],
+        original: mustacheStatement,
+      } satisfies PathExpressionTreeNode);
+    })
+    .with({ type: "BlockStatement" }, () => {
+      const blockStatement = statement as hbs.AST.BlockStatement;
+      const helperName =
+        blockStatement.path?.type === "PathExpression" && isNonEmptyArray(blockStatement.path.parts)
+          ? blockStatement.path.parts[0]
+          : "";
+
+      if (helperName && !HandlebarsAstSupportedBlockHelperSchema.validate(helperName)) {
+        return appErr(
+          "module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstBlockHelper",
+          {
+            blockHelper: helperName,
+            location: blockStatement.loc,
+          },
+        );
+      }
+
+      // The first param is usually the path the block operates on (for with/each)
+      const blockPathExpr =
+        blockStatement.params !== undefined &&
+        isNonEmptyArray(blockStatement.params) &&
+        blockStatement.params[0].type === "PathExpression"
+          ? (blockStatement.params[0] as hbs.AST.PathExpression)
+          : null;
+
+      const programNodes: PathExpressionTreeNode[] = [];
+      if (blockStatement.program) {
+        const prog = buildHandlebarsPathExpressionTree(blockStatement.program);
+        if (prog.isErr()) {
+          return prog as Err<any, typeof prog.error>;
+        }
+        programNodes.push(...prog.value);
+      }
+
+      const inverseNodes: PathExpressionTreeNode[] = [];
+      if (blockStatement.inverse) {
+        const inv = buildHandlebarsPathExpressionTree(blockStatement.inverse);
+        if (inv.isErr()) {
+          return inv as Err<any, typeof inv.error>;
+        }
+        inverseNodes.push(...inv.value);
+      }
+
+      return ok({
+        kind: "block",
+        helper: helperName,
+        path: blockPathExpr,
+        params: blockStatement.params ?? [],
+        program: programNodes,
+        inverse: inverseNodes,
+        original: blockStatement,
+      } satisfies PathExpressionTreeNode);
+    })
+    .exhaustive();
+}
