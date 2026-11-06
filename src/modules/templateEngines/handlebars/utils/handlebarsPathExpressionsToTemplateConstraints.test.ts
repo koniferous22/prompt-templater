@@ -3,7 +3,10 @@ import { describe, it } from "node:test";
 
 import Handlebars from "handlebars";
 
-import { SelectorSchema } from "../../../../validation/resourceReference/term/schemas/selector.js";
+import {
+  SelectorSchema,
+  type Selector,
+} from "../../../../validation/resourceReference/term/schemas/selector.js";
 import { buildHandlebarsPathExpressionTree } from "./buildPathExpressionTree.js";
 import { extractHandlebarsPathExpressions } from "./extractHandlebarsPathExpressions.js";
 import { pathExpressionsToConstraints } from "./handlebarsPathExpressionsToTemplateConstraints.js";
@@ -347,7 +350,8 @@ describe("pathExpressionsToConstraints", () => {
             (actualItem) =>
               actualItem.expectedType === expectedItem.expectedType &&
               actualItem.selector.every(
-                (selectorValue, index) => selectorValue === expectedItem.selector[index],
+                (selectorValue: Selector[number], index: number) =>
+                  selectorValue === expectedItem.selector[index],
               ),
           ),
         ),

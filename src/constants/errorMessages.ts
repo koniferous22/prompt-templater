@@ -187,6 +187,9 @@ export const errorMessages = {
   module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unexpectedAstStatement:
     (ctx: { statementType: string; location: hbs.AST.SourceLocation }) =>
       `Encountered unexpected statement "${ctx.statementType}" (${JSON.stringify(ctx.location)})`,
+  module_templateEngines_handlebars_createHandlebarsTemplate_unableToParseInput: (ctx: {
+    templateFilePath: string;
+  }) => `Unable to parse handlebars template from file "${ctx.templateFilePath}"`,
   module_templateVariableContext_resolveValuesStrict_unintializedState: (ctx: {
     missingFields: [string, ...string[]];
   }) => `Uninitialized template context fields: ${formatStringList(ctx.missingFields)}`,

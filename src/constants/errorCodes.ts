@@ -41,6 +41,7 @@ export type AppErrorCode =
   | "module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstStatement"
   | "module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstBlockHelper"
   | "module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unexpectedAstStatement"
+  | "module_templateEngines_handlebars_createHandlebarsTemplate_unableToParseInput"
   | "module_templateVariableContext_setValue_keyNotFound"
   | "module_templateVariableContext_setValue_invalidValueType"
   | "module_templateVariableContext_resolveValuesStrict_unintializedState"

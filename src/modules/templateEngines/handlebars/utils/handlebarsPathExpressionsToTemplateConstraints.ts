@@ -1,16 +1,7 @@
-import {
-  SelectorSchema,
-  type Selector,
-} from "../../../../validation/resourceReference/term/schemas/selector.js";
+import { SelectorSchema } from "../../../../validation/resourceReference/term/schemas/selector.js";
+import type { Constraint, ExpectedType } from "../../templateEngine.js";
 import { resolvePathAgainstHbsBlockStatements } from "./resolvePathAgainstBlockStatements.js";
 import type { LocatedPathExpression } from "./types.js";
-
-export type ExpectedType = "object" | "array" | "primitive" | "any";
-
-export interface Constraint {
-  selector: Selector;
-  expectedType: ExpectedType;
-}
 
 // Seralizes constraints from path expressions
 // Note - produces potentially duplicate constraints that are left as-is
