@@ -158,7 +158,6 @@ describe("extractTemplateConstraintsFromHandlebarsTemplate", () => {
       const result = extractTemplateConstraintsFromHandlebarsTemplate(ast);
       if (testOutcome.data.result === true) {
         assert.ok(result.isOk(), "expected Ok result");
-        console.error(result.value);
       }
     });
   }
