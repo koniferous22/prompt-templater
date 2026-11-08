@@ -1,6 +1,6 @@
+import { describe, it } from "bun:test";
 import assert from "node:assert";
 import { join } from "node:path";
-import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 import { dirname } from "path";
 

@@ -1,6 +1,6 @@
+import { describe, it } from "bun:test";
 import assert from "node:assert";
 import { dirname, join } from "node:path";
-import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { expectTypeOf } from "expect-type";

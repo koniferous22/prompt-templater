@@ -1,7 +1,7 @@
+import { describe, it } from "bun:test";
 import assert from "node:assert/strict";
 import { readdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
-import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import z from "zod";

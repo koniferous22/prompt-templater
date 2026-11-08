@@ -1,6 +1,6 @@
+import { describe, it } from "bun:test";
 import assert from "node:assert";
 import { dirname, join } from "node:path";
-import { describe, it } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { AbsolutePathSchema, type AbsolutePath } from "../../validation/path/customTypes/index.js";

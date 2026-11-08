@@ -1,5 +1,5 @@
+import { describe, it } from "bun:test";
 import assert from "node:assert/strict";
-import { describe, it } from "node:test";
 
 import { NonEmptyStringToTemplateResourceReferenceSchema } from "../../../../../validation/resourceReference/template/codecs/nonEmptyStringToResourceReference.js";
 import { NonEmptyStringToTermResourceReferenceSchema } from "../../../../../validation/resourceReference/term/codecs/nonEmptyStringToResourceReference.js";

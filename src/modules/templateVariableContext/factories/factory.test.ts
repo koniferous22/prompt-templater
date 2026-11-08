@@ -1,5 +1,5 @@
+import { describe, it } from "bun:test";
 import assert from "node:assert/strict";
-import { describe, it } from "node:test";
 
 import type { Err, Ok, Result } from "neverthrow";
 import { match } from "ts-pattern";
