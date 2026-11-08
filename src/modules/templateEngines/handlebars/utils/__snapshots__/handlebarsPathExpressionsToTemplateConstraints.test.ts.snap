@@ -54,7 +54,7 @@ exports[`pathExpressionsToConstraints for path that is the subject of a #with bl
 exports[`pathExpressionsToConstraints for path that is the subject of a #each block parsing should infer an array constraint for the each subject 1`] = `
 [
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,
@@ -67,7 +67,7 @@ exports[`pathExpressionsToConstraints for path that is the subject of a #each bl
     ],
   },
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,
@@ -85,7 +85,7 @@ exports[`pathExpressionsToConstraints for path that is the subject of a #each bl
 exports[`pathExpressionsToConstraints for @index data variable inside an each block parsing should infer an array constraint on the nearest each subject 1`] = `
 [
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,
@@ -98,7 +98,7 @@ exports[`pathExpressionsToConstraints for @index data variable inside an each bl
     ],
   },
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,
@@ -129,7 +129,7 @@ exports[`pathExpressionsToConstraints for @index data variable inside an each bl
 exports[`pathExpressionsToConstraints for @key data variable inside an each block parsing should infer an object constraint on the nearest each subject 1`] = `
 [
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,
@@ -142,7 +142,7 @@ exports[`pathExpressionsToConstraints for @key data variable inside an each bloc
     ],
   },
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,
@@ -173,7 +173,7 @@ exports[`pathExpressionsToConstraints for @key data variable inside an each bloc
 exports[`pathExpressionsToConstraints for pure this reference inside an each block parsing should infer an array constraint on the current each context 1`] = `
 [
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,
@@ -186,7 +186,7 @@ exports[`pathExpressionsToConstraints for pure this reference inside an each blo
     ],
   },
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,
@@ -308,7 +308,7 @@ exports[`pathExpressionsToConstraints for deep path expression with intermediate
 exports[`pathExpressionsToConstraints for relative path with depth 1 resolving against block chain parsing should resolve the path to the parent context and infer a primitive constraint 1`] = `
 [
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,
@@ -321,7 +321,7 @@ exports[`pathExpressionsToConstraints for relative path with depth 1 resolving a
     ],
   },
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,
@@ -410,7 +410,7 @@ exports[`pathExpressionsToConstraints for mustache path nested inside a with blo
 exports[`pathExpressionsToConstraints for nested each + with blocks with relative mustache paths parsing should resolve nested contexts and emit primitive + intermediate object constraints 1`] = `
 [
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,
@@ -423,7 +423,7 @@ exports[`pathExpressionsToConstraints for nested each + with blocks with relativ
     ],
   },
   {
-    "expectedType": "array",
+    "expectedType": "iterable",
     "reference": {
       "location": {
         "column": 8,

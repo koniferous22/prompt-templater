@@ -61,7 +61,7 @@ export function pathExpressionsToConstraints(
         if (current.isEach) {
           constraints.push({
             selector: SelectorSchema.parse(current.resolvedSelector),
-            expectedType: "array",
+            expectedType: "iterable",
             reference: {
               pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
               location: {
@@ -105,7 +105,7 @@ export function pathExpressionsToConstraints(
       loc.origin.helper === "each" &&
       loc.origin.path === pathExpr
     ) {
-      expectedType = "array";
+      expectedType = "iterable";
     }
     // Path used as a simple mustache → most likely a primitive (stringified)
     else if (loc.mustache) {

@@ -1,7 +1,7 @@
 import type { Selector } from "../../../../validation/resourceReference/term/schemas/selector.js";
 import type { NonEmptyString } from "../../validation/string/customTypes/string.ts";
 
-export type ExpectedType = "object" | "array" | "primitive" | "any";
+export type ExpectedType = "object" | "array" | "primitive" | "any" | "iterable";
 
 export interface Constraint {
   selector: Selector;
