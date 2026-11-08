@@ -1,4 +1,4 @@
-import type { AppErrorCode } from "../../../constants/errorCodes.js";
+import type { AppErrorCode } from "../../../constants/errorCodes.ts";
 import type { AppAggregateErr, AppErrorInstance, AppErrors, OptionalAppErrors } from "./types.js";
 
 type AppErrorFromOptionalAppErrorsAcc<
