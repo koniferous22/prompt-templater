@@ -1,4 +1,5 @@
 import { SelectorSchema } from "../../../../validation/resourceReference/term/schemas/selector.js";
+import { NonEmptyStringSchema } from "../../../../validation/string/customTypes/string.js";
 import type { Constraint, ExpectedType } from "../../templateEngine.js";
 import { resolvePathAgainstHbsBlockStatements } from "./resolvePathAgainstBlockStatements.js";
 import type { LocatedPathExpression } from "./types.js";
@@ -22,6 +23,13 @@ export function pathExpressionsToConstraints(
           constraints.push({
             selector: SelectorSchema.parse(eachBlock.resolvedSelector),
             expectedType: "object",
+            reference: {
+              pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
+              location: {
+                column: loc.origin.path?.loc.start.column ?? null,
+                line: loc.origin.path?.loc.start.line ?? null,
+              },
+            },
           });
         }
       } else if (dataName === "index") {
@@ -30,6 +38,13 @@ export function pathExpressionsToConstraints(
           constraints.push({
             selector: SelectorSchema.parse(eachBlock.resolvedSelector),
             expectedType: "array",
+            reference: {
+              pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
+              location: {
+                column: loc.origin.path?.loc.start.column ?? null,
+                line: loc.origin.path?.loc.start.line ?? null,
+              },
+            },
           });
         }
       }
@@ -47,12 +62,26 @@ export function pathExpressionsToConstraints(
           constraints.push({
             selector: SelectorSchema.parse(current.resolvedSelector),
             expectedType: "array",
+            reference: {
+              pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
+              location: {
+                column: loc.origin.path?.loc.start.column ?? null,
+                line: loc.origin.path?.loc.start.line ?? null,
+              },
+            },
           });
         } else {
           // inside a with the current context is an object
           constraints.push({
             selector: SelectorSchema.parse(current.resolvedSelector),
             expectedType: "object",
+            reference: {
+              pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
+              location: {
+                column: loc.origin.path?.loc.start.column ?? null,
+                line: loc.origin.path?.loc.start.line ?? null,
+              },
+            },
           });
         }
       }
@@ -87,7 +116,17 @@ export function pathExpressionsToConstraints(
       expectedType = "any";
     }
 
-    constraints.push({ selector, expectedType });
+    constraints.push({
+      selector,
+      expectedType,
+      reference: {
+        pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
+        location: {
+          column: loc.origin.path?.loc.start.column ?? null,
+          line: loc.origin.path?.loc.start.line ?? null,
+        },
+      },
+    });
 
     // Also emit intermediate object constraints for deep paths
     // e.g. a.b.c  ⇒  a is object, a.b is object
@@ -95,6 +134,13 @@ export function pathExpressionsToConstraints(
       constraints.push({
         selector: SelectorSchema.parse(selector.slice(0, i)),
         expectedType: "object",
+        reference: {
+          pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
+          location: {
+            column: loc.origin.path?.loc.start.column ?? null,
+            line: loc.origin.path?.loc.start.line ?? null,
+          },
+        },
       });
     }
   }

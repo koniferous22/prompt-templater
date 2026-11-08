@@ -6,6 +6,13 @@ exports[`pathExpressionsToConstraints for simple top-level mustache path express
 [
   {
     "expectedType": "primitive",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "name",
+    },
     "selector": [
       "name",
     ],
@@ -17,12 +24,26 @@ exports[`pathExpressionsToConstraints for path that is the subject of a #with bl
 [
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "person",
+    },
     "selector": [
       "person",
     ],
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "person",
+    },
     "selector": [
       "person",
     ],
@@ -34,12 +55,26 @@ exports[`pathExpressionsToConstraints for path that is the subject of a #each bl
 [
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "items",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "items",
+    },
     "selector": [
       "items",
     ],
@@ -51,18 +86,39 @@ exports[`pathExpressionsToConstraints for @index data variable inside an each bl
 [
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "items",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "items",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 17,
+        "line": 1,
+      },
+      "pathExpression": "@index",
+    },
     "selector": [
       "items",
     ],
@@ -74,18 +130,39 @@ exports[`pathExpressionsToConstraints for @key data variable inside an each bloc
 [
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "people",
+    },
     "selector": [
       "people",
     ],
   },
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "people",
+    },
     "selector": [
       "people",
     ],
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 18,
+        "line": 1,
+      },
+      "pathExpression": "@key",
+    },
     "selector": [
       "people",
     ],
@@ -97,18 +174,39 @@ exports[`pathExpressionsToConstraints for pure this reference inside an each blo
 [
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "items",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "items",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "primitive",
+    "reference": {
+      "location": {
+        "column": 17,
+        "line": 1,
+      },
+      "pathExpression": "this",
+    },
     "selector": [
       "items",
     ],
@@ -120,18 +218,39 @@ exports[`pathExpressionsToConstraints for pure this reference inside a with bloc
 [
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "person",
+    },
     "selector": [
       "person",
     ],
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "person",
+    },
     "selector": [
       "person",
     ],
   },
   {
     "expectedType": "primitive",
+    "reference": {
+      "location": {
+        "column": 18,
+        "line": 1,
+      },
+      "pathExpression": "this",
+    },
     "selector": [
       "person",
     ],
@@ -143,6 +262,13 @@ exports[`pathExpressionsToConstraints for deep path expression with intermediate
 [
   {
     "expectedType": "primitive",
+    "reference": {
+      "location": {
+        "column": 2,
+        "line": 1,
+      },
+      "pathExpression": "a.b.c",
+    },
     "selector": [
       "a",
       "b",
@@ -151,12 +277,26 @@ exports[`pathExpressionsToConstraints for deep path expression with intermediate
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 2,
+        "line": 1,
+      },
+      "pathExpression": "a.b.c",
+    },
     "selector": [
       "a",
     ],
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 2,
+        "line": 1,
+      },
+      "pathExpression": "a.b.c",
+    },
     "selector": [
       "a",
       "b",
@@ -169,18 +309,39 @@ exports[`pathExpressionsToConstraints for relative path with depth 1 resolving a
 [
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "items",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "items",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "primitive",
+    "reference": {
+      "location": {
+        "column": 17,
+        "line": 1,
+      },
+      "pathExpression": "../name",
+    },
     "selector": [
       "name",
     ],
@@ -192,18 +353,39 @@ exports[`pathExpressionsToConstraints for mustache path nested inside a with blo
 [
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "person",
+    },
     "selector": [
       "person",
     ],
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 1,
+      },
+      "pathExpression": "person",
+    },
     "selector": [
       "person",
     ],
   },
   {
     "expectedType": "primitive",
+    "reference": {
+      "location": {
+        "column": 18,
+        "line": 1,
+      },
+      "pathExpression": "firstName",
+    },
     "selector": [
       "person",
       "firstName",
@@ -211,6 +393,13 @@ exports[`pathExpressionsToConstraints for mustache path nested inside a with blo
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 18,
+        "line": 1,
+      },
+      "pathExpression": "firstName",
+    },
     "selector": [
       "person",
     ],
@@ -222,18 +411,39 @@ exports[`pathExpressionsToConstraints for nested each + with blocks with relativ
 [
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 2,
+      },
+      "pathExpression": "items",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "array",
+    "reference": {
+      "location": {
+        "column": 8,
+        "line": 2,
+      },
+      "pathExpression": "items",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "primitive",
+    "reference": {
+      "location": {
+        "column": 4,
+        "line": 3,
+      },
+      "pathExpression": "title",
+    },
     "selector": [
       "items",
       "title",
@@ -241,12 +451,26 @@ exports[`pathExpressionsToConstraints for nested each + with blocks with relativ
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 4,
+        "line": 3,
+      },
+      "pathExpression": "title",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 10,
+        "line": 4,
+      },
+      "pathExpression": "details",
+    },
     "selector": [
       "items",
       "details",
@@ -254,12 +478,26 @@ exports[`pathExpressionsToConstraints for nested each + with blocks with relativ
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 10,
+        "line": 4,
+      },
+      "pathExpression": "details",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 10,
+        "line": 4,
+      },
+      "pathExpression": "details",
+    },
     "selector": [
       "items",
       "details",
@@ -267,12 +505,26 @@ exports[`pathExpressionsToConstraints for nested each + with blocks with relativ
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 10,
+        "line": 4,
+      },
+      "pathExpression": "details",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "primitive",
+    "reference": {
+      "location": {
+        "column": 6,
+        "line": 5,
+      },
+      "pathExpression": "color",
+    },
     "selector": [
       "items",
       "details",
@@ -281,12 +533,26 @@ exports[`pathExpressionsToConstraints for nested each + with blocks with relativ
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 6,
+        "line": 5,
+      },
+      "pathExpression": "color",
+    },
     "selector": [
       "items",
     ],
   },
   {
     "expectedType": "object",
+    "reference": {
+      "location": {
+        "column": 6,
+        "line": 5,
+      },
+      "pathExpression": "color",
+    },
     "selector": [
       "items",
       "details",
