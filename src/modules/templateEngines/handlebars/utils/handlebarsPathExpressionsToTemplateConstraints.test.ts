@@ -1,12 +1,7 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 
 import Handlebars from "handlebars";
 
-import {
-  SelectorSchema,
-  type Selector,
-} from "../../../../validation/resourceReference/term/schemas/selector.js";
 import { buildHandlebarsPathExpressionTree } from "./buildPathExpressionTree.js";
 import { extractHandlebarsPathExpressions } from "./extractHandlebarsPathExpressions.js";
 import { pathExpressionsToConstraints } from "./handlebarsPathExpressionsToTemplateConstraints.js";
@@ -20,9 +15,6 @@ const testCasesForPathExpressionsToConstraints = [
     },
     testOutcome: {
       testBehaviourDescription: "return an empty constraints array",
-      data: {
-        result: [],
-      },
     },
   },
   {
@@ -36,14 +28,6 @@ const testCasesForPathExpressionsToConstraints = [
     },
     testOutcome: {
       testBehaviourDescription: "infer a primitive constraint for the path",
-      data: {
-        result: [
-          {
-            selector: SelectorSchema.parse(["name"]),
-            expectedType: "primitive",
-          },
-        ],
-      },
     },
   },
   {
@@ -57,14 +41,6 @@ const testCasesForPathExpressionsToConstraints = [
     },
     testOutcome: {
       testBehaviourDescription: "infer an object constraint for the with subject",
-      data: {
-        result: [
-          {
-            selector: SelectorSchema.parse(["person"]),
-            expectedType: "object",
-          },
-        ],
-      },
     },
   },
   {
@@ -78,14 +54,6 @@ const testCasesForPathExpressionsToConstraints = [
     },
     testOutcome: {
       testBehaviourDescription: "infer an array constraint for the each subject",
-      data: {
-        result: [
-          {
-            selector: SelectorSchema.parse(["items"]),
-            expectedType: "array",
-          },
-        ],
-      },
     },
   },
   {
@@ -99,18 +67,6 @@ const testCasesForPathExpressionsToConstraints = [
     },
     testOutcome: {
       testBehaviourDescription: "infer an array constraint on the nearest each subject",
-      data: {
-        result: [
-          {
-            selector: SelectorSchema.parse(["items"]),
-            expectedType: "array",
-          },
-          {
-            selector: SelectorSchema.parse(["items"]),
-            expectedType: "array",
-          },
-        ],
-      },
     },
   },
   {
@@ -124,18 +80,6 @@ const testCasesForPathExpressionsToConstraints = [
     },
     testOutcome: {
       testBehaviourDescription: "infer an object constraint on the nearest each subject",
-      data: {
-        result: [
-          {
-            selector: SelectorSchema.parse(["people"]),
-            expectedType: "array",
-          },
-          {
-            selector: SelectorSchema.parse(["people"]),
-            expectedType: "object",
-          },
-        ],
-      },
     },
   },
   {
@@ -149,18 +93,6 @@ const testCasesForPathExpressionsToConstraints = [
     },
     testOutcome: {
       testBehaviourDescription: "infer an array constraint on the current each context",
-      data: {
-        result: [
-          {
-            selector: SelectorSchema.parse(["items"]),
-            expectedType: "array",
-          },
-          {
-            selector: SelectorSchema.parse(["items"]),
-            expectedType: "array",
-          },
-        ],
-      },
     },
   },
   {
@@ -174,18 +106,6 @@ const testCasesForPathExpressionsToConstraints = [
     },
     testOutcome: {
       testBehaviourDescription: "infer an object constraint on the current with context",
-      data: {
-        result: [
-          {
-            selector: SelectorSchema.parse(["person"]),
-            expectedType: "object",
-          },
-          {
-            selector: SelectorSchema.parse(["person"]),
-            expectedType: "object",
-          },
-        ],
-      },
     },
   },
   {
@@ -200,22 +120,6 @@ const testCasesForPathExpressionsToConstraints = [
     testOutcome: {
       testBehaviourDescription:
         "infer primitive for the full path and object constraints for all intermediate prefixes",
-      data: {
-        result: [
-          {
-            selector: SelectorSchema.parse(["a", "b", "c"]),
-            expectedType: "primitive",
-          },
-          {
-            selector: SelectorSchema.parse(["a"]),
-            expectedType: "object",
-          },
-          {
-            selector: SelectorSchema.parse(["a", "b"]),
-            expectedType: "object",
-          },
-        ],
-      },
     },
   },
   {
@@ -230,18 +134,6 @@ const testCasesForPathExpressionsToConstraints = [
     testOutcome: {
       testBehaviourDescription:
         "resolve the path to the parent context and infer a primitive constraint",
-      data: {
-        result: [
-          {
-            selector: SelectorSchema.parse(["items"]),
-            expectedType: "array",
-          },
-          {
-            selector: SelectorSchema.parse(["name"]),
-            expectedType: "primitive",
-          },
-        ],
-      },
     },
   },
   {
@@ -256,22 +148,6 @@ const testCasesForPathExpressionsToConstraints = [
     testOutcome: {
       testBehaviourDescription:
         "resolve the path relative to the with context and infer a primitive constraint",
-      data: {
-        result: [
-          {
-            selector: SelectorSchema.parse(["person"]),
-            expectedType: "object",
-          },
-          {
-            selector: SelectorSchema.parse(["person", "firstName"]),
-            expectedType: "primitive",
-          },
-          {
-            selector: SelectorSchema.parse(["person"]),
-            expectedType: "object",
-          },
-        ],
-      },
     },
   },
   {
@@ -293,38 +169,6 @@ const testCasesForPathExpressionsToConstraints = [
     testOutcome: {
       testBehaviourDescription:
         "resolve nested contexts and emit primitive + intermediate object constraints",
-      data: {
-        result: [
-          {
-            selector: SelectorSchema.parse(["items"]),
-            expectedType: "array",
-          },
-          {
-            selector: SelectorSchema.parse(["items", "title"]),
-            expectedType: "primitive",
-          },
-          {
-            selector: SelectorSchema.parse(["items"]),
-            expectedType: "object",
-          },
-          {
-            selector: SelectorSchema.parse(["items", "details"]),
-            expectedType: "object",
-          },
-          {
-            selector: SelectorSchema.parse(["items", "details", "color"]),
-            expectedType: "primitive",
-          },
-          {
-            selector: SelectorSchema.parse(["items", "details"]),
-            expectedType: "object",
-          },
-          {
-            selector: SelectorSchema.parse(["items"]),
-            expectedType: "object",
-          },
-        ],
-      },
     },
   },
 ] satisfies {
@@ -334,28 +178,13 @@ const testCasesForPathExpressionsToConstraints = [
   };
   testOutcome: {
     testBehaviourDescription: string;
-    data: {
-      result: ReturnType<typeof pathExpressionsToConstraints>;
-    };
   };
 }[];
 describe("pathExpressionsToConstraints", () => {
   for (const { testInput, testOutcome } of testCasesForPathExpressionsToConstraints) {
     it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
       const result = pathExpressionsToConstraints(testInput.data);
-      // expect(result).toEqual(testOutcome.data.result);
-      assert.ok(
-        testOutcome.data.result.every((expectedItem) =>
-          result.some(
-            (actualItem) =>
-              actualItem.expectedType === expectedItem.expectedType &&
-              actualItem.selector.every(
-                (selectorValue: Selector[number], index: number) =>
-                  selectorValue === expectedItem.selector[index],
-              ),
-          ),
-        ),
-      );
+      expect(result).toMatchSnapshot();
     });
   }
 });

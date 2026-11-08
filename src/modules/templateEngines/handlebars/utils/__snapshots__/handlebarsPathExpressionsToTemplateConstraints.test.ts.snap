@@ -1,0 +1,296 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`pathExpressionsToConstraints for empty located path expressions array parsing should return an empty constraints array 1`] = `[]`;
+
+exports[`pathExpressionsToConstraints for simple top-level mustache path expression parsing should infer a primitive constraint for the path 1`] = `
+[
+  {
+    "expectedType": "primitive",
+    "selector": [
+      "name",
+    ],
+  },
+]
+`;
+
+exports[`pathExpressionsToConstraints for path that is the subject of a #with block parsing should infer an object constraint for the with subject 1`] = `
+[
+  {
+    "expectedType": "object",
+    "selector": [
+      "person",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "person",
+    ],
+  },
+]
+`;
+
+exports[`pathExpressionsToConstraints for path that is the subject of a #each block parsing should infer an array constraint for the each subject 1`] = `
+[
+  {
+    "expectedType": "array",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "array",
+    "selector": [
+      "items",
+    ],
+  },
+]
+`;
+
+exports[`pathExpressionsToConstraints for @index data variable inside an each block parsing should infer an array constraint on the nearest each subject 1`] = `
+[
+  {
+    "expectedType": "array",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "array",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "array",
+    "selector": [
+      "items",
+    ],
+  },
+]
+`;
+
+exports[`pathExpressionsToConstraints for @key data variable inside an each block parsing should infer an object constraint on the nearest each subject 1`] = `
+[
+  {
+    "expectedType": "array",
+    "selector": [
+      "people",
+    ],
+  },
+  {
+    "expectedType": "array",
+    "selector": [
+      "people",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "people",
+    ],
+  },
+]
+`;
+
+exports[`pathExpressionsToConstraints for pure this reference inside an each block parsing should infer an array constraint on the current each context 1`] = `
+[
+  {
+    "expectedType": "array",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "array",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "primitive",
+    "selector": [
+      "items",
+    ],
+  },
+]
+`;
+
+exports[`pathExpressionsToConstraints for pure this reference inside a with block parsing should infer an object constraint on the current with context 1`] = `
+[
+  {
+    "expectedType": "object",
+    "selector": [
+      "person",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "person",
+    ],
+  },
+  {
+    "expectedType": "primitive",
+    "selector": [
+      "person",
+    ],
+  },
+]
+`;
+
+exports[`pathExpressionsToConstraints for deep path expression with intermediate segments parsing should infer primitive for the full path and object constraints for all intermediate prefixes 1`] = `
+[
+  {
+    "expectedType": "primitive",
+    "selector": [
+      "a",
+      "b",
+      "c",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "a",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "a",
+      "b",
+    ],
+  },
+]
+`;
+
+exports[`pathExpressionsToConstraints for relative path with depth 1 resolving against block chain parsing should resolve the path to the parent context and infer a primitive constraint 1`] = `
+[
+  {
+    "expectedType": "array",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "array",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "primitive",
+    "selector": [
+      "name",
+    ],
+  },
+]
+`;
+
+exports[`pathExpressionsToConstraints for mustache path nested inside a with block parsing should resolve the path relative to the with context and infer a primitive constraint 1`] = `
+[
+  {
+    "expectedType": "object",
+    "selector": [
+      "person",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "person",
+    ],
+  },
+  {
+    "expectedType": "primitive",
+    "selector": [
+      "person",
+      "firstName",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "person",
+    ],
+  },
+]
+`;
+
+exports[`pathExpressionsToConstraints for nested each + with blocks with relative mustache paths parsing should resolve nested contexts and emit primitive + intermediate object constraints 1`] = `
+[
+  {
+    "expectedType": "array",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "array",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "primitive",
+    "selector": [
+      "items",
+      "title",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "items",
+      "details",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "items",
+      "details",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "primitive",
+    "selector": [
+      "items",
+      "details",
+      "color",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "items",
+    ],
+  },
+  {
+    "expectedType": "object",
+    "selector": [
+      "items",
+      "details",
+    ],
+  },
+]
+`;
