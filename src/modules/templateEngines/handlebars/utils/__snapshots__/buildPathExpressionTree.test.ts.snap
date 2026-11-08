@@ -1,0 +1,193 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`buildHandlebarsPathExpressionTree for simple content + single mustache parsing should return a hierarchy containing only the mustache node 1`] = `
+[
+  {
+    "kind": "mustache",
+    "originalType": "MustacheStatement",
+    "params": [],
+    "path": {
+      "data": false,
+      "depth": 0,
+      "original": "name",
+      "parts": [
+        "name",
+      ],
+      "type": "PathExpression",
+    },
+  },
+]
+`;
+
+exports[`buildHandlebarsPathExpressionTree for allowed #with block with nested mustache parsing should return hierarchy with block node containing the nested mustache 1`] = `
+[
+  {
+    "helper": "with",
+    "inverse": [],
+    "kind": "block",
+    "originalType": "BlockStatement",
+    "params": [
+      {
+        "data": false,
+        "depth": 0,
+        "original": "person",
+        "parts": [
+          "person",
+        ],
+        "type": "PathExpression",
+      },
+    ],
+    "path": {
+      "data": false,
+      "depth": 0,
+      "original": "person",
+      "parts": [
+        "person",
+      ],
+      "type": "PathExpression",
+    },
+    "program": [
+      {
+        "kind": "mustache",
+        "originalType": "MustacheStatement",
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "original": "firstName",
+          "parts": [
+            "firstName",
+          ],
+          "type": "PathExpression",
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`buildHandlebarsPathExpressionTree for allowed #each block with program and inverse parsing should return hierarchy with block containing both program and inverse mustaches 1`] = `
+[
+  {
+    "helper": "each",
+    "inverse": [
+      {
+        "kind": "mustache",
+        "originalType": "MustacheStatement",
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "original": "name",
+          "parts": [
+            "name",
+          ],
+          "type": "PathExpression",
+        },
+      },
+    ],
+    "kind": "block",
+    "originalType": "BlockStatement",
+    "params": [
+      {
+        "data": false,
+        "depth": 0,
+        "original": "items",
+        "parts": [
+          "items",
+        ],
+        "type": "PathExpression",
+      },
+    ],
+    "path": {
+      "data": false,
+      "depth": 0,
+      "original": "items",
+      "parts": [
+        "items",
+      ],
+      "type": "PathExpression",
+    },
+    "program": [
+      {
+        "kind": "mustache",
+        "originalType": "MustacheStatement",
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "original": "title",
+          "parts": [
+            "title",
+          ],
+          "type": "PathExpression",
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`buildHandlebarsPathExpressionTree for only content and comment statements parsing should return empty hierarchy (content/comments are ignored) 1`] = `[]`;
+
+exports[`buildHandlebarsPathExpressionTree for allowed #if block with inverse parsing should return hierarchy with if-block containing both program and inverse 1`] = `
+[
+  {
+    "helper": "if",
+    "inverse": [
+      {
+        "kind": "mustache",
+        "originalType": "MustacheStatement",
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "original": "no",
+          "parts": [
+            "no",
+          ],
+          "type": "PathExpression",
+        },
+      },
+    ],
+    "kind": "block",
+    "originalType": "BlockStatement",
+    "params": [
+      {
+        "data": false,
+        "depth": 0,
+        "original": "condition",
+        "parts": [
+          "condition",
+        ],
+        "type": "PathExpression",
+      },
+    ],
+    "path": {
+      "data": false,
+      "depth": 0,
+      "original": "condition",
+      "parts": [
+        "condition",
+      ],
+      "type": "PathExpression",
+    },
+    "program": [
+      {
+        "kind": "mustache",
+        "originalType": "MustacheStatement",
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "original": "yes",
+          "parts": [
+            "yes",
+          ],
+          "type": "PathExpression",
+        },
+      },
+    ],
+  },
+]
+`;

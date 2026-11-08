@@ -54,20 +54,6 @@ const testCasesForBuildHandlebarsPathExpressionTree = [
       testBehaviourDescription: "return a hierarchy containing only the mustache node",
       data: {
         result: true as const,
-        nodes: [
-          {
-            kind: "mustache",
-            path: {
-              type: "PathExpression",
-              data: false,
-              depth: 0,
-              parts: ["name"],
-              original: "name",
-            },
-            params: [],
-            originalType: "MustacheStatement",
-          },
-        ],
       },
     },
   },
@@ -80,44 +66,6 @@ const testCasesForBuildHandlebarsPathExpressionTree = [
       testBehaviourDescription: "return hierarchy with block node containing the nested mustache",
       data: {
         result: true as const,
-        nodes: [
-          {
-            kind: "block",
-            helper: "with",
-            path: {
-              type: "PathExpression",
-              data: false,
-              depth: 0,
-              parts: ["person"],
-              original: "person",
-            },
-            params: [
-              {
-                type: "PathExpression",
-                data: false,
-                depth: 0,
-                parts: ["person"],
-                original: "person",
-              },
-            ],
-            program: [
-              {
-                kind: "mustache",
-                path: {
-                  type: "PathExpression",
-                  data: false,
-                  depth: 0,
-                  parts: ["firstName"],
-                  original: "firstName",
-                },
-                params: [],
-                originalType: "MustacheStatement",
-              },
-            ],
-            inverse: [],
-            originalType: "BlockStatement",
-          },
-        ],
       },
     },
   },
@@ -131,57 +79,6 @@ const testCasesForBuildHandlebarsPathExpressionTree = [
         "return hierarchy with block containing both program and inverse mustaches",
       data: {
         result: true as const,
-        nodes: [
-          {
-            kind: "block",
-            helper: "each",
-            path: {
-              type: "PathExpression",
-              data: false,
-              depth: 0,
-              parts: ["items"],
-              original: "items",
-            },
-            params: [
-              {
-                type: "PathExpression",
-                data: false,
-                depth: 0,
-                parts: ["items"],
-                original: "items",
-              },
-            ],
-            program: [
-              {
-                kind: "mustache",
-                path: {
-                  type: "PathExpression",
-                  data: false,
-                  depth: 0,
-                  parts: ["title"],
-                  original: "title",
-                },
-                params: [],
-                originalType: "MustacheStatement",
-              },
-            ],
-            inverse: [
-              {
-                kind: "mustache",
-                path: {
-                  type: "PathExpression",
-                  data: false,
-                  depth: 0,
-                  parts: ["name"],
-                  original: "name",
-                },
-                params: [],
-                originalType: "MustacheStatement",
-              },
-            ],
-            originalType: "BlockStatement",
-          },
-        ],
       },
     },
   },
@@ -222,7 +119,6 @@ const testCasesForBuildHandlebarsPathExpressionTree = [
       testBehaviourDescription: "return empty hierarchy (content/comments are ignored)",
       data: {
         result: true as const,
-        nodes: [],
       },
     },
   },
@@ -236,57 +132,6 @@ const testCasesForBuildHandlebarsPathExpressionTree = [
         "return hierarchy with if-block containing both program and inverse",
       data: {
         result: true as const,
-        nodes: [
-          {
-            kind: "block",
-            helper: "if",
-            path: {
-              type: "PathExpression",
-              data: false,
-              depth: 0,
-              parts: ["condition"],
-              original: "condition",
-            },
-            params: [
-              {
-                type: "PathExpression",
-                data: false,
-                depth: 0,
-                parts: ["condition"],
-                original: "condition",
-              },
-            ],
-            program: [
-              {
-                kind: "mustache",
-                path: {
-                  type: "PathExpression",
-                  data: false,
-                  depth: 0,
-                  parts: ["yes"],
-                  original: "yes",
-                },
-                params: [],
-                originalType: "MustacheStatement",
-              },
-            ],
-            inverse: [
-              {
-                kind: "mustache",
-                path: {
-                  type: "PathExpression",
-                  data: false,
-                  depth: 0,
-                  parts: ["no"],
-                  original: "no",
-                },
-                params: [],
-                originalType: "MustacheStatement",
-              },
-            ],
-            originalType: "BlockStatement",
-          },
-        ],
       },
     },
   },
@@ -300,7 +145,6 @@ const testCasesForBuildHandlebarsPathExpressionTree = [
     data:
       | {
           result: true;
-          nodes: unknown[];
         }
       | {
           result: false;
@@ -318,7 +162,7 @@ describe("buildHandlebarsPathExpressionTree", () => {
       if (testOutcome.data.result === true) {
         assert.ok(pathExpressionTree.isOk(), "expected Ok result");
         const simplified = pathExpressionTree.value.map(simplifyNode);
-        expect(simplified).toEqual(testOutcome.data.nodes);
+        expect(simplified).toMatchSnapshot();
       } else {
         assert.ok(pathExpressionTree.isErr(), "expected Err result");
         assert.equal(pathExpressionTree.error.code, testOutcome.data.errorCode);

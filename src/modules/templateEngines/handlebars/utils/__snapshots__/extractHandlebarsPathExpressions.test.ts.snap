@@ -1,0 +1,2611 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`extractHandlebarsPathExpressions for a single top-level mustache referencing a simple path parsing should return one LocatedPathExpression for the mustache path with empty blockStatementStack 1`] = `
+[
+  {
+    "blockStatementStack": [],
+    "mustache": {
+      "kind": "mustache",
+      "original": {
+        "escaped": true,
+        "hash": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 14,
+            "line": 1,
+          },
+          "source": undefined,
+          "start": {
+            "column": 6,
+            "line": 1,
+          },
+        },
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 12,
+              "line": 1,
+            },
+            "source": undefined,
+            "start": {
+              "column": 8,
+              "line": 1,
+            },
+          },
+          "original": "name",
+          "parts": [
+            "name",
+          ],
+          "type": "PathExpression",
+        },
+        "strip": {
+          "close": false,
+          "open": false,
+        },
+        "type": "MustacheStatement",
+      },
+      "params": [],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 12,
+            "line": 1,
+          },
+          "source": undefined,
+          "start": {
+            "column": 8,
+            "line": 1,
+          },
+        },
+        "original": "name",
+        "parts": [
+          "name",
+        ],
+        "type": "PathExpression",
+      },
+    },
+    "origin": {
+      "kind": "mustache",
+      "original": {
+        "escaped": true,
+        "hash": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 14,
+            "line": 1,
+          },
+          "source": undefined,
+          "start": {
+            "column": 6,
+            "line": 1,
+          },
+        },
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 12,
+              "line": 1,
+            },
+            "source": undefined,
+            "start": {
+              "column": 8,
+              "line": 1,
+            },
+          },
+          "original": "name",
+          "parts": [
+            "name",
+          ],
+          "type": "PathExpression",
+        },
+        "strip": {
+          "close": false,
+          "open": false,
+        },
+        "type": "MustacheStatement",
+      },
+      "params": [],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 12,
+            "line": 1,
+          },
+          "source": undefined,
+          "start": {
+            "column": 8,
+            "line": 1,
+          },
+        },
+        "original": "name",
+        "parts": [
+          "name",
+        ],
+        "type": "PathExpression",
+      },
+    },
+    "pathExpr": {
+      "data": false,
+      "depth": 0,
+      "loc": SourceLocation {
+        "end": {
+          "column": 12,
+          "line": 1,
+        },
+        "source": undefined,
+        "start": {
+          "column": 8,
+          "line": 1,
+        },
+      },
+      "original": "name",
+      "parts": [
+        "name",
+      ],
+      "type": "PathExpression",
+    },
+  },
+]
+`;
+
+exports[`extractHandlebarsPathExpressions for a #with block containing a nested mustache parsing should return LocatedPathExpressions for the block subject and the nested mustache, with the mustache carrying the with block in its blockStatementStack 1`] = `
+[
+  {
+    "blockStatementStack": [],
+    "origin": {
+      "helper": "with",
+      "inverse": [],
+      "kind": "block",
+      "original": {
+        "closeStrip": {
+          "close": false,
+          "open": false,
+        },
+        "hash": undefined,
+        "inverse": undefined,
+        "inverseStrip": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 9,
+            "line": 3,
+          },
+          "source": undefined,
+          "start": {
+            "column": 0,
+            "line": 1,
+          },
+        },
+        "openStrip": {
+          "close": false,
+          "open": false,
+        },
+        "params": [
+          {
+            "data": false,
+            "depth": 0,
+            "loc": SourceLocation {
+              "end": {
+                "column": 14,
+                "line": 1,
+              },
+              "source": undefined,
+              "start": {
+                "column": 8,
+                "line": 1,
+              },
+            },
+            "original": "person",
+            "parts": [
+              "person",
+            ],
+            "type": "PathExpression",
+          },
+        ],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 7,
+              "line": 1,
+            },
+            "source": undefined,
+            "start": {
+              "column": 3,
+              "line": 1,
+            },
+          },
+          "original": "with",
+          "parts": [
+            "with",
+          ],
+          "type": "PathExpression",
+        },
+        "program": {
+          "blockParams": undefined,
+          "body": [
+            {
+              "loc": SourceLocation {
+                "end": {
+                  "column": 2,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 16,
+                  "line": 1,
+                },
+              },
+              "original": 
+"
+  "
+,
+              "rightStripped": true,
+              "type": "ContentStatement",
+              "value": "  ",
+            },
+            {
+              "escaped": true,
+              "hash": undefined,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 15,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 2,
+                  "line": 2,
+                },
+              },
+              "params": [],
+              "path": {
+                "data": false,
+                "depth": 0,
+                "loc": SourceLocation {
+                  "end": {
+                    "column": 13,
+                    "line": 2,
+                  },
+                  "source": undefined,
+                  "start": {
+                    "column": 4,
+                    "line": 2,
+                  },
+                },
+                "original": "firstName",
+                "parts": [
+                  "firstName",
+                ],
+                "type": "PathExpression",
+              },
+              "strip": {
+                "close": false,
+                "open": false,
+              },
+              "type": "MustacheStatement",
+            },
+            {
+              "leftStripped": false,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 0,
+                  "line": 3,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 15,
+                  "line": 2,
+                },
+              },
+              "original": 
+"
+"
+,
+              "type": "ContentStatement",
+              "value": 
+"
+"
+,
+            },
+          ],
+          "loc": {
+            "end": {
+              "column": 0,
+              "line": 3,
+            },
+            "source": undefined,
+            "start": {
+              "column": 16,
+              "line": 1,
+            },
+          },
+          "strip": {},
+          "type": "Program",
+        },
+        "type": "BlockStatement",
+      },
+      "params": [
+        {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 14,
+              "line": 1,
+            },
+            "source": undefined,
+            "start": {
+              "column": 8,
+              "line": 1,
+            },
+          },
+          "original": "person",
+          "parts": [
+            "person",
+          ],
+          "type": "PathExpression",
+        },
+      ],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 14,
+            "line": 1,
+          },
+          "source": undefined,
+          "start": {
+            "column": 8,
+            "line": 1,
+          },
+        },
+        "original": "person",
+        "parts": [
+          "person",
+        ],
+        "type": "PathExpression",
+      },
+      "program": [
+        {
+          "kind": "mustache",
+          "original": {
+            "escaped": true,
+            "hash": undefined,
+            "loc": SourceLocation {
+              "end": {
+                "column": 15,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 2,
+                "line": 2,
+              },
+            },
+            "params": [],
+            "path": {
+              "data": false,
+              "depth": 0,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 13,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 4,
+                  "line": 2,
+                },
+              },
+              "original": "firstName",
+              "parts": [
+                "firstName",
+              ],
+              "type": "PathExpression",
+            },
+            "strip": {
+              "close": false,
+              "open": false,
+            },
+            "type": "MustacheStatement",
+          },
+          "params": [],
+          "path": {
+            "data": false,
+            "depth": 0,
+            "loc": SourceLocation {
+              "end": {
+                "column": 13,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 4,
+                "line": 2,
+              },
+            },
+            "original": "firstName",
+            "parts": [
+              "firstName",
+            ],
+            "type": "PathExpression",
+          },
+        },
+      ],
+    },
+    "pathExpr": {
+      "data": false,
+      "depth": 0,
+      "loc": SourceLocation {
+        "end": {
+          "column": 14,
+          "line": 1,
+        },
+        "source": undefined,
+        "start": {
+          "column": 8,
+          "line": 1,
+        },
+      },
+      "original": "person",
+      "parts": [
+        "person",
+      ],
+      "type": "PathExpression",
+    },
+  },
+  {
+    "blockStatementStack": [],
+    "origin": {
+      "helper": "with",
+      "inverse": [],
+      "kind": "block",
+      "original": {
+        "closeStrip": {
+          "close": false,
+          "open": false,
+        },
+        "hash": undefined,
+        "inverse": undefined,
+        "inverseStrip": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 9,
+            "line": 3,
+          },
+          "source": undefined,
+          "start": {
+            "column": 0,
+            "line": 1,
+          },
+        },
+        "openStrip": {
+          "close": false,
+          "open": false,
+        },
+        "params": [
+          {
+            "data": false,
+            "depth": 0,
+            "loc": SourceLocation {
+              "end": {
+                "column": 14,
+                "line": 1,
+              },
+              "source": undefined,
+              "start": {
+                "column": 8,
+                "line": 1,
+              },
+            },
+            "original": "person",
+            "parts": [
+              "person",
+            ],
+            "type": "PathExpression",
+          },
+        ],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 7,
+              "line": 1,
+            },
+            "source": undefined,
+            "start": {
+              "column": 3,
+              "line": 1,
+            },
+          },
+          "original": "with",
+          "parts": [
+            "with",
+          ],
+          "type": "PathExpression",
+        },
+        "program": {
+          "blockParams": undefined,
+          "body": [
+            {
+              "loc": SourceLocation {
+                "end": {
+                  "column": 2,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 16,
+                  "line": 1,
+                },
+              },
+              "original": 
+"
+  "
+,
+              "rightStripped": true,
+              "type": "ContentStatement",
+              "value": "  ",
+            },
+            {
+              "escaped": true,
+              "hash": undefined,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 15,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 2,
+                  "line": 2,
+                },
+              },
+              "params": [],
+              "path": {
+                "data": false,
+                "depth": 0,
+                "loc": SourceLocation {
+                  "end": {
+                    "column": 13,
+                    "line": 2,
+                  },
+                  "source": undefined,
+                  "start": {
+                    "column": 4,
+                    "line": 2,
+                  },
+                },
+                "original": "firstName",
+                "parts": [
+                  "firstName",
+                ],
+                "type": "PathExpression",
+              },
+              "strip": {
+                "close": false,
+                "open": false,
+              },
+              "type": "MustacheStatement",
+            },
+            {
+              "leftStripped": false,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 0,
+                  "line": 3,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 15,
+                  "line": 2,
+                },
+              },
+              "original": 
+"
+"
+,
+              "type": "ContentStatement",
+              "value": 
+"
+"
+,
+            },
+          ],
+          "loc": {
+            "end": {
+              "column": 0,
+              "line": 3,
+            },
+            "source": undefined,
+            "start": {
+              "column": 16,
+              "line": 1,
+            },
+          },
+          "strip": {},
+          "type": "Program",
+        },
+        "type": "BlockStatement",
+      },
+      "params": [
+        {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 14,
+              "line": 1,
+            },
+            "source": undefined,
+            "start": {
+              "column": 8,
+              "line": 1,
+            },
+          },
+          "original": "person",
+          "parts": [
+            "person",
+          ],
+          "type": "PathExpression",
+        },
+      ],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 14,
+            "line": 1,
+          },
+          "source": undefined,
+          "start": {
+            "column": 8,
+            "line": 1,
+          },
+        },
+        "original": "person",
+        "parts": [
+          "person",
+        ],
+        "type": "PathExpression",
+      },
+      "program": [
+        {
+          "kind": "mustache",
+          "original": {
+            "escaped": true,
+            "hash": undefined,
+            "loc": SourceLocation {
+              "end": {
+                "column": 15,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 2,
+                "line": 2,
+              },
+            },
+            "params": [],
+            "path": {
+              "data": false,
+              "depth": 0,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 13,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 4,
+                  "line": 2,
+                },
+              },
+              "original": "firstName",
+              "parts": [
+                "firstName",
+              ],
+              "type": "PathExpression",
+            },
+            "strip": {
+              "close": false,
+              "open": false,
+            },
+            "type": "MustacheStatement",
+          },
+          "params": [],
+          "path": {
+            "data": false,
+            "depth": 0,
+            "loc": SourceLocation {
+              "end": {
+                "column": 13,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 4,
+                "line": 2,
+              },
+            },
+            "original": "firstName",
+            "parts": [
+              "firstName",
+            ],
+            "type": "PathExpression",
+          },
+        },
+      ],
+    },
+    "pathExpr": {
+      "data": false,
+      "depth": 0,
+      "loc": SourceLocation {
+        "end": {
+          "column": 14,
+          "line": 1,
+        },
+        "source": undefined,
+        "start": {
+          "column": 8,
+          "line": 1,
+        },
+      },
+      "original": "person",
+      "parts": [
+        "person",
+      ],
+      "type": "PathExpression",
+    },
+  },
+  {
+    "blockStatementStack": [
+      {
+        "helper": "with",
+        "isEach": false,
+        "resolvedSelector": [
+          "person",
+        ],
+      },
+    ],
+    "mustache": {
+      "kind": "mustache",
+      "original": {
+        "escaped": true,
+        "hash": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 15,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 2,
+            "line": 2,
+          },
+        },
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 13,
+              "line": 2,
+            },
+            "source": undefined,
+            "start": {
+              "column": 4,
+              "line": 2,
+            },
+          },
+          "original": "firstName",
+          "parts": [
+            "firstName",
+          ],
+          "type": "PathExpression",
+        },
+        "strip": {
+          "close": false,
+          "open": false,
+        },
+        "type": "MustacheStatement",
+      },
+      "params": [],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 13,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 4,
+            "line": 2,
+          },
+        },
+        "original": "firstName",
+        "parts": [
+          "firstName",
+        ],
+        "type": "PathExpression",
+      },
+    },
+    "origin": {
+      "kind": "mustache",
+      "original": {
+        "escaped": true,
+        "hash": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 15,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 2,
+            "line": 2,
+          },
+        },
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 13,
+              "line": 2,
+            },
+            "source": undefined,
+            "start": {
+              "column": 4,
+              "line": 2,
+            },
+          },
+          "original": "firstName",
+          "parts": [
+            "firstName",
+          ],
+          "type": "PathExpression",
+        },
+        "strip": {
+          "close": false,
+          "open": false,
+        },
+        "type": "MustacheStatement",
+      },
+      "params": [],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 13,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 4,
+            "line": 2,
+          },
+        },
+        "original": "firstName",
+        "parts": [
+          "firstName",
+        ],
+        "type": "PathExpression",
+      },
+    },
+    "pathExpr": {
+      "data": false,
+      "depth": 0,
+      "loc": SourceLocation {
+        "end": {
+          "column": 13,
+          "line": 2,
+        },
+        "source": undefined,
+        "start": {
+          "column": 4,
+          "line": 2,
+        },
+      },
+      "original": "firstName",
+      "parts": [
+        "firstName",
+      ],
+      "type": "PathExpression",
+    },
+  },
+]
+`;
+
+exports[`extractHandlebarsPathExpressions for a #each block with program mustaches (including ../) and an inverse mustache parsing should return LocatedPathExpressions for the each subject, program paths (with each in blockStatementStack) and inverse path (without the each blockStatementStack) 1`] = `
+[
+  {
+    "blockStatementStack": [],
+    "origin": {
+      "helper": "each",
+      "inverse": [
+        {
+          "kind": "mustache",
+          "original": {
+            "escaped": true,
+            "hash": undefined,
+            "loc": SourceLocation {
+              "end": {
+                "column": 23,
+                "line": 4,
+              },
+              "source": undefined,
+              "start": {
+                "column": 15,
+                "line": 4,
+              },
+            },
+            "params": [],
+            "path": {
+              "data": false,
+              "depth": 0,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 21,
+                  "line": 4,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 17,
+                  "line": 4,
+                },
+              },
+              "original": "name",
+              "parts": [
+                "name",
+              ],
+              "type": "PathExpression",
+            },
+            "strip": {
+              "close": false,
+              "open": false,
+            },
+            "type": "MustacheStatement",
+          },
+          "params": [],
+          "path": {
+            "data": false,
+            "depth": 0,
+            "loc": SourceLocation {
+              "end": {
+                "column": 21,
+                "line": 4,
+              },
+              "source": undefined,
+              "start": {
+                "column": 17,
+                "line": 4,
+              },
+            },
+            "original": "name",
+            "parts": [
+              "name",
+            ],
+            "type": "PathExpression",
+          },
+        },
+      ],
+      "kind": "block",
+      "original": {
+        "closeStrip": {
+          "close": false,
+          "open": false,
+        },
+        "hash": undefined,
+        "inverse": {
+          "body": [
+            {
+              "loc": SourceLocation {
+                "end": {
+                  "column": 15,
+                  "line": 4,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 8,
+                  "line": 3,
+                },
+              },
+              "original": 
+"
+  No items for "
+,
+              "rightStripped": true,
+              "type": "ContentStatement",
+              "value": "  No items for ",
+            },
+            {
+              "escaped": true,
+              "hash": undefined,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 23,
+                  "line": 4,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 15,
+                  "line": 4,
+                },
+              },
+              "params": [],
+              "path": {
+                "data": false,
+                "depth": 0,
+                "loc": SourceLocation {
+                  "end": {
+                    "column": 21,
+                    "line": 4,
+                  },
+                  "source": undefined,
+                  "start": {
+                    "column": 17,
+                    "line": 4,
+                  },
+                },
+                "original": "name",
+                "parts": [
+                  "name",
+                ],
+                "type": "PathExpression",
+              },
+              "strip": {
+                "close": false,
+                "open": false,
+              },
+              "type": "MustacheStatement",
+            },
+            {
+              "leftStripped": false,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 0,
+                  "line": 5,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 23,
+                  "line": 4,
+                },
+              },
+              "original": 
+"
+"
+,
+              "type": "ContentStatement",
+              "value": 
+"
+"
+,
+            },
+          ],
+          "loc": {
+            "end": {
+              "column": 0,
+              "line": 5,
+            },
+            "source": undefined,
+            "start": {
+              "column": 8,
+              "line": 3,
+            },
+          },
+          "strip": {},
+          "type": "Program",
+        },
+        "inverseStrip": {
+          "close": false,
+          "open": false,
+        },
+        "loc": SourceLocation {
+          "end": {
+            "column": 9,
+            "line": 5,
+          },
+          "source": undefined,
+          "start": {
+            "column": 0,
+            "line": 1,
+          },
+        },
+        "openStrip": {
+          "close": false,
+          "open": false,
+        },
+        "params": [
+          {
+            "data": false,
+            "depth": 0,
+            "loc": SourceLocation {
+              "end": {
+                "column": 13,
+                "line": 1,
+              },
+              "source": undefined,
+              "start": {
+                "column": 8,
+                "line": 1,
+              },
+            },
+            "original": "items",
+            "parts": [
+              "items",
+            ],
+            "type": "PathExpression",
+          },
+        ],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 7,
+              "line": 1,
+            },
+            "source": undefined,
+            "start": {
+              "column": 3,
+              "line": 1,
+            },
+          },
+          "original": "each",
+          "parts": [
+            "each",
+          ],
+          "type": "PathExpression",
+        },
+        "program": {
+          "blockParams": undefined,
+          "body": [
+            {
+              "loc": SourceLocation {
+                "end": {
+                  "column": 4,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 15,
+                  "line": 1,
+                },
+              },
+              "original": 
+"
+  - "
+,
+              "rightStripped": true,
+              "type": "ContentStatement",
+              "value": "  - ",
+            },
+            {
+              "escaped": true,
+              "hash": undefined,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 18,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 4,
+                  "line": 2,
+                },
+              },
+              "params": [],
+              "path": {
+                "data": false,
+                "depth": 0,
+                "loc": SourceLocation {
+                  "end": {
+                    "column": 16,
+                    "line": 2,
+                  },
+                  "source": undefined,
+                  "start": {
+                    "column": 6,
+                    "line": 2,
+                  },
+                },
+                "original": "this.title",
+                "parts": [
+                  "title",
+                ],
+                "type": "PathExpression",
+              },
+              "strip": {
+                "close": false,
+                "open": false,
+              },
+              "type": "MustacheStatement",
+            },
+            {
+              "loc": SourceLocation {
+                "end": {
+                  "column": 20,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 18,
+                  "line": 2,
+                },
+              },
+              "original": " (",
+              "type": "ContentStatement",
+              "value": " (",
+            },
+            {
+              "escaped": true,
+              "hash": undefined,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 31,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 20,
+                  "line": 2,
+                },
+              },
+              "params": [],
+              "path": {
+                "data": false,
+                "depth": 1,
+                "loc": SourceLocation {
+                  "end": {
+                    "column": 29,
+                    "line": 2,
+                  },
+                  "source": undefined,
+                  "start": {
+                    "column": 22,
+                    "line": 2,
+                  },
+                },
+                "original": "../name",
+                "parts": [
+                  "name",
+                ],
+                "type": "PathExpression",
+              },
+              "strip": {
+                "close": false,
+                "open": false,
+              },
+              "type": "MustacheStatement",
+            },
+            {
+              "leftStripped": false,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 0,
+                  "line": 3,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 31,
+                  "line": 2,
+                },
+              },
+              "original": 
+")
+"
+,
+              "type": "ContentStatement",
+              "value": 
+")
+"
+,
+            },
+          ],
+          "loc": {
+            "end": {
+              "column": 0,
+              "line": 3,
+            },
+            "source": undefined,
+            "start": {
+              "column": 15,
+              "line": 1,
+            },
+          },
+          "strip": {},
+          "type": "Program",
+        },
+        "type": "BlockStatement",
+      },
+      "params": [
+        {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 13,
+              "line": 1,
+            },
+            "source": undefined,
+            "start": {
+              "column": 8,
+              "line": 1,
+            },
+          },
+          "original": "items",
+          "parts": [
+            "items",
+          ],
+          "type": "PathExpression",
+        },
+      ],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 13,
+            "line": 1,
+          },
+          "source": undefined,
+          "start": {
+            "column": 8,
+            "line": 1,
+          },
+        },
+        "original": "items",
+        "parts": [
+          "items",
+        ],
+        "type": "PathExpression",
+      },
+      "program": [
+        {
+          "kind": "mustache",
+          "original": {
+            "escaped": true,
+            "hash": undefined,
+            "loc": SourceLocation {
+              "end": {
+                "column": 18,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 4,
+                "line": 2,
+              },
+            },
+            "params": [],
+            "path": {
+              "data": false,
+              "depth": 0,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 16,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 6,
+                  "line": 2,
+                },
+              },
+              "original": "this.title",
+              "parts": [
+                "title",
+              ],
+              "type": "PathExpression",
+            },
+            "strip": {
+              "close": false,
+              "open": false,
+            },
+            "type": "MustacheStatement",
+          },
+          "params": [],
+          "path": {
+            "data": false,
+            "depth": 0,
+            "loc": SourceLocation {
+              "end": {
+                "column": 16,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 6,
+                "line": 2,
+              },
+            },
+            "original": "this.title",
+            "parts": [
+              "title",
+            ],
+            "type": "PathExpression",
+          },
+        },
+        {
+          "kind": "mustache",
+          "original": {
+            "escaped": true,
+            "hash": undefined,
+            "loc": SourceLocation {
+              "end": {
+                "column": 31,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 20,
+                "line": 2,
+              },
+            },
+            "params": [],
+            "path": {
+              "data": false,
+              "depth": 1,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 29,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 22,
+                  "line": 2,
+                },
+              },
+              "original": "../name",
+              "parts": [
+                "name",
+              ],
+              "type": "PathExpression",
+            },
+            "strip": {
+              "close": false,
+              "open": false,
+            },
+            "type": "MustacheStatement",
+          },
+          "params": [],
+          "path": {
+            "data": false,
+            "depth": 1,
+            "loc": SourceLocation {
+              "end": {
+                "column": 29,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 22,
+                "line": 2,
+              },
+            },
+            "original": "../name",
+            "parts": [
+              "name",
+            ],
+            "type": "PathExpression",
+          },
+        },
+      ],
+    },
+    "pathExpr": {
+      "data": false,
+      "depth": 0,
+      "loc": SourceLocation {
+        "end": {
+          "column": 13,
+          "line": 1,
+        },
+        "source": undefined,
+        "start": {
+          "column": 8,
+          "line": 1,
+        },
+      },
+      "original": "items",
+      "parts": [
+        "items",
+      ],
+      "type": "PathExpression",
+    },
+  },
+  {
+    "blockStatementStack": [],
+    "origin": {
+      "helper": "each",
+      "inverse": [
+        {
+          "kind": "mustache",
+          "original": {
+            "escaped": true,
+            "hash": undefined,
+            "loc": SourceLocation {
+              "end": {
+                "column": 23,
+                "line": 4,
+              },
+              "source": undefined,
+              "start": {
+                "column": 15,
+                "line": 4,
+              },
+            },
+            "params": [],
+            "path": {
+              "data": false,
+              "depth": 0,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 21,
+                  "line": 4,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 17,
+                  "line": 4,
+                },
+              },
+              "original": "name",
+              "parts": [
+                "name",
+              ],
+              "type": "PathExpression",
+            },
+            "strip": {
+              "close": false,
+              "open": false,
+            },
+            "type": "MustacheStatement",
+          },
+          "params": [],
+          "path": {
+            "data": false,
+            "depth": 0,
+            "loc": SourceLocation {
+              "end": {
+                "column": 21,
+                "line": 4,
+              },
+              "source": undefined,
+              "start": {
+                "column": 17,
+                "line": 4,
+              },
+            },
+            "original": "name",
+            "parts": [
+              "name",
+            ],
+            "type": "PathExpression",
+          },
+        },
+      ],
+      "kind": "block",
+      "original": {
+        "closeStrip": {
+          "close": false,
+          "open": false,
+        },
+        "hash": undefined,
+        "inverse": {
+          "body": [
+            {
+              "loc": SourceLocation {
+                "end": {
+                  "column": 15,
+                  "line": 4,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 8,
+                  "line": 3,
+                },
+              },
+              "original": 
+"
+  No items for "
+,
+              "rightStripped": true,
+              "type": "ContentStatement",
+              "value": "  No items for ",
+            },
+            {
+              "escaped": true,
+              "hash": undefined,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 23,
+                  "line": 4,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 15,
+                  "line": 4,
+                },
+              },
+              "params": [],
+              "path": {
+                "data": false,
+                "depth": 0,
+                "loc": SourceLocation {
+                  "end": {
+                    "column": 21,
+                    "line": 4,
+                  },
+                  "source": undefined,
+                  "start": {
+                    "column": 17,
+                    "line": 4,
+                  },
+                },
+                "original": "name",
+                "parts": [
+                  "name",
+                ],
+                "type": "PathExpression",
+              },
+              "strip": {
+                "close": false,
+                "open": false,
+              },
+              "type": "MustacheStatement",
+            },
+            {
+              "leftStripped": false,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 0,
+                  "line": 5,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 23,
+                  "line": 4,
+                },
+              },
+              "original": 
+"
+"
+,
+              "type": "ContentStatement",
+              "value": 
+"
+"
+,
+            },
+          ],
+          "loc": {
+            "end": {
+              "column": 0,
+              "line": 5,
+            },
+            "source": undefined,
+            "start": {
+              "column": 8,
+              "line": 3,
+            },
+          },
+          "strip": {},
+          "type": "Program",
+        },
+        "inverseStrip": {
+          "close": false,
+          "open": false,
+        },
+        "loc": SourceLocation {
+          "end": {
+            "column": 9,
+            "line": 5,
+          },
+          "source": undefined,
+          "start": {
+            "column": 0,
+            "line": 1,
+          },
+        },
+        "openStrip": {
+          "close": false,
+          "open": false,
+        },
+        "params": [
+          {
+            "data": false,
+            "depth": 0,
+            "loc": SourceLocation {
+              "end": {
+                "column": 13,
+                "line": 1,
+              },
+              "source": undefined,
+              "start": {
+                "column": 8,
+                "line": 1,
+              },
+            },
+            "original": "items",
+            "parts": [
+              "items",
+            ],
+            "type": "PathExpression",
+          },
+        ],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 7,
+              "line": 1,
+            },
+            "source": undefined,
+            "start": {
+              "column": 3,
+              "line": 1,
+            },
+          },
+          "original": "each",
+          "parts": [
+            "each",
+          ],
+          "type": "PathExpression",
+        },
+        "program": {
+          "blockParams": undefined,
+          "body": [
+            {
+              "loc": SourceLocation {
+                "end": {
+                  "column": 4,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 15,
+                  "line": 1,
+                },
+              },
+              "original": 
+"
+  - "
+,
+              "rightStripped": true,
+              "type": "ContentStatement",
+              "value": "  - ",
+            },
+            {
+              "escaped": true,
+              "hash": undefined,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 18,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 4,
+                  "line": 2,
+                },
+              },
+              "params": [],
+              "path": {
+                "data": false,
+                "depth": 0,
+                "loc": SourceLocation {
+                  "end": {
+                    "column": 16,
+                    "line": 2,
+                  },
+                  "source": undefined,
+                  "start": {
+                    "column": 6,
+                    "line": 2,
+                  },
+                },
+                "original": "this.title",
+                "parts": [
+                  "title",
+                ],
+                "type": "PathExpression",
+              },
+              "strip": {
+                "close": false,
+                "open": false,
+              },
+              "type": "MustacheStatement",
+            },
+            {
+              "loc": SourceLocation {
+                "end": {
+                  "column": 20,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 18,
+                  "line": 2,
+                },
+              },
+              "original": " (",
+              "type": "ContentStatement",
+              "value": " (",
+            },
+            {
+              "escaped": true,
+              "hash": undefined,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 31,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 20,
+                  "line": 2,
+                },
+              },
+              "params": [],
+              "path": {
+                "data": false,
+                "depth": 1,
+                "loc": SourceLocation {
+                  "end": {
+                    "column": 29,
+                    "line": 2,
+                  },
+                  "source": undefined,
+                  "start": {
+                    "column": 22,
+                    "line": 2,
+                  },
+                },
+                "original": "../name",
+                "parts": [
+                  "name",
+                ],
+                "type": "PathExpression",
+              },
+              "strip": {
+                "close": false,
+                "open": false,
+              },
+              "type": "MustacheStatement",
+            },
+            {
+              "leftStripped": false,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 0,
+                  "line": 3,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 31,
+                  "line": 2,
+                },
+              },
+              "original": 
+")
+"
+,
+              "type": "ContentStatement",
+              "value": 
+")
+"
+,
+            },
+          ],
+          "loc": {
+            "end": {
+              "column": 0,
+              "line": 3,
+            },
+            "source": undefined,
+            "start": {
+              "column": 15,
+              "line": 1,
+            },
+          },
+          "strip": {},
+          "type": "Program",
+        },
+        "type": "BlockStatement",
+      },
+      "params": [
+        {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 13,
+              "line": 1,
+            },
+            "source": undefined,
+            "start": {
+              "column": 8,
+              "line": 1,
+            },
+          },
+          "original": "items",
+          "parts": [
+            "items",
+          ],
+          "type": "PathExpression",
+        },
+      ],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 13,
+            "line": 1,
+          },
+          "source": undefined,
+          "start": {
+            "column": 8,
+            "line": 1,
+          },
+        },
+        "original": "items",
+        "parts": [
+          "items",
+        ],
+        "type": "PathExpression",
+      },
+      "program": [
+        {
+          "kind": "mustache",
+          "original": {
+            "escaped": true,
+            "hash": undefined,
+            "loc": SourceLocation {
+              "end": {
+                "column": 18,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 4,
+                "line": 2,
+              },
+            },
+            "params": [],
+            "path": {
+              "data": false,
+              "depth": 0,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 16,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 6,
+                  "line": 2,
+                },
+              },
+              "original": "this.title",
+              "parts": [
+                "title",
+              ],
+              "type": "PathExpression",
+            },
+            "strip": {
+              "close": false,
+              "open": false,
+            },
+            "type": "MustacheStatement",
+          },
+          "params": [],
+          "path": {
+            "data": false,
+            "depth": 0,
+            "loc": SourceLocation {
+              "end": {
+                "column": 16,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 6,
+                "line": 2,
+              },
+            },
+            "original": "this.title",
+            "parts": [
+              "title",
+            ],
+            "type": "PathExpression",
+          },
+        },
+        {
+          "kind": "mustache",
+          "original": {
+            "escaped": true,
+            "hash": undefined,
+            "loc": SourceLocation {
+              "end": {
+                "column": 31,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 20,
+                "line": 2,
+              },
+            },
+            "params": [],
+            "path": {
+              "data": false,
+              "depth": 1,
+              "loc": SourceLocation {
+                "end": {
+                  "column": 29,
+                  "line": 2,
+                },
+                "source": undefined,
+                "start": {
+                  "column": 22,
+                  "line": 2,
+                },
+              },
+              "original": "../name",
+              "parts": [
+                "name",
+              ],
+              "type": "PathExpression",
+            },
+            "strip": {
+              "close": false,
+              "open": false,
+            },
+            "type": "MustacheStatement",
+          },
+          "params": [],
+          "path": {
+            "data": false,
+            "depth": 1,
+            "loc": SourceLocation {
+              "end": {
+                "column": 29,
+                "line": 2,
+              },
+              "source": undefined,
+              "start": {
+                "column": 22,
+                "line": 2,
+              },
+            },
+            "original": "../name",
+            "parts": [
+              "name",
+            ],
+            "type": "PathExpression",
+          },
+        },
+      ],
+    },
+    "pathExpr": {
+      "data": false,
+      "depth": 0,
+      "loc": SourceLocation {
+        "end": {
+          "column": 13,
+          "line": 1,
+        },
+        "source": undefined,
+        "start": {
+          "column": 8,
+          "line": 1,
+        },
+      },
+      "original": "items",
+      "parts": [
+        "items",
+      ],
+      "type": "PathExpression",
+    },
+  },
+  {
+    "blockStatementStack": [
+      {
+        "helper": "each",
+        "isEach": true,
+        "resolvedSelector": [
+          "items",
+        ],
+      },
+    ],
+    "mustache": {
+      "kind": "mustache",
+      "original": {
+        "escaped": true,
+        "hash": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 18,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 4,
+            "line": 2,
+          },
+        },
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 16,
+              "line": 2,
+            },
+            "source": undefined,
+            "start": {
+              "column": 6,
+              "line": 2,
+            },
+          },
+          "original": "this.title",
+          "parts": [
+            "title",
+          ],
+          "type": "PathExpression",
+        },
+        "strip": {
+          "close": false,
+          "open": false,
+        },
+        "type": "MustacheStatement",
+      },
+      "params": [],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 16,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 6,
+            "line": 2,
+          },
+        },
+        "original": "this.title",
+        "parts": [
+          "title",
+        ],
+        "type": "PathExpression",
+      },
+    },
+    "origin": {
+      "kind": "mustache",
+      "original": {
+        "escaped": true,
+        "hash": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 18,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 4,
+            "line": 2,
+          },
+        },
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 16,
+              "line": 2,
+            },
+            "source": undefined,
+            "start": {
+              "column": 6,
+              "line": 2,
+            },
+          },
+          "original": "this.title",
+          "parts": [
+            "title",
+          ],
+          "type": "PathExpression",
+        },
+        "strip": {
+          "close": false,
+          "open": false,
+        },
+        "type": "MustacheStatement",
+      },
+      "params": [],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 16,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 6,
+            "line": 2,
+          },
+        },
+        "original": "this.title",
+        "parts": [
+          "title",
+        ],
+        "type": "PathExpression",
+      },
+    },
+    "pathExpr": {
+      "data": false,
+      "depth": 0,
+      "loc": SourceLocation {
+        "end": {
+          "column": 16,
+          "line": 2,
+        },
+        "source": undefined,
+        "start": {
+          "column": 6,
+          "line": 2,
+        },
+      },
+      "original": "this.title",
+      "parts": [
+        "title",
+      ],
+      "type": "PathExpression",
+    },
+  },
+  {
+    "blockStatementStack": [
+      {
+        "helper": "each",
+        "isEach": true,
+        "resolvedSelector": [
+          "items",
+        ],
+      },
+    ],
+    "mustache": {
+      "kind": "mustache",
+      "original": {
+        "escaped": true,
+        "hash": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 31,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 20,
+            "line": 2,
+          },
+        },
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 1,
+          "loc": SourceLocation {
+            "end": {
+              "column": 29,
+              "line": 2,
+            },
+            "source": undefined,
+            "start": {
+              "column": 22,
+              "line": 2,
+            },
+          },
+          "original": "../name",
+          "parts": [
+            "name",
+          ],
+          "type": "PathExpression",
+        },
+        "strip": {
+          "close": false,
+          "open": false,
+        },
+        "type": "MustacheStatement",
+      },
+      "params": [],
+      "path": {
+        "data": false,
+        "depth": 1,
+        "loc": SourceLocation {
+          "end": {
+            "column": 29,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 22,
+            "line": 2,
+          },
+        },
+        "original": "../name",
+        "parts": [
+          "name",
+        ],
+        "type": "PathExpression",
+      },
+    },
+    "origin": {
+      "kind": "mustache",
+      "original": {
+        "escaped": true,
+        "hash": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 31,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 20,
+            "line": 2,
+          },
+        },
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 1,
+          "loc": SourceLocation {
+            "end": {
+              "column": 29,
+              "line": 2,
+            },
+            "source": undefined,
+            "start": {
+              "column": 22,
+              "line": 2,
+            },
+          },
+          "original": "../name",
+          "parts": [
+            "name",
+          ],
+          "type": "PathExpression",
+        },
+        "strip": {
+          "close": false,
+          "open": false,
+        },
+        "type": "MustacheStatement",
+      },
+      "params": [],
+      "path": {
+        "data": false,
+        "depth": 1,
+        "loc": SourceLocation {
+          "end": {
+            "column": 29,
+            "line": 2,
+          },
+          "source": undefined,
+          "start": {
+            "column": 22,
+            "line": 2,
+          },
+        },
+        "original": "../name",
+        "parts": [
+          "name",
+        ],
+        "type": "PathExpression",
+      },
+    },
+    "pathExpr": {
+      "data": false,
+      "depth": 1,
+      "loc": SourceLocation {
+        "end": {
+          "column": 29,
+          "line": 2,
+        },
+        "source": undefined,
+        "start": {
+          "column": 22,
+          "line": 2,
+        },
+      },
+      "original": "../name",
+      "parts": [
+        "name",
+      ],
+      "type": "PathExpression",
+    },
+  },
+  {
+    "blockStatementStack": [],
+    "mustache": {
+      "kind": "mustache",
+      "original": {
+        "escaped": true,
+        "hash": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 23,
+            "line": 4,
+          },
+          "source": undefined,
+          "start": {
+            "column": 15,
+            "line": 4,
+          },
+        },
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 21,
+              "line": 4,
+            },
+            "source": undefined,
+            "start": {
+              "column": 17,
+              "line": 4,
+            },
+          },
+          "original": "name",
+          "parts": [
+            "name",
+          ],
+          "type": "PathExpression",
+        },
+        "strip": {
+          "close": false,
+          "open": false,
+        },
+        "type": "MustacheStatement",
+      },
+      "params": [],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 21,
+            "line": 4,
+          },
+          "source": undefined,
+          "start": {
+            "column": 17,
+            "line": 4,
+          },
+        },
+        "original": "name",
+        "parts": [
+          "name",
+        ],
+        "type": "PathExpression",
+      },
+    },
+    "origin": {
+      "kind": "mustache",
+      "original": {
+        "escaped": true,
+        "hash": undefined,
+        "loc": SourceLocation {
+          "end": {
+            "column": 23,
+            "line": 4,
+          },
+          "source": undefined,
+          "start": {
+            "column": 15,
+            "line": 4,
+          },
+        },
+        "params": [],
+        "path": {
+          "data": false,
+          "depth": 0,
+          "loc": SourceLocation {
+            "end": {
+              "column": 21,
+              "line": 4,
+            },
+            "source": undefined,
+            "start": {
+              "column": 17,
+              "line": 4,
+            },
+          },
+          "original": "name",
+          "parts": [
+            "name",
+          ],
+          "type": "PathExpression",
+        },
+        "strip": {
+          "close": false,
+          "open": false,
+        },
+        "type": "MustacheStatement",
+      },
+      "params": [],
+      "path": {
+        "data": false,
+        "depth": 0,
+        "loc": SourceLocation {
+          "end": {
+            "column": 21,
+            "line": 4,
+          },
+          "source": undefined,
+          "start": {
+            "column": 17,
+            "line": 4,
+          },
+        },
+        "original": "name",
+        "parts": [
+          "name",
+        ],
+        "type": "PathExpression",
+      },
+    },
+    "pathExpr": {
+      "data": false,
+      "depth": 0,
+      "loc": SourceLocation {
+        "end": {
+          "column": 21,
+          "line": 4,
+        },
+        "source": undefined,
+        "start": {
+          "column": 17,
+          "line": 4,
+        },
+      },
+      "original": "name",
+      "parts": [
+        "name",
+      ],
+      "type": "PathExpression",
+    },
+  },
+]
+`;
