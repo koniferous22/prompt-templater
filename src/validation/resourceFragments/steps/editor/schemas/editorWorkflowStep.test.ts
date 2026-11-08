@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import type z from "zod";
 
@@ -121,7 +120,7 @@ describe("EditorWorkflowStepSchema", () => {
   for (const { testInput, testOutcome } of testCasesForEditorWorkflowStepSchema) {
     it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = EditorWorkflowStepSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      expect(parsingResult.success).toBe(testOutcome.data.result);
     });
   }
 });

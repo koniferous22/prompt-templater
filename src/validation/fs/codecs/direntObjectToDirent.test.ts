@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -102,11 +101,11 @@ describe("DirentObjectToDirentSchema", () => {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const fixture = await testInput.data.initializeDirents();
       const parsingResult = DirentObjectToDirentSchema.safeParse(fixture);
-      assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      expect(parsingResult.success).toBe(testOutcome.data.result);
       if (parsingResult.success) {
-        assert.deepEqual(parsingResult.data.dirent, testOutcome.data.dirent);
+        expect(parsingResult.data.dirent).toEqual(testOutcome.data.dirent);
         // Assert coded revertbility - that codec contains unmodified reference to original object used in input
-        assert.strictEqual(parsingResult.data.direntObject, fixture);
+        expect(parsingResult.data.direntObject).toBe(fixture);
       }
     });
   }

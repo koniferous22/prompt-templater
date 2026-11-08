@@ -343,7 +343,7 @@ describe("pathExpressionsToConstraints", () => {
   for (const { testInput, testOutcome } of testCasesForPathExpressionsToConstraints) {
     it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
       const result = pathExpressionsToConstraints(testInput.data);
-      // assert.deepEqual(result, testOutcome.data.result);
+      // expect(result).toEqual(testOutcome.data.result);
       assert.ok(
         testOutcome.data.result.every((expectedItem) =>
           result.some(

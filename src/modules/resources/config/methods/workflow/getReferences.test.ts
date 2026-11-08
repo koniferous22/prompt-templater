@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 
 import { NonEmptyStringToTemplateResourceReferenceSchema } from "../../../../../validation/resourceReference/template/codecs/nonEmptyStringToResourceReference.js";
 import { NonEmptyStringToTermResourceReferenceSchema } from "../../../../../validation/resourceReference/term/codecs/nonEmptyStringToResourceReference.js";
@@ -183,7 +182,7 @@ describe("workflowResourceGetReferences", () => {
   for (const { testInput, testOutcome } of testCasesForWorkflowResourceGetReferences) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const result = workflowResourceGetReferences(testInput.data.workflow);
-      assert.deepEqual(result, testOutcome.data.result);
+      expect(result).toEqual(testOutcome.data.result);
     });
   }
 });

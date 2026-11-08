@@ -1,5 +1,5 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
+import assert from "node:assert/strict";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { dirname } from "path";
@@ -121,7 +121,7 @@ describe("resolveWorkspaceResourceRelativePath", () => {
       assert.ok(resolvedPathResult.isOk());
       const outputSchemaResult = testOutcome.data.targetSchema;
       const outputResult = outputSchemaResult.safeParse(resolvedPathResult.value);
-      assert.strictEqual(testOutcome.data.result, outputResult.success);
+      expect(testOutcome.data.result as boolean).toBe(outputResult.success);
     });
   }
 });

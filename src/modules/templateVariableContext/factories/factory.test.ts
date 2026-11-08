@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import type { Err, Ok, Result } from "neverthrow";
@@ -184,11 +184,10 @@ const testCasesForCreateTemplateVariableContext = [
             },
             assertOperationResult(result) {
               assert.ok(result.isErr(), "expected error result");
-              assert.strictEqual(
+              expect(
                 result.error.code,
-                "module_templateVariableContext_setValue_keyNotFound",
                 "expected error code denoting invalid setting invalid key",
-              );
+              ).toBe("module_templateVariableContext_setValue_keyNotFound");
             },
           },
         ]),
@@ -213,11 +212,10 @@ const testCasesForCreateTemplateVariableContext = [
             },
             assertOperationResult(result) {
               assert.ok(result.isErr(), "expected error result");
-              assert.strictEqual(
+              expect(
                 result.error.code,
-                "module_templateVariableContext_setValue_invalidValueType",
                 "expected error code denoting invalid setting invalid value type",
-              );
+              ).toBe("module_templateVariableContext_setValue_invalidValueType");
             },
           },
         ]),
@@ -252,22 +250,21 @@ const testCasesForCreateTemplateVariableContext = [
             type: "resolvedValuesStrictAssertion",
             assertResolvedValuesStrict(result) {
               assert.ok(result.isErr(), "expected error result");
-              assert.strictEqual(
+              expect(
                 result.error.code,
-                "module_templateVariableContext_resolveValuesStrict_unintializedState",
                 "expected error code denoting invalid setting invalid value type",
-              );
+              ).toBe("module_templateVariableContext_resolveValuesStrict_unintializedState");
             },
           },
           {
             type: "resolvedValuesAssertion",
             assertResolvedValues(optionalValues) {
-              assert.deepEqual(optionalValues, {
+              expect(optionalValues).toEqual({
                 booleanVariable: true,
                 numericVariable: 5,
                 stringVariable: undefined,
                 nestedStringArrayVariable: undefined,
-              });
+              } as any);
             },
           },
         ]),
@@ -317,23 +314,23 @@ const testCasesForCreateTemplateVariableContext = [
             type: "resolvedValuesStrictAssertion",
             assertResolvedValuesStrict(result) {
               assert.ok(result.isOk(), "expected ok result");
-              assert.deepEqual(result.value, {
+              expect(result.value).toEqual({
                 booleanVariable: true,
                 numericVariable: 5,
                 stringVariable: "stringValue",
                 nestedStringArrayVariable: [["string1", "string2"], ["string3"]],
-              });
+              } as any);
             },
           },
           {
             type: "resolvedValuesAssertion",
             assertResolvedValues(optionalValues) {
-              assert.deepEqual(optionalValues, {
+              expect(optionalValues).toEqual({
                 booleanVariable: true,
                 numericVariable: 5,
                 stringVariable: "stringValue",
                 nestedStringArrayVariable: [["string1", "string2"], ["string3"]],
-              });
+              } as any);
             },
           },
         ]),
@@ -382,23 +379,23 @@ const testCasesForCreateTemplateVariableContext = [
             type: "resolvedValuesStrictAssertion",
             assertResolvedValuesStrict(result) {
               assert.ok(result.isOk(), "expected ok result");
-              assert.deepEqual(result.value, {
+              expect(result.value).toEqual({
                 booleanVariable: true,
                 numericVariable: 5,
                 stringVariable: "stringValue",
                 nestedStringArrayVariable: [["string1", "string2"], ["string3"]],
-              });
+              } as any);
             },
           },
           {
             type: "resolvedValuesAssertion",
             assertResolvedValues(optionalValues) {
-              assert.deepEqual(optionalValues, {
+              expect(optionalValues).toEqual({
                 booleanVariable: true,
                 numericVariable: 5,
                 stringVariable: "stringValue",
                 nestedStringArrayVariable: [["string1", "string2"], ["string3"]],
-              });
+              } as any);
             },
           },
           {
@@ -419,23 +416,23 @@ const testCasesForCreateTemplateVariableContext = [
             type: "resolvedValuesStrictAssertion",
             assertResolvedValuesStrict(result) {
               assert.ok(result.isOk(), "expected ok result");
-              assert.deepEqual(result.value, {
+              expect(result.value).toEqual({
                 booleanVariable: false,
                 numericVariable: 6,
                 stringVariable: "stringValue",
                 nestedStringArrayVariable: [["string1", "string2"], ["string3"]],
-              });
+              } as any);
             },
           },
           {
             type: "resolvedValuesAssertion",
             assertResolvedValues(optionalValues) {
-              assert.deepEqual(optionalValues, {
+              expect(optionalValues).toEqual({
                 booleanVariable: false,
                 numericVariable: 6,
                 stringVariable: "stringValue",
                 nestedStringArrayVariable: [["string1", "string2"], ["string3"]],
-              });
+              } as any);
             },
           },
         ]),

@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -192,21 +192,20 @@ describe("WorkspaceContextSchema", () => {
       match(testOutcome.data)
         .with({ type: "create" }, async (testCaseForCreate) => {
           assert.ok(testResult.isOk());
-          assert.deepEqual(testResult.value.getState(), testCaseForCreate.expectedState);
+          expect(testResult.value.getState()).toEqual(testCaseForCreate.expectedState);
         })
         .with({ type: "returnError" }, async () => {
           assert.ok(testResult.isErr());
-          assert.strictEqual(testResult.error.type, "aggregate");
+          expect(testResult.error.type).toBe("aggregate");
         })
         .with({ type: "createAndResolve" }, async (testCaseForCreateAndResolve) => {
           assert.ok(testResult.isOk());
-          assert.deepEqual(
-            testResult.value.getPlainState(),
+          expect(testResult.value.getPlainState()).toEqual(
             testCaseForCreateAndResolve.expectedPlainState,
           );
           const resolveResult = await testResult.value.resolve(testInput.data.workspaceContext);
           assert.ok(resolveResult.isOk());
-          assert.deepEqual(resolveResult.value, testCaseForCreateAndResolve.expectedDeferredResult);
+          expect(resolveResult.value).toEqual(testCaseForCreateAndResolve.expectedDeferredResult);
         });
     });
   }

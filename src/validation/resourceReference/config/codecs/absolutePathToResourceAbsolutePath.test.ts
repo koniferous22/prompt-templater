@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -93,22 +93,18 @@ describe("AbsolutePathToConfigResourceAbsolutePath", () => {
       const parsingResult = AbsolutePathToConfigResourceAbsolutePath.safeParse(testInput.data);
       if (testOutcome.data.result === true) {
         assert.ok(parsingResult.success);
-        assert.deepEqual(parsingResult.data, testOutcome.data.value);
+        expect(parsingResult.data).toEqual(testOutcome.data.value);
         expectTypeOf(parsingResult.data).toEqualTypeOf<ConfigResourceAbsolutePath>();
       } else {
         assert.ok(!parsingResult.success);
-        assert.strictEqual(parsingResult.error.issues.length, 1);
-        assert.strictEqual(
-          parsingResult.error.issues[0] && parsingResult.error.issues[0].code,
-          "custom",
-        );
-        assert.strictEqual(
+        expect(parsingResult.error.issues.length).toBe(1);
+        expect(parsingResult.error.issues[0] && parsingResult.error.issues[0].code).toBe("custom");
+        expect(
           parsingResult.error.issues[0] &&
             parsingResult.error.issues[0].code === "custom" &&
             parsingResult.error.issues[0].params &&
             parsingResult.error.issues[0].params.code,
-          testOutcome.data.errorCode,
-        );
+        ).toBe(testOutcome.data.errorCode);
       }
     });
   }

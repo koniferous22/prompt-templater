@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -171,7 +171,7 @@ describe("NonEmptyStringToTermResourceReferenceSchema", () => {
       const parsingResult = NonEmptyStringToTermResourceReferenceSchema.safeParse(testInput.data);
       if (testOutcome.data.result === true) {
         assert.ok(parsingResult.success);
-        assert.deepEqual(parsingResult.data, testOutcome.data.value);
+        expect(parsingResult.data).toEqual(testOutcome.data.value);
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermResourceReference>();
       }
     });

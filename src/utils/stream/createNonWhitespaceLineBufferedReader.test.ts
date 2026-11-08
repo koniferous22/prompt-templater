@@ -1,5 +1,5 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
+import assert from "node:assert/strict";
 import { Readable } from "stream";
 
 import { createNonWhitespaceLineBufferedReader } from "./createNonWhitespaceLineBufferedReader.js";
@@ -298,11 +298,14 @@ describe("createNonWhitespaceLineBufferedReader", () => {
       const expected = testOutcome.data.result;
       let i = 0;
       for await (const item of nonWhitespaceLineBufferedReader) {
-        assert.deepStrictEqual(item, expected[i]);
+        const expectedItem = expected[i];
+        // Type inferrence - remove `undefined`
+        assert.ok(expectedItem);
+        expect(item).toStrictEqual(expectedItem);
         i += 1;
       }
-      assert.strictEqual(i, expected.length);
-      assert.strictEqual(stream.destroyed, true);
+      expect(i).toBe(expected.length);
+      expect(stream.destroyed).toBe(true);
     });
   }
 });

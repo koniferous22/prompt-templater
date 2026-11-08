@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import { expectTypeOf } from "expect-type";
 import type z from "zod";
@@ -51,7 +50,7 @@ describe("ConfigResourceRelativePathSchema", () => {
   for (const { testInput, testOutcome } of testCasesForConfigResourceRelativePathSchema) {
     it(`for ${testInput.testCaseDescription} parsing ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = ConfigResourceRelativePathSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<ConfigResourceRelativePath>();
       }

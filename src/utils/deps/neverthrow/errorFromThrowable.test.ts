@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
@@ -92,7 +92,7 @@ describe("appErrAsyncFromThrowable", () => {
         assert.ok(result.isOk());
       } else {
         assert.ok(result.isErr());
-        assert.strictEqual(result.isErr() && result.error.code, testOutcome.data.errorCode);
+        expect(result.isErr() && result.error.code).toBe(testOutcome.data.errorCode);
       }
     });
   }

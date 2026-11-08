@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import { z } from "zod";
@@ -101,7 +101,7 @@ describe("buildUnionOptionsFromEnum", () => {
       // Optional deeper check: the set of literal values matches
       const resultValues = result.map((s) => (s as unknown as z.ZodLiteral<any>).value);
       const expectedValues = testOutcome.data.map((s) => (s as z.ZodLiteral<any>).value);
-      assert.deepEqual([...resultValues].sort(), [...expectedValues].sort());
+      expect([...resultValues].sort()).toEqual([...expectedValues].sort());
     });
   }
 });

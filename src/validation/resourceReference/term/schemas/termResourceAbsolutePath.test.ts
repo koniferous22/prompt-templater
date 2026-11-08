@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -103,7 +102,7 @@ describe("TermResourceAbsolutePathSchema", () => {
   for (const { testInput, testOutcome } of testCasesForTermResourceAbsolutePathSchema) {
     it(`for ${testInput.testCaseDescription} parsing ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = TermResourceAbsolutePathSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermResourceAbsolutePath>();
       }

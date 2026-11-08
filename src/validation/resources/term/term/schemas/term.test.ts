@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import { expectTypeOf } from "expect-type";
 import z from "zod";
@@ -52,7 +51,7 @@ describe("BooleanTermSchema", () => {
   for (const { testInput, testOutcome } of testCasesForBooleanTermSchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = BooleanTermSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"boolean">>();
       }
@@ -105,7 +104,7 @@ describe("NumericTermSchema", () => {
   for (const { testInput, testOutcome } of testCasesForNumericTermSchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = NumericTermSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"number">>();
       }
@@ -158,7 +157,7 @@ describe("StringTermSchema", () => {
   for (const { testInput, testOutcome } of testCasesForStringTermSchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = StringTermSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"string">>();
       }

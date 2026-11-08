@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -109,7 +109,7 @@ describe("configResourceFromResourceFile - Workflow", () => {
       } else {
         assert.ok(resourceResult.isErr());
         // Compare only error code
-        assert.strictEqual(resourceResult.error.code, testOutcome.data.errorCode);
+        expect(resourceResult.error.code).toBe(testOutcome.data.errorCode);
       }
     });
   }

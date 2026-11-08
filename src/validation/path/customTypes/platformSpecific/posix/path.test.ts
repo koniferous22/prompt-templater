@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 
 import { expectTypeOf } from "expect-type";
 import type z from "zod";
@@ -35,7 +34,7 @@ describe("AbsolutePathPosixSchema", () => {
   for (const { testInput, testOutcome } of testCasesForAbsolutePathPosixSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = AbsolutePathPosixSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<AbsolutePathPosix>();
       }
@@ -65,7 +64,7 @@ describe("RelativePathPosixSchema", () => {
   for (const { testInput, testOutcome } of testCasesForRelativePathPosixSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = RelativePathPosixSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<RelativePathPosix>();
       }
@@ -95,7 +94,7 @@ describe("PathFragmentPosixSchema", () => {
   for (const { testInput, testOutcome } of testCasesForPathFragmentPosixSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = PathFragmentPosixSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<PathFragmentPosix>();
       }

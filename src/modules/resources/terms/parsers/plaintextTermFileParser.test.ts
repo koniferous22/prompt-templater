@@ -1,5 +1,5 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
+import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -376,7 +376,7 @@ describe("plaintextTermFileParser", () => {
       });
       if (testOutcome.data.success === true) {
         assert.ok(result.isOk());
-        assert.deepEqual(result.value, testOutcome.data.parsedLines);
+        expect(result.value).toEqual(testOutcome.data.parsedLines);
       } else {
         assert.ok(result.isErr());
       }

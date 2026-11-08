@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import type z from "zod";
@@ -232,8 +232,7 @@ describe("createTemplateVariableSpecsFromWorkflowData", () => {
         }
       } else {
         assert.ok(templateVariableSpecsResult.isErr());
-        assert.strictEqual(
-          templateVariableSpecsResult.error.code,
+        expect(templateVariableSpecsResult.error.code).toBe(
           testOutcome.data.createTemplateVariableSpecsResult.errorCode,
         );
       }

@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -49,7 +48,7 @@ describe("JsonAbsolutePathSchema", () => {
   for (const { testInput, testOutcome } of testCasesForJsonAbsolutePathSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = JsonAbsolutePathSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<JsonAbsolutePath>();
       }
@@ -83,7 +82,7 @@ describe("YamlAbsolutePathSchema", () => {
   for (const { testInput, testOutcome } of testCasesForYamlAbsolutePathSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = YamlAbsolutePathSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<YamlAbsolutePath>();
       }
@@ -117,7 +116,7 @@ describe("HandlebarsAbsolutePathSchema", () => {
   for (const { testInput, testOutcome } of testCasesForHandlebarsAbsolutePathSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = HandlebarsAbsolutePathSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<HandlebarsAbsolutePath>();
       }
@@ -151,7 +150,7 @@ describe("JsonRelativePathSchema", () => {
   for (const { testInput, testOutcome } of testCasesForJsonRelativePathSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = JsonRelativePathSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<JsonRelativePath>();
       }
@@ -185,7 +184,7 @@ describe("YamlRelativePathSchema", () => {
   for (const { testInput, testOutcome } of testCasesForYamlRelativePathSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = YamlRelativePathSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<YamlRelativePath>();
       }
@@ -219,7 +218,7 @@ describe("HandlebarsRelativePathSchema", () => {
   for (const { testInput, testOutcome } of testCasesForHandlebarsRelativePathSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = HandlebarsRelativePathSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<HandlebarsRelativePath>();
       }

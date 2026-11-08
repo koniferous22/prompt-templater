@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -291,7 +291,7 @@ describe("createResourceContext", () => {
           assert.ok(loadWorkflowResult.isOk());
         } else {
           assert.ok(loadWorkflowResult.isErr());
-          assert.strictEqual(loadWorkflowResult.error.code, testOutcome.data.errorCode);
+          expect(loadWorkflowResult.error.code).toBe(testOutcome.data.errorCode);
         }
       });
     }
@@ -310,7 +310,7 @@ describe("createResourceContext", () => {
           assert.ok(loadTemplateResult.isOk());
         } else {
           assert.ok(loadTemplateResult.isErr());
-          assert.strictEqual(loadTemplateResult.error.code, testOutcome.data.errorCode);
+          expect(loadTemplateResult.error.code).toBe(testOutcome.data.errorCode);
         }
       });
     }
@@ -329,7 +329,7 @@ describe("createResourceContext", () => {
           assert.ok(loadTermResult.isOk());
         } else {
           assert.ok(loadTermResult.isErr());
-          assert.strictEqual(loadTermResult.error.code, testOutcome.data.errorCode);
+          expect(loadTermResult.error.code).toBe(testOutcome.data.errorCode);
         }
       });
     }

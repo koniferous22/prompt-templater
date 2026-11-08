@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 
 import { SelectorSchema } from "../../../../validation/resourceReference/term/schemas/selector.js";
 import { resolvePathAgainstHbsBlockStatements } from "./resolvePathAgainstBlockStatements.js";
@@ -294,7 +293,7 @@ describe("resolvePathAgainstHbsBlockStatements", () => {
         testInput.data.pathExpr,
         testInput.data.blockStatementStack,
       );
-      assert.deepStrictEqual(result, testOutcome.data.result);
+      expect(result).toStrictEqual(testOutcome.data.result);
     });
   }
 });

@@ -1,6 +1,6 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
-import { dirname, format, join } from "node:path";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { AbsolutePathSchema } from "../../../validation/path/customTypes/index.js";
@@ -98,8 +98,7 @@ describe("templateResourceFromInput", () => {
         testInput.data.workspaceContext,
       );
       assert.ok(resourceAbsolutePathResult.isOk());
-      assert.strictEqual(
-        resourceAbsolutePathResult.value(testInput.data.templateInput),
+      expect(resourceAbsolutePathResult.value(testInput.data.templateInput)).toBe(
         testOutcome.data.renderResult,
       );
     });

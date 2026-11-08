@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -114,11 +114,10 @@ const loadResourceTestCaseFactory = createMutationTestCaseFactory(
       .with({ type: "mutationWithOptionalAssertion" }, async (value) => {
         const mutationResult = await loadResource(initialState, value.operationInput);
         if (mutationResult.isOk()) {
-          assert.strictEqual(
+          expect(
             mutationResult.value.state,
-            initialState,
             'expected state to hold same reference as before "loadResource" (immutable update detected)',
-          );
+          ).toBe(initialState);
         }
         if (value.assertOperationResult !== undefined) {
           value.assertOperationResult(mutationResult);
@@ -147,26 +146,23 @@ const testCasesForConfigResourceFileFromInput = [
           },
           assertOperationResult(result) {
             assert.ok(result.isOk(), "expected successful result");
-            assert.strictEqual(
+            expect(
               result.value.enqueuedOperations.length,
-              1,
               "expected result to contain 1 enqueued operation",
-            );
+            ).toBe(1);
           },
         },
         {
           type: "stateAssertion",
           assertState(state) {
-            assert.strictEqual(
+            expect(
               state.resources.configResources.workflows.size,
-              1,
               "expected 1 workflow to be loaded",
-            );
-            assert.strictEqual(
+            ).toBe(1);
+            expect(
               state.resources.templateResources.templates.size,
-              0,
               "expected rest of the state not to be polluted",
-            );
+            ).toBe(0);
           },
         },
         {
@@ -181,26 +177,23 @@ const testCasesForConfigResourceFileFromInput = [
           },
           assertOperationResult(result) {
             assert.ok(result.isOk(), "expected successful result");
-            assert.strictEqual(
+            expect(
               result.value.enqueuedOperations.length,
-              0,
               "expected result to contain 0 enqueued operations",
-            );
+            ).toBe(0);
           },
         },
         {
           type: "stateAssertion",
           assertState(state) {
-            assert.strictEqual(
+            expect(
               state.resources.configResources.workflows.size,
-              1,
               "expected 1 workflow to be loaded",
-            );
-            assert.strictEqual(
+            ).toBe(1);
+            expect(
               state.resources.templateResources.templates.size,
-              0,
               "expected rest of the state not to be polluted",
-            );
+            ).toBe(0);
           },
         },
       ]),
@@ -225,26 +218,23 @@ const testCasesForConfigResourceFileFromInput = [
           },
           assertOperationResult(result) {
             assert.ok(result.isOk(), "expected successful result");
-            assert.strictEqual(
+            expect(
               result.value.enqueuedOperations.length,
-              0,
               "expected result to contain 0 enqueued operations",
-            );
+            ).toBe(0);
           },
         },
         {
           type: "stateAssertion",
           assertState(state) {
-            assert.strictEqual(
+            expect(
               state.resources.templateResources.templates.size,
-              1,
               "expected 1 template to be loaded",
-            );
-            assert.strictEqual(
+            ).toBe(1);
+            expect(
               state.resources.configResources.workflows.size,
-              0,
               "expected rest of the state not to be polluted",
-            );
+            ).toBe(0);
           },
         },
         {
@@ -258,26 +248,23 @@ const testCasesForConfigResourceFileFromInput = [
           },
           assertOperationResult(result) {
             assert.ok(result.isOk(), "expected successful result");
-            assert.strictEqual(
+            expect(
               result.value.enqueuedOperations.length,
-              0,
               "expected result to contain 0 enqueued operations",
-            );
+            ).toBe(0);
           },
         },
         {
           type: "stateAssertion",
           assertState(state) {
-            assert.strictEqual(
+            expect(
               state.resources.templateResources.templates.size,
-              1,
               "expected 1 template to be loaded",
-            );
-            assert.strictEqual(
+            ).toBe(1);
+            expect(
               state.resources.configResources.workflows.size,
-              0,
               "expected rest of the state not to be polluted",
-            );
+            ).toBe(0);
           },
         },
       ]),
@@ -304,26 +291,22 @@ const testCasesForConfigResourceFileFromInput = [
           },
           assertOperationResult(result) {
             assert.ok(result.isOk(), "expected successful result");
-            assert.strictEqual(
+            expect(
               result.value.enqueuedOperations.length,
-              0,
               "expected result to contain 0 enqueued operations",
-            );
+            ).toBe(0);
           },
         },
         {
           type: "stateAssertion",
           assertState(state) {
-            assert.strictEqual(
-              state.resources.termResources.terms.size,
+            expect(state.resources.termResources.terms.size, "expected 1 term to be loaded").toBe(
               1,
-              "expected 1 term to be loaded",
             );
-            assert.strictEqual(
+            expect(
               state.resources.configResources.workflows.size,
-              0,
               "expected rest of the state not to be polluted",
-            );
+            ).toBe(0);
           },
         },
         {
@@ -339,26 +322,22 @@ const testCasesForConfigResourceFileFromInput = [
           },
           assertOperationResult(result) {
             assert.ok(result.isOk(), "expected successful result");
-            assert.strictEqual(
+            expect(
               result.value.enqueuedOperations.length,
-              0,
               "expected result to contain 0 enqueued operations",
-            );
+            ).toBe(0);
           },
         },
         {
           type: "stateAssertion",
           assertState(state) {
-            assert.strictEqual(
-              state.resources.termResources.terms.size,
+            expect(state.resources.termResources.terms.size, "expected 1 term to be loaded").toBe(
               1,
-              "expected 1 term to be loaded",
             );
-            assert.strictEqual(
+            expect(
               state.resources.configResources.workflows.size,
-              0,
               "expected rest of the state not to be polluted",
-            );
+            ).toBe(0);
           },
         },
       ]),
@@ -384,21 +363,18 @@ const testCasesForConfigResourceFileFromInput = [
           },
           assertOperationResult(result) {
             assert.ok(result.isOk(), "expected successful result");
-            assert.strictEqual(
+            expect(
               result.value.enqueuedOperations.length,
-              2,
               "expected result to contain 2 enqueued operation",
-            );
-            assert.strictEqual(
+            ).toBe(2);
+            expect(
               result.value.enqueuedOperations.length,
-              2,
               "expected result to contain 2 enqueued operations",
-            );
-            assert.deepEqual(
+            ).toBe(2);
+            expect(
               result.value.enqueuedOperations.map(({ type }) => type),
-              ["templateResource", "termResource"],
               "expected result to contain enqueued operations for template and term",
-            );
+            ).toEqual(["templateResource", "termResource"]);
           },
         },
       ]),

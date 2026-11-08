@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 
 import { expectTypeOf } from "expect-type";
 import type z from "zod";
@@ -147,7 +146,7 @@ describe("AbsolutePathWin32Schema", () => {
   for (const { testInput, testOutcome } of testCasesForAbsolutePathWin32Schema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = AbsolutePathWin32Schema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<AbsolutePathWin32>();
       }
@@ -249,7 +248,7 @@ describe("RelativePathWin32Schema", () => {
   for (const { testInput, testOutcome } of testCasesForRelativePathWin32Schema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = RelativePathWin32Schema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<RelativePathWin32>();
       }
@@ -339,7 +338,7 @@ describe("PathFragmentWin32Schema", () => {
   for (const { testInput, testOutcome } of testCasesForPathFragmentWin32Schema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = PathFragmentWin32Schema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<PathFragmentWin32>();
       }

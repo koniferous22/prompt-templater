@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import type z from "zod";
 
@@ -126,9 +125,9 @@ describe("EditorPromptValidationShorthandSchema", () => {
   for (const { testInput, testOutcome } of testCasesForEditorPromptValidationShorthandSchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = EditorPromptValidationShorthandSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      expect(parsingResult.success).toBe(testOutcome.data.result);
       if (testOutcome.data.result) {
-        assert.deepEqual(parsingResult.data, testOutcome.data.parsedValue);
+        expect(parsingResult.data).toEqual(testOutcome.data.parsedValue);
       }
     });
   }

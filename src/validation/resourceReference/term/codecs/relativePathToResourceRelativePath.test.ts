@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import { expectTypeOf } from "expect-type";
@@ -86,7 +86,7 @@ describe("RelativePathToTermResourceRelativePath", () => {
       const parsingResult = RelativePathToTermResourceRelativePath.safeParse(testInput.data);
       if (testOutcome.data.result === true) {
         assert.ok(parsingResult.success);
-        assert.deepEqual(parsingResult.data, testOutcome.data.value);
+        expect(parsingResult.data).toStrictEqual(testOutcome.data.value);
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermResourceRelativePath>();
       }
     });

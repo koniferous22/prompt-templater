@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 
 import type z from "zod";
 
@@ -39,7 +38,7 @@ describe("PlainFileReferenceOptionsSchema", () => {
   for (const { testInput, testOutcome } of testCasesForPlainFileReferenceOptionsSchema) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = PlainFileTermReferenceOptionsSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      expect(parsingResult.success).toBe(testOutcome.data.result);
     });
   }
 });

@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 import { readdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
@@ -190,10 +190,10 @@ describe("direntFlagsMatcher", () => {
 
       if (testOutcome.data.ok === true) {
         assert.ok(result.isOk());
-        assert.strictEqual(result.value, testOutcome.data.value);
+        expect(result.value).toBe(testOutcome.data.value);
       } else {
         assert.ok(result.isErr());
-        assert.deepStrictEqual(result.error, testOutcome.data.errors);
+        expect(result.error).toStrictEqual(testOutcome.data.errors);
       }
     });
   }

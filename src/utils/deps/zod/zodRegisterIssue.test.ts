@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import z from "zod";
 
@@ -77,19 +76,17 @@ describe("zodRegisterIssue", () => {
     for (const { testInput, testOutcome } of testCasesForZodRegisterIssue) {
       it(`for ${testInput.testCaseDescription} DummyZodSchema ${testOutcome.testBehaviourDescription}`, async () => {
         const parsingResult = DummyZodSchema.safeParse(testInput.data);
-        assert.strictEqual(parsingResult.success, testOutcome.data.parseResult);
+        expect(parsingResult.success).toBe(testOutcome.data.parseResult);
         if (!testOutcome.data.parseResult) {
-          assert.deepEqual(
+          expect(
             parsingResult.success === false && parsingResult.error.issues.map(({ code }) => code),
-            testOutcome.data.issues.map(({ issueCode }) => issueCode),
-          );
-          assert.deepEqual(
+          ).toEqual(testOutcome.data.issues.map(({ issueCode }) => issueCode));
+          expect(
             parsingResult.success === false &&
               parsingResult.error.issues.map((issue) =>
                 issue.code === "custom" ? issue.params : null,
               ),
-            testOutcome.data.issues.map(({ issueParams }) => issueParams),
-          );
+          ).toEqual(testOutcome.data.issues.map(({ issueParams }) => issueParams));
         }
       });
     }

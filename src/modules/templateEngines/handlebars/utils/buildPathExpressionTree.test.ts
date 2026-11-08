@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import Handlebars from "handlebars";
@@ -318,7 +318,7 @@ describe("buildHandlebarsPathExpressionTree", () => {
       if (testOutcome.data.result === true) {
         assert.ok(pathExpressionTree.isOk(), "expected Ok result");
         const simplified = pathExpressionTree.value.map(simplifyNode);
-        assert.deepEqual(simplified, testOutcome.data.nodes);
+        expect(simplified).toEqual(testOutcome.data.nodes);
       } else {
         assert.ok(pathExpressionTree.isErr(), "expected Err result");
         assert.equal(pathExpressionTree.error.code, testOutcome.data.errorCode);

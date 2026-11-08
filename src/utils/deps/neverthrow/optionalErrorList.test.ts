@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import { expectTypeOf } from "expect-type";
@@ -102,18 +102,15 @@ describe("errorFromOptionalErrorList", () => {
       const result = errorFromOptionalErrorList(...testInput.data);
       match(testOutcome.data)
         .with(null, () => {
-          assert.strictEqual(result, null);
+          expect(result).toBe(null);
         })
-        .with({ type: "plain" }, () => {
-          assert.strictEqual(result && result.type, "plain");
-          assert.deepStrictEqual(result, testOutcome.data && testOutcome.data.error);
+        .with({ type: "plain" }, (plainError) => {
+          expect(result).toStrictEqual(plainError.error);
         })
-        .with({ type: "aggregate" }, () => {
-          assert.strictEqual(result && result.type, "aggregate");
-          assert.deepStrictEqual(
-            result && result.type === "aggregate" && result.errors,
-            testOutcome.data && testOutcome.data.errors,
-          );
+        .with({ type: "aggregate" }, (aggregateError) => {
+          assert.ok(testOutcome.data);
+          assert.strictEqual(testOutcome.data.type, "aggregate");
+          expect(testOutcome.data && testOutcome.data.errors).toStrictEqual(aggregateError.errors);
         })
         .exhaustive();
       match(result)
@@ -225,22 +222,19 @@ describe("resultFromOptionalErrorList", () => {
       match(testOutcome.data)
         .with(null, () => {
           assert.ok(result.isOk());
-          assert.strictEqual(result.value, null);
+          expect(result.value).toBe(null);
         })
-        .with({ type: "plain" }, () => {
+        .with({ type: "plain" }, (plainError) => {
           assert.ok(result.isErr());
           assert.strictEqual(result.error.type, "plain");
-          assert.deepStrictEqual(
-            result.error.type === "plain" && result.error,
-            testOutcome.data && testOutcome.data.error,
-          );
+          expect(result.error).toStrictEqual(plainError.error);
         })
-        .with({ type: "aggregate" }, () => {
+        .with({ type: "aggregate" }, (aggregateError) => {
           assert.ok(result.isErr());
           assert.strictEqual(result.error.type, "aggregate");
-          assert.deepStrictEqual(
-            result.error.type === "aggregate" && result.error.errors,
-            testOutcome.data && testOutcome.data.errors,
+          expect(result.error.errors).toStrictEqual(
+            // @ts-expect-error
+            aggregateError.errors,
           );
         })
         .exhaustive();

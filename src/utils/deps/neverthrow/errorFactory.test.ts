@@ -1,8 +1,8 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import { expectTypeOf } from "expect-type";
-import { z, ZodError } from "zod";
+import { ZodError } from "zod";
 
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import {
@@ -51,8 +51,8 @@ describe("createError", () => {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, () => {
       const actual = createError(testInput.code, testInput.meta, testInput.opts);
 
-      assert.strictEqual(actual.type, testOutcome.data.type);
-      assert.strictEqual(actual.code, testOutcome.data.code);
+      expect(actual.type).toBe(testOutcome.data.type);
+      expect(actual.code).toBe(testOutcome.data.code);
       expectTypeOf(actual).toEqualTypeOf<AppError<"dependency_zod_safeParseErrorWithoutIssues">>();
     });
   }
@@ -103,10 +103,10 @@ describe("createAggregateError", () => {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, () => {
       const actual = createAggregateError(...testInput.errors);
 
-      assert.strictEqual(actual.type, testOutcome.data.type);
-      assert.strictEqual(actual.errors.length, testOutcome.data.codes.length);
+      expect(actual.type).toBe(testOutcome.data.type);
+      expect(actual.errors.length).toBe(testOutcome.data.codes.length);
       testOutcome.data.codes.forEach((expectedCode, index) => {
-        assert.strictEqual(actual.errors[index] && actual.errors[index].code, expectedCode);
+        expect(actual.errors[index] && actual.errors[index].code).toBe(expectedCode);
       });
       expectTypeOf(actual).toExtend<AppAggregateErr>();
     });
@@ -154,8 +154,8 @@ describe("appErr", () => {
       const actual = appErr(testInput.code, testInput.meta, testInput.opts);
 
       assert.ok(actual.isErr());
-      assert.strictEqual(actual.error.type, testOutcome.data.error.type);
-      assert.strictEqual(actual.error.code, testOutcome.data.error.code);
+      expect(actual.error.type).toBe(testOutcome.data.error.type);
+      expect(actual.error.code).toBe(testOutcome.data.error.code);
       expectTypeOf(actual.error).toExtend<AppError<AppErrorCode>>();
     });
   }
@@ -203,8 +203,8 @@ describe("appErrAsync", () => {
       const actual = await appErrAsync(testInput.code, undefined, testInput.opts);
 
       assert.ok(actual.isErr());
-      assert.strictEqual(actual.error.type, testOutcome.data.error.type);
-      assert.strictEqual(actual.error.code, testOutcome.data.error.code);
+      expect(actual.error.type).toBe(testOutcome.data.error.type);
+      expect(actual.error.code).toBe(testOutcome.data.error.code);
       expectTypeOf(actual.error).toExtend<AppError<AppErrorCode>>();
     });
   }
@@ -262,13 +262,10 @@ describe("appAggregateErr", () => {
       const actual = appAggregateErr(...testInput.errors);
 
       assert.ok(actual.isErr());
-      assert.strictEqual(actual.error.type, testOutcome.data.error.type);
-      assert.strictEqual(actual.error.errors.length, testOutcome.data.error.codes.length);
+      expect(actual.error.type).toBe(testOutcome.data.error.type);
+      expect(actual.error.errors.length).toBe(testOutcome.data.error.codes.length);
       testOutcome.data.error.codes.forEach((expectedCode, index) => {
-        assert.strictEqual(
-          actual.error.errors[index] && actual.error.errors[index].code,
-          expectedCode,
-        );
+        expect(actual.error.errors[index] && actual.error.errors[index].code).toBe(expectedCode);
       });
       expectTypeOf(actual.error).toExtend<AppAggregateErr>();
     });
@@ -328,13 +325,10 @@ describe("appAggregateErrAsync", () => {
       const actual = await appAggregateErrAsync(...testInput.errors);
 
       assert.ok(actual.isErr());
-      assert.strictEqual(actual.error.type, testOutcome.data.error.type);
-      assert.strictEqual(actual.error.errors.length, testOutcome.data.error.codes.length);
+      expect(actual.error.type).toBe(testOutcome.data.error.type);
+      expect(actual.error.errors.length).toBe(testOutcome.data.error.codes.length);
       testOutcome.data.error.codes.forEach((expectedCode, index) => {
-        assert.strictEqual(
-          actual.error.errors[index] && actual.error.errors[index].code,
-          expectedCode,
-        );
+        expect(actual.error.errors[index] && actual.error.errors[index].code).toBe(expectedCode);
       });
       expectTypeOf(actual.error).toExtend<AppAggregateErr>();
     });

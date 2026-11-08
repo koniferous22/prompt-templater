@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import z from "zod";
 
@@ -1709,9 +1708,9 @@ describe("SelectWorkflowStepSchema", () => {
   for (const { testInput, testOutcome } of testCasesForSelectWorkflowStepSchema) {
     it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = SelectWorkflowStepSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data.success);
+      expect(parsingResult.success).toBe(testOutcome.data.success);
       if (testOutcome.data.success) {
-        assert.deepEqual(parsingResult.data, testOutcome.data.parsedResult);
+        expect(parsingResult.data).toEqual(testOutcome.data.parsedResult);
       }
     });
   }

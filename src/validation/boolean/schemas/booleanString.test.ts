@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import type z from "zod";
 
@@ -35,7 +34,7 @@ describe("BooleanStringSchema", () => {
   for (const { testInput, testOutcome } of testCasesForBooleanStringSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = BooleanStringSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
     });
   }
 });

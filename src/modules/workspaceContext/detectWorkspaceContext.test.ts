@@ -1,5 +1,5 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
+import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -85,7 +85,7 @@ describe("detectWorkspaceContextFromCliInput", () => {
       });
       if (testOutcome.data.result === true) {
         assert.ok(result.isOk());
-        assert.strictEqual(result.value, testOutcome.data.value);
+        expect(result.value as string).toBe(testOutcome.data.value);
       } else {
         assert.ok(result.isErr());
       }

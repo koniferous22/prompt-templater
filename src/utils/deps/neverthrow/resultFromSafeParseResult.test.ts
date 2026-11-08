@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import { expectTypeOf } from "expect-type";
@@ -162,10 +162,10 @@ describe("errFromZodError", () => {
 
       if (testOutcome.data.error.type === "plain") {
         assert.strictEqual(actualError.type, "plain");
-        assert.strictEqual(actualError.code, testOutcome.data.error.code);
+        expect(actualError.code).toBe(testOutcome.data.error.code);
       } else {
         assert.strictEqual(actualError.type, "aggregate");
-        assert.strictEqual(actualError.errors.length, testOutcome.data.error.codes.length);
+        expect(actualError.errors.length).toBe(testOutcome.data.error.codes.length);
         testOutcome.data.error.codes.forEach((expectedCode, index) => {
           assert.strictEqual(
             actualError.errors[index] && actualError.errors[index].code,
@@ -289,17 +289,17 @@ describe("resultFromSafeParseResult", () => {
 
       if (testOutcome.data.result === true) {
         assert.ok(actualResult.isOk());
-        assert.deepStrictEqual(actualResult.value, testOutcome.data.value);
+        expect(actualResult.value).toStrictEqual(testOutcome.data.value);
       } else {
         assert.ok(actualResult.isErr());
         const actualError = actualResult.error;
 
         if (testOutcome.data.error.type === "plain") {
           assert.strictEqual(actualError.type, "plain");
-          assert.strictEqual(actualError.code, testOutcome.data.error.code);
+          expect(actualError.code).toBe(testOutcome.data.error.code);
         } else {
           assert.strictEqual(actualError.type, "aggregate");
-          assert.strictEqual(actualError.errors.length, testOutcome.data.error.codes.length);
+          expect(actualError.errors.length).toBe(testOutcome.data.error.codes.length);
           testOutcome.data.error.codes.forEach((expectedCode, index) => {
             assert.strictEqual(
               actualError.errors[index] && actualError.errors[index].code,

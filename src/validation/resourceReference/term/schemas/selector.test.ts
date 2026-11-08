@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import type z from "zod";
 
@@ -107,7 +106,7 @@ describe("SelectorSchema", () => {
   for (const { testInput, testOutcome } of testCasesForSelectorSchema) {
     it(`for "${testInput.testCaseDescription}" parsing should "${testOutcome.testBehaviourDescription}"`, async () => {
       const parsingResult = SelectorSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      expect(parsingResult.success).toBe(testOutcome.data.result);
     });
   }
 });

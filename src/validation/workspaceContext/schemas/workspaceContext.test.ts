@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { dirname } from "path";
@@ -59,7 +58,7 @@ describe("WorkspaceContextSchema", () => {
   for (const { testInput, testOutcome } of testCasesForWorkspaceContextSchema) {
     it(`for ${testInput.testCaseDescription} parsing ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = await WorkspaceContextSchema.safeParseAsync(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      expect(parsingResult.success).toBe(testOutcome.data.result);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<WorkspaceContext>();
       }

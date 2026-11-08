@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 
 import type z from "zod";
 
@@ -223,7 +222,7 @@ describe("WorkflowChoicesFragmentToTermResourceReference", () => {
       const parsingResult = WorkflowChoicesFragmentToTermResourceReference.safeParse(
         testInput.data,
       );
-      assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      expect(parsingResult.success).toBe(testOutcome.data.result);
     });
   }
 });

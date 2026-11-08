@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -144,7 +143,7 @@ describe("TermResourceFileSchema", () => {
   for (const { testInput, testOutcome } of testCasesForTermResourceFileSchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = await TermResourceFileSchema.safeParseAsync(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      expect(parsingResult.success).toBe(testOutcome.data.result);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermResourceFile>();
       }

@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import { wrapNonEmptyInputLiteralIntoArray } from "./wrapNonEmptyInputLiteralIntoArray.js";
@@ -153,7 +153,7 @@ describe("wrapNonEmptyInputLiteralIntoArray", () => {
       if (testOutcome.data.assertionType === "equalOriginal") {
         assert.equal(result, testInput.data);
       } else {
-        assert.deepEqual(result, testOutcome.data.value);
+        expect(result).toEqual(testOutcome.data.value);
       }
     });
   }

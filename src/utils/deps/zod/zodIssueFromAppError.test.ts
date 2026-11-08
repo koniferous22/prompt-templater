@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import { createError } from "../neverthrow/errorFactory.js";
 import { zodIssueFromAppError } from "./zodIssueFromAppError.js";
@@ -57,7 +56,7 @@ describe("zodIssueFromAppError", () => {
   for (const { testInput, testOutcome } of testCasesForZodIssueFromAppError) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const result = zodIssueFromAppError(...testInput.data.params);
-      assert.deepEqual(result, testOutcome.data.result);
+      expect(result).toEqual(testOutcome.data.result);
     });
   }
 });

@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import { expectTypeOf } from "expect-type";
@@ -259,10 +259,10 @@ describe("templateVariableSpecToZodSchema", () => {
         assert.ok(parseResult.success);
         match(testInput.data.assertion)
           .with({ type: "deepEqualsInput" }, () => {
-            assert.deepEqual(parseResult.data, testInput.data.zodSchemaInput);
+            expect(parseResult.data).toEqual(testInput.data.zodSchemaInput);
           })
           .with({ type: "strictEqualsLiteral" }, (strictEqualsLiteralAssertion) => {
-            assert.strictEqual(parseResult.data, strictEqualsLiteralAssertion.literal);
+            expect(parseResult.data).toBe(strictEqualsLiteralAssertion.literal);
           })
           .exhaustive();
       }
@@ -348,7 +348,7 @@ describe("templateVariableSpecsBuildZodSchema", () => {
       const parseResult = builtZodSchema.safeParse(testInput.data.zodSchemaInput);
       if (testOutcome.data.result === true) {
         assert.ok(parseResult.success);
-        assert.deepEqual(parseResult.data, testInput.data.zodSchemaInput);
+        expect(parseResult.data).toEqual(testInput.data.zodSchemaInput);
       }
     });
   }

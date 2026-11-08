@@ -1,5 +1,5 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
+import assert from "node:assert/strict";
 
 import type { AppErrorCode } from "../../../../constants/errorCodes.js";
 import { AbsolutePathSchema } from "../../../../validation/path/customTypes/index.js";
@@ -232,10 +232,10 @@ describe("retrieveTermDataBySelector", () => {
       });
       if (testOutcome.data.result === true) {
         assert.ok(result.isOk());
-        assert.deepEqual(result.value, testOutcome.data.value);
+        expect(result.value).toEqual(testOutcome.data.value);
       } else {
         assert.ok(result.isErr());
-        assert.strictEqual(result.error.code, testOutcome.data.errorCode);
+        expect(result.error.code).toBe(testOutcome.data.errorCode);
       }
     });
   }

@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import { expectTypeOf } from "expect-type";
 import type z from "zod";
@@ -28,7 +27,7 @@ describe("NonEmptyStringSchema", () => {
   for (const { testInput, testOutcome } of testCasesForNonEmptyStringSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, async () => {
       const parsingResult = NonNegativeIntegerSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<NonNegativeInteger>();
       }

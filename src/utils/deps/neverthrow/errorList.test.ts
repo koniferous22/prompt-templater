@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import { expectTypeOf } from "expect-type";
@@ -86,14 +86,15 @@ describe("errorFromErrorList", () => {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, () => {
       const result = errorFromErrorList(...testInput.data);
       match(testOutcome.data)
-        .with({ type: "plain" }, () => {
+        .with({ type: "plain" }, (plainError) => {
           assert.strictEqual(result.type, "plain");
-          assert.deepStrictEqual(result, testOutcome.data.error);
+          expect(result).toStrictEqual(plainError.error);
           expectTypeOf(result).toExtend<AppError<AppErrorCode>>();
         })
-        .with({ type: "aggregate" }, () => {
+        .with({ type: "aggregate" }, (aggregateError) => {
           assert.strictEqual(result.type, "aggregate");
-          assert.deepStrictEqual(result.errors, testOutcome.data.errors);
+          // @ts-expect-error
+          expect(result.errors).toStrictEqual(aggregateError.errors);
           expectTypeOf(result).toExtend<AppAggregateErr>();
         })
         .exhaustive();
@@ -177,14 +178,15 @@ describe("resultFromErrorList", () => {
       const result = resultFromErrorList(...testInput.data);
       assert.ok(result.isErr());
       match(testOutcome.data)
-        .with({ type: "plain" }, () => {
+        .with({ type: "plain" }, (plainError) => {
           assert.strictEqual(result.error.type, "plain");
-          assert.deepStrictEqual(result.error, testOutcome.data.error);
+          expect(result.error).toStrictEqual(plainError.error);
           expectTypeOf(result.error).toExtend<AppError<AppErrorCode>>();
         })
-        .with({ type: "aggregate" }, () => {
+        .with({ type: "aggregate" }, (aggregateError) => {
           assert.strictEqual(result.error.type, "aggregate");
-          assert.deepStrictEqual(result.error.errors, testOutcome.data.errors);
+          // @ts-expect-error
+          expect(result.error.errors).toStrictEqual(aggregateError.errors);
           expectTypeOf(result.error).toExtend<AppAggregateErr>();
         })
         .exhaustive();

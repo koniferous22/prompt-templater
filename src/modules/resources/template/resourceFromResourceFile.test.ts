@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -84,8 +84,7 @@ describe("templateResourceFromResourceFile - template", () => {
       } else {
         assert.ok(resourceResult.isErr());
         // Compare only error code
-        assert.strictEqual(
-          resourceResult.error.code,
+        expect(resourceResult.error.code).toBe(
           // @ts-expect-error, remove when fixing the test expecting incorrect syntax
           testOutcome.data.error.code,
         );

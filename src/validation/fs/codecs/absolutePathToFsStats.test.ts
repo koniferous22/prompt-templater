@@ -1,5 +1,5 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
+import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -63,10 +63,10 @@ describe("AbsolutePathToFsStatsSchema", () => {
   for (const { testInput, testOutcome } of testCasesForAbsolutePathToFsStatsSchema) {
     it(`for ${testInput.testCaseDescription} parsing ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = await AbsolutePathToFsStatsSchema.safeParseAsync(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      expect(parsingResult.success).toBe(testOutcome.data.result);
       if (testOutcome.data.result === true) {
         assert.ok(parsingResult.success);
-        assert.strictEqual(parsingResult.data.absolutePath, testInput.data);
+        expect(parsingResult.data.absolutePath as string).toBe(testInput.data);
       }
     });
   }

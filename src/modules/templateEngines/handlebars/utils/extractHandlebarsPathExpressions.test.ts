@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 
 import { extractHandlebarsPathExpressions } from "./extractHandlebarsPathExpressions.js";
 import type { PathExpressionTreeNode } from "./types.js";
@@ -1753,7 +1752,7 @@ describe("extractHandlebarsPathExpressions", () => {
   for (const { testInput, testOutcome } of testCasesForExtractHandlebarsPathExpressions) {
     it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
       const handlebarsPathExpressions = extractHandlebarsPathExpressions(testInput.data);
-      assert.deepEqual(handlebarsPathExpressions, testOutcome.data.result);
+      expect(handlebarsPathExpressions).toEqual(testOutcome.data.result);
     });
   }
 });

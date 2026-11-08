@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import { expectTypeOf } from "expect-type";
 import z from "zod";
@@ -50,7 +49,7 @@ describe("BooleanTermFromBooleanArraySchema", () => {
   for (const { testInput, testOutcome } of testCasesForBooleanTermFromBooleanArraySchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = BooleanTermFromBooleanArraySchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"boolean">>();
       }
@@ -94,7 +93,7 @@ describe("NumericTermFromNumericArraySchema", () => {
   for (const { testInput, testOutcome } of testCasesForNumericTermFromNumericArraySchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = NumericTermFromNumericArraySchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"number">>();
       }
@@ -138,7 +137,7 @@ describe("StringTermFromStringArraySchema", () => {
   for (const { testInput, testOutcome } of testCasesForStringTermFromStringArraySchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = StringTermFromStringArraySchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"string">>();
       }
@@ -182,7 +181,7 @@ describe("BooleanTermFromBooleanRecordSchema", () => {
   for (const { testInput, testOutcome } of testCasesForBooleanTermFromBooleanRecordSchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = BooleanTermFromBooleanRecordSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"boolean">>();
       }
@@ -226,7 +225,7 @@ describe("NumericTermFromNumericRecordSchema", () => {
   for (const { testInput, testOutcome } of testCasesForNumericTermFromNumericRecordSchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = NumericTermFromNumericRecordSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"number">>();
       }
@@ -270,7 +269,7 @@ describe("StringTermFromStringRecordSchema", () => {
   for (const { testInput, testOutcome } of testCasesForStringTermFromStringRecordSchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const parsingResult = StringTermFromStringRecordSchema.safeParse(testInput.data);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<TermData<"string">>();
       }

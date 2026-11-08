@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 
 import { NonEmptyStringSchema } from "../../../../string/customTypes/string.js";
 import {
@@ -79,7 +78,7 @@ describe("createTermByTermTypeSchema", () => {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
       const TermSchema = createTermByTermTypeSchema(testInput.data.termType);
       const parsingResult = TermSchema.safeParse(testInput.data.values);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
     });
   }
 });
@@ -139,7 +138,7 @@ describe("createTermFromArrayInputByTermTypeCodec", () => {
         testInput.data.termType,
       );
       const parsingResult = TermFromArrayInputSchema.safeParse(testInput.data.values);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
     });
   }
 });
@@ -204,7 +203,7 @@ describe("createTermFromRecordInputByTermTypeCodec", () => {
         testInput.data.termType,
       );
       const parsingResult = TermFromRecordInputSchema.safeParse(testInput.data.values);
-      assert.strictEqual(parsingResult.success, testOutcome.data);
+      expect(parsingResult.success).toBe(testOutcome.data);
     });
   }
 });

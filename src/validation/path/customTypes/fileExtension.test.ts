@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 
 import { expectTypeOf } from "expect-type";
 import type z from "zod";
@@ -44,7 +43,7 @@ describe("FileExtensionSchema", () => {
   for (const { testInput, testOutcome } of testCasesForFileExtensionSchema) {
     it(`for "${testInput}" parsing should return "${testOutcome}"`, () => {
       const parsingResult = FileExtensionSchema.safeParse(testInput);
-      assert.strictEqual(parsingResult.success, testOutcome);
+      expect(parsingResult.success).toBe(testOutcome);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<FileExtension>();
       }

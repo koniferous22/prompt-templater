@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert";
+import { describe, expect, it } from "bun:test";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -370,7 +369,7 @@ describe("createFolderWithContentsSchema", () => {
       const parsingResult = await FolderWithContentsSchema.safeParseAsync(
         testInput.data.rootFolder,
       );
-      assert.strictEqual(parsingResult.success, testOutcome.data.result);
+      expect(parsingResult.success).toBe(testOutcome.data.result);
       if (parsingResult.success) {
         expectTypeOf(parsingResult.data).toEqualTypeOf<FolderWithContents>();
       }

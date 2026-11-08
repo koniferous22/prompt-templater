@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -71,7 +71,7 @@ describe("configResourceFileFromAbsolutePath", () => {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const resourceAbsolutePathResult = await configResourceFileFromAbsolutePath(testInput.data);
       assert.ok(resourceAbsolutePathResult.isOk());
-      assert.deepEqual(resourceAbsolutePathResult.value, testOutcome.data);
+      expect(resourceAbsolutePathResult.value).toEqual(testOutcome.data);
     });
   }
 });
