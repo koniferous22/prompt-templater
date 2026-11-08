@@ -58,9 +58,14 @@ export type TemplateVariableSpecPrimitive =
           };
     });
 
-export type TemplateVariableSpecComposite = {
+type CompositeVariableType = "array" | "object";
+
+export type TemplateVariableSpecAbstractComposite<VariableType extends CompositeVariableType> = {
   specType: "composite";
-  variableType: "array";
+  variableType: VariableType;
+};
+
+export type TemplateVariableSpecArrayComposite = TemplateVariableSpecAbstractComposite<"array"> & {
   arrayElementType: TemplateVariableSpecComposite | TemplateVariableSpecPrimitive;
   modifier:
     | {
@@ -76,21 +81,40 @@ export type TemplateVariableSpecComposite = {
       };
 };
 
-export type TemplateVariableSpec = TemplateVariableSpecPrimitive | TemplateVariableSpecComposite;
+export type TemplateVariableSpecObjectComposite =
+  TemplateVariableSpecAbstractComposite<"object"> & {
+    objectShapeType: Record<string, TemplateVariableSpecComposite | TemplateVariableSpecPrimitive>;
+    modifier:
+      | {
+          modifierType: "none";
+        }
+      | {
+          modifierType: "optional";
+        }
+      | {
+          modifierType: "optionalWithDefault";
+          // TODO - type inferrence too complicated
+          defaultValue: Record<string, unknown>;
+        };
+  };
 
-// For now alias - `handlebars` supports all strings for keys
-export type TemplateSupportedString = string;
+export type TemplateVariableSpecComposite =
+  | TemplateVariableSpecArrayComposite
+  | TemplateVariableSpecObjectComposite;
 
-export type TemplateVariableSpecs = Record<TemplateSupportedString, TemplateVariableSpec>;
+export type TemplateVariableSpecs = TemplateVariableSpecPrimitive | TemplateVariableSpecComposite;
 
-export const createTemplateVariableSpecs = <const Specs extends TemplateVariableSpecs>(
-  inputSpecs: Specs,
+export const createTemplateVariableSpecs = <
+  const VariableSpecs extends Record<string, TemplateVariableSpecs>,
+>(
+  inputSpecs: VariableSpecs,
 ) => {
   const state = inputSpecs;
   const zodSchema = templateVariableSpecsBuildZodSchema(state);
   return {
     getSpecs: () => state,
     getZodSchema: () => zodSchema,
-    createTemplateVariableContext: () => createTemplateVariableContext(state, zodSchema.def.shape),
+    createTemplateVariableContext: () =>
+      createTemplateVariableContext(state, zodSchema.def.shape as any),
   };
 };

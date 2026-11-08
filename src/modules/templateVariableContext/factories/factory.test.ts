@@ -5,7 +5,11 @@ import type { Err, Ok, Result } from "neverthrow";
 import { match } from "ts-pattern";
 
 import type { AppError } from "../../../utils/deps/neverthrow/types.js";
-import type { TemplateVariableSpecs } from "../../templateVariableSpecs/factories/factory.js";
+import { createResourceContextFromExplicitWorkspace } from "../../resourceContext/createResourceContextFromExplicitWorkspace.js";
+import type {
+  TemplateVariableSpecObjectComposite,
+  TemplateVariableSpecs,
+} from "../../templateVariableSpecs/factories/factory.js";
 import { templateVariableSpecsBuildZodSchema } from "../../templateVariableSpecs/methods/buildZodSchema.js";
 import {
   createTemplateVariableContext,
@@ -75,17 +79,17 @@ const runMutationTestCase = async <
 
 // Mini-mutation testing framework end
 
-type TemplateVariableContextMutation<Specs extends TemplateVariableSpecs> =
+type TemplateVariableContextMutation<VariableSpecs extends Record<string, TemplateVariableSpecs>> =
   | {
       type: "mutationWithOptionalAssertion";
       operationInput: {
-        key: keyof Specs;
+        key: keyof VariableSpecs;
         value: any;
       };
       // optional
       assertOperationResult?: (
         result:
-          | Ok<InferTemplateContextStateFromSpecs<Specs>, never>
+          | Ok<InferTemplateContextStateFromSpecs<VariableSpecs>, never>
           | Err<
               any,
               | AppError<"module_templateVariableContext_setValue_keyNotFound">
@@ -95,23 +99,25 @@ type TemplateVariableContextMutation<Specs extends TemplateVariableSpecs> =
     }
   | {
       type: "resolvedValuesAssertion";
-      assertResolvedValues: (state: InferOptionalValues<Specs>) => any;
+      assertResolvedValues: (state: InferOptionalValues<VariableSpecs>) => any;
     }
   | {
       // Note - "strict" in sense of method naming "resolveValuesStrict"
       type: "resolvedValuesStrictAssertion";
-      assertResolvedValuesStrict: (result: Result<InferValues<Specs>, any>) => any;
+      assertResolvedValuesStrict: (result: Result<InferValues<VariableSpecs>, any>) => any;
     };
 
 // Todo - adjust this factory if necessary
-const templateVariableContextMutationFactory = <Specs extends TemplateVariableSpecs>(
-  operation: TemplateVariableContextMutation<Specs>,
-): TemplateVariableContextMutation<Specs> => {
+const templateVariableContextMutationFactory = <
+  VariableSpecs extends Record<string, TemplateVariableSpecs>,
+>(
+  operation: TemplateVariableContextMutation<VariableSpecs>,
+): TemplateVariableContextMutation<VariableSpecs> => {
   return operation;
 };
 
 const templateVariableContextTestCaseFactory = createMutationTestCaseFactory(
-  (specs: TemplateVariableSpecs) =>
+  (specs: Record<string, TemplateVariableSpecs>) =>
     createTemplateVariableContext(specs, templateVariableSpecsBuildZodSchema(specs).def.shape),
   templateVariableContextMutationFactory,
   async (sequenceItem, initialState) => {
@@ -167,7 +173,7 @@ const templateVariableSpecsFixture1 = {
       },
     },
   },
-} satisfies TemplateVariableSpecs;
+} satisfies Record<string, TemplateVariableSpecs>;
 
 const testCasesForCreateTemplateVariableContext = [
   {
@@ -313,6 +319,9 @@ const testCasesForCreateTemplateVariableContext = [
           {
             type: "resolvedValuesStrictAssertion",
             assertResolvedValuesStrict(result) {
+              if (!result.isOk()) {
+                console.error(result.error);
+              }
               assert.ok(result.isOk(), "expected ok result");
               expect(result.value).toEqual({
                 booleanVariable: true,
@@ -378,6 +387,9 @@ const testCasesForCreateTemplateVariableContext = [
           {
             type: "resolvedValuesStrictAssertion",
             assertResolvedValuesStrict(result) {
+              if (!result.isOk()) {
+                console.error(result.error);
+              }
               assert.ok(result.isOk(), "expected ok result");
               expect(result.value).toEqual({
                 booleanVariable: true,
@@ -446,7 +458,7 @@ const testCasesForCreateTemplateVariableContext = [
 ] satisfies {
   testInput: {
     data: {
-      templateSpecs: TemplateVariableSpecs;
+      templateSpecs: Record<string, TemplateVariableSpecs>;
       mutationTestingData: ReturnType<typeof templateVariableContextTestCaseFactory>;
     };
     testCaseDescription: string;

@@ -2,9 +2,9 @@ import { match } from "ts-pattern";
 import z from "zod";
 
 import type {
-  TemplateSupportedString,
-  TemplateVariableSpec,
+  TemplateVariableSpecArrayComposite,
   TemplateVariableSpecComposite,
+  TemplateVariableSpecObjectComposite,
   TemplateVariableSpecPrimitive,
   TemplateVariableSpecs,
 } from "../factories/factory.js";
@@ -36,33 +36,87 @@ const templateVariableSpecPrimitiveSchemas = {
   };
 };
 
-export type TemplateVariableSpecToZodSchema<Spec extends TemplateVariableSpec> =
-  Spec extends TemplateVariableSpecPrimitive
-    ? Spec["variableType"] extends keyof typeof templateVariableSpecPrimitiveSchemas
-      ? Spec["modifier"]["modifierType"] extends keyof (typeof templateVariableSpecPrimitiveSchemas)[Spec["variableType"]]
-        ? (typeof templateVariableSpecPrimitiveSchemas)[Spec["variableType"]][Spec["modifier"]["modifierType"]] extends (
+export type TemplateVariableSpecToZodSchema<Specs extends TemplateVariableSpecs> =
+  Specs extends TemplateVariableSpecPrimitive
+    ? Specs["variableType"] extends keyof typeof templateVariableSpecPrimitiveSchemas
+      ? Specs["modifier"]["modifierType"] extends keyof (typeof templateVariableSpecPrimitiveSchemas)[Specs["variableType"]]
+        ? (typeof templateVariableSpecPrimitiveSchemas)[Specs["variableType"]][Specs["modifier"]["modifierType"]] extends (
             ...args: any[]
           ) => any
           ? ReturnType<
-              (typeof templateVariableSpecPrimitiveSchemas)[Spec["variableType"]][Spec["modifier"]["modifierType"]]
+              (typeof templateVariableSpecPrimitiveSchemas)[Specs["variableType"]][Specs["modifier"]["modifierType"]]
             >
-          : (typeof templateVariableSpecPrimitiveSchemas)[Spec["variableType"]][Spec["modifier"]["modifierType"]]
+          : (typeof templateVariableSpecPrimitiveSchemas)[Specs["variableType"]][Specs["modifier"]["modifierType"]]
         : never
       : never
-    : Spec extends TemplateVariableSpecComposite
-      ? Spec["variableType"] extends "array"
-        ? z.ZodArray<TemplateVariableSpecToZodSchema<Spec["arrayElementType"]>>
-        : never
+    : Specs extends TemplateVariableSpecComposite
+      ? Specs extends TemplateVariableSpecArrayComposite
+        ? z.ZodArray<TemplateVariableSpecToZodSchema<Specs["arrayElementType"]>>
+        : Specs extends TemplateVariableSpecObjectComposite
+          ? z.ZodObject<{
+              [key in keyof Specs["objectShapeType"]]: TemplateVariableSpecToZodSchema<
+                Specs["objectShapeType"][key]
+              >;
+            }>
+          : never
       : never;
 
-export const templateVariableSpecToZodSchema = <const Spec extends TemplateVariableSpec>(
-  spec: Spec,
-): TemplateVariableSpecToZodSchema<Spec> => {
+export const templateVariableSpecToZodSchema = <const Specs extends TemplateVariableSpecs>(
+  spec: Specs,
+): TemplateVariableSpecToZodSchema<Specs> => {
   if (spec.specType === "composite") {
-    // Array only case for now
-    // Note - `ts-pattern` not used because inference doesn't work correctly on recursion
-    // @ts-expect-error excessively infinite instantiation
-    return z.array(templateVariableSpecToZodSchema(spec.arrayElementType));
+    // @ts-expect-error
+    return match(spec as TemplateVariableSpecComposite)
+      .with({ variableType: "array", modifier: { modifierType: "none" } }, (arraySpec) => {
+        // const innnerSpec = templateVariableSpecsBuildZodSchema(arraySpec.arrayElementType) as z.ZodType;
+        const innnerSpec = templateVariableSpecToZodSchema(arraySpec.arrayElementType) as z.ZodType;
+        return z.array(innnerSpec);
+      })
+      .with({ variableType: "array", modifier: { modifierType: "optional" } }, (arraySpec) => {
+        const innnerSpec = templateVariableSpecToZodSchema(arraySpec.arrayElementType) as z.ZodType;
+        return z.array(innnerSpec).optional();
+      })
+      .with(
+        { variableType: "array", modifier: { modifierType: "optionalWithDefault" } },
+        (arraySpec) => {
+          const innnerSpec = templateVariableSpecToZodSchema(
+            arraySpec.arrayElementType,
+          ) as z.ZodType;
+          return z.array(innnerSpec).default(arraySpec.modifier.defaultValue);
+        },
+      )
+      .with({ variableType: "object", modifier: { modifierType: "none" } }, (objectSpec) => {
+        const objectShape = Object.fromEntries(
+          Object.entries(objectSpec.objectShapeType).map(([key, value]) => [
+            key,
+            // @ts-expect-error type instantiation excessively deep and infinite
+            templateVariableSpecToZodSchema(value) as z.ZodType,
+          ]),
+        );
+        return z.object(objectShape);
+      })
+      .with({ variableType: "object", modifier: { modifierType: "optional" } }, (objectSpec) => {
+        const objectShape = Object.fromEntries(
+          Object.entries(objectSpec.objectShapeType).map(([key, value]) => [
+            key,
+            templateVariableSpecToZodSchema(value) as z.ZodType,
+          ]),
+        );
+        return z.object(objectShape).optional();
+      })
+      .with(
+        { variableType: "object", modifier: { modifierType: "optionalWithDefault" } },
+        (objectSpec) => {
+          const objectShape = Object.fromEntries(
+            Object.entries(objectSpec.objectShapeType).map(([key, value]) => [
+              key,
+              templateVariableSpecToZodSchema(value) as z.ZodType,
+            ]),
+          );
+          return z.object(objectShape).default(objectSpec.modifier.defaultValue);
+        },
+      )
+      .exhaustive();
   }
   // @ts-expect-error
   return match(spec as TemplateVariableSpecPrimitive)
@@ -133,14 +187,16 @@ export const templateVariableSpecToZodSchema = <const Spec extends TemplateVaria
 };
 
 export type TemplateVariableSpecsBuildZodSchema<
-  Specs extends Record<TemplateSupportedString, TemplateVariableSpec>,
+  VariableSpecs extends Record<string, TemplateVariableSpecs>,
 > = z.ZodObject<{
-  [key in keyof Specs]: TemplateVariableSpecToZodSchema<Specs[key]>;
+  [key in keyof VariableSpecs]: TemplateVariableSpecToZodSchema<VariableSpecs[key]>;
 }>;
 
-export const templateVariableSpecsBuildZodSchema = <const Specs extends TemplateVariableSpecs>(
-  specs: Specs,
-): TemplateVariableSpecsBuildZodSchema<Specs> => {
+export const templateVariableSpecsBuildZodSchema = <
+  const VariableSpecs extends Record<string, TemplateVariableSpecs>,
+>(
+  specs: VariableSpecs,
+): TemplateVariableSpecsBuildZodSchema<VariableSpecs> => {
   // @ts-expect-error
   return z.object(
     Object.fromEntries(

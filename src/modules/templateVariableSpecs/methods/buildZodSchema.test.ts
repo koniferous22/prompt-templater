@@ -3,8 +3,9 @@ import assert from "node:assert/strict";
 
 import { expectTypeOf } from "expect-type";
 import { match } from "ts-pattern";
+import z from "zod";
 
-import type { TemplateVariableSpec, TemplateVariableSpecs } from "../factories/factory.js";
+import type { TemplateVariableSpecs } from "../factories/factory.js";
 import {
   templateVariableSpecsBuildZodSchema,
   templateVariableSpecToZodSchema,
@@ -226,10 +227,137 @@ const testCasesForTemplateVariableSpecToZodSchema = [
       testBehaviourDescription: "should successfully parse",
     },
   },
+  {
+    testInput: {
+      data: {
+        specs: {
+          specType: "composite",
+          variableType: "array",
+          arrayElementType: {
+            specType: "primitive",
+            variableType: "string",
+            modifier: { modifierType: "none" },
+          },
+          modifier: { modifierType: "optional" },
+        },
+        zodSchemaInput: undefined,
+        assertion: {
+          type: "deepEqualsInput",
+        },
+      },
+      testCaseDescription: "composite optional array of strings",
+    },
+    testOutcome: {
+      data: {
+        result: true,
+      },
+      testBehaviourDescription: "should successfully parse",
+    },
+  },
+  {
+    testInput: {
+      data: {
+        specs: {
+          specType: "composite",
+          variableType: "object",
+          objectShapeType: {
+            key1: {
+              specType: "primitive",
+              variableType: "boolean",
+              modifier: {
+                modifierType: "none",
+              },
+            },
+            key2: {
+              specType: "primitive",
+              variableType: "number",
+              modifier: {
+                modifierType: "none",
+              },
+            },
+            key3: {
+              specType: "primitive",
+              variableType: "string",
+              modifier: {
+                modifierType: "none",
+              },
+            },
+            arrayAttribute: {
+              specType: "composite",
+              variableType: "array",
+              arrayElementType: {
+                specType: "primitive",
+                variableType: "number",
+                modifier: {
+                  modifierType: "none",
+                },
+              },
+              modifier: {
+                modifierType: "none",
+              },
+            },
+            nestedObjectAttribute: {
+              specType: "composite",
+              variableType: "object",
+              objectShapeType: {
+                nestedKey1: {
+                  specType: "primitive",
+                  variableType: "boolean",
+                  modifier: {
+                    modifierType: "none",
+                  },
+                },
+              },
+              modifier: {
+                modifierType: "none",
+              },
+            },
+            nestedOptionalObjectAttribute: {
+              specType: "composite",
+              variableType: "object",
+              objectShapeType: {
+                nestedOptionalKey1: {
+                  specType: "primitive",
+                  variableType: "boolean",
+                  modifier: {
+                    modifierType: "optional",
+                  },
+                },
+              },
+              modifier: {
+                modifierType: "none",
+              },
+            },
+          },
+          modifier: { modifierType: "none" },
+        },
+        zodSchemaInput: {
+          key1: true,
+          key2: 2,
+          key3: "test",
+          arrayAttribute: [1, 2, 3],
+          nestedObjectAttribute: {
+            nestedKey1: false,
+          },
+          nestedOptionalObjectAttribute: {},
+        },
+        assertion: {
+          type: "deepEqualsInput",
+        },
+      },
+      testCaseDescription: "object with mixed and nested values",
+    },
+    testOutcome: {
+      data: {
+        result: true,
+      },
+      testBehaviourDescription: "should successfully parse",
+    },
+  },
 ] satisfies {
   testInput: {
     data: {
-      specs: TemplateVariableSpec;
+      specs: TemplateVariableSpecs;
       zodSchemaInput: any;
       assertion:
         | {
@@ -285,7 +413,7 @@ const exampleSpec = {
     },
   },
   modifier: { modifierType: "none" },
-} satisfies TemplateVariableSpec;
+} satisfies TemplateVariableSpecs;
 
 expectTypeOf(() => templateVariableSpecToZodSchema(exampleSpec).parse([["input"]])).toEqualTypeOf<
   () => string[][]
@@ -295,7 +423,7 @@ const testCasesForTemplateVariableSpecsBuildZodSchema = [
   {
     testInput: {
       data: {
-        specs: {
+        variableSpecs: {
           nestedStringArrayVariable: {
             specType: "composite",
             variableType: "array",
@@ -328,7 +456,7 @@ const testCasesForTemplateVariableSpecsBuildZodSchema = [
 ] satisfies {
   testInput: {
     data: {
-      specs: TemplateVariableSpecs;
+      variableSpecs: Record<string, TemplateVariableSpecs>;
       zodSchemaInput: object;
     };
     testCaseDescription: string;
@@ -344,7 +472,7 @@ const testCasesForTemplateVariableSpecsBuildZodSchema = [
 describe("templateVariableSpecsBuildZodSchema", () => {
   for (const { testInput, testOutcome } of testCasesForTemplateVariableSpecsBuildZodSchema) {
     it(`for ${testInput.testCaseDescription} it ${testOutcome.testBehaviourDescription}`, async () => {
-      const builtZodSchema = templateVariableSpecsBuildZodSchema(testInput.data.specs);
+      const builtZodSchema = templateVariableSpecsBuildZodSchema(testInput.data.variableSpecs);
       const parseResult = builtZodSchema.safeParse(testInput.data.zodSchemaInput);
       if (testOutcome.data.result === true) {
         assert.ok(parseResult.success);
@@ -371,7 +499,7 @@ const exampleSpecs = {
       },
     },
   },
-} satisfies TemplateVariableSpecs;
+} satisfies Record<string, TemplateVariableSpecs>;
 
 expectTypeOf(() =>
   templateVariableSpecsBuildZodSchema(exampleSpecs).parse({ nestedArrayVariable: [["input"]] }),

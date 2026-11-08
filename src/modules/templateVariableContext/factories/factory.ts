@@ -4,7 +4,8 @@ import { isNonEmptyArray } from "../../../utils/array/isNonEmptyArray.js";
 import { appErr } from "../../../utils/deps/neverthrow/errorFactory.js";
 import type {
   SpecsToTypescriptMapper,
-  TemplateVariableSpec,
+  TemplateVariableSpecArrayComposite,
+  TemplateVariableSpecObjectComposite,
   TemplateVariableSpecPrimitive,
   TemplateVariableSpecs,
 } from "../../templateVariableSpecs/factories/factory.js";
@@ -37,49 +38,82 @@ const typescriptTypeResolutionMapperHelper = {
   };
 };
 
-export type InferValueTypeFromSpec<Spec extends TemplateVariableSpec> =
-  Spec["variableType"] extends keyof typeof typescriptTypeResolutionMapperHelper
-    ? Spec["modifier"]["modifierType"] extends keyof (typeof typescriptTypeResolutionMapperHelper)[Spec["variableType"]]
-      ? SpecsToTypescriptMapper[(typeof typescriptTypeResolutionMapperHelper)[Spec["variableType"]][Spec["modifier"]["modifierType"]]]
+export type InferValueTypeFromSpecs<Specs extends TemplateVariableSpecs> =
+  Specs["specType"] extends "primitive"
+    ? Specs["variableType"] extends keyof typeof typescriptTypeResolutionMapperHelper
+      ? Specs["modifier"]["modifierType"] extends keyof (typeof typescriptTypeResolutionMapperHelper)[Specs["variableType"]]
+        ? SpecsToTypescriptMapper[(typeof typescriptTypeResolutionMapperHelper)[Specs["variableType"]][Specs["modifier"]["modifierType"]]]
+        : never
       : never
-    : never;
+    : Specs["specType"] extends "composite"
+      ? Specs extends TemplateVariableSpecArrayComposite
+        ? Specs["modifier"] extends { modifierType: "optional" }
+          ? Array<InferValueTypeFromSpecs<Specs["arrayElementType"]>> | undefined
+          : // i.e. for array with default value and required array infer array with proper value type, i.e. without potential `undefined`
+            Array<InferValueTypeFromSpecs<Specs["arrayElementType"]>>
+        : Specs extends TemplateVariableSpecObjectComposite
+          ? Specs["modifier"] extends { modifierType: "optional" }
+            ?
+                | {
+                    [key in keyof Specs["objectShapeType"]]: InferValueTypeFromSpecs<
+                      Specs["objectShapeType"][key]
+                    >;
+                  }
+                | undefined
+            : // i.e. for object with default value and required array infer object with proper value type, i.e. without potential `undefined`
+              {
+                [key in keyof Specs["objectShapeType"]]: InferValueTypeFromSpecs<
+                  Specs["objectShapeType"][key]
+                >;
+              }
+          : never
+      : never;
 
-export type InferValues<Specs extends TemplateVariableSpecs> = {
-  [key in keyof Specs]: InferValueTypeFromSpec<Specs[key]>;
+export type InferValues<VariableSpecs extends Record<string, TemplateVariableSpecs>> = {
+  [key in keyof VariableSpecs]: InferValueTypeFromSpecs<VariableSpecs[key]>;
 };
 
-export type InferOptionalValues<Specs extends TemplateVariableSpecs> = {
-  [key in keyof Specs]: InferValueTypeFromSpec<Specs[key]> | undefined;
+export type InferOptionalValues<VariableSpecs extends Record<string, TemplateVariableSpecs>> = {
+  [key in keyof VariableSpecs]: InferValueTypeFromSpecs<VariableSpecs[key]> | undefined;
 };
 
-export type InferTemplateContextStateFromSpecs<Specs extends TemplateVariableSpecs> = {
-  [key in keyof Specs]:
+export type InferTemplateContextStateFromSpecs<
+  VariableSpecs extends Record<string, TemplateVariableSpecs>,
+> = {
+  [key in keyof VariableSpecs]:
     | {
         type: "uninitialized";
       }
     | {
         type: "initialized";
-        value: InferValueTypeFromSpec<Specs[key]>;
+        value: InferValueTypeFromSpecs<VariableSpecs[key]>;
       };
 };
 
-const buildEmptyTemplateVariableContext = <const Specs extends TemplateVariableSpecs>(
-  specs: Specs,
-): InferTemplateContextStateFromSpecs<Specs> => {
+const buildEmptyTemplateVariableContext = <
+  const VariableSpecs extends Record<string, TemplateVariableSpecs>,
+>(
+  specs: VariableSpecs,
+): InferTemplateContextStateFromSpecs<VariableSpecs> => {
   // @ts-expect-error
   return Object.fromEntries(Object.keys(specs).map((key) => [key, { type: "uninitialized" }]));
 };
 
 export const createTemplateVariableContextValidateAndSetValueFn =
   <
-    Specs extends TemplateVariableSpecs,
-    ZodSchemas extends { [key in keyof Specs]: TemplateVariableSpecToZodSchema<Specs[key]> },
+    VariableSpecs extends Record<string, TemplateVariableSpecs>,
+    ZodSchemas extends {
+      [key in keyof VariableSpecs]: TemplateVariableSpecToZodSchema<VariableSpecs[key]>;
+    },
   >(
-    state: InferTemplateContextStateFromSpecs<Specs>,
+    state: InferTemplateContextStateFromSpecs<VariableSpecs>,
     zodSchemas: ZodSchemas,
-    specs: Specs,
+    specs: VariableSpecs,
   ) =>
-  <Key extends keyof Specs>(key: Key, value: InferValueTypeFromSpec<Specs[Key]>) => {
+  <Key extends keyof VariableSpecs>(
+    key: Key,
+    value: InferValueTypeFromSpecs<VariableSpecs[Key]>,
+  ) => {
     const fieldZodSchema = zodSchemas[key];
     if (fieldZodSchema === undefined) {
       return appErr("module_templateVariableContext_setValue_keyNotFound", {
@@ -101,11 +135,11 @@ export const createTemplateVariableContextValidateAndSetValueFn =
   };
 
 export const templateVariableContextResolveValuesStrict = <
-  const Specs extends TemplateVariableSpecs,
+  const VariableSpecs extends Record<string, TemplateVariableSpecs>,
 >(
-  state: InferTemplateContextStateFromSpecs<Specs>,
-): Result<InferValues<Specs>, any> => {
-  let result: Partial<InferValues<Specs>> = {};
+  state: InferTemplateContextStateFromSpecs<VariableSpecs>,
+): Result<InferValues<VariableSpecs>, any> => {
+  let result: Partial<InferValues<VariableSpecs>> = {};
   const uninitializeFields: string[] = [];
   for (const [key, value] of Object.entries(state)) {
     if (value.type === "uninitialized") {
@@ -121,13 +155,15 @@ export const templateVariableContextResolveValuesStrict = <
       missingFields: uninitializeFields,
     });
   }
-  return ok(result as InferValues<Specs>);
+  return ok(result as InferValues<VariableSpecs>);
 };
 
-export const templateVariableContextResolveValues = <const Specs extends TemplateVariableSpecs>(
-  state: InferTemplateContextStateFromSpecs<Specs>,
-): InferOptionalValues<Specs> => {
-  let result: Partial<InferOptionalValues<Specs>> = {};
+export const templateVariableContextResolveValues = <
+  const VariableSpecs extends Record<string, TemplateVariableSpecs>,
+>(
+  state: InferTemplateContextStateFromSpecs<VariableSpecs>,
+): InferOptionalValues<VariableSpecs> => {
+  let result: Partial<InferOptionalValues<VariableSpecs>> = {};
   for (const [key, value] of Object.entries(state)) {
     if (value.type === "uninitialized") {
       // @ts-expect-error
@@ -137,14 +173,16 @@ export const templateVariableContextResolveValues = <const Specs extends Templat
     // @ts-expect-error
     result[key] = value.value;
   }
-  return result as InferOptionalValues<Specs>;
+  return result as InferOptionalValues<VariableSpecs>;
 };
 
 export const createTemplateVariableContext = <
-  Specs extends TemplateVariableSpecs,
-  ZodSchemas extends { [key in keyof Specs]: TemplateVariableSpecToZodSchema<Specs[key]> },
+  VariableSpecs extends Record<string, TemplateVariableSpecs>,
+  ZodSchemas extends {
+    [key in keyof VariableSpecs]: TemplateVariableSpecToZodSchema<VariableSpecs[key]>;
+  },
 >(
-  specs: Specs,
+  specs: VariableSpecs,
   zodSchemas: ZodSchemas,
 ) => {
   const state = buildEmptyTemplateVariableContext(specs);
@@ -157,6 +195,8 @@ export const createTemplateVariableContext = <
 };
 
 export type TemplateVariableContext<
-  Specs extends TemplateVariableSpecs,
-  ZodSchemas extends { [key in keyof Specs]: TemplateVariableSpecToZodSchema<Specs[key]> },
-> = ReturnType<typeof createTemplateVariableContext<Specs, ZodSchemas>>;
+  VariableSpecs extends Record<string, TemplateVariableSpecs>,
+  ZodSchemas extends {
+    [key in keyof VariableSpecs]: TemplateVariableSpecToZodSchema<VariableSpecs[key]>;
+  },
+> = ReturnType<typeof createTemplateVariableContext<VariableSpecs, ZodSchemas>>;

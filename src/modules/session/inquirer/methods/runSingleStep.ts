@@ -11,12 +11,13 @@ import type { TemplateVariableSpecToZodSchema } from "../../../templateVariableS
 
 export const createInquirerRunStep =
   <
-    Specs extends TemplateVariableSpecs,
-    ZodSchemas extends { [key in keyof Specs]: TemplateVariableSpecToZodSchema<Specs[key]> },
-    e,
+    VariableSpecs extends Record<string, TemplateVariableSpecs>,
+    ZodSchemas extends {
+      [key in keyof VariableSpecs]: TemplateVariableSpecToZodSchema<VariableSpecs[key]>;
+    },
   >(
     resourceContext: ResourceContext,
-    templateVariableContext: TemplateVariableContext<Specs, ZodSchemas>,
+    templateVariableContext: TemplateVariableContext<VariableSpecs, ZodSchemas>,
   ) =>
   (workflowStep: Workflow["steps"][number]) => {
     return match(workflowStep)

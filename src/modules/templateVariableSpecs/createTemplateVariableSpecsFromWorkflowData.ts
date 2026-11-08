@@ -9,11 +9,7 @@ import type { AbsolutePath } from "../../validation/path/customTypes/index.js";
 import type { EditorWorkflowStep } from "../../validation/resourceFragments/steps/editor/schemas/editorWorkflowStep.js";
 import type { InputWorkflowStep } from "../../validation/resourceFragments/steps/input/schemas/inputWorkflowStep.js";
 import type { WorkflowSchema } from "../../validation/resources/config/workflow/schemas/workflow.js";
-import {
-  createTemplateVariableSpecs,
-  type TemplateSupportedString,
-  type TemplateVariableSpec,
-} from "./factories/factory.js";
+import { createTemplateVariableSpecs, type TemplateVariableSpecs } from "./factories/factory.js";
 
 type InputWorkflowData = Pick<z.output<typeof WorkflowSchema>, "steps">;
 
@@ -41,7 +37,7 @@ const mapWorkflowStepContextToTemplateVariableSpec = (
   workflowStepContext: InputWorkflowStepContext,
 ) =>
   match(workflowStepContext)
-    .returnType<TemplateVariableSpec>()
+    .returnType<TemplateVariableSpecs>()
     .with({ type: "input", validation: { type: "required" } }, () => ({
       specType: "primitive",
       variableType: "string",
@@ -119,7 +115,7 @@ export const createTemplateVariableSpecsFromWorkflowData = (
   workflowData: InputWorkflowData,
   context: { file: AbsolutePath },
 ) => {
-  const templateVariableSpecsInputMap = new Map<TemplateSupportedString, TemplateVariableSpec>();
+  const templateVariableSpecsInputMap = new Map<string, TemplateVariableSpecs>();
   for (const workflowStep of workflowData.steps) {
     const workflowStepVariableName = resolveWorkflowStepVariable(workflowStep);
     if (templateVariableSpecsInputMap.has(workflowStepVariableName)) {
