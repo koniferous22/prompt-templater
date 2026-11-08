@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 
 import {
   AbsolutePathPosixSchema,
@@ -111,7 +110,7 @@ describe("longestCommonPathPrefixPosix", () => {
   for (const { testInput, testOutcome } of testCasesForLongestCommonPathPosix) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const [firstPath, secondPath] = testInput.data;
-      assert.equal(longestCommonPathPrefixPosix(firstPath, secondPath), testOutcome.data);
+      expect(longestCommonPathPrefixPosix(firstPath, secondPath)).toEqual(testOutcome.data);
     });
   }
 });

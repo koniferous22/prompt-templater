@@ -151,7 +151,7 @@ describe("wrapNonEmptyInputLiteralIntoArray", () => {
     it(`for "${testInput.testCaseDescription}" it should ${testOutcome.testBehaviourDescription}`, () => {
       const result = wrapNonEmptyInputLiteralIntoArray(testInput.data);
       if (testOutcome.data.assertionType === "equalOriginal") {
-        assert.equal(result, testInput.data);
+        expect(result).toStrictEqual(testInput.data);
       } else {
         expect(result).toEqual(testOutcome.data.value);
       }

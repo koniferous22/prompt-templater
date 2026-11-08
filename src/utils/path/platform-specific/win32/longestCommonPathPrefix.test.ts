@@ -1,5 +1,4 @@
-import { describe, it } from "bun:test";
-import assert from "node:assert/strict";
+import { describe, expect, it } from "bun:test";
 
 import {
   AbsolutePathWin32Schema,
@@ -101,7 +100,7 @@ describe("longestCommonPathPrefixWin32", () => {
   for (const { testInput, testOutcome } of testCasesForLongestCommonPathWin32) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const [firstPath, secondPath] = testInput.data;
-      assert.equal(longestCommonPathPrefixWin32(firstPath, secondPath), testOutcome.data);
+      expect(longestCommonPathPrefixWin32(firstPath, secondPath)).toEqual(testOutcome.data);
     });
   }
 });

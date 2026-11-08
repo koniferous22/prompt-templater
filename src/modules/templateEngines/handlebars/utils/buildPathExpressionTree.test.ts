@@ -165,7 +165,7 @@ describe("buildHandlebarsPathExpressionTree", () => {
         expect(simplified).toMatchSnapshot();
       } else {
         assert.ok(pathExpressionTree.isErr(), "expected Err result");
-        assert.equal(pathExpressionTree.error.code, testOutcome.data.errorCode);
+        expect(pathExpressionTree.error.code).toBe(testOutcome.data.errorCode);
       }
     });
   }

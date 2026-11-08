@@ -1,4 +1,4 @@
-import { describe, it } from "bun:test";
+import { describe, expect, it } from "bun:test";
 import assert from "node:assert/strict";
 
 import { z } from "zod";
@@ -58,11 +58,11 @@ describe("buildUnionOptionsFromEnumMapper", () => {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, () => {
       const result = buildUnionOptionsFromEnumMapper(testInput.data as any);
 
-      assert.equal(result.length, testOutcome.data.length);
+      expect(result.length).toEqual(testOutcome.data.length);
       assert.ok(result.length >= 1, "result must be a non-empty array");
       const mapperValues = Object.values(testInput.data);
       for (let i = 0; i < result.length; i++) {
-        assert.equal(result[i], mapperValues[i]);
+        expect(result[i]).toEqual(mapperValues[i]);
       }
     });
   }

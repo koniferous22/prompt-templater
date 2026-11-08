@@ -89,7 +89,7 @@ describe("buildUnionOptionsFromEnum", () => {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, () => {
       const result = buildUnionOptionsFromEnum(testInput.data as any);
 
-      assert.equal(result.length, testOutcome.data.length);
+      expect(result.length).toBe(testOutcome.data.length);
       assert.ok(result.length >= 1, "result must be a non-empty array");
 
       // Each element is a Zod schema (literal in practice)
