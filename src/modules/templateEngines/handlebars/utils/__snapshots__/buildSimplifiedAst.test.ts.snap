@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
-exports[`buildHandlebarsPathExpressionTree for simple content + single mustache parsing should return a hierarchy containing only the mustache node 1`] = `
+exports[`buildSimplifiedAst for simple content + single mustache parsing should return a hierarchy containing only the mustache node 1`] = `
 [
   {
     "kind": "mustache",
@@ -19,7 +19,7 @@ exports[`buildHandlebarsPathExpressionTree for simple content + single mustache 
 ]
 `;
 
-exports[`buildHandlebarsPathExpressionTree for allowed #with block with nested mustache parsing should return hierarchy with block node containing the nested mustache 1`] = `
+exports[`buildSimplifiedAst for allowed #with block with nested mustache parsing should return hierarchy with block node containing the nested mustache 1`] = `
 [
   {
     "helper": "with",
@@ -66,7 +66,7 @@ exports[`buildHandlebarsPathExpressionTree for allowed #with block with nested m
 ]
 `;
 
-exports[`buildHandlebarsPathExpressionTree for allowed #each block with program and inverse parsing should return hierarchy with block containing both program and inverse mustaches 1`] = `
+exports[`buildSimplifiedAst for allowed #each block with program and inverse parsing should return hierarchy with block containing both program and inverse mustaches 1`] = `
 [
   {
     "helper": "each",
@@ -128,9 +128,9 @@ exports[`buildHandlebarsPathExpressionTree for allowed #each block with program 
 ]
 `;
 
-exports[`buildHandlebarsPathExpressionTree for only content and comment statements parsing should return empty hierarchy (content/comments are ignored) 1`] = `[]`;
+exports[`buildSimplifiedAst for only content and comment statements parsing should return empty hierarchy (content/comments are ignored) 1`] = `[]`;
 
-exports[`buildHandlebarsPathExpressionTree for allowed #if block with inverse parsing should return hierarchy with if-block containing both program and inverse 1`] = `
+exports[`buildSimplifiedAst for allowed #if block with inverse parsing should return hierarchy with if-block containing both program and inverse 1`] = `
 [
   {
     "helper": "if",

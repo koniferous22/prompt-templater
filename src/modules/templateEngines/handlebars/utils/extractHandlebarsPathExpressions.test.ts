@@ -2,14 +2,15 @@ import { describe, expect, it } from "bun:test";
 
 import Handlebars from "handlebars";
 
-import { buildHandlebarsPathExpressionTree } from "./buildPathExpressionTree.js";
+import { AbsolutePathSchema } from "../../../../validation/path/customTypes/index.js";
+import { buildSimplifiedAst } from "./buildSimplifiedAst.js";
 import { extractHandlebarsPathExpressions } from "./extractHandlebarsPathExpressions.js";
-import type { PathExpressionTreeNode } from "./types.js";
+import type { SimplifiedAstNode } from "./types.js";
 
 const testCasesForExtractHandlebarsPathExpressions = [
   {
     testInput: {
-      data: buildHandlebarsPathExpressionTree(
+      data: buildSimplifiedAst(
         Handlebars.parse(`Hello {{name}}!`) as unknown as hbs.AST.Program,
       )._unsafeUnwrap(),
       testCaseDescription: "a single top-level mustache referencing a simple path",
@@ -21,7 +22,7 @@ const testCasesForExtractHandlebarsPathExpressions = [
   },
   {
     testInput: {
-      data: buildHandlebarsPathExpressionTree(
+      data: buildSimplifiedAst(
         Handlebars.parse(`{{#with person}}
   {{firstName}}
 {{/with}}`) as unknown as hbs.AST.Program,
@@ -35,7 +36,7 @@ const testCasesForExtractHandlebarsPathExpressions = [
   },
   {
     testInput: {
-      data: buildHandlebarsPathExpressionTree(
+      data: buildSimplifiedAst(
         Handlebars.parse(`{{#each items}}
   - {{this.title}} ({{../name}})
 {{else}}
@@ -52,7 +53,7 @@ const testCasesForExtractHandlebarsPathExpressions = [
   },
 ] satisfies {
   testInput: {
-    data: PathExpressionTreeNode[];
+    data: SimplifiedAstNode[];
     testCaseDescription: string;
   };
   testOutcome: {
@@ -64,7 +65,10 @@ const testCasesForExtractHandlebarsPathExpressions = [
 describe("extractHandlebarsPathExpressions", () => {
   for (const { testInput, testOutcome } of testCasesForExtractHandlebarsPathExpressions) {
     it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
-      const handlebarsPathExpressions = extractHandlebarsPathExpressions(testInput.data);
+      const handlebarsPathExpressions = extractHandlebarsPathExpressions(testInput.data, {
+        templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+        sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+      });
       expect(handlebarsPathExpressions).toMatchSnapshot();
     });
   }

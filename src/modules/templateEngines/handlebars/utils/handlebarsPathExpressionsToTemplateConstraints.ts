@@ -1,15 +1,24 @@
-import { SelectorSchema } from "../../../../validation/resourceReference/term/schemas/selector.js";
+import { err, ok } from "neverthrow";
+
+import type { AppErrorCode } from "../../../../constants/errorCodes.js";
+import { isNonEmptyArray } from "../../../../utils/array/isNonEmptyArray.js";
+import type { AppError } from "../../../../utils/deps/neverthrow/types.js";
+import type { AbsolutePath } from "../../../../validation/path/customTypes/index.js";
 import { NonEmptyStringSchema } from "../../../../validation/string/customTypes/string.js";
-import type { Constraint, ExpectedType } from "../../templateEngine.js";
-import { resolvePathAgainstHbsBlockStatements } from "./resolvePathAgainstBlockStatements.js";
-import type { LocatedPathExpression } from "./types.js";
+import { handlebarsResolvePathAgainstBlockStatements } from "./resolvePathAgainstBlockStatements.js";
+import type { HandlebarsConstraint, ExpectedType, LocatedPathExpression } from "./types.js";
 
 // Seralizes constraints from path expressions
 // Note - produces potentially duplicate constraints that are left as-is
 export function pathExpressionsToConstraints(
   locatedPathExpressions: LocatedPathExpression[],
-): Constraint[] {
-  const constraints: Constraint[] = [];
+  ctx: {
+    templateFile: AbsolutePath;
+    sourceWorkflowFile: AbsolutePath;
+  },
+) {
+  const constraints: HandlebarsConstraint[] = [];
+  const errors: AppError<AppErrorCode>[] = [];
 
   for (const loc of locatedPathExpressions) {
     const { pathExpr, blockStatementStack } = loc;
@@ -21,7 +30,7 @@ export function pathExpressionsToConstraints(
         const eachBlock = [...blockStatementStack].reverse().find((b) => b.isEach);
         if (eachBlock) {
           constraints.push({
-            selector: SelectorSchema.parse(eachBlock.resolvedSelector),
+            selector: eachBlock.resolvedSelector,
             expectedType: "object",
             reference: {
               pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
@@ -36,7 +45,7 @@ export function pathExpressionsToConstraints(
         const eachBlock = [...blockStatementStack].reverse().find((b) => b.isEach);
         if (eachBlock) {
           constraints.push({
-            selector: SelectorSchema.parse(eachBlock.resolvedSelector),
+            selector: eachBlock.resolvedSelector,
             expectedType: "array",
             reference: {
               pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
@@ -52,15 +61,25 @@ export function pathExpressionsToConstraints(
       continue;
     }
 
-    const selector = resolvePathAgainstHbsBlockStatements(pathExpr, blockStatementStack);
+    const selectorResult = handlebarsResolvePathAgainstBlockStatements(
+      loc.origin,
+      blockStatementStack,
+      ctx,
+    );
+
+    if (selectorResult.isErr()) {
+      errors.push(selectorResult.error);
+    }
+
+    const selector = selectorResult.isOk() ? selectorResult.value : null;
     if (!selector || selector.length === 0) {
       // pure "this" reference – the current context itself
       if (blockStatementStack.length > 0) {
         const current = blockStatementStack[blockStatementStack.length - 1]!;
-        // inside an each the current context is an element of the array
+        // inside an each the current context is iterable (either iterating array elements, or object values)
         if (current.isEach) {
           constraints.push({
-            selector: SelectorSchema.parse(current.resolvedSelector),
+            selector: current.resolvedSelector,
             expectedType: "iterable",
             reference: {
               pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
@@ -73,7 +92,7 @@ export function pathExpressionsToConstraints(
         } else {
           // inside a with the current context is an object
           constraints.push({
-            selector: SelectorSchema.parse(current.resolvedSelector),
+            selector: current.resolvedSelector,
             expectedType: "object",
             reference: {
               pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
@@ -108,7 +127,9 @@ export function pathExpressionsToConstraints(
       expectedType = "iterable";
     }
     // Path used as a simple mustache → most likely a primitive (stringified)
-    else if (loc.mustache) {
+    // workaround - exclude plain this
+    // BUG - `this` points to parent selector
+    else if (loc.mustache && loc.mustache.path?.original !== "this") {
       expectedType = "primitive";
     }
     // Path used as a property access (has multiple parts) → intermediate segments are objects
@@ -132,8 +153,8 @@ export function pathExpressionsToConstraints(
     // e.g. a.b.c  ⇒  a is object, a.b is object
     for (let i = 1; i < selector.length; i++) {
       constraints.push({
-        selector: SelectorSchema.parse(selector.slice(0, i)),
-        expectedType: "object",
+        selector: selector.slice(0, i),
+        expectedType: selector[i - 1]!.shouldExpectIterable ? "iterable" : "object",
         reference: {
           pathExpression: NonEmptyStringSchema.nullable().parse(loc.origin.path?.original),
           location: {
@@ -145,5 +166,8 @@ export function pathExpressionsToConstraints(
     }
   }
 
-  return constraints;
+  if (isNonEmptyArray(errors)) {
+    return err(errors);
+  }
+  return ok(constraints);
 }

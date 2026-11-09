@@ -46,6 +46,9 @@ const createFormatItemList =
 
 const formatStringList = createFormatItemList<string>((x: string) => x);
 
+const formatReferenceInFile = (line: number | null, column: number | null) =>
+  line !== null ? `(line ${line}${column !== null ? `, column ${column}` : ""})` : "";
+
 // TODO - often encountering circular references, because zod issue formatting reuses `errorMessages` as well
 
 export const errorMessages = {
@@ -178,18 +181,108 @@ export const errorMessages = {
   module_session_createSessionFromCliInput_unableToDetectContext: (ctx: {
     workflowFileInput: string;
   }) => `Unable to detect workspace context from workflow file "${ctx.workflowFileInput}"`,
-  module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstStatement:
-    (ctx: { statementType: string; location: hbs.AST.SourceLocation }) =>
-      `prompt-templater-v1 doesn't support handlebars "${ctx.statementType}" statement type (${JSON.stringify(ctx.location)})`,
-  module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstBlockHelper:
-    (ctx: { blockHelper: string; location: hbs.AST.SourceLocation }) =>
-      `Encountered unsupported block helper "${ctx.blockHelper}" (${JSON.stringify(ctx.location)})`,
-  module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unexpectedAstStatement:
-    (ctx: { statementType: string; location: hbs.AST.SourceLocation }) =>
-      `Encountered unexpected statement "${ctx.statementType}" (${JSON.stringify(ctx.location)})`,
+  module_templateEngines_handlebars_buildSimplifiedAst_unsupportedAstStatement: (ctx: {
+    statementType: string;
+    location: hbs.AST.SourceLocation;
+  }) =>
+    `prompt-templater-v1 doesn't support handlebars "${ctx.statementType}" statement type (${JSON.stringify(ctx.location)})`,
+  module_templateEngines_handlebars_buildSimplifiedAst_unsupportedAstBlockHelper: (ctx: {
+    blockHelper: string;
+    location: hbs.AST.SourceLocation;
+  }) =>
+    `Encountered unsupported block helper "${ctx.blockHelper}" (${JSON.stringify(ctx.location)})`,
+  module_templateEngines_handlebars_buildSimplifiedAst_unexpectedAstStatement: (ctx: {
+    statementType: string;
+    location: hbs.AST.SourceLocation;
+  }) => `Encountered unexpected statement "${ctx.statementType}" (${JSON.stringify(ctx.location)})`,
   module_templateEngines_handlebars_createHandlebarsTemplate_unableToParseInput: (ctx: {
     templateFilePath: string;
   }) => `Unable to parse handlebars template from file "${ctx.templateFilePath}"`,
+  module_templateEngines_handlebars_resolvePathAgainstBlockStatements_depthOverflow: (ctx: {
+    templateFile: string;
+    sourceWorkflow: string;
+    reference: {
+      pathExpression: string | null;
+      location: {
+        line: number | null;
+        column: number | null;
+      };
+    };
+  }) => {
+    const expressionLocation = ctx.reference.location ?? null;
+    const stringifiedExpressionLocation =
+      expressionLocation !== null
+        ? formatReferenceInFile(expressionLocation.line, expressionLocation.column)
+        : "";
+    return `Handlebarstemplate "${ctx.templateFile}" contains reference "${ctx.reference.pathExpression}" out of bounds ${stringifiedExpressionLocation}`;
+  },
+  module_templateEngines_handlebars_validateExpectedVariableSpecs_invalidReference: (ctx: {
+    templateFile: string;
+    sourceWorkflow: string;
+    reference: {
+      pathExpression: string | null;
+      location: {
+        line: number | null;
+        column: number | null;
+      };
+    } | null;
+    selector: (string | number)[];
+    faillingSegment: string | number;
+    faillingSegmentIndex: number;
+    expected: "array" | "object";
+    actual: string;
+  }) => {
+    const expressionLocation = ctx.reference?.location ?? null;
+    const stringifiedExpressionLocation =
+      expressionLocation !== null
+        ? formatReferenceInFile(expressionLocation.line, expressionLocation.column)
+        : "";
+    return `Handlebars template "${ctx.templateFile}" contains inconsistent reference "${ctx.reference?.pathExpression ?? JSON.stringify(ctx.selector)}" ${stringifiedExpressionLocation} towards workflow "${ctx.sourceWorkflow}"; expected ${ctx.expected}, got "${ctx.actual}" - failed on segment ${ctx.faillingSegment} at selector index ${ctx.faillingSegmentIndex}`;
+  },
+  module_templateEngines_handlebars_validateExpectedVariableSpecs_attributeNotFound: (ctx: {
+    templateFile: string;
+    sourceWorkflow: string;
+    reference: {
+      pathExpression: string | null;
+      location: {
+        line: number | null;
+        column: number | null;
+      };
+    } | null;
+    selector: (string | number)[];
+    faillingSegment: string | number;
+    faillingSegmentIndex: number;
+  }) => {
+    const expressionLocation = ctx.reference?.location ?? null;
+    const stringifiedExpressionLocation =
+      expressionLocation !== null
+        ? formatReferenceInFile(expressionLocation.line, expressionLocation.column)
+        : "";
+    return `Handlebars template "${ctx.templateFile}" contains expression "${ctx.reference?.pathExpression ?? JSON.stringify(ctx.selector)}" ${stringifiedExpressionLocation} referencing invalid key "${ctx.faillingSegment}" towards workflow "${ctx.sourceWorkflow}"`;
+  },
+  module_templateEngines_handlebars_validateExpectedVariableSpecs_invalidType: (ctx: {
+    templateFile: string;
+    sourceWorkflow: string;
+    reference: {
+      pathExpression: string | null;
+      location: {
+        line: number | null;
+        column: number | null;
+      };
+    } | null;
+    selector: (string | number)[];
+    expectedType: string;
+    // override param
+    expectedTypeDescription: string | null;
+    actualType: string;
+  }) => {
+    const expressionLocation = ctx.reference?.location ?? null;
+    const stringifiedExpressionLocation =
+      expressionLocation !== null
+        ? formatReferenceInFile(expressionLocation.line, expressionLocation.column)
+        : "";
+    return `Handlebars template "${ctx.templateFile}" resolves expression "${ctx.reference?.pathExpression ?? JSON.stringify(ctx.selector)}" ${stringifiedExpressionLocation} into inconsistent type towards workflow "${ctx.sourceWorkflow}"; expected ${ctx.expectedTypeDescription !== null ? ctx.expectedTypeDescription : `"${ctx.expectedType}"`}, actual "${ctx.actualType}"`;
+  },
   module_templateVariableContext_resolveValuesStrict_unintializedState: (ctx: {
     missingFields: [string, ...string[]];
   }) => `Uninitialized template context fields: ${formatStringList(ctx.missingFields)}`,

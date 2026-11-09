@@ -1,19 +1,29 @@
-import { resolvePathAgainstHbsBlockStatements } from "./resolvePathAgainstBlockStatements.js";
-import type { LocatedPathExpression, PathExpressionTreeNode } from "./types.js";
+import { err, ok, type Result } from "neverthrow";
+
+import type { AppErrorCode } from "../../../../constants/errorCodes.js";
+import { isNonEmptyArray } from "../../../../utils/array/isNonEmptyArray.js";
+import { errorFromErrorList } from "../../../../utils/deps/neverthrow/errorList.js";
+import type { AppError } from "../../../../utils/deps/neverthrow/types.js";
+import type { AbsolutePath } from "../../../../validation/path/customTypes/index.js";
+import { handlebarsResolvePathAgainstBlockStatements } from "./resolvePathAgainstBlockStatements.js";
+import type { HandlebarsSelector, LocatedPathExpression, SimplifiedAstNode } from "./types.js";
 
 export function extractHandlebarsPathExpressions(
-  pathExpressionTree: PathExpressionTreeNode[],
-): LocatedPathExpression[] {
+  pathExpressionTree: SimplifiedAstNode[],
+  ctx: {
+    templateFile: AbsolutePath;
+    sourceWorkflowFile: AbsolutePath;
+  },
+) {
   const collected: LocatedPathExpression[] = [];
+  const errors: AppError<AppErrorCode>[] = [];
 
-  // Walk path expression tree (output of first part of preprocessing - `buildExpressionTree`)
   function walk(
-    nodes: PathExpressionTreeNode[],
+    nodes: SimplifiedAstNode[],
     blockStatementStack: LocatedPathExpression["blockStatementStack"],
   ) {
     for (const node of nodes) {
       if (node.kind === "mustache") {
-        // path of the mustache itself
         if (node.path) {
           collected.push({
             pathExpr: node.path,
@@ -22,10 +32,8 @@ export function extractHandlebarsPathExpressions(
             origin: node,
           });
         }
-        // also any PathExpressions that appear in params / hash
         collectPathsFromExpressions(node.params, blockStatementStack, node, collected);
       } else if (node.kind === "block") {
-        // The path that the block operates on (e.g. the `person` in {{#with person}})
         if (node.path) {
           collected.push({
             pathExpr: node.path,
@@ -35,14 +43,25 @@ export function extractHandlebarsPathExpressions(
         }
         collectPathsFromExpressions(node.params, blockStatementStack, node, collected);
 
-        // Resolve the selector that this block will push onto the context stack
-        const resolved = resolvePathAgainstHbsBlockStatements(node.path, blockStatementStack);
+        const resolvedPathResult = handlebarsResolvePathAgainstBlockStatements(
+          node,
+          blockStatementStack,
+          ctx,
+        );
+
+        let resolvedSelector: HandlebarsSelector = [];
+        if (resolvedPathResult.isErr()) {
+          errors.push(resolvedPathResult.error);
+        } else {
+          // fall back to empty selector so the walk can continue collecting sibling / sibling-subtree paths
+          resolvedSelector = resolvedPathResult.value ?? [];
+        }
 
         const nextBlockStatementStack = [
           ...blockStatementStack,
           {
             helper: node.helper,
-            resolvedSelector: resolved ?? [],
+            resolvedSelector,
             isEach: node.helper === "each",
           },
         ];
@@ -55,13 +74,17 @@ export function extractHandlebarsPathExpressions(
   }
 
   walk(pathExpressionTree, []);
-  return collected;
+
+  if (isNonEmptyArray(errors)) {
+    return err(errorFromErrorList(...errors));
+  }
+  return ok(collected);
 }
 
 function collectPathsFromExpressions(
   expressions: hbs.AST.Expression[],
   blockStatementStack: LocatedPathExpression["blockStatementStack"],
-  origin: PathExpressionTreeNode,
+  origin: SimplifiedAstNode,
   out: LocatedPathExpression[],
 ) {
   for (const e of expressions) {

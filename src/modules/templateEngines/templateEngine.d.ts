@@ -1,21 +1,8 @@
 import type { Selector } from "../../../../validation/resourceReference/term/schemas/selector.js";
+import type { AppError } from "../../utils/deps/neverthrow/types.js";
 import type { NonEmptyString } from "../../validation/string/customTypes/string.ts";
 
-export type ExpectedType = "object" | "array" | "primitive" | "any" | "iterable";
-
-export interface Constraint {
-  selector: Selector;
-  expectedType: ExpectedType;
-  reference: {
-    pathExpression: NonEmptyString | null;
-    location: {
-      line: number | null;
-      column: number | null;
-    };
-  } | null;
-}
-
 export interface Template {
-  getVariableConstraints(): Constraint[];
+  validateExpectedVariableSpecs(): Result<undefined, AppError>;
   getCompiledTemplate(): (arg: any) => string;
 }

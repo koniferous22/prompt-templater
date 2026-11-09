@@ -4,8 +4,8 @@ import assert from "node:assert/strict";
 import Handlebars from "handlebars";
 
 import type { AppErrorCode } from "../../../../constants/errorCodes.js";
-import { buildHandlebarsPathExpressionTree } from "./buildPathExpressionTree.js";
-import type { PathExpressionTreeNode } from "./types.js";
+import { buildSimplifiedAst } from "./buildSimplifiedAst.js";
+import type { SimplifiedAstNode } from "./types.js";
 
 // assertion helpers
 function simplifyPath(p: hbs.AST.PathExpression | null) {
@@ -19,7 +19,7 @@ function simplifyPath(p: hbs.AST.PathExpression | null) {
   };
 }
 
-function simplifyNode(node: PathExpressionTreeNode): unknown {
+function simplifyNode(node: SimplifiedAstNode): unknown {
   if (node.kind === "mustache") {
     return {
       kind: "mustache",
@@ -44,7 +44,7 @@ function simplifyNode(node: PathExpressionTreeNode): unknown {
   };
 }
 
-const testCasesForBuildHandlebarsPathExpressionTree = [
+const testCasesForBuildSimplifiedAst = [
   {
     testInput: {
       template: `Hello {{name}}!`,
@@ -91,8 +91,7 @@ const testCasesForBuildHandlebarsPathExpressionTree = [
       testBehaviourDescription: "reject with unsupported statement type error",
       data: {
         result: false as const,
-        errorCode:
-          "module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstStatement",
+        errorCode: "module_templateEngines_handlebars_buildSimplifiedAst_unsupportedAstStatement",
       },
     },
   },
@@ -105,8 +104,7 @@ const testCasesForBuildHandlebarsPathExpressionTree = [
       testBehaviourDescription: "reject with not-in-whitelist error",
       data: {
         result: false as const,
-        errorCode:
-          "module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstBlockHelper",
+        errorCode: "module_templateEngines_handlebars_buildSimplifiedAst_unsupportedAstBlockHelper",
       },
     },
   },
@@ -153,11 +151,11 @@ const testCasesForBuildHandlebarsPathExpressionTree = [
   };
 }[];
 
-describe("buildHandlebarsPathExpressionTree", () => {
-  for (const { testInput, testOutcome } of testCasesForBuildHandlebarsPathExpressionTree) {
+describe("buildSimplifiedAst", () => {
+  for (const { testInput, testOutcome } of testCasesForBuildSimplifiedAst) {
     it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, () => {
       const ast = Handlebars.parse(testInput.template) as unknown as hbs.AST.Program;
-      const pathExpressionTree = buildHandlebarsPathExpressionTree(ast);
+      const pathExpressionTree = buildSimplifiedAst(ast);
 
       if (testOutcome.data.result === true) {
         assert.ok(pathExpressionTree.isOk(), "expected Ok result");

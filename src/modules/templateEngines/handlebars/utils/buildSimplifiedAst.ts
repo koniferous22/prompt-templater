@@ -10,17 +10,17 @@ import { isNonEmptyArray } from "../../../../utils/array/isNonEmptyArray.js";
 import { appErr } from "../../../../utils/deps/neverthrow/errorFactory.js";
 import type { AppError } from "../../../../utils/deps/neverthrow/types.js";
 import { zodUnionFromEnum } from "../../../../utils/deps/zod/zodUnionFromEnum.js";
-import type { PathExpressionTreeNode } from "./types.js";
+import type { SimplifiedAstNode } from "./types.js";
 
 type BuildPathExpressionTreeErrorType =
-  | AppError<"module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstBlockHelper">
-  | AppError<"module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstStatement">
-  | AppError<"module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unexpectedAstStatement">;
+  | AppError<"module_templateEngines_handlebars_buildSimplifiedAst_unsupportedAstBlockHelper">
+  | AppError<"module_templateEngines_handlebars_buildSimplifiedAst_unsupportedAstStatement">
+  | AppError<"module_templateEngines_handlebars_buildSimplifiedAst_unexpectedAstStatement">;
 
-export function buildHandlebarsPathExpressionTree(
+export function buildSimplifiedAst(
   ast: hbs.AST.Program,
-): Result<PathExpressionTreeNode[], BuildPathExpressionTreeErrorType> {
-  const result: PathExpressionTreeNode[] = [];
+): Result<SimplifiedAstNode[], BuildPathExpressionTreeErrorType> {
+  const result: SimplifiedAstNode[] = [];
 
   for (const stmt of ast.body) {
     const mappedStatementResult = mapStatement(stmt);
@@ -41,28 +41,22 @@ const HandlebarsAstSupportedBlockHelperSchema = zodUnionFromEnum(HandlebarsAstSu
 
 function mapStatement(
   statement: hbs.AST.Statement,
-): Result<PathExpressionTreeNode | null, BuildPathExpressionTreeErrorType> {
+): Result<SimplifiedAstNode | null, BuildPathExpressionTreeErrorType> {
   const unsupportedStatementResult = HandlebarsAstUnsupportedStatementSchema.safeParse(
     statement.type,
   );
   if (unsupportedStatementResult.success) {
-    return appErr(
-      "module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstStatement",
-      {
-        statementType: statement.type,
-        location: statement.loc,
-      },
-    );
+    return appErr("module_templateEngines_handlebars_buildSimplifiedAst_unsupportedAstStatement", {
+      statementType: statement.type,
+      location: statement.loc,
+    });
   }
   const supportedStatementResult = HandlebarsAstSupportedStatementSchema.safeParse(statement.type);
   if (!supportedStatementResult.success) {
-    return appErr(
-      "module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unexpectedAstStatement",
-      {
-        statementType: statement.type,
-        location: statement.loc,
-      },
-    );
+    return appErr("module_templateEngines_handlebars_buildSimplifiedAst_unexpectedAstStatement", {
+      statementType: statement.type,
+      location: statement.loc,
+    });
   }
   return match({ type: supportedStatementResult.data, statement })
     .with({ type: "CommentStatement" }, () => {
@@ -82,7 +76,7 @@ function mapStatement(
         path,
         params: mustacheStatement.params ?? [],
         original: mustacheStatement,
-      } satisfies PathExpressionTreeNode);
+      } satisfies SimplifiedAstNode);
     })
     .with({ type: "BlockStatement" }, () => {
       const blockStatement = statement as hbs.AST.BlockStatement;
@@ -93,7 +87,7 @@ function mapStatement(
 
       if (helperName && !HandlebarsAstSupportedBlockHelperSchema.validate(helperName)) {
         return appErr(
-          "module_templateEngines_handlebars_buildHandlebarsPathExpressionTree_unsupportedAstBlockHelper",
+          "module_templateEngines_handlebars_buildSimplifiedAst_unsupportedAstBlockHelper",
           {
             blockHelper: helperName,
             location: blockStatement.loc,
@@ -109,18 +103,18 @@ function mapStatement(
           ? (blockStatement.params[0] as hbs.AST.PathExpression)
           : null;
 
-      const programNodes: PathExpressionTreeNode[] = [];
+      const programNodes: SimplifiedAstNode[] = [];
       if (blockStatement.program) {
-        const prog = buildHandlebarsPathExpressionTree(blockStatement.program);
+        const prog = buildSimplifiedAst(blockStatement.program);
         if (prog.isErr()) {
           return prog as Err<any, typeof prog.error>;
         }
         programNodes.push(...prog.value);
       }
 
-      const inverseNodes: PathExpressionTreeNode[] = [];
+      const inverseNodes: SimplifiedAstNode[] = [];
       if (blockStatement.inverse) {
-        const inv = buildHandlebarsPathExpressionTree(blockStatement.inverse);
+        const inv = buildSimplifiedAst(blockStatement.inverse);
         if (inv.isErr()) {
           return inv as Err<any, typeof inv.error>;
         }
@@ -135,7 +129,7 @@ function mapStatement(
         program: programNodes,
         inverse: inverseNodes,
         original: blockStatement,
-      } satisfies PathExpressionTreeNode);
+      } satisfies SimplifiedAstNode);
     })
     .exhaustive();
 }

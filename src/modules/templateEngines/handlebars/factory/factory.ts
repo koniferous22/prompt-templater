@@ -3,12 +3,17 @@ import { ok } from "neverthrow";
 
 import { appErr } from "../../../../utils/deps/neverthrow/errorFactory.js";
 import type { AbsolutePath } from "../../../../validation/path/customTypes/index.js";
+import type { TemplateVariableSpecs } from "../../../templateVariableSpecs/factories/factory.js";
 import type { Template } from "../../templateEngine.js";
-import { extractTemplateConstraintsFromHandlebarsTemplate } from "../methods/extractTemplateConstraintsFromHandlebarsTemplate.js";
+import { handlebarsTemplateValidateExpectedVariableSpecs } from "../methods/validateExpectedVariableSpecs.js";
 
 export const createHandlebarsTemplate = (
   templateSource: string,
-  context: { templateFilePath: AbsolutePath },
+  specs: TemplateVariableSpecs,
+  context: {
+    templateFilePath: AbsolutePath;
+    sourceWorkflowFilePath: AbsolutePath;
+  },
 ) => {
   let ast: hbs.AST.Program;
   try {
@@ -19,15 +24,14 @@ export const createHandlebarsTemplate = (
       context,
     );
   }
-  const extractTemplateVariableConstraintsResult =
-    extractTemplateConstraintsFromHandlebarsTemplate(ast);
-  if (!extractTemplateVariableConstraintsResult.isOk()) {
-    return extractTemplateVariableConstraintsResult;
-  }
   const handlebarsTemplate = {
-    getVariableConstraints() {
-      return extractTemplateVariableConstraintsResult.value;
-    },
+    // Note - validation hidden under callback, in case it needs to be turned off, for errors that I don't have time to fix
+    // Invoked in `Template` resource unless flags have been configured to skip this check
+    validateExpectedVariableSpecs: () =>
+      handlebarsTemplateValidateExpectedVariableSpecs(ast, specs, {
+        templateFile: context.templateFilePath,
+        sourceWorkflowFile: context.sourceWorkflowFilePath,
+      }),
     getCompiledTemplate() {
       return Handlebars.compile(ast);
     },

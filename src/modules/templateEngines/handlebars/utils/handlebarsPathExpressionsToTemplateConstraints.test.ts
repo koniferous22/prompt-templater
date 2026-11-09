@@ -2,7 +2,8 @@ import { describe, expect, it } from "bun:test";
 
 import Handlebars from "handlebars";
 
-import { buildHandlebarsPathExpressionTree } from "./buildPathExpressionTree.js";
+import { AbsolutePathSchema } from "../../../../validation/path/customTypes/index.js";
+import { buildSimplifiedAst } from "./buildSimplifiedAst.js";
 import { extractHandlebarsPathExpressions } from "./extractHandlebarsPathExpressions.js";
 import { pathExpressionsToConstraints } from "./handlebarsPathExpressionsToTemplateConstraints.js";
 import type { LocatedPathExpression } from "./types.js";
@@ -20,10 +21,14 @@ const testCasesForPathExpressionsToConstraints = [
   {
     testInput: {
       data: extractHandlebarsPathExpressions(
-        buildHandlebarsPathExpressionTree(
+        buildSimplifiedAst(
           Handlebars.parse(`Hello {{name}}!`) as unknown as hbs.AST.Program,
         )._unsafeUnwrap(),
-      ),
+        {
+          templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+          sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+        },
+      )._unsafeUnwrap(),
       testCaseDescription: "simple top-level mustache path expression",
     },
     testOutcome: {
@@ -33,10 +38,14 @@ const testCasesForPathExpressionsToConstraints = [
   {
     testInput: {
       data: extractHandlebarsPathExpressions(
-        buildHandlebarsPathExpressionTree(
+        buildSimplifiedAst(
           Handlebars.parse(`{{#with person}}{{/with}}`) as unknown as hbs.AST.Program,
         )._unsafeUnwrap(),
-      ),
+        {
+          templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+          sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+        },
+      )._unsafeUnwrap(),
       testCaseDescription: "path that is the subject of a #with block",
     },
     testOutcome: {
@@ -46,10 +55,14 @@ const testCasesForPathExpressionsToConstraints = [
   {
     testInput: {
       data: extractHandlebarsPathExpressions(
-        buildHandlebarsPathExpressionTree(
+        buildSimplifiedAst(
           Handlebars.parse(`{{#each items}}{{/each}}`) as unknown as hbs.AST.Program,
         )._unsafeUnwrap(),
-      ),
+        {
+          templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+          sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+        },
+      )._unsafeUnwrap(),
       testCaseDescription: "path that is the subject of a #each block",
     },
     testOutcome: {
@@ -59,10 +72,14 @@ const testCasesForPathExpressionsToConstraints = [
   {
     testInput: {
       data: extractHandlebarsPathExpressions(
-        buildHandlebarsPathExpressionTree(
+        buildSimplifiedAst(
           Handlebars.parse(`{{#each items}}{{@index}}{{/each}}`) as unknown as hbs.AST.Program,
         )._unsafeUnwrap(),
-      ),
+        {
+          templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+          sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+        },
+      )._unsafeUnwrap(),
       testCaseDescription: "@index data variable inside an each block",
     },
     testOutcome: {
@@ -72,10 +89,14 @@ const testCasesForPathExpressionsToConstraints = [
   {
     testInput: {
       data: extractHandlebarsPathExpressions(
-        buildHandlebarsPathExpressionTree(
+        buildSimplifiedAst(
           Handlebars.parse(`{{#each people}}{{@key}}{{/each}}`) as unknown as hbs.AST.Program,
         )._unsafeUnwrap(),
-      ),
+        {
+          templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+          sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+        },
+      )._unsafeUnwrap(),
       testCaseDescription: "@key data variable inside an each block",
     },
     testOutcome: {
@@ -85,10 +106,14 @@ const testCasesForPathExpressionsToConstraints = [
   {
     testInput: {
       data: extractHandlebarsPathExpressions(
-        buildHandlebarsPathExpressionTree(
+        buildSimplifiedAst(
           Handlebars.parse(`{{#each items}}{{this}}{{/each}}`) as unknown as hbs.AST.Program,
         )._unsafeUnwrap(),
-      ),
+        {
+          templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+          sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+        },
+      )._unsafeUnwrap(),
       testCaseDescription: "pure this reference inside an each block",
     },
     testOutcome: {
@@ -98,10 +123,14 @@ const testCasesForPathExpressionsToConstraints = [
   {
     testInput: {
       data: extractHandlebarsPathExpressions(
-        buildHandlebarsPathExpressionTree(
+        buildSimplifiedAst(
           Handlebars.parse(`{{#with person}}{{this}}{{/with}}`) as unknown as hbs.AST.Program,
         )._unsafeUnwrap(),
-      ),
+        {
+          templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+          sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+        },
+      )._unsafeUnwrap(),
       testCaseDescription: "pure this reference inside a with block",
     },
     testOutcome: {
@@ -111,10 +140,14 @@ const testCasesForPathExpressionsToConstraints = [
   {
     testInput: {
       data: extractHandlebarsPathExpressions(
-        buildHandlebarsPathExpressionTree(
+        buildSimplifiedAst(
           Handlebars.parse(`{{a.b.c}}`) as unknown as hbs.AST.Program,
         )._unsafeUnwrap(),
-      ),
+        {
+          templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+          sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+        },
+      )._unsafeUnwrap(),
       testCaseDescription: "deep path expression with intermediate segments",
     },
     testOutcome: {
@@ -125,10 +158,14 @@ const testCasesForPathExpressionsToConstraints = [
   {
     testInput: {
       data: extractHandlebarsPathExpressions(
-        buildHandlebarsPathExpressionTree(
+        buildSimplifiedAst(
           Handlebars.parse(`{{#each items}}{{../name}}{{/each}}`) as unknown as hbs.AST.Program,
         )._unsafeUnwrap(),
-      ),
+        {
+          templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+          sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+        },
+      )._unsafeUnwrap(),
       testCaseDescription: "relative path with depth 1 resolving against block chain",
     },
     testOutcome: {
@@ -139,10 +176,14 @@ const testCasesForPathExpressionsToConstraints = [
   {
     testInput: {
       data: extractHandlebarsPathExpressions(
-        buildHandlebarsPathExpressionTree(
+        buildSimplifiedAst(
           Handlebars.parse(`{{#with person}}{{firstName}}{{/with}}`) as unknown as hbs.AST.Program,
         )._unsafeUnwrap(),
-      ),
+        {
+          templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+          sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+        },
+      )._unsafeUnwrap(),
       testCaseDescription: "mustache path nested inside a with block",
     },
     testOutcome: {
@@ -153,7 +194,7 @@ const testCasesForPathExpressionsToConstraints = [
   {
     testInput: {
       data: extractHandlebarsPathExpressions(
-        buildHandlebarsPathExpressionTree(
+        buildSimplifiedAst(
           Handlebars.parse(`
 {{#each items}}
   {{title}}
@@ -163,7 +204,11 @@ const testCasesForPathExpressionsToConstraints = [
 {{/each}}
 `) as unknown as hbs.AST.Program,
         )._unsafeUnwrap(),
-      ),
+        {
+          templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+          sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+        },
+      )._unsafeUnwrap(),
       testCaseDescription: "nested each + with blocks with relative mustache paths",
     },
     testOutcome: {
@@ -183,7 +228,10 @@ const testCasesForPathExpressionsToConstraints = [
 describe("pathExpressionsToConstraints", () => {
   for (const { testInput, testOutcome } of testCasesForPathExpressionsToConstraints) {
     it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
-      const result = pathExpressionsToConstraints(testInput.data);
+      const result = pathExpressionsToConstraints(testInput.data, {
+        templateFile: AbsolutePathSchema.parse("/example/absolute/path/to/template"),
+        sourceWorkflowFile: AbsolutePathSchema.parse("/example/absolute/path/to/workflow"),
+      });
       expect(result).toMatchSnapshot();
     });
   }

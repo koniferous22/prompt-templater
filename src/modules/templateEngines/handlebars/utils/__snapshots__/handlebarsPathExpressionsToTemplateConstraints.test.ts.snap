@@ -1,562 +1,780 @@
 // Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
-exports[`pathExpressionsToConstraints for empty located path expressions array parsing should return an empty constraints array 1`] = `[]`;
+exports[`pathExpressionsToConstraints for empty located path expressions array parsing should return an empty constraints array 1`] = `
+Ok {
+  "value": [],
+}
+`;
 
 exports[`pathExpressionsToConstraints for simple top-level mustache path expression parsing should infer a primitive constraint for the path 1`] = `
-[
-  {
-    "expectedType": "primitive",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+Ok {
+  "value": [
+    {
+      "expectedType": "primitive",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "name",
       },
-      "pathExpression": "name",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "name",
+        },
+      ],
     },
-    "selector": [
-      "name",
-    ],
-  },
-]
+  ],
+}
 `;
 
 exports[`pathExpressionsToConstraints for path that is the subject of a #with block parsing should infer an object constraint for the with subject 1`] = `
-[
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+Ok {
+  "value": [
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "person",
       },
-      "pathExpression": "person",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "person",
+        },
+      ],
     },
-    "selector": [
-      "person",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "person",
       },
-      "pathExpression": "person",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "person",
+        },
+      ],
     },
-    "selector": [
-      "person",
-    ],
-  },
-]
+  ],
+}
 `;
 
 exports[`pathExpressionsToConstraints for path that is the subject of a #each block parsing should infer an array constraint for the each subject 1`] = `
-[
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+Ok {
+  "value": [
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "items",
       },
-      "pathExpression": "items",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "items",
       },
-      "pathExpression": "items",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-]
+  ],
+}
 `;
 
 exports[`pathExpressionsToConstraints for @index data variable inside an each block parsing should infer an array constraint on the nearest each subject 1`] = `
-[
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+Ok {
+  "value": [
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "items",
       },
-      "pathExpression": "items",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "items",
       },
-      "pathExpression": "items",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "array",
-    "reference": {
-      "location": {
-        "column": 17,
-        "line": 1,
+    {
+      "expectedType": "array",
+      "reference": {
+        "location": {
+          "column": 17,
+          "line": 1,
+        },
+        "pathExpression": "@index",
       },
-      "pathExpression": "@index",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-]
+  ],
+}
 `;
 
 exports[`pathExpressionsToConstraints for @key data variable inside an each block parsing should infer an object constraint on the nearest each subject 1`] = `
-[
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+Ok {
+  "value": [
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "people",
       },
-      "pathExpression": "people",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "people",
+        },
+      ],
     },
-    "selector": [
-      "people",
-    ],
-  },
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "people",
       },
-      "pathExpression": "people",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "people",
+        },
+      ],
     },
-    "selector": [
-      "people",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 18,
-        "line": 1,
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 18,
+          "line": 1,
+        },
+        "pathExpression": "@key",
       },
-      "pathExpression": "@key",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "people",
+        },
+      ],
     },
-    "selector": [
-      "people",
-    ],
-  },
-]
+  ],
+}
 `;
 
 exports[`pathExpressionsToConstraints for pure this reference inside an each block parsing should infer an array constraint on the current each context 1`] = `
-[
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+Ok {
+  "value": [
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "items",
       },
-      "pathExpression": "items",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "items",
       },
-      "pathExpression": "items",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "primitive",
-    "reference": {
-      "location": {
-        "column": 17,
-        "line": 1,
+    {
+      "expectedType": "any",
+      "reference": {
+        "location": {
+          "column": 17,
+          "line": 1,
+        },
+        "pathExpression": "this",
       },
-      "pathExpression": "this",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-]
+  ],
+}
 `;
 
 exports[`pathExpressionsToConstraints for pure this reference inside a with block parsing should infer an object constraint on the current with context 1`] = `
-[
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+Ok {
+  "value": [
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "person",
       },
-      "pathExpression": "person",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "person",
+        },
+      ],
     },
-    "selector": [
-      "person",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "person",
       },
-      "pathExpression": "person",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "person",
+        },
+      ],
     },
-    "selector": [
-      "person",
-    ],
-  },
-  {
-    "expectedType": "primitive",
-    "reference": {
-      "location": {
-        "column": 18,
-        "line": 1,
+    {
+      "expectedType": "any",
+      "reference": {
+        "location": {
+          "column": 18,
+          "line": 1,
+        },
+        "pathExpression": "this",
       },
-      "pathExpression": "this",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "person",
+        },
+      ],
     },
-    "selector": [
-      "person",
-    ],
-  },
-]
+  ],
+}
 `;
 
 exports[`pathExpressionsToConstraints for deep path expression with intermediate segments parsing should infer primitive for the full path and object constraints for all intermediate prefixes 1`] = `
-[
-  {
-    "expectedType": "primitive",
-    "reference": {
-      "location": {
-        "column": 2,
-        "line": 1,
+Ok {
+  "value": [
+    {
+      "expectedType": "primitive",
+      "reference": {
+        "location": {
+          "column": 2,
+          "line": 1,
+        },
+        "pathExpression": "a.b.c",
       },
-      "pathExpression": "a.b.c",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "a",
+        },
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "b",
+        },
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "c",
+        },
+      ],
     },
-    "selector": [
-      "a",
-      "b",
-      "c",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 2,
-        "line": 1,
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 2,
+          "line": 1,
+        },
+        "pathExpression": "a.b.c",
       },
-      "pathExpression": "a.b.c",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "a",
+        },
+      ],
     },
-    "selector": [
-      "a",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 2,
-        "line": 1,
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 2,
+          "line": 1,
+        },
+        "pathExpression": "a.b.c",
       },
-      "pathExpression": "a.b.c",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "a",
+        },
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "b",
+        },
+      ],
     },
-    "selector": [
-      "a",
-      "b",
-    ],
-  },
-]
+  ],
+}
 `;
 
 exports[`pathExpressionsToConstraints for relative path with depth 1 resolving against block chain parsing should resolve the path to the parent context and infer a primitive constraint 1`] = `
-[
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+Ok {
+  "value": [
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "items",
       },
-      "pathExpression": "items",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "items",
       },
-      "pathExpression": "items",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "primitive",
-    "reference": {
-      "location": {
-        "column": 17,
-        "line": 1,
+    {
+      "expectedType": "primitive",
+      "reference": {
+        "location": {
+          "column": 17,
+          "line": 1,
+        },
+        "pathExpression": "../name",
       },
-      "pathExpression": "../name",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "name",
+        },
+      ],
     },
-    "selector": [
-      "name",
-    ],
-  },
-]
+  ],
+}
 `;
 
 exports[`pathExpressionsToConstraints for mustache path nested inside a with block parsing should resolve the path relative to the with context and infer a primitive constraint 1`] = `
-[
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+Ok {
+  "value": [
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "person",
       },
-      "pathExpression": "person",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "person",
+        },
+      ],
     },
-    "selector": [
-      "person",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 1,
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 1,
+        },
+        "pathExpression": "person",
       },
-      "pathExpression": "person",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "person",
+        },
+      ],
     },
-    "selector": [
-      "person",
-    ],
-  },
-  {
-    "expectedType": "primitive",
-    "reference": {
-      "location": {
-        "column": 18,
-        "line": 1,
+    {
+      "expectedType": "primitive",
+      "reference": {
+        "location": {
+          "column": 18,
+          "line": 1,
+        },
+        "pathExpression": "firstName",
       },
-      "pathExpression": "firstName",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "person",
+        },
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "firstName",
+        },
+      ],
     },
-    "selector": [
-      "person",
-      "firstName",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 18,
-        "line": 1,
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 18,
+          "line": 1,
+        },
+        "pathExpression": "firstName",
       },
-      "pathExpression": "firstName",
+      "selector": [
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "person",
+        },
+      ],
     },
-    "selector": [
-      "person",
-    ],
-  },
-]
+  ],
+}
 `;
 
 exports[`pathExpressionsToConstraints for nested each + with blocks with relative mustache paths parsing should resolve nested contexts and emit primitive + intermediate object constraints 1`] = `
-[
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 2,
+Ok {
+  "value": [
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 2,
+        },
+        "pathExpression": "items",
       },
-      "pathExpression": "items",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "iterable",
-    "reference": {
-      "location": {
-        "column": 8,
-        "line": 2,
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 8,
+          "line": 2,
+        },
+        "pathExpression": "items",
       },
-      "pathExpression": "items",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "primitive",
-    "reference": {
-      "location": {
-        "column": 4,
-        "line": 3,
+    {
+      "expectedType": "primitive",
+      "reference": {
+        "location": {
+          "column": 4,
+          "line": 3,
+        },
+        "pathExpression": "title",
       },
-      "pathExpression": "title",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "title",
+        },
+      ],
     },
-    "selector": [
-      "items",
-      "title",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 4,
-        "line": 3,
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 4,
+          "line": 3,
+        },
+        "pathExpression": "title",
       },
-      "pathExpression": "title",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 10,
-        "line": 4,
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 10,
+          "line": 4,
+        },
+        "pathExpression": "details",
       },
-      "pathExpression": "details",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "details",
+        },
+      ],
     },
-    "selector": [
-      "items",
-      "details",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 10,
-        "line": 4,
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 10,
+          "line": 4,
+        },
+        "pathExpression": "details",
       },
-      "pathExpression": "details",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 10,
-        "line": 4,
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 10,
+          "line": 4,
+        },
+        "pathExpression": "details",
       },
-      "pathExpression": "details",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "details",
+        },
+      ],
     },
-    "selector": [
-      "items",
-      "details",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 10,
-        "line": 4,
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 10,
+          "line": 4,
+        },
+        "pathExpression": "details",
       },
-      "pathExpression": "details",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "primitive",
-    "reference": {
-      "location": {
-        "column": 6,
-        "line": 5,
+    {
+      "expectedType": "primitive",
+      "reference": {
+        "location": {
+          "column": 6,
+          "line": 5,
+        },
+        "pathExpression": "color",
       },
-      "pathExpression": "color",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "details",
+        },
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "color",
+        },
+      ],
     },
-    "selector": [
-      "items",
-      "details",
-      "color",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 6,
-        "line": 5,
+    {
+      "expectedType": "iterable",
+      "reference": {
+        "location": {
+          "column": 6,
+          "line": 5,
+        },
+        "pathExpression": "color",
       },
-      "pathExpression": "color",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+      ],
     },
-    "selector": [
-      "items",
-    ],
-  },
-  {
-    "expectedType": "object",
-    "reference": {
-      "location": {
-        "column": 6,
-        "line": 5,
+    {
+      "expectedType": "object",
+      "reference": {
+        "location": {
+          "column": 6,
+          "line": 5,
+        },
+        "pathExpression": "color",
       },
-      "pathExpression": "color",
+      "selector": [
+        {
+          "shouldExpectIterable": true,
+          "type": "stringSegment",
+          "value": "items",
+        },
+        {
+          "shouldExpectIterable": false,
+          "type": "stringSegment",
+          "value": "details",
+        },
+      ],
     },
-    "selector": [
-      "items",
-      "details",
-    ],
-  },
-]
+  ],
+}
 `;
