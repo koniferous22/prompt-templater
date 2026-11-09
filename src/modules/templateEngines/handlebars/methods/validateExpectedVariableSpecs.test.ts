@@ -583,6 +583,47 @@ Hello {{name}}!
         "resolve nested contexts and emit primitive + intermediate object constraints",
     },
   },
+  {
+    testInput: {
+      data: {
+        templateAst: Handlebars.parse(
+          `
+Template:
+handlebars{{#if (eq status "pending")}}
+  <span class="badge warning">Pending</span>
+{{else if (eq status "approved")}}
+  <span class="badge success">Approved</span>
+{{else if (eq status "rejected")}}
+  <span class="badge danger">Rejected</span>
+{{else}}
+  <span class="badge">Unknown</span>
+{{/if}}
+`,
+        ) as unknown as hbs.AST.Program,
+        specs: {
+          specType: "composite",
+          variableType: "object",
+          objectShapeType: {
+            status: {
+              specType: "primitive",
+              variableType: "string",
+              modifier: {
+                modifierType: "none",
+              },
+            },
+          },
+          modifier: {
+            modifierType: "none",
+          },
+        },
+      },
+      testCaseDescription: "template with if statement referencing variable",
+    },
+    testOutcome: {
+      testBehaviourDescription:
+        "resolve the path relative to the with context and infer a primitive constraint",
+    },
+  },
 ] satisfies {
   testInput: {
     data: {
