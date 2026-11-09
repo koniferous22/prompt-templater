@@ -319,9 +319,6 @@ const testCasesForCreateTemplateVariableContext = [
           {
             type: "resolvedValuesStrictAssertion",
             assertResolvedValuesStrict(result) {
-              if (!result.isOk()) {
-                console.error(result.error);
-              }
               assert.ok(result.isOk(), "expected ok result");
               expect(result.value).toEqual({
                 booleanVariable: true,
@@ -387,9 +384,6 @@ const testCasesForCreateTemplateVariableContext = [
           {
             type: "resolvedValuesStrictAssertion",
             assertResolvedValuesStrict(result) {
-              if (!result.isOk()) {
-                console.error(result.error);
-              }
               assert.ok(result.isOk(), "expected ok result");
               expect(result.value).toEqual({
                 booleanVariable: true,
