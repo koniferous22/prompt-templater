@@ -37,6 +37,7 @@ const createTerm = <TermType extends TermValueType>(
   }
   const state = termResult.data as TermData<TermType>;
   const term = {
+    getAbsolutePath: () => context.file,
     getState: () => state,
   };
   return ok(term);

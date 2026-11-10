@@ -37,6 +37,7 @@ const createWorkflow = (
     return templateVariableSpecsResult;
   }
   const workflow = {
+    getAbsolutePath: () => context.file,
     getWorkflowData: () => workflowData,
     getReferences: () => workflowResourceGetReferences(workflowData),
     getTemplateVariableSpecs: () => templateVariableSpecsResult.value,
