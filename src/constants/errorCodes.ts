@@ -43,6 +43,7 @@ export type AppErrorCode =
   | "module_templateEngines_handlebars_buildSimplifiedAst_unexpectedAstStatement"
   | "module_templateEngines_handlebars_createHandlebarsTemplate_unableToParseInput"
   | "module_templateEngines_handlebars_resolvePathAgainstBlockStatements_depthOverflow"
+  | "module_templateEngines_handlebars_resolvePathAgainstBlockStatements_invalidPathFragment"
   | "module_templateEngines_handlebars_validateExpectedVariableSpecs_invalidReference"
   | "module_templateEngines_handlebars_validateExpectedVariableSpecs_attributeNotFound"
   | "module_templateEngines_handlebars_validateExpectedVariableSpecs_invalidType"

@@ -214,7 +214,26 @@ export const errorMessages = {
       expressionLocation !== null
         ? formatReferenceInFile(expressionLocation.line, expressionLocation.column)
         : "";
-    return `Handlebarstemplate "${ctx.templateFile}" contains reference "${ctx.reference.pathExpression}" out of bounds ${stringifiedExpressionLocation}`;
+    return `Handlebars template "${ctx.templateFile}" contains reference "${ctx.reference.pathExpression}" out of bounds ${stringifiedExpressionLocation}`;
+  },
+  module_templateEngines_handlebars_resolvePathAgainstBlockStatements_invalidPathFragment: (ctx: {
+    templateFile: string;
+    sourceWorkflow: string;
+    pathFragment: string;
+    reference: {
+      pathExpression: string | null;
+      location: {
+        line: number | null;
+        column: number | null;
+      };
+    };
+  }) => {
+    const expressionLocation = ctx.reference.location ?? null;
+    const stringifiedExpressionLocation =
+      expressionLocation !== null
+        ? formatReferenceInFile(expressionLocation.line, expressionLocation.column)
+        : "";
+    return `Encountered path expression "${ctx.reference.pathExpression}" with invalid path fragment "${ctx.pathFragment}" ${stringifiedExpressionLocation} - handlebars template "${ctx.templateFile}"; loaded from "${ctx.sourceWorkflow}"`;
   },
   module_templateEngines_handlebars_validateExpectedVariableSpecs_invalidReference: (ctx: {
     templateFile: string;
