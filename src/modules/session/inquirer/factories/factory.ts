@@ -24,11 +24,9 @@ export const inquirerSessionFactory = (
   if (!resolveTemplateResult.isOk()) {
     return resolveTemplateResult;
   }
-  const templateVariableSpecsResult = entrypointWorkflow.resource.getTemplateVariableContextSpecs();
-  if (!templateVariableSpecsResult.isOk()) {
-    return templateVariableSpecsResult;
-  }
-  const templateVariableContext = templateVariableSpecsResult.value.createTemplateVariableContext();
+  const templateVariableContext = entrypointWorkflow.resource
+    .getTemplateVariableSpecs()
+    .createTemplateVariableContext();
   const stepsQueue = resolveStepsQueue(entrypointWorkflow.resource);
   // TODO 1 - Invoke validation against constraints from loaded AST - should be template method
   //   * should be invoked by calling - getRenderFunction, that performs the validation

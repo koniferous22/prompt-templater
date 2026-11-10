@@ -32,5 +32,6 @@ export const createSessionFromCliInput = async (cliInput: ResolveContextArgs) =>
   if (!resourceContextResult.isOk()) {
     return resourceContextResult;
   }
+  // todo - add here `match` on multiple session implementations
   return inquirerSessionFactory(resourceContextResult.value, cliInput.positionalArgs.workflow);
 };

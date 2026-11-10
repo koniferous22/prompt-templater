@@ -28,12 +28,18 @@ const createWorkflow = (
       zodError: workflowDataResult.error,
     });
   }
-  const state = workflowDataResult.data;
+
+  const workflowData = workflowDataResult.data;
+  const templateVariableSpecsResult = createTemplateVariableSpecsFromWorkflowData(workflowData, {
+    file: context.file,
+  });
+  if (!templateVariableSpecsResult.isOk()) {
+    return templateVariableSpecsResult;
+  }
   const workflow = {
-    getWorkflowData: () => state,
-    getReferences: () => workflowResourceGetReferences(state),
-    getTemplateVariableContextSpecs: () =>
-      createTemplateVariableSpecsFromWorkflowData(state, { file: context.file }),
+    getWorkflowData: () => workflowData,
+    getReferences: () => workflowResourceGetReferences(workflowData),
+    getTemplateVariableSpecs: () => templateVariableSpecsResult.value,
   };
   return ok(workflow);
 };
