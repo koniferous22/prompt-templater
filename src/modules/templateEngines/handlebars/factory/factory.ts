@@ -5,7 +5,7 @@ import { appErr } from "../../../../utils/deps/neverthrow/errorFactory.js";
 import type { AbsolutePath } from "../../../../validation/path/customTypes/index.js";
 import type { TemplateVariableSpecs } from "../../../templateVariableSpecs/factories/factory.js";
 import type { Template } from "../../templateEngine.js";
-import { handlebarsTemplateValidateExpectedVariableSpecs } from "../methods/validateExpectedVariableSpecs.js";
+import { handlebarsTemplateValidateWithExpectedVariableSpecs } from "../methods/validateWithExpectedVariableSpecs.js";
 
 export const createHandlebarsTemplate = (
   templateSource: string,
@@ -27,8 +27,8 @@ export const createHandlebarsTemplate = (
   const handlebarsTemplate = {
     // Note - validation hidden under callback, in case it needs to be turned off, for errors that I don't have time to fix
     // Invoked in `Template` resource unless flags have been configured to skip this check
-    validateExpectedVariableSpecs: () =>
-      handlebarsTemplateValidateExpectedVariableSpecs(ast, specs, {
+    validateWithExpectedVariableSpecs: () =>
+      handlebarsTemplateValidateWithExpectedVariableSpecs(ast, specs, {
         templateFile: context.templateFilePath,
         sourceWorkflowFile: context.sourceWorkflowFilePath,
       }),

@@ -5,9 +5,9 @@ import Handlebars from "handlebars";
 
 import { AbsolutePathSchema } from "../../../../validation/path/customTypes/index.js";
 import type { TemplateVariableSpecs } from "../../../templateVariableSpecs/factories/factory.js";
-import { handlebarsTemplateValidateExpectedVariableSpecs } from "./validateExpectedVariableSpecs.js";
+import { handlebarsTemplateValidateWithExpectedVariableSpecs } from "./validateWithExpectedVariableSpecs.js";
 
-const testCasesForValidateExpectedVariableSpecs = [
+const testCasesForValidateWithExpectedVariableSpecs = [
   {
     testInput: {
       data: {
@@ -637,10 +637,10 @@ handlebars{{#if (eq status "pending")}}
   };
 }[];
 
-describe("validateExpectedVariableSpecs", () => {
-  for (const { testInput, testOutcome } of testCasesForValidateExpectedVariableSpecs) {
+describe("validateWithExpectedVariableSpecs", () => {
+  for (const { testInput, testOutcome } of testCasesForValidateWithExpectedVariableSpecs) {
     it(`for ${testInput.testCaseDescription} parsing should ${testOutcome.testBehaviourDescription}`, async () => {
-      const result = handlebarsTemplateValidateExpectedVariableSpecs(
+      const result = handlebarsTemplateValidateWithExpectedVariableSpecs(
         testInput.data.templateAst,
         testInput.data.specs,
         {

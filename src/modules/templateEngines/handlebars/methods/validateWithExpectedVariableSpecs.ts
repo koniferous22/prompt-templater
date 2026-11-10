@@ -247,7 +247,7 @@ const validateHandlebarsConstraintAgainstInputShape = (
     .exhaustive();
 };
 
-export const handlebarsTemplateValidateExpectedVariableSpecs = (
+export const handlebarsTemplateValidateWithExpectedVariableSpecs = (
   templateAst: hbs.AST.Program,
   specs: TemplateVariableSpecs,
   ctx: {
