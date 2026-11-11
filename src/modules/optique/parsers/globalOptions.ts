@@ -7,7 +7,7 @@ import z from "zod";
 import { WorkspaceContextSchema } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
 import { envContext } from "../context/env.js";
 
-const contextValueParser = zodAsync<z.output<typeof WorkspaceContextSchema>>(
+const workspaceContextValueParser = zodAsync<z.output<typeof WorkspaceContextSchema>>(
   // @ts-expect-error minor branded type inconsistency
   WorkspaceContextSchema,
   {
@@ -24,19 +24,19 @@ const contextValueParser = zodAsync<z.output<typeof WorkspaceContextSchema>>(
 );
 
 // Note - null default value results in errors, hence using `optional`
-const context = optional(
+const workspaceContext = optional(
   bindEnv(
-    option("--workspace", "-w", contextValueParser, {
+    option("--workspace", "-w", workspaceContextValueParser, {
       description: message`Folder denoting workspace to use`,
     }),
     {
       context: envContext,
       key: "CONTEXT",
-      parser: contextValueParser,
+      parser: workspaceContextValueParser,
     },
   ),
 );
 
 export const globalOptionsParser = object({
-  context,
+  workspaceContext,
 });

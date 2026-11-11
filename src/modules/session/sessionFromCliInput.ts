@@ -6,15 +6,19 @@ import { inquirerSessionFactory } from "./inquirer/factories/factory.js";
 
 type ResolveContextArgs = {
   positionalArgs: Pick<CliArgs["positionalArgs"], "workflow" | "workflowPreset">;
-  globalOptions: Pick<CliArgs["globalOptions"], "context">;
+  globalOptions: Pick<CliArgs["globalOptions"], "workspaceContext">;
+  runCommandOptions: CliArgs["runCommandOptions"];
 };
 
 export const resolveResourceContext = async ({
   positionalArgs,
   globalOptions,
 }: ResolveContextArgs) => {
-  if (globalOptions.context !== undefined) {
-    return createResourceContextFromExplicitWorkspace(globalOptions.context, positionalArgs);
+  if (globalOptions.workspaceContext !== undefined) {
+    return createResourceContextFromExplicitWorkspace(
+      globalOptions.workspaceContext,
+      positionalArgs,
+    );
   }
   if (positionalArgs.workflow.type === "relative") {
     // TODO - change error code
@@ -33,5 +37,9 @@ export const createSessionFromCliInput = async (cliInput: ResolveContextArgs) =>
     return resourceContextResult;
   }
   // todo - add here `match` on multiple session implementations
-  return inquirerSessionFactory(resourceContextResult.value, cliInput.positionalArgs.workflow);
+  return inquirerSessionFactory(
+    resourceContextResult.value,
+    cliInput.positionalArgs.workflow,
+    cliInput.runCommandOptions,
+  );
 };

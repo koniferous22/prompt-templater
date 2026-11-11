@@ -3,7 +3,8 @@ import { ok } from "neverthrow";
 import type { ConfigResourceReference } from "../../../../validation/resourceReference/config/schemas/configResourceReference.js";
 import type { ResourceContext } from "../../../resourceContext/factory/resourceContext.js";
 import type { ConfigResourceTypes } from "../../../resources/config/factories/resourceFactories.js";
-import { createInquirerRunStep } from "../methods/runSingleStep.js";
+import { inquirerSessionGenerateOutput } from "../methods/generateOutput.js";
+import { createInquirerSessionRunStep } from "../methods/runSingleStep.js";
 
 // TODO - eventual improvement to this method - compose flow from multiple workflows that call each other
 const resolveStepsQueue = (workflow: ConfigResourceTypes["workflow"]) => {
@@ -13,6 +14,12 @@ const resolveStepsQueue = (workflow: ConfigResourceTypes["workflow"]) => {
 export const inquirerSessionFactory = (
   resourceContext: ResourceContext,
   entrypointWorkflowRef: ConfigResourceReference,
+  options: {
+    skipTemplateValidation: boolean;
+    unsafeRender: boolean;
+    shouldPrintToStdout: boolean;
+    shouldCopyToClipboard: boolean;
+  },
 ) => {
   const resolveEntrypointWorkflowResult = resourceContext.loadWorkflow(entrypointWorkflowRef);
   if (!resolveEntrypointWorkflowResult.isOk()) {
@@ -24,25 +31,29 @@ export const inquirerSessionFactory = (
   if (!resolveTemplateResult.isOk()) {
     return resolveTemplateResult;
   }
+  const template = resolveTemplateResult.value.template;
   const templateVariableContext = entrypointWorkflow.resource
     .getTemplateVariableSpecs()
     .createTemplateVariableContext();
   const stepsQueue = resolveStepsQueue(entrypointWorkflow.resource);
-  // TODO 1 - Invoke validation against constraints from loaded AST - should be template method
-  //   * should be invoked by calling - getRenderFunction, that performs the validation
-  //     * it accepts Template object spec as input data
-  //       * reason - there are 2 methods invoked -
-  //         * plain state for handlebars validation
-  //         * generated zod schema for compiled function
-  //       * I.e. Handlebars AST etc should be template object internal state
-  //     * template objects should have 2 exposed methods
-  //       * getRenderFunction
-  //       * getUnsafeRenderFunction
-  const runSingleStep = createInquirerRunStep(resourceContext, templateVariableContext);
+  if (!options.skipTemplateValidation) {
+    const validateInputShapeResult = template.validateInputShape();
+    if (!validateInputShapeResult.isOk()) {
+      return validateInputShapeResult;
+    }
+  }
+  const runSingleStep = createInquirerSessionRunStep(resourceContext, templateVariableContext);
   const inquirerSession = {
+    generateOutput: () => {
+      return inquirerSessionGenerateOutput(
+        resolveTemplateResult.value.template,
+        templateVariableContext,
+        options,
+      );
+    },
     getSessionState: () => templateVariableContext,
     runStep: runSingleStep,
-    run: async () => {
+    runSteps: async () => {
       // consumes the entire steps queue
       for (const step of stepsQueue) {
         const stepResult = await runSingleStep(step);
@@ -51,6 +62,20 @@ export const inquirerSessionFactory = (
         }
       }
       return ok(undefined);
+    },
+    run: async () => {
+      // consumes the entire steps queue
+      for (const step of stepsQueue) {
+        const stepResult = await runSingleStep(step);
+        if (!stepResult.isOk()) {
+          return stepResult;
+        }
+      }
+      return inquirerSessionGenerateOutput(
+        resolveTemplateResult.value.template,
+        templateVariableContext,
+        options,
+      );
     },
   };
   return ok(inquirerSession);

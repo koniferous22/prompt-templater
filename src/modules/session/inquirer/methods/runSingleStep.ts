@@ -9,7 +9,7 @@ import type { TemplateVariableContext } from "../../../templateVariableContext/f
 import type { TemplateVariableSpecs } from "../../../templateVariableSpecs/factories/factory.js";
 import type { TemplateVariableSpecToZodSchema } from "../../../templateVariableSpecs/methods/buildZodSchema.js";
 
-export const createInquirerRunStep =
+export const createInquirerSessionRunStep =
   <
     VariableSpecs extends Record<string, TemplateVariableSpecs>,
     ZodSchemas extends {
@@ -52,7 +52,7 @@ export const createInquirerRunStep =
           () => {
             return editor({
               message: editorWorkflowStep.message,
-              // TODO - inject here the
+              // TODO - inject here the validator
             });
           },
           // TODO - runtime error handling - dependency_inquirer
