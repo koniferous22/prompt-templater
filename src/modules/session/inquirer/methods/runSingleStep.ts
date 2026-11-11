@@ -1,4 +1,4 @@
-import { editor, input, select } from "@inquirer/prompts";
+import { checkbox, editor, input, select } from "@inquirer/prompts";
 import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 
@@ -175,7 +175,7 @@ export const createInquirerRunStep =
         }
         const checkboxPromptResult = await appErrAsyncFromThrowable(
           () => {
-            return select({
+            return checkbox({
               message: checkboxWorkflowStep.message,
               // @ts-expect-error
               choices: checkboxPromptChoicesResult.value,

@@ -1,0 +1,23 @@
+{
+  "templateFile": "templates/test-template-basic.hbs",
+  "steps": [
+    {
+      "id": "name",
+      "type": "input",
+      "message": "enter name",
+      "validation": {
+        "type": "required"
+      }
+    },
+    {
+      "id": "status",
+      "type": "select",
+      "message": "choose current status",
+      "valueType": "string",
+      "choices": {
+        "type": "literal",
+        "values": ["active", "pending", "inactive"]
+      }
+    }
+  ]
+}

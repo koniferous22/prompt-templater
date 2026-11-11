@@ -1,0 +1,17 @@
+templateFile: templates/test-template-with-each-block.hbs
+steps:
+  - type: input
+    id: name
+    message: enter name
+    validation:
+      type: required
+  - type: checkbox
+    id: items
+    message: pick relevant items
+    valueType: string
+    choices:
+      type: literal
+      values:
+        - item 1
+        - item 2
+        - item 3

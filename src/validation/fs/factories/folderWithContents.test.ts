@@ -234,6 +234,10 @@ const testCasesForCreateFolderWithContentsSchema = [
               RelativePathSchema.parse("templates/test-template-basic-if-statement.hbs"),
               fileDirentFlagsPattern,
             ],
+            [
+              RelativePathSchema.parse("templates/test-template-with-each-block.hbs"),
+              fileDirentFlagsPattern,
+            ],
             [RelativePathSchema.parse("templates/test-bad-syntax.hbs"), fileDirentFlagsPattern],
             [RelativePathSchema.parse("templates/.oxfmtrc.jsonc"), fileDirentFlagsPattern],
             [PathFragmentSchema.parse("terms"), directoryDirentFlagsPattern],
@@ -295,6 +299,34 @@ const testCasesForCreateFolderWithContentsSchema = [
             ],
             [
               RelativePathSchema.parse("workflows/test-workflow-bad-syntax.json"),
+              fileDirentFlagsPattern,
+            ],
+            [
+              RelativePathSchema.parse("workflows/test-workflow-bad-template-syntax.yml"),
+              fileDirentFlagsPattern,
+            ],
+            [
+              RelativePathSchema.parse("workflows/test-workflow-bad-template-syntax.json"),
+              fileDirentFlagsPattern,
+            ],
+            [
+              RelativePathSchema.parse(
+                "workflows/test-workflow-for-template-with-basic-if-statement.yml",
+              ),
+              fileDirentFlagsPattern,
+            ],
+            [
+              RelativePathSchema.parse(
+                "workflows/test-workflow-for-template-with-basic-if-statement.json",
+              ),
+              fileDirentFlagsPattern,
+            ],
+            [
+              RelativePathSchema.parse("workflows/test-workflow-for-template-with-each-block.yml"),
+              fileDirentFlagsPattern,
+            ],
+            [
+              RelativePathSchema.parse("workflows/test-workflow-for-template-with-each-block.json"),
               fileDirentFlagsPattern,
             ],
             [

@@ -1,0 +1,7 @@
+Hello {{name}}!
+
+{{#each items}}
+  - {{this}} ({{../name}})
+{{else}}
+  No choices selected by {{name}}
+{{/each}}

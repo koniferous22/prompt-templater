@@ -1,0 +1,17 @@
+templateFile: templates/test-template-basic-if-statement.hbs
+steps:
+  - type: input
+    id: name
+    message: enter name
+    validation:
+      type: required
+  - type: select
+    id: status
+    message: choose current status
+    valueType: string
+    choices:
+      type: literal
+      values:
+        - active
+        - pending
+        - inactive

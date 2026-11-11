@@ -1,0 +1,12 @@
+templateFile: templates/test-bad-syntax.hbs
+steps:
+  - type: select
+    id: selectStep
+    message: pick an option
+    valueType: string
+    choices:
+      type: literal
+      values:
+        - literalValue1
+        - literalValue2
+        - literalValue3

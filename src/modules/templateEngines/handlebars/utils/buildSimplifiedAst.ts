@@ -12,14 +12,14 @@ import type { AppError } from "../../../../utils/deps/neverthrow/types.js";
 import { zodUnionFromEnum } from "../../../../utils/deps/zod/zodUnionFromEnum.js";
 import type { SimplifiedAstNode } from "./types.js";
 
-type BuildPathExpressionTreeErrorType =
+type BuildSimplifiedAstErrorType =
   | AppError<"module_templateEngines_handlebars_buildSimplifiedAst_unsupportedAstBlockHelper">
   | AppError<"module_templateEngines_handlebars_buildSimplifiedAst_unsupportedAstStatement">
   | AppError<"module_templateEngines_handlebars_buildSimplifiedAst_unexpectedAstStatement">;
 
 export function buildSimplifiedAst(
   ast: hbs.AST.Program,
-): Result<SimplifiedAstNode[], BuildPathExpressionTreeErrorType> {
+): Result<SimplifiedAstNode[], BuildSimplifiedAstErrorType> {
   const result: SimplifiedAstNode[] = [];
 
   for (const stmt of ast.body) {
@@ -41,7 +41,7 @@ const HandlebarsAstSupportedBlockHelperSchema = zodUnionFromEnum(HandlebarsAstSu
 
 function mapStatement(
   statement: hbs.AST.Statement,
-): Result<SimplifiedAstNode | null, BuildPathExpressionTreeErrorType> {
+): Result<SimplifiedAstNode | null, BuildSimplifiedAstErrorType> {
   const unsupportedStatementResult = HandlebarsAstUnsupportedStatementSchema.safeParse(
     statement.type,
   );

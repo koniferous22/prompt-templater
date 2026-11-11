@@ -1,0 +1,23 @@
+{
+  "templateFile": "templates/test-bad-syntax.hbs",
+  "steps": [
+    {
+      "id": "name",
+      "type": "input",
+      "message": "enter name",
+      "validation": {
+        "type": "required"
+      }
+    },
+    {
+      "id": "items",
+      "type": "checkbox",
+      "message": "pick relevant items",
+      "valueType": "string",
+      "choices": {
+        "type": "literal",
+        "values": ["item 1", "item 2", "item 3"]
+      }
+    }
+  ]
+}

@@ -257,7 +257,7 @@ export const handlebarsTemplateValidateWithExpectedVariableSpecs = (
 ) => {
   const pathExpressionTreeResult = buildSimplifiedAst(templateAst);
   if (pathExpressionTreeResult.isErr()) {
-    return err(pathExpressionTreeResult.error.code);
+    return pathExpressionTreeResult;
   }
 
   const locatedPathExpressionsResult = extractHandlebarsPathExpressions(

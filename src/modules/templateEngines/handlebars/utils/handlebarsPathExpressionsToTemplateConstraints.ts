@@ -2,6 +2,7 @@ import { err, ok } from "neverthrow";
 
 import type { AppErrorCode } from "../../../../constants/errorCodes.js";
 import { isNonEmptyArray } from "../../../../utils/array/isNonEmptyArray.js";
+import { errorFromErrorList } from "../../../../utils/deps/neverthrow/errorList.js";
 import type { AppError } from "../../../../utils/deps/neverthrow/types.js";
 import type { AbsolutePath } from "../../../../validation/path/customTypes/index.js";
 import { NonEmptyStringSchema } from "../../../../validation/string/customTypes/string.js";
@@ -167,7 +168,7 @@ export function pathExpressionsToConstraints(
   }
 
   if (isNonEmptyArray(errors)) {
-    return err(errors);
+    return err(errorFromErrorList<(typeof errors)[number]["code"]>(...errors));
   }
   return ok(constraints);
 }
