@@ -122,6 +122,13 @@ export const errorMessages = {
     `File "${ctx.file}" contains invalid JSON contents`,
   module_resources_config_resourceFromResourceFile_invalidYamlContents: (ctx: { file: string }) =>
     `File "${ctx.file}" contains invalid YAML contents`,
+  module_resources_template_createRenderFunction_invalidRenderingInput: (ctx: {
+    zodError: ZodError<any>;
+    templateFile: string;
+  }) =>
+    `Invoked template "${ctx.templateFile}" with incorrect input data\n${z.prettifyError(ctx.zodError)}`,
+  module_resources_template_createRenderFunction_unknownError: (ctx: { templateFile: string }) =>
+    `Encountered unknown error when rendering template file "${ctx.templateFile}"`,
   module_resources_template_resourceFileFromReference_invalidInput: (ctx: { value: string }) =>
     `Expected template resource path ${ctx.value} for user input`,
   module_resources_template_resourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>

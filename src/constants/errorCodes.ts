@@ -25,6 +25,8 @@ export type AppErrorCode =
   | "module_resources_config_resourceFromResourceFile_invalidYamlContents"
   | "module_resources_config_utils_resourceFileFromAbsolutePath_invalidInput"
   | "module_resources_config_utils_resourceFileFromReference_invalidInput"
+  | "module_resources_template_createRenderFunction_invalidRenderingInput"
+  | "module_resources_template_createRenderFunction_unknownError"
   | "module_resources_template_resourceFileFromReference_invalidInput"
   | "module_resources_template_resourceFromResourceFile_errorReadingFile"
   | "module_resources_term_factories_createTerm_invalidInputData"

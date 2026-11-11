@@ -1,10 +1,13 @@
 import { Ok, ok } from "neverthrow";
 import { match } from "ts-pattern";
+import z from "zod";
 
 import {
   TemplateEngine,
   type TemplateEngineType,
 } from "../../../../constants/enums/templateEngines/templateEngine.js";
+import { createError } from "../../../../utils/deps/neverthrow/errorFactory.js";
+import { appErrFromThrowable } from "../../../../utils/deps/neverthrow/errorFromThrowable.js";
 import type { AbsolutePath } from "../../../../validation/path/customTypes/index.js";
 import { createTemplateRenderFunctionSchema } from "../../../../validation/resources/template/factory/factory/templateRenderFunction.js";
 import { createHandlebarsTemplate } from "../../../templateEngines/handlebars/factory/factory.js";
@@ -43,7 +46,18 @@ export const createTemplate = (
       const renderFnSchema = createTemplateRenderFunctionSchema(
         templateVariableSpecs.getZodSchema(),
       );
-      return renderFnSchema.implement(templateInstance.getCompiledTemplate());
+      const renderFn = renderFnSchema.implement(templateInstance.getCompiledTemplate());
+      // Wrap to handle neverthrow errors
+      return appErrFromThrowable(renderFn, (error) =>
+        error instanceof z.ZodError
+          ? createError("module_resources_template_createRenderFunction_invalidRenderingInput", {
+              templateFile: context.file,
+              zodError: error,
+            })
+          : createError("module_resources_template_createRenderFunction_unknownError", {
+              templateFile: context.file,
+            }),
+      );
     },
   };
   return ok(inputObject);

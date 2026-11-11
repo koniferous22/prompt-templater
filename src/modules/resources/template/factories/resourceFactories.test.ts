@@ -124,6 +124,32 @@ const testCasesCreateTemplate = [
   {
     testInput: {
       data: {
+        template: "passed value from workflow: {{selectStep}}",
+        format: "handlebars",
+        sourceWorkflow: workflowResourceFixtureBasic,
+        inputDataForRender: {
+          wrongPassedVariable: "passedValue",
+        },
+      },
+      testCaseDescription: "template with wrong render variable input",
+    },
+    testOutcome: {
+      data: {
+        result: true,
+        validateInputShape: {
+          result: true,
+          renderResult: {
+            result: false,
+            errorCode: "module_resources_template_createRenderFunction_invalidRenderingInput",
+          },
+        },
+      },
+      testBehaviourDescription: "should fail on input shape validation",
+    },
+  },
+  {
+    testInput: {
+      data: {
         template: `Hello {{
   name
 }} - Status: {{#if (
@@ -267,9 +293,14 @@ describe("templateFactories.template", () => {
           assert.ok(validateInputShapeResult.isOk());
           const renderFn = templateResource.createRenderFunction();
           const renderResult = renderFn(testInput.data.inputDataForRender);
-          expect(renderResult).toBe(
-            testOutcome.data.validateInputShape.renderResult.renderedContents,
-          );
+          if (testOutcome.data.validateInputShape.renderResult.result === false) {
+            assert.ok(renderResult.isErr());
+          } else {
+            assert.ok(renderResult.isOk());
+            expect(renderResult.value).toBe(
+              testOutcome.data.validateInputShape.renderResult.renderedContents,
+            );
+          }
         }
       }
     });
