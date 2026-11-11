@@ -3,7 +3,10 @@ import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import type { Ok } from "neverthrow";
+
 import { AbsolutePathSchema } from "../../../validation/path/customTypes/index.js";
+import { NonEmptyStringToConfigResourceReferenceSchema } from "../../../validation/resourceReference/config/codecs/nonEmptyStringToResourceReference.js";
 import {
   TemplateResourceReferenceSchema,
   type TemplateResourceReference,
@@ -12,6 +15,8 @@ import {
   WorkspaceContextSchema,
   type WorkspaceContext,
 } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
+import type { ConfigResourceTypes } from "../config/factories/resourceFactories.js";
+import { configResourceFromReference } from "../config/resourceFromReference.js";
 import { templateResourceFromReference } from "./resourceFromReference.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -20,6 +25,13 @@ const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtur
 const workspaceContext = await WorkspaceContextSchema.parseAsync(
   join(projectFixturesFolder, "workspace1"),
 );
+
+const workflowResourceFixture1Result = (await configResourceFromReference(
+  "workflow",
+  NonEmptyStringToConfigResourceReferenceSchema.parse("workflows/test-workflow.json"),
+  workspaceContext,
+)) as Extract<Awaited<ReturnType<typeof configResourceFromReference<"workflow">>>, Ok<any, any>>;
+const workflowResourceFixture1 = workflowResourceFixture1Result._unsafeUnwrap();
 
 const templateInputFixture: Record<string, any> = {
   name: "Alice",
@@ -41,6 +53,7 @@ const testCasesForTemplateResourceFileFromInput = [
         }),
         workspaceContext,
         templateInput: templateInputFixture,
+        sourceWorkflowFixture: workflowResourceFixture1,
       },
       testCaseDescription: "absolute .hbs path",
     },
@@ -63,6 +76,7 @@ const testCasesForTemplateResourceFileFromInput = [
         }),
         workspaceContext,
         templateInput: templateInputFixture,
+        sourceWorkflowFixture: workflowResourceFixture1,
       },
       testCaseDescription: "relative .hbs path",
     },
@@ -79,6 +93,7 @@ const testCasesForTemplateResourceFileFromInput = [
       userInput: TemplateResourceReference;
       workspaceContext: WorkspaceContext;
       templateInput: Record<string, any>;
+      sourceWorkflowFixture: ConfigResourceTypes["workflow"];
     };
     testCaseDescription: string;
   };
@@ -93,14 +108,16 @@ const testCasesForTemplateResourceFileFromInput = [
 describe("templateResourceFromInput", () => {
   for (const { testInput, testOutcome } of testCasesForTemplateResourceFileFromInput) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
-      const resourceAbsolutePathResult = await templateResourceFromReference(
+      const resourceResult = await templateResourceFromReference(
         testInput.data.userInput,
         testInput.data.workspaceContext,
+        {
+          sourceWorkflow: testInput.data.sourceWorkflowFixture,
+        },
       );
-      assert.ok(resourceAbsolutePathResult.isOk());
-      expect(resourceAbsolutePathResult.value(testInput.data.templateInput)).toBe(
-        testOutcome.data.renderResult,
-      );
+      assert.ok(resourceResult.isOk());
+      const renderFn = resourceResult.value.createUnsafeRenderFunction();
+      expect(renderFn(testInput.data.templateInput)).toBe(testOutcome.data.renderResult);
     });
   }
 });

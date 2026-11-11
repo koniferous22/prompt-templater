@@ -126,9 +126,6 @@ export const errorMessages = {
     `Expected template resource path ${ctx.value} for user input`,
   module_resources_template_resourceFromResourceFile_errorReadingFile: (ctx: { value: string }) =>
     `Error reading file "${ctx.value}"`,
-  module_resources_template_resourceFromResourceFile_invalidHandlebarsContents: (ctx: {
-    file: string;
-  }) => `File "${ctx.file}" contains invalid handlebars template contents`,
   module_resources_config_utils_resourceFileFromAbsolutePath_invalidInput: (ctx: {
     value: string;
   }) => `Expected config resource path ${ctx.value} for user input`,

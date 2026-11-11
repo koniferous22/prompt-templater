@@ -7,6 +7,11 @@ import type { TemplateVariableSpecs } from "../../../templateVariableSpecs/facto
 import type { Template } from "../../templateEngine.js";
 import { handlebarsTemplateValidateWithExpectedVariableSpecs } from "../methods/validateWithExpectedVariableSpecs.js";
 
+// TODO - make polyfill conditional on basis of features
+Handlebars.registerHelper("eq", function (a, b) {
+  return a === b;
+});
+
 export const createHandlebarsTemplate = (
   templateSource: string,
   specs: TemplateVariableSpecs,

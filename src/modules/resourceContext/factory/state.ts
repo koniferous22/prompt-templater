@@ -21,6 +21,7 @@ import type {
   ConfigResourceTypes,
 } from "../../resources/config/factories/resourceFactories.js";
 import { configResourceFromResourceFile } from "../../resources/config/resourceFromResourceFile.js";
+import type { TemplateResourceTypes } from "../../resources/template/factories/resourceFactories.js";
 import { templateResourceFromResourceFile } from "../../resources/template/resourceFromResourceFile.js";
 import { templateResourceFileFromReference } from "../../resources/template/utils/resourceFileFromReference.js";
 import type { TermResourceTypes } from "../../resources/terms/factories/resourceFactories.js";
@@ -51,7 +52,7 @@ const initState = (workspaceContext: WorkspaceContext) => {
           File,
           {
             templateResourceFile: TemplateResourceFile;
-            template: (resourceContext: Record<string, any>) => string;
+            template: TemplateResourceTypes["template"];
           }
         >(),
       },
@@ -83,6 +84,9 @@ export type ResourceContextAddResourceOperation =
   | {
       type: "templateResource";
       file: TemplateResourceFile;
+      dependencies: {
+        sourceWorkflow: ConfigResourceTypes["workflow"];
+      };
     }
   | {
       type: "termResource";
@@ -187,6 +191,9 @@ export const loadResource = async (
                 Ok<any, any>
               >
             ).value,
+            dependencies: {
+              sourceWorkflow: resource,
+            },
           },
           ...termResourceFiles.map(({ file, termType }) => ({
             type: "termResource" as const,
@@ -205,7 +212,7 @@ export const loadResource = async (
         } satisfies ResourceContextMutationFnResult);
       }
       // 1 - Load file
-      const loadingResult = await templateResourceFromResourceFile(value.file);
+      const loadingResult = await templateResourceFromResourceFile(value.file, value.dependencies);
       if (!loadingResult.isOk()) {
         return loadingResult;
       }

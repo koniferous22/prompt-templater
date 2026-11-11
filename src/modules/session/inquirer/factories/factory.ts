@@ -38,9 +38,6 @@ export const inquirerSessionFactory = (
   //     * template objects should have 2 exposed methods
   //       * getRenderFunction
   //       * getUnsafeRenderFunction
-  // TODO 2 - Initialize steps queue
-  //   * add code comment that with nested workflow feature  this will be a flatmap
-  //    * create placeholder function, because it will involve more steps, such as cycle detection, I.e. if workflows don't circularly call each other.
   const runSingleStep = createInquirerRunStep(resourceContext, templateVariableContext);
   const inquirerSession = {
     getSessionState: () => templateVariableContext,

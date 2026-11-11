@@ -3,13 +3,19 @@ import assert from "node:assert/strict";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import type { Ok } from "neverthrow";
+
+import type { AppErrorCode } from "../../../constants/errorCodes.js";
 import type { AppErrorInstance } from "../../../utils/deps/neverthrow/types.js";
 import { AbsolutePathSchema } from "../../../validation/path/customTypes/index.js";
 import {
   TemplateResourceFileSchema,
   type TemplateResourceFile,
 } from "../../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
+import { NonEmptyStringToConfigResourceReferenceSchema } from "../../../validation/resourceReference/config/codecs/nonEmptyStringToResourceReference.js";
 import { WorkspaceContextSchema } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
+import type { ConfigResourceTypes } from "../config/factories/resourceFactories.js";
+import { configResourceFromReference } from "../config/resourceFromReference.js";
 import { templateResourceFromResourceFile } from "./resourceFromResourceFile.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -19,13 +25,23 @@ const workspaceContext = await WorkspaceContextSchema.parseAsync(
   join(projectFixturesFolder, "workspace1"),
 );
 
+const workflowResourceFixture1Result = (await configResourceFromReference(
+  "workflow",
+  NonEmptyStringToConfigResourceReferenceSchema.parse("workflows/test-workflow.json"),
+  workspaceContext,
+)) as Extract<Awaited<ReturnType<typeof configResourceFromReference<"workflow">>>, Ok<any, any>>;
+const workflowResourceFixture1 = workflowResourceFixture1Result._unsafeUnwrap();
+
 const testCasesForTemplateResourceFromResourceFile = [
   {
     testInput: {
-      data: await TemplateResourceFileSchema.parseAsync({
-        format: "handlebars",
-        path: join(workspaceContext, "templates/test-template.hbs"),
-      }),
+      data: {
+        templateResourceFile: await TemplateResourceFileSchema.parseAsync({
+          format: "handlebars",
+          path: join(workspaceContext, "templates/test-template.hbs"),
+        }),
+        sourceWorkflowFixture: workflowResourceFixture1,
+      },
       testCaseDescription: "correct .hbs template file",
     },
     testOutcome: {
@@ -35,31 +51,31 @@ const testCasesForTemplateResourceFromResourceFile = [
       testBehaviourDescription: "succeed",
     },
   },
-  // TODO - reenable this test case on "handlebars" proper integration + uncomment @ts-expect error
-  // there's a weird library behaviour - syntax errors resultin successful template compilation that only throws errors when attempting to render anything
-  // resolution / workaround
-  // compile template with strict mode disallowed, that missing fields are ignored, and test by rendering with empty object
-  // {
-  //   testInput: {
-  //     data: await TemplateResourceFileSchema.parseAsync({
-  //       format: "handlebars",
-  //       path: join(workspaceContext, "templates/test-bad-syntax.hbs"),
-  //     }),
-  //     testCaseDescription: "syntactically incorrect .hbs template file",
-  //   },
-  //   testOutcome: {
-  //     data: {
-  //       result: false,
-  //       error: createError("module_resources_template_resourceFromResourceFile_errorReadingFile", {
-  //         value: join(workspaceContext, "templates/test-bad-syntax.hbs"),
-  //       }),
-  //     },
-  //     testBehaviourDescription: "fail with invalid structure error",
-  //   },
-  // },
+  {
+    testInput: {
+      data: {
+        templateResourceFile: await TemplateResourceFileSchema.parseAsync({
+          format: "handlebars",
+          path: join(workspaceContext, "templates/test-bad-syntax.hbs"),
+        }),
+        sourceWorkflowFixture: workflowResourceFixture1,
+      },
+      testCaseDescription: "syntactically incorrect .hbs template file",
+    },
+    testOutcome: {
+      data: {
+        result: false,
+        errorCode: "module_templateEngines_handlebars_createHandlebarsTemplate_unableToParseInput",
+      },
+      testBehaviourDescription: "fail with invalid structure error",
+    },
+  },
 ] satisfies {
   testInput: {
-    data: TemplateResourceFile;
+    data: {
+      templateResourceFile: TemplateResourceFile;
+      sourceWorkflowFixture: ConfigResourceTypes["workflow"];
+    };
     testCaseDescription: string;
   };
   testOutcome: {
@@ -69,7 +85,7 @@ const testCasesForTemplateResourceFromResourceFile = [
         }
       | {
           result: false;
-          error: AppErrorInstance;
+          errorCode: AppErrorCode;
         };
     testBehaviourDescription: string;
   };
@@ -78,16 +94,18 @@ const testCasesForTemplateResourceFromResourceFile = [
 describe("templateResourceFromResourceFile - template", () => {
   for (const { testInput, testOutcome } of testCasesForTemplateResourceFromResourceFile) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
-      const resourceResult = await templateResourceFromResourceFile(testInput.data);
+      const resourceResult = await templateResourceFromResourceFile(
+        testInput.data.templateResourceFile,
+        {
+          sourceWorkflow: testInput.data.sourceWorkflowFixture,
+        },
+      );
       if (testOutcome.data.result === true) {
         assert.ok(resourceResult.isOk());
       } else {
         assert.ok(resourceResult.isErr());
         // Compare only error code
-        expect(resourceResult.error.code).toBe(
-          // @ts-expect-error, remove when fixing the test expecting incorrect syntax
-          testOutcome.data.error.code,
-        );
+        expect(resourceResult.error.code).toBe(testOutcome.data.errorCode);
       }
     });
   }

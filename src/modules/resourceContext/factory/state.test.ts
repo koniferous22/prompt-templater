@@ -10,7 +10,9 @@ import { AbsolutePathSchema } from "../../../validation/path/customTypes/index.j
 import { ConfigResourceFileSchema } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import { TemplateResourceFileSchema } from "../../../validation/resourceFile/template/codecs/resourceAbsolutePathToResourceFile.js";
 import { TermResourceFileSchema } from "../../../validation/resourceFile/term/codecs/resourceAbsolutePathToResourceFile.js";
+import { NonEmptyStringToConfigResourceReferenceSchema } from "../../../validation/resourceReference/config/codecs/nonEmptyStringToResourceReference.js";
 import { WorkspaceContextSchema } from "../../../validation/workspaceContext/schemas/workspaceContext.js";
+import { configResourceFromReference } from "../../resources/config/resourceFromReference.js";
 import {
   initializeResourceContext,
   loadResource,
@@ -86,6 +88,13 @@ const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtur
 const workspaceContext = await WorkspaceContextSchema.parseAsync(
   join(projectFixturesFolder, "workspace1"),
 );
+
+const workflowResourceFixture1Result = (await configResourceFromReference(
+  "workflow",
+  NonEmptyStringToConfigResourceReferenceSchema.parse("workflows/test-workflow.json"),
+  workspaceContext,
+)) as Extract<Awaited<ReturnType<typeof configResourceFromReference<"workflow">>>, Ok<any, any>>;
+const workflowResourceFixture1 = workflowResourceFixture1Result._unsafeUnwrap();
 
 type LoadResourceMutation =
   | {
@@ -215,6 +224,9 @@ const testCasesForConfigResourceFileFromInput = [
               format: "handlebars",
               path: join(workspaceContext, "templates/test-template.hbs"),
             }),
+            dependencies: {
+              sourceWorkflow: workflowResourceFixture1,
+            },
           },
           assertOperationResult(result) {
             assert.ok(result.isOk(), "expected successful result");
@@ -245,6 +257,9 @@ const testCasesForConfigResourceFileFromInput = [
               format: "handlebars",
               path: join(workspaceContext, "templates/test-template.hbs"),
             }),
+            dependencies: {
+              sourceWorkflow: workflowResourceFixture1,
+            },
           },
           assertOperationResult(result) {
             assert.ok(result.isOk(), "expected successful result");

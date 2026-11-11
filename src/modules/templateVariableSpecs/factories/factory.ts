@@ -112,7 +112,17 @@ export const createTemplateVariableSpecs = <
   const state = inputSpecs;
   const zodSchema = templateVariableSpecsBuildZodSchema(state);
   return {
-    getSpecs: () => state,
+    getSpecsAsRecord: () => state,
+    getSpecs: () => {
+      return {
+        specType: "composite",
+        variableType: "object",
+        objectShapeType: state,
+        modifier: {
+          modifierType: "none",
+        },
+      } satisfies TemplateVariableSpecs;
+    },
     getZodSchema: () => zodSchema,
     createTemplateVariableContext: () =>
       createTemplateVariableContext(state, zodSchema.def.shape as any),

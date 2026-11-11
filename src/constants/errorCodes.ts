@@ -27,7 +27,6 @@ export type AppErrorCode =
   | "module_resources_config_utils_resourceFileFromReference_invalidInput"
   | "module_resources_template_resourceFileFromReference_invalidInput"
   | "module_resources_template_resourceFromResourceFile_errorReadingFile"
-  | "module_resources_template_resourceFromResourceFile_invalidHandlebarsContents"
   | "module_resources_term_factories_createTerm_invalidInputData"
   | "module_resources_term_parsers_plaintextTermFileParser_parsedWhitespaceLines"
   | "module_resources_term_resourceFromResourceFile_errorReadingFile"
