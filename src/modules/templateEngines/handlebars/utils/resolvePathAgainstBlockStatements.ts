@@ -1,4 +1,4 @@
-import { Err, err, ok, Result } from "neverthrow";
+import { Err, ok, Result } from "neverthrow";
 import { match } from "ts-pattern";
 import z from "zod";
 

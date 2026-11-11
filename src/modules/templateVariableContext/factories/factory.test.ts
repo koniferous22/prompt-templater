@@ -5,11 +5,7 @@ import type { Err, Ok, Result } from "neverthrow";
 import { match } from "ts-pattern";
 
 import type { AppError } from "../../../utils/deps/neverthrow/types.js";
-import { createResourceContextFromExplicitWorkspace } from "../../resourceContext/createResourceContextFromExplicitWorkspace.js";
-import type {
-  TemplateVariableSpecObjectComposite,
-  TemplateVariableSpecs,
-} from "../../templateVariableSpecs/factories/factory.js";
+import type { TemplateVariableSpecs } from "../../templateVariableSpecs/factories/factory.js";
 import { templateVariableSpecsBuildZodSchema } from "../../templateVariableSpecs/methods/buildZodSchema.js";
 import {
   createTemplateVariableContext,

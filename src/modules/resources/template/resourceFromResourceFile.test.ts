@@ -6,7 +6,6 @@ import { fileURLToPath } from "node:url";
 import type { Ok } from "neverthrow";
 
 import type { AppErrorCode } from "../../../constants/errorCodes.js";
-import type { AppErrorInstance } from "../../../utils/deps/neverthrow/types.js";
 import { AbsolutePathSchema } from "../../../validation/path/customTypes/index.js";
 import {
   TemplateResourceFileSchema,

@@ -1,4 +1,4 @@
-import { err, ok, type Result } from "neverthrow";
+import { err, ok } from "neverthrow";
 
 import type { AppErrorCode } from "../../../../constants/errorCodes.js";
 import { isNonEmptyArray } from "../../../../utils/array/isNonEmptyArray.js";

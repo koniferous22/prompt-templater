@@ -1,6 +1,5 @@
 import fs from "node:fs/promises";
 
-import Handlebars from "handlebars";
 import { Result } from "neverthrow";
 import { match } from "ts-pattern";
 

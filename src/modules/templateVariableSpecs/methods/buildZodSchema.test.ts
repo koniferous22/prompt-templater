@@ -3,7 +3,6 @@ import assert from "node:assert/strict";
 
 import { expectTypeOf } from "expect-type";
 import { match } from "ts-pattern";
-import z from "zod";
 
 import type { TemplateVariableSpecs } from "../factories/factory.js";
 import {

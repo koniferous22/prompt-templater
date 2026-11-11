@@ -6,7 +6,6 @@ import { match } from "ts-pattern";
 
 import { createError } from "../../../utils/deps/neverthrow/errorFactory.js";
 import { appErrAsyncFromThrowable } from "../../../utils/deps/neverthrow/errorFromThrowable.js";
-import type { AppError } from "../../../utils/deps/neverthrow/types.js";
 import type { ConfigResourceFile } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import {
   configResourceFactories,

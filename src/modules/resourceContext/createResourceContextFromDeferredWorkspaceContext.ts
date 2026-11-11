@@ -1,7 +1,6 @@
 import { ok } from "neverthrow";
 
 import { appErrAsync } from "../../utils/deps/neverthrow/errorFactory.js";
-import type { ConfigResourceFile } from "../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
 import type { ConfigResourceAbsolutePath } from "../../validation/resourceReference/config/schemas/configResourceAbsolutePath.js";
 import {
   createDeferredContext,

@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import { join } from "node:path";
 
-import { ok, err, Result } from "neverthrow";
+import { ok, Result } from "neverthrow";
 import { match } from "ts-pattern";
 import { z } from "zod";
 
