@@ -59,7 +59,7 @@ const testCasesForAbsolutePathToConfigResourceAbsolutePath = [
   {
     testInput: {
       data: AbsolutePathSchema.parse(
-        join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
+        join(fixturesUnitTestWorkspaceFolder, "templates/test-template-basic.hbs"),
       ),
       testCaseDescription: "absolute path (not a template)",
     },

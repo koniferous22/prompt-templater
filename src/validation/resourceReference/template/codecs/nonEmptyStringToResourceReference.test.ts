@@ -24,7 +24,7 @@ const testCasesForNonEmptyStringToTemplateResourceReferenceSchema = [
   {
     testInput: {
       data: NonEmptyStringSchema.parse(
-        join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
+        join(fixturesUnitTestWorkspaceFolder, "templates/test-template-basic.hbs"),
       ),
       testCaseDescription: "absolute path with supported template extension",
     },
@@ -35,7 +35,7 @@ const testCasesForNonEmptyStringToTemplateResourceReferenceSchema = [
           type: "absolute",
           filePath: {
             format: "handlebars",
-            path: join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
+            path: join(fixturesUnitTestWorkspaceFolder, "templates/test-template-basic.hbs"),
           },
         }),
       },
@@ -60,7 +60,7 @@ const testCasesForNonEmptyStringToTemplateResourceReferenceSchema = [
   },
   {
     testInput: {
-      data: NonEmptyStringSchema.parse("templates/test-template.hbs"),
+      data: NonEmptyStringSchema.parse("templates/test-template-basic.hbs"),
       testCaseDescription: "relative path with supported template extension",
     },
     testOutcome: {
@@ -70,7 +70,7 @@ const testCasesForNonEmptyStringToTemplateResourceReferenceSchema = [
           type: "relative",
           filePath: {
             format: "handlebars",
-            path: "templates/test-template.hbs",
+            path: "templates/test-template-basic.hbs",
           },
         }),
       },

@@ -222,7 +222,7 @@ const testCasesForConfigResourceFileFromInput = [
             type: "templateResource",
             file: await TemplateResourceFileSchema.parseAsync({
               format: "handlebars",
-              path: join(workspaceContext, "templates/test-template.hbs"),
+              path: join(workspaceContext, "templates/test-template-basic.hbs"),
             }),
             dependencies: {
               sourceWorkflow: workflowResourceFixture1,
@@ -255,7 +255,7 @@ const testCasesForConfigResourceFileFromInput = [
             type: "templateResource",
             file: await TemplateResourceFileSchema.parseAsync({
               format: "handlebars",
-              path: join(workspaceContext, "templates/test-template.hbs"),
+              path: join(workspaceContext, "templates/test-template-basic.hbs"),
             }),
             dependencies: {
               sourceWorkflow: workflowResourceFixture1,

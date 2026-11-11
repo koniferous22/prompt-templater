@@ -24,7 +24,7 @@ const testCasesForTemplateResourceFileSchema = [
         path: AbsolutePathSchema.parse(
           join(
             __dirname,
-            "../../../../../fixtures/unit-test-workspace/templates/test-template.hbs",
+            "../../../../../fixtures/unit-test-workspace/templates/test-template-basic.hbs",
           ),
         ),
       }),
@@ -44,7 +44,7 @@ const testCasesForTemplateResourceFileSchema = [
         path: AbsolutePathSchema.parse(
           join(
             __dirname,
-            "../../../../../fixtures/non-existing-workspace/templates/test-template.hbs",
+            "../../../../../fixtures/non-existing-workspace/templates/test-template-basic.hbs",
           ),
         ),
       }),

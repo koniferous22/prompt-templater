@@ -46,7 +46,7 @@ const testCasesForRelativePathToConfigResourceRelativePath = [
   },
   {
     testInput: {
-      data: RelativePathSchema.parse("templates/test-template.hbs"),
+      data: RelativePathSchema.parse("templates/test-template-basic.hbs"),
       testCaseDescription: "relative path (not a template)",
     },
     testOutcome: {

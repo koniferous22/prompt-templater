@@ -66,7 +66,7 @@ const testCasesForNonEmptyStringToConfigResourceReferenceSchema = [
   {
     testInput: {
       data: NonEmptyStringSchema.parse(
-        join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
+        join(fixturesUnitTestWorkspaceFolder, "templates/test-template-basic.hbs"),
       ),
       testCaseDescription: "absolute path with invalid extension",
     },
@@ -119,7 +119,7 @@ const testCasesForNonEmptyStringToConfigResourceReferenceSchema = [
   },
   {
     testInput: {
-      data: NonEmptyStringSchema.parse("templates/test-template.hbs"),
+      data: NonEmptyStringSchema.parse("templates/test-template-basic.hbs"),
       testCaseDescription: "relative path with invalid extension",
     },
     testOutcome: {

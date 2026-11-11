@@ -229,7 +229,11 @@ const testCasesForCreateFolderWithContentsSchema = [
           pathDetection: "readDirRecursive",
           items: new Map<RelativePath, DirentFlagPatterns>([
             [PathFragmentSchema.parse("templates"), directoryDirentFlagsPattern],
-            [RelativePathSchema.parse("templates/test-template.hbs"), fileDirentFlagsPattern],
+            [RelativePathSchema.parse("templates/test-template-basic.hbs"), fileDirentFlagsPattern],
+            [
+              RelativePathSchema.parse("templates/test-template-basic-if-statement.hbs"),
+              fileDirentFlagsPattern,
+            ],
             [RelativePathSchema.parse("templates/test-bad-syntax.hbs"), fileDirentFlagsPattern],
             [RelativePathSchema.parse("templates/.oxfmtrc.jsonc"), fileDirentFlagsPattern],
             [PathFragmentSchema.parse("terms"), directoryDirentFlagsPattern],

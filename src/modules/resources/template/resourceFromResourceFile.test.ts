@@ -38,7 +38,7 @@ const testCasesForTemplateResourceFromResourceFile = [
       data: {
         templateResourceFile: await TemplateResourceFileSchema.parseAsync({
           format: "handlebars",
-          path: join(workspaceContext, "templates/test-template.hbs"),
+          path: join(workspaceContext, "templates/test-template-basic.hbs"),
         }),
         sourceWorkflowFixture: workflowResourceFixture1,
       },

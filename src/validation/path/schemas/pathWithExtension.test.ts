@@ -92,7 +92,7 @@ describe("YamlAbsolutePathSchema", () => {
 
 const testCasesForHandlebarsAbsolutePathSchema = [
   {
-    testInput: join(__dirname, "../../../../fixtures/templates/test-template.hbs"),
+    testInput: join(__dirname, "../../../../fixtures/templates/test-template-basic.hbs"),
     testOutcome: true,
   },
   {
@@ -194,7 +194,7 @@ describe("YamlRelativePathSchema", () => {
 
 const testCasesForHandlebarsRelativePathSchema = [
   {
-    testInput: "fixtures/templates/test-template.hbs",
+    testInput: "fixtures/templates/test-template-basic.hbs",
     testOutcome: true,
   },
   {

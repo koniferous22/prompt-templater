@@ -128,7 +128,7 @@ const testCasesForLoadTemplate = [
           type: "relative",
           filePath: {
             format: "handlebars",
-            path: "templates/test-template.hbs",
+            path: "templates/test-template-basic.hbs",
           },
         }),
       },

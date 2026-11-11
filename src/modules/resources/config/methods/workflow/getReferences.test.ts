@@ -13,7 +13,7 @@ const testCasesForWorkflowResourceGetReferences = [
     testInput: {
       data: {
         workflow: WorkflowSchema.parse({
-          templateFile: "templates/test-template.hbs",
+          templateFile: "templates/test-template-basic.hbs",
           steps: [],
         }),
       },
@@ -24,7 +24,7 @@ const testCasesForWorkflowResourceGetReferences = [
         result: {
           template: {
             reference: NonEmptyStringToTemplateResourceReferenceSchema.parse(
-              "templates/test-template.hbs",
+              "templates/test-template-basic.hbs",
             ),
           },
           terms: [],
@@ -37,7 +37,7 @@ const testCasesForWorkflowResourceGetReferences = [
     testInput: {
       data: {
         workflow: WorkflowSchema.parse({
-          templateFile: "templates/test-template.hbs",
+          templateFile: "templates/test-template-basic.hbs",
           steps: [
             {
               id: "step1",
@@ -56,7 +56,7 @@ const testCasesForWorkflowResourceGetReferences = [
         result: {
           template: {
             reference: NonEmptyStringToTemplateResourceReferenceSchema.parse(
-              "templates/test-template.hbs",
+              "templates/test-template-basic.hbs",
             ),
           },
           terms: [
@@ -74,7 +74,7 @@ const testCasesForWorkflowResourceGetReferences = [
     testInput: {
       data: {
         workflow: WorkflowSchema.parse({
-          templateFile: "templates/test-template.hbs",
+          templateFile: "templates/test-template-basic.hbs",
           steps: [
             {
               id: "step1",
@@ -93,7 +93,7 @@ const testCasesForWorkflowResourceGetReferences = [
         result: {
           template: {
             reference: NonEmptyStringToTemplateResourceReferenceSchema.parse(
-              "templates/test-template.hbs",
+              "templates/test-template-basic.hbs",
             ),
           },
           terms: [
@@ -111,7 +111,7 @@ const testCasesForWorkflowResourceGetReferences = [
     testInput: {
       data: {
         workflow: WorkflowSchema.parse({
-          templateFile: "templates/test-template.hbs",
+          templateFile: "templates/test-template-basic.hbs",
           steps: [
             {
               id: "step1",
@@ -145,7 +145,7 @@ const testCasesForWorkflowResourceGetReferences = [
         result: {
           template: {
             reference: NonEmptyStringToTemplateResourceReferenceSchema.parse(
-              "templates/test-template.hbs",
+              "templates/test-template-basic.hbs",
             ),
           },
           terms: [

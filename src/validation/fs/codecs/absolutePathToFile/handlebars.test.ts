@@ -13,7 +13,7 @@ const testCasesForHandlebarsFileSchema = [
   {
     testInput: join(
       __dirname,
-      "../../../../../fixtures/unit-test-workspace/templates/test-template.hbs",
+      "../../../../../fixtures/unit-test-workspace/templates/test-template-basic.hbs",
     ),
     testOutcome: true,
   },

@@ -1,5 +1,5 @@
 {
-  "templateFile": "templates/test-template.hbs",
+  "templateFile": "templates/test-template-basic.hbs",
   "steps": [
     {
       "id": "selectStep",

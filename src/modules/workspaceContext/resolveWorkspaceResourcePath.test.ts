@@ -81,7 +81,7 @@ const testCasesForResolveWorkspaceResourceRelativePath = [
   {
     testInput: {
       data: {
-        input: RelativePathSchema.parse("templates/test-template.hbs"),
+        input: RelativePathSchema.parse("templates/test-template-basic.hbs"),
         workspaceContext,
       },
       testCaseDescription: "input consisting of plain handlebars relative path",

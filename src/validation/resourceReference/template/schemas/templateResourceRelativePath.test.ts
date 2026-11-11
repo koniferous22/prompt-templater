@@ -13,7 +13,7 @@ const testCasesForTemplateResourceRelativePathSchema = [
     testInput: {
       data: {
         format: "handlebars",
-        path: "fixtures/unit-test-workspace/templates/test-template.hbs",
+        path: "fixtures/unit-test-workspace/templates/test-template-basic.hbs",
       },
       testCaseDescription: "valid .hbs input",
     },

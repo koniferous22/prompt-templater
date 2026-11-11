@@ -14,7 +14,7 @@ import { RelativePathToTemplateResourceRelativePath } from "./relativePathToReso
 const testCasesForTemplateResourceFileFromReference = [
   {
     testInput: {
-      data: RelativePathSchema.parse("templates/test-template.hbs"),
+      data: RelativePathSchema.parse("templates/test-template-basic.hbs"),
       testCaseDescription: "relative path with supported template extension",
     },
     testOutcome: {
@@ -22,7 +22,7 @@ const testCasesForTemplateResourceFileFromReference = [
         result: true,
         value: TemplateResourceRelativePathSchema.parse({
           format: "handlebars",
-          path: "templates/test-template.hbs",
+          path: "templates/test-template-basic.hbs",
         }),
       },
       testBehaviourDescription: "succeed with original relative path",

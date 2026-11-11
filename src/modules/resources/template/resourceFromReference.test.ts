@@ -48,7 +48,7 @@ const testCasesForTemplateResourceFileFromInput = [
           type: "absolute",
           filePath: {
             format: "handlebars",
-            path: join(workspaceContext, "templates/test-template.hbs"),
+            path: join(workspaceContext, "templates/test-template-basic-if-statement.hbs"),
           },
         }),
         workspaceContext,
@@ -71,7 +71,7 @@ const testCasesForTemplateResourceFileFromInput = [
           type: "relative",
           filePath: {
             format: "handlebars",
-            path: "templates/test-template.hbs",
+            path: "templates/test-template-basic-if-statement.hbs",
           },
         }),
         workspaceContext,
@@ -105,7 +105,7 @@ const testCasesForTemplateResourceFileFromInput = [
   };
 }[];
 
-describe("templateResourceFromInput", () => {
+describe("templateResourceFromReference", () => {
   for (const { testInput, testOutcome } of testCasesForTemplateResourceFileFromInput) {
     it(`for ${testInput.testCaseDescription} it should ${testOutcome.testBehaviourDescription}`, async () => {
       const resourceResult = await templateResourceFromReference(

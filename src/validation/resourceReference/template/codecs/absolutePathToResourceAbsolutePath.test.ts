@@ -23,7 +23,7 @@ const testCasesForTemplateResourceFileFromReference = [
   {
     testInput: {
       data: AbsolutePathSchema.parse(
-        join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
+        join(fixturesUnitTestWorkspaceFolder, "templates/test-template-basic.hbs"),
       ),
       testCaseDescription: "absolute path with supported template extension",
     },
@@ -32,7 +32,7 @@ const testCasesForTemplateResourceFileFromReference = [
         result: true,
         value: TemplateResourceAbsolutePathSchema.parse({
           format: "handlebars",
-          path: join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
+          path: join(fixturesUnitTestWorkspaceFolder, "templates/test-template-basic.hbs"),
         }),
       },
       testBehaviourDescription: "succeed with original absolute path",

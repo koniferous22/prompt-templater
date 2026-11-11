@@ -19,7 +19,7 @@ const testCasesForTemplateResourceAbsolutePathSchema = [
         format: "handlebars",
         path: join(
           __dirname,
-          "../../../../../fixtures/unit-test-workspace/templates/test-template.hbs",
+          "../../../../../fixtures/unit-test-workspace/templates/test-template-basic.hbs",
         ),
       },
       testCaseDescription: "valid .hbs input",

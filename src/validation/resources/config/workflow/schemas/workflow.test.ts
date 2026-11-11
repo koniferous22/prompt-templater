@@ -8,7 +8,7 @@ const testCasesForWorkflowSchema = [
   {
     testInput: {
       data: {
-        templateFile: "templates/test-template.hbs",
+        templateFile: "templates/test-template-basic.hbs",
         steps: [
           {
             id: "step1",

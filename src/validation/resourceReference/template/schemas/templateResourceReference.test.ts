@@ -21,7 +21,7 @@ const testCasesForTemplateResourceReferenceSchema = [
           format: "handlebars",
           path: join(
             __dirname,
-            "../../../../../fixtures/unit-test-workspace/templates/test-template.hbs",
+            "../../../../../fixtures/unit-test-workspace/templates/test-template-basic.hbs",
           ),
         },
       },
@@ -38,7 +38,7 @@ const testCasesForTemplateResourceReferenceSchema = [
         type: "relative",
         filePath: {
           format: "handlebars",
-          path: "templates/test-template.hbs",
+          path: "templates/test-template-basic.hbs",
         },
       },
       testCaseDescription: "valid relative handlebars template input",

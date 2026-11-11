@@ -33,7 +33,7 @@ const testCasesForTemplateResourceFileFromReference = [
           type: "absolute",
           filePath: {
             format: "handlebars",
-            path: join(workspaceContext, "templates/test-template.hbs"),
+            path: join(workspaceContext, "templates/test-template-basic.hbs"),
           },
         }),
         workspaceContext,
@@ -43,7 +43,7 @@ const testCasesForTemplateResourceFileFromReference = [
     testOutcome: {
       data: await TemplateResourceFileSchema.parseAsync({
         format: "handlebars",
-        path: join(workspaceContext, "templates/test-template.hbs"),
+        path: join(workspaceContext, "templates/test-template-basic.hbs"),
       }),
       testBehaviourDescription: "succeed with original absolute path",
     },
@@ -55,7 +55,7 @@ const testCasesForTemplateResourceFileFromReference = [
           type: "relative",
           filePath: {
             format: "handlebars",
-            path: "templates/test-template.hbs",
+            path: "templates/test-template-basic.hbs",
           },
         }),
         workspaceContext,
@@ -65,7 +65,7 @@ const testCasesForTemplateResourceFileFromReference = [
     testOutcome: {
       data: await TemplateResourceFileSchema.parseAsync({
         format: "handlebars",
-        path: join(workspaceContext, "templates/test-template.hbs"),
+        path: join(workspaceContext, "templates/test-template-basic.hbs"),
       }),
       testBehaviourDescription: "succeed with concatenated relative path to workspace context",
     },
