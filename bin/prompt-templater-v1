@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
 
-import { main } from '../src/entrypoints/cli.ts'
+import { main } from '../src/index.ts'
+
 main();

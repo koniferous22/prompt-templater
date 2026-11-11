@@ -21,15 +21,7 @@ export const configResourceFromResourceFile = async <
 >(
   type: ConfigResourceT,
   configResourceFile: ConfigResourceFile,
-): Promise<
-  Result<
-    ConfigResource,
-    | AppError<"module_resources_config_resourceFromResourceFile_errorReadingFile">
-    | AppError<"module_resources_config_resourceFromResourceFile_invalidJsonContents">
-    | AppError<"module_resources_config_factories_createWorkflow_invalidInputData">
-    | AppError<"module_resources_config_resourceFromResourceFile_invalidYamlContents">
-  >
-> => {
+) => {
   const fileReadResult = await appErrAsyncFromThrowable(
     async () => {
       return fs.readFile(configResourceFile.file, "utf-8");
@@ -79,7 +71,6 @@ export const configResourceFromResourceFile = async <
   if (!fileContentsParseResult.isOk()) {
     return fileContentsParseResult as Result<never, typeof fileContentsParseResult.error>;
   }
-  // @ts-expect-error
   return match(type as ConfigResourceType)
     .with("workflow", () =>
       configResourceFactories.workflow(fileContentsParseResult.value, {

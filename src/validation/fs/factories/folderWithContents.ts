@@ -86,7 +86,7 @@ const pathDetectionCheckStaticEntries = async (
       .with({ status: "rejected" }, () => appErr("dependency_zod_awaitingAsyncDecode", {}))
       .exhaustive();
     if (!statsResult.isOk()) {
-      return err(statsResult.error);
+      return statsResult;
     }
     const direntResult = DirentSchema.safeParse({
       parentPath: parentFolder,

@@ -5,7 +5,7 @@ import { cliArgsParser } from "../modules/optique/cliArgs.js";
 import { envContext } from "../modules/optique/context/env.js";
 import { createSessionFromCliInput } from "../modules/session/sessionFromCliInput.js";
 
-export const main = async () => {
+export const runCli = async () => {
   const cliInput = await run(cliArgsParser, {
     programName: "prompt-templater-v1",
     contexts: [envContext],
