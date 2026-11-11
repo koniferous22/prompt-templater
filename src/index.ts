@@ -1,4 +1,4 @@
 import { runCli } from "./entrypoints/cli.js";
-import { handleError } from "./utils/error/cliErrorHandler.js";
+import { handleCliError } from "./utils/error/cliErrorHandler.js";
 
-export const main = handleError(runCli);
+export const main = handleCliError(runCli);

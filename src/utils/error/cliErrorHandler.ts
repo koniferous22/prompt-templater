@@ -3,7 +3,7 @@ import type { Result } from "neverthrow";
 import type { AppErrorCode } from "../../constants/errorCodes.js";
 import type { AppAggregateErr, AppError } from "../deps/neverthrow/types.js";
 
-export const handleError =
+export const handleCliError =
   (cb: () => Promise<Result<any, AppError<AppErrorCode> | AppAggregateErr>>) => async () => {
     const result = await cb();
     if (result.isErr()) {
