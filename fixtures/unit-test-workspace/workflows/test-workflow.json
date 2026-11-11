@@ -1,4 +1,15 @@
 {
   "templateFile": "templates/test-template-basic.hbs",
-  "steps": []
+  "steps": [
+    {
+      "id": "selectStep",
+      "type": "select",
+      "message": "pick an option",
+      "valueType": "string",
+      "choices": {
+        "type": "literal",
+        "values": ["literalValue1", "literalValue2", "literalValue3"]
+      }
+    }
+  ]
 }

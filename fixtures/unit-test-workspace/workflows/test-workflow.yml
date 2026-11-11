@@ -1,2 +1,12 @@
 templateFile: templates/test-template-basic.hbs
-steps: []
+steps:
+  - type: select
+    id: selectStep
+    message: pick an option
+    valueType: string
+    choices:
+      type: literal
+      values:
+        - literalValue1
+        - literalValue2
+        - literalValue3
