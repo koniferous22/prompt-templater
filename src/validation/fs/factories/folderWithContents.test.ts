@@ -18,8 +18,8 @@ import { createFolderWithContentsSchema, type FolderWithContents } from "./folde
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
-const fixturesWorkspace1Folder = AbsolutePathSchema.parse(
-  join(projectFixturesFolder, "workspace1"),
+const fixturesUnitTestWorkspaceFolder = AbsolutePathSchema.parse(
+  join(projectFixturesFolder, "unit-test-workspace"),
 );
 
 const directoryDirentFlagsPattern: DirentFlagPatterns = {
@@ -45,7 +45,7 @@ const testCasesForCreateFolderWithContentsSchema = [
             [PathFragmentSchema.parse("terms"), directoryDirentFlagsPattern],
           ]),
         },
-        rootFolder: fixturesWorkspace1Folder,
+        rootFolder: fixturesUnitTestWorkspaceFolder,
       },
       testCaseDescription: "whitelist input with existing folders",
     },
@@ -67,7 +67,7 @@ const testCasesForCreateFolderWithContentsSchema = [
             [PathFragmentSchema.parse("workflows2"), directoryDirentFlagsPattern],
           ]),
         },
-        rootFolder: fixturesWorkspace1Folder,
+        rootFolder: fixturesUnitTestWorkspaceFolder,
       },
       testCaseDescription: "whitelist input with non-existing folders",
     },
@@ -89,7 +89,7 @@ const testCasesForCreateFolderWithContentsSchema = [
             [PathFragmentSchema.parse("terms"), directoryDirentFlagsPattern],
           ]),
         },
-        rootFolder: fixturesWorkspace1Folder,
+        rootFolder: fixturesUnitTestWorkspaceFolder,
       },
       testCaseDescription:
         'existing patterns partially matching input retrieved through fs.readdir + "failOnExtraItems": false',
@@ -113,7 +113,7 @@ const testCasesForCreateFolderWithContentsSchema = [
             [PathFragmentSchema.parse("workflows2"), directoryDirentFlagsPattern],
           ]),
         },
-        rootFolder: fixturesWorkspace1Folder,
+        rootFolder: fixturesUnitTestWorkspaceFolder,
       },
       testCaseDescription:
         'non-existing patterns and input retrieved through fs.readdir + "failOnExtraItems": false',
@@ -138,7 +138,7 @@ const testCasesForCreateFolderWithContentsSchema = [
             [PathFragmentSchema.parse("workflow-presets"), directoryDirentFlagsPattern],
           ]),
         },
-        rootFolder: fixturesWorkspace1Folder,
+        rootFolder: fixturesUnitTestWorkspaceFolder,
       },
       testCaseDescription:
         'existing patterns fully matching input retrieved through fs.readdir + "failOnExtraItems": true',
@@ -162,7 +162,7 @@ const testCasesForCreateFolderWithContentsSchema = [
             [PathFragmentSchema.parse("workflows"), directoryDirentFlagsPattern],
           ]),
         },
-        rootFolder: fixturesWorkspace1Folder,
+        rootFolder: fixturesUnitTestWorkspaceFolder,
       },
       testCaseDescription:
         'patterns partially matching input retrieved through fs.readdir + "failOnExtraItems": true',
@@ -185,7 +185,7 @@ const testCasesForCreateFolderWithContentsSchema = [
             [PathFragmentSchema.parse("terms"), directoryDirentFlagsPattern],
           ]),
         },
-        rootFolder: fixturesWorkspace1Folder,
+        rootFolder: fixturesUnitTestWorkspaceFolder,
       },
       testCaseDescription:
         'existing patterns partially matching input retrieved through fs.readdir + "failOnExtraItems": false',
@@ -209,7 +209,7 @@ const testCasesForCreateFolderWithContentsSchema = [
             [PathFragmentSchema.parse("workflows2"), directoryDirentFlagsPattern],
           ]),
         },
-        rootFolder: fixturesWorkspace1Folder,
+        rootFolder: fixturesUnitTestWorkspaceFolder,
       },
       testCaseDescription:
         'non-existing patterns and input retrieved through fs.readdir + "failOnExtraItems": false',
@@ -308,7 +308,7 @@ const testCasesForCreateFolderWithContentsSchema = [
             ],
           ]),
         },
-        rootFolder: fixturesWorkspace1Folder,
+        rootFolder: fixturesUnitTestWorkspaceFolder,
       },
       testCaseDescription:
         'existing patterns fully matching input retrieved through fs.readdir + "failOnExtraItems": true',
@@ -332,7 +332,7 @@ const testCasesForCreateFolderWithContentsSchema = [
             [PathFragmentSchema.parse("workflows"), directoryDirentFlagsPattern],
           ]),
         },
-        rootFolder: fixturesWorkspace1Folder,
+        rootFolder: fixturesUnitTestWorkspaceFolder,
       },
       testCaseDescription:
         'patterns partially matching input retrieved through fs.readdir + "failOnExtraItems": true',

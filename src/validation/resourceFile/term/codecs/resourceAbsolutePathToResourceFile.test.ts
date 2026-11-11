@@ -23,7 +23,7 @@ const testCasesForTermResourceFileSchema = [
       data: TermResourceAbsolutePathSchema.parse({
         format: "yaml",
         path: AbsolutePathSchema.parse(
-          join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.yml"),
+          join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.yml"),
         ),
         selector: null,
       }),
@@ -41,7 +41,7 @@ const testCasesForTermResourceFileSchema = [
       data: TermResourceAbsolutePathSchema.parse({
         format: "json",
         path: AbsolutePathSchema.parse(
-          join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.json"),
+          join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.json"),
         ),
         selector: null,
       }),
@@ -59,7 +59,7 @@ const testCasesForTermResourceFileSchema = [
       data: TermResourceAbsolutePathSchema.parse({
         format: "plaintext",
         path: AbsolutePathSchema.parse(
-          join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.txt"),
+          join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.txt"),
         ),
         options: PlainFileTermReferenceOptionsInputSchema.parse(undefined),
       }),

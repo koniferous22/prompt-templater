@@ -13,7 +13,7 @@ const testCasesForTermResourceRelativePathSchema = [
     testInput: {
       data: {
         format: "json",
-        path: "fixtures/workspace1/terms/test-term.json",
+        path: "fixtures/unit-test-workspace/terms/test-term.json",
         selector: null,
       },
       testCaseDescription: "valid .json input",
@@ -27,7 +27,7 @@ const testCasesForTermResourceRelativePathSchema = [
     testInput: {
       data: {
         format: "json",
-        path: "fixtures/workspace1/terms/test-term.json",
+        path: "fixtures/unit-test-workspace/terms/test-term.json",
         selector: ["key", 0],
       },
       testCaseDescription: "valid .json input with selector",
@@ -41,7 +41,7 @@ const testCasesForTermResourceRelativePathSchema = [
     testInput: {
       data: {
         format: "yaml",
-        path: "fixtures/workspace1/terms/test-term.yml",
+        path: "fixtures/unit-test-workspace/terms/test-term.yml",
         selector: null,
       },
       testCaseDescription: "valid .yaml input",
@@ -55,7 +55,7 @@ const testCasesForTermResourceRelativePathSchema = [
     testInput: {
       data: {
         format: "yaml",
-        path: "fixtures/workspace1/terms/test-term.yml",
+        path: "fixtures/unit-test-workspace/terms/test-term.yml",
         selector: ["key", 0],
       },
       testCaseDescription: "valid .yaml input with selector",
@@ -69,7 +69,7 @@ const testCasesForTermResourceRelativePathSchema = [
     testInput: {
       data: {
         format: "plaintext",
-        path: "fixtures/workspace1/terms/test-term.txt",
+        path: "fixtures/unit-test-workspace/terms/test-term.txt",
         options: {
           whitespaceLines: "skipTrailing",
           trimWhitespace: true,

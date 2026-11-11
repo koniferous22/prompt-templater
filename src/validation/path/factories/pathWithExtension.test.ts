@@ -25,7 +25,7 @@ const testCasesForCreateAbsolutePathWithExtensionSchema = [
     testInput: {
       data: {
         file: AbsolutePathSchema.parse(
-          join(__dirname, "../../../fixtures/workspace1/workflows/test-workflow.yml"),
+          join(__dirname, "../../../fixtures/unit-test-workspace/workflows/test-workflow.yml"),
         ),
         extension: FileExtensionSchema.parse("yml"),
       },
@@ -42,7 +42,7 @@ const testCasesForCreateAbsolutePathWithExtensionSchema = [
     testInput: {
       data: {
         file: AbsolutePathSchema.parse(
-          join(__dirname, "../../../fixtures/workspace1/workflows/test-workflow.yml"),
+          join(__dirname, "../../../fixtures/unit-test-workspace/workflows/test-workflow.yml"),
         ),
         extension: FileExtensionSchema.parse("json"),
       },

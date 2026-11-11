@@ -12,14 +12,14 @@ import { WorkspaceContextSchema, type WorkspaceContext } from "./workspaceContex
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
-const fixturesWorkspace1Folder = AbsolutePathSchema.parse(
-  join(projectFixturesFolder, "workspace1"),
+const fixturesUnitTestWorkspaceFolder = AbsolutePathSchema.parse(
+  join(projectFixturesFolder, "unit-test-workspace"),
 );
 
 const testCasesForWorkspaceContextSchema = [
   {
     testInput: {
-      data: await FolderSchema.parseAsync(fixturesWorkspace1Folder),
+      data: await FolderSchema.parseAsync(fixturesUnitTestWorkspaceFolder),
       testCaseDescription: "folder matching workspace preset",
     },
     testOutcome: {

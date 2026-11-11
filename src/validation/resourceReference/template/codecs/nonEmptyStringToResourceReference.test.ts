@@ -17,14 +17,14 @@ import { NonEmptyStringToTemplateResourceReferenceSchema } from "./nonEmptyStrin
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
-const fixturesWorkspace1Folder = AbsolutePathSchema.parse(
-  join(projectFixturesFolder, "workspace1"),
+const fixturesUnitTestWorkspaceFolder = AbsolutePathSchema.parse(
+  join(projectFixturesFolder, "unit-test-workspace"),
 );
 const testCasesForNonEmptyStringToTemplateResourceReferenceSchema = [
   {
     testInput: {
       data: NonEmptyStringSchema.parse(
-        join(fixturesWorkspace1Folder, "templates/test-template.hbs"),
+        join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
       ),
       testCaseDescription: "absolute path with supported template extension",
     },
@@ -35,7 +35,7 @@ const testCasesForNonEmptyStringToTemplateResourceReferenceSchema = [
           type: "absolute",
           filePath: {
             format: "handlebars",
-            path: join(fixturesWorkspace1Folder, "templates/test-template.hbs"),
+            path: join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
           },
         }),
       },
@@ -45,7 +45,7 @@ const testCasesForNonEmptyStringToTemplateResourceReferenceSchema = [
   {
     testInput: {
       data: NonEmptyStringSchema.parse(
-        join(fixturesWorkspace1Folder, "workflows/test-workflow.json"),
+        join(fixturesUnitTestWorkspaceFolder, "workflows/test-workflow.json"),
       ),
       testCaseDescription: "absolute path (not a template)",
     },

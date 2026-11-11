@@ -11,11 +11,17 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const testCasesForYamlFileSchema = [
   {
-    testInput: join(__dirname, "../../../../../fixtures/workspace1/workflows/test-workflow.yml"),
+    testInput: join(
+      __dirname,
+      "../../../../../fixtures/unit-test-workspace/workflows/test-workflow.yml",
+    ),
     testOutcome: true,
   },
   {
-    testInput: join(__dirname, "../../../../../fixtures/workspace1/workflows/test-workflow.json"),
+    testInput: join(
+      __dirname,
+      "../../../../../fixtures/unit-test-workspace/workflows/test-workflow.json",
+    ),
     testOutcome: false,
   },
   {

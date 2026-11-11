@@ -16,13 +16,15 @@ import { AbsolutePathToTemplateResourceAbsolutePath } from "./absolutePathToReso
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
-const fixturesWorkspace1Folder = AbsolutePathSchema.parse(
-  join(projectFixturesFolder, "workspace1"),
+const fixturesUnitTestWorkspaceFolder = AbsolutePathSchema.parse(
+  join(projectFixturesFolder, "unit-test-workspace"),
 );
 const testCasesForTemplateResourceFileFromReference = [
   {
     testInput: {
-      data: AbsolutePathSchema.parse(join(fixturesWorkspace1Folder, "templates/test-template.hbs")),
+      data: AbsolutePathSchema.parse(
+        join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
+      ),
       testCaseDescription: "absolute path with supported template extension",
     },
     testOutcome: {
@@ -30,7 +32,7 @@ const testCasesForTemplateResourceFileFromReference = [
         result: true,
         value: TemplateResourceAbsolutePathSchema.parse({
           format: "handlebars",
-          path: join(fixturesWorkspace1Folder, "templates/test-template.hbs"),
+          path: join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
         }),
       },
       testBehaviourDescription: "succeed with original absolute path",
@@ -39,7 +41,7 @@ const testCasesForTemplateResourceFileFromReference = [
   {
     testInput: {
       data: AbsolutePathSchema.parse(
-        join(fixturesWorkspace1Folder, "workflows/test-workflow.json"),
+        join(fixturesUnitTestWorkspaceFolder, "workflows/test-workflow.json"),
       ),
       testCaseDescription: "absolute path (not a template)",
     },

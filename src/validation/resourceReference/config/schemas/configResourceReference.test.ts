@@ -19,7 +19,10 @@ const testCasesForConfigResourceReferenceSchema = [
         type: "absolute",
         filePath: {
           format: "json",
-          path: join(__dirname, "../../../../../fixtures/workspace1/workflows/test-workflow.json"),
+          path: join(
+            __dirname,
+            "../../../../../fixtures/unit-test-workspace/workflows/test-workflow.json",
+          ),
         },
       },
       testCaseDescription: "valid absolute json workflow input",
@@ -35,7 +38,10 @@ const testCasesForConfigResourceReferenceSchema = [
         type: "absolute",
         filePath: {
           format: "yaml",
-          path: join(__dirname, "../../../../../fixtures/workspace1/workflows/test-workflow.yml"),
+          path: join(
+            __dirname,
+            "../../../../../fixtures/unit-test-workspace/workflows/test-workflow.yml",
+          ),
         },
       },
       testCaseDescription: "valid absolute yaml workflow input",

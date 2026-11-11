@@ -17,7 +17,10 @@ const testCasesForConfigResourceAbsolutePathSchema = [
     testInput: {
       data: {
         format: "json",
-        path: join(__dirname, "../../../../../fixtures/workspace1/workflows/test-workflow.json"),
+        path: join(
+          __dirname,
+          "../../../../../fixtures/unit-test-workspace/workflows/test-workflow.json",
+        ),
       },
       testCaseDescription: "valid .json input",
     },
@@ -30,7 +33,10 @@ const testCasesForConfigResourceAbsolutePathSchema = [
     testInput: {
       data: {
         format: "yaml",
-        path: join(__dirname, "../../../../../fixtures/workspace1/workflows/test-workflow.yml"),
+        path: join(
+          __dirname,
+          "../../../../../fixtures/unit-test-workspace/workflows/test-workflow.yml",
+        ),
       },
       testCaseDescription: "valid .yaml input",
     },

@@ -22,7 +22,10 @@ const testCasesForTemplateResourceFileSchema = [
       data: TemplateResourceAbsolutePathSchema.parse({
         format: "handlebars",
         path: AbsolutePathSchema.parse(
-          join(__dirname, "../../../../../fixtures/workspace1/templates/test-template.hbs"),
+          join(
+            __dirname,
+            "../../../../../fixtures/unit-test-workspace/templates/test-template.hbs",
+          ),
         ),
       }),
       testCaseDescription: "handlebars template resource path pointing to existing file",

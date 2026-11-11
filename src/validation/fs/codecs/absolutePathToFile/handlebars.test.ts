@@ -11,11 +11,17 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const testCasesForHandlebarsFileSchema = [
   {
-    testInput: join(__dirname, "../../../../../fixtures/workspace1/templates/test-template.hbs"),
+    testInput: join(
+      __dirname,
+      "../../../../../fixtures/unit-test-workspace/templates/test-template.hbs",
+    ),
     testOutcome: true,
   },
   {
-    testInput: join(__dirname, "../../../../../fixtures/workspace1/workflows/test-workflow.yml"),
+    testInput: join(
+      __dirname,
+      "../../../../../fixtures/unit-test-workspace/workflows/test-workflow.yml",
+    ),
     testOutcome: false,
   },
   {

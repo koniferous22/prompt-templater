@@ -19,7 +19,7 @@ const testCasesForTermResourceReferenceSchema = [
         type: "absolute",
         filePath: {
           format: "json",
-          path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.json"),
+          path: join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.json"),
           selector: null,
         },
       },
@@ -36,7 +36,7 @@ const testCasesForTermResourceReferenceSchema = [
         type: "absolute",
         filePath: {
           format: "json",
-          path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.json"),
+          path: join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.json"),
           selector: ["key", 0],
         },
       },
@@ -53,7 +53,7 @@ const testCasesForTermResourceReferenceSchema = [
         type: "absolute",
         filePath: {
           format: "yaml",
-          path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.yml"),
+          path: join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.yml"),
           selector: null,
         },
       },
@@ -70,7 +70,7 @@ const testCasesForTermResourceReferenceSchema = [
         type: "absolute",
         filePath: {
           format: "yaml",
-          path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.yml"),
+          path: join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.yml"),
           selector: ["key", 0],
         },
       },
@@ -87,7 +87,7 @@ const testCasesForTermResourceReferenceSchema = [
         type: "absolute",
         filePath: {
           format: "yaml",
-          path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.yml"),
+          path: join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.yml"),
           selector: ["key", 0],
         },
       },
@@ -104,7 +104,7 @@ const testCasesForTermResourceReferenceSchema = [
         type: "absolute",
         filePath: {
           format: "plaintext",
-          path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.txt"),
+          path: join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.txt"),
           options: {
             whitespaceLines: "skipTrailing",
             trimWhitespace: true,
@@ -125,7 +125,7 @@ const testCasesForTermResourceReferenceSchema = [
         type: "relative",
         filePath: {
           format: "json",
-          path: "fixtures/workspace1/terms/test-term.json",
+          path: "fixtures/unit-test-workspace/terms/test-term.json",
           selector: null,
         },
       },
@@ -142,7 +142,7 @@ const testCasesForTermResourceReferenceSchema = [
         type: "relative",
         filePath: {
           format: "json",
-          path: "fixtures/workspace1/terms/test-term.json",
+          path: "fixtures/unit-test-workspace/terms/test-term.json",
           selector: ["key", 0],
         },
       },
@@ -159,7 +159,7 @@ const testCasesForTermResourceReferenceSchema = [
         type: "relative",
         filePath: {
           format: "yaml",
-          path: "fixtures/workspace1/terms/test-term.yml",
+          path: "fixtures/unit-test-workspace/terms/test-term.yml",
           selector: null,
         },
       },
@@ -176,7 +176,7 @@ const testCasesForTermResourceReferenceSchema = [
         type: "relative",
         filePath: {
           format: "yaml",
-          path: "fixtures/workspace1/terms/test-term.yml",
+          path: "fixtures/unit-test-workspace/terms/test-term.yml",
           selector: ["key", 0],
         },
       },
@@ -193,7 +193,7 @@ const testCasesForTermResourceReferenceSchema = [
         type: "relative",
         filePath: {
           format: "plaintext",
-          path: "fixtures/workspace1/terms/test-term.txt",
+          path: "fixtures/unit-test-workspace/terms/test-term.txt",
           options: {
             whitespaceLines: "skipTrailing",
             trimWhitespace: true,

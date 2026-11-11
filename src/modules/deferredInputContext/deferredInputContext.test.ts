@@ -24,7 +24,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
 const workspaceContext = await WorkspaceContextSchema.parseAsync(
-  join(projectFixturesFolder, "workspace1"),
+  join(projectFixturesFolder, "unit-test-workspace"),
 );
 
 // Readable options that is going to be serialized in error message

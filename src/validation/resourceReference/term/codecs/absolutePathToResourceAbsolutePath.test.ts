@@ -15,13 +15,13 @@ import { AbsolutePathToTermResourceAbsolutePath } from "./absolutePathToResource
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
-const fixturesWorkspace1Folder = AbsolutePathSchema.parse(
-  join(projectFixturesFolder, "workspace1"),
+const fixturesUnitTestWorkspaceFolder = AbsolutePathSchema.parse(
+  join(projectFixturesFolder, "unit-test-workspace"),
 );
 const testCasesForTermResourceFileFromReference = [
   {
     testInput: {
-      data: AbsolutePathSchema.parse(join(fixturesWorkspace1Folder, "terms/test-term.json")),
+      data: AbsolutePathSchema.parse(join(fixturesUnitTestWorkspaceFolder, "terms/test-term.json")),
       testCaseDescription: "absolute path with .json term extension",
     },
     testOutcome: {
@@ -29,7 +29,7 @@ const testCasesForTermResourceFileFromReference = [
         result: true,
         value: TermResourceAbsolutePathSchema.parse({
           format: "json",
-          path: join(fixturesWorkspace1Folder, "terms/test-term.json"),
+          path: join(fixturesUnitTestWorkspaceFolder, "terms/test-term.json"),
           selector: null,
         }),
       },
@@ -38,7 +38,7 @@ const testCasesForTermResourceFileFromReference = [
   },
   {
     testInput: {
-      data: AbsolutePathSchema.parse(join(fixturesWorkspace1Folder, "terms/test-term.yml")),
+      data: AbsolutePathSchema.parse(join(fixturesUnitTestWorkspaceFolder, "terms/test-term.yml")),
       testCaseDescription: "absolute path with .yml term extension",
     },
     testOutcome: {
@@ -46,7 +46,7 @@ const testCasesForTermResourceFileFromReference = [
         result: true,
         value: TermResourceAbsolutePathSchema.parse({
           format: "yaml",
-          path: join(fixturesWorkspace1Folder, "terms/test-term.yml"),
+          path: join(fixturesUnitTestWorkspaceFolder, "terms/test-term.yml"),
           selector: null,
         }),
       },
@@ -55,7 +55,7 @@ const testCasesForTermResourceFileFromReference = [
   },
   {
     testInput: {
-      data: AbsolutePathSchema.parse(join(fixturesWorkspace1Folder, "terms/test-term.txt")),
+      data: AbsolutePathSchema.parse(join(fixturesUnitTestWorkspaceFolder, "terms/test-term.txt")),
       testCaseDescription: "absolute path with plaintext as fallback",
     },
     testOutcome: {
@@ -63,7 +63,7 @@ const testCasesForTermResourceFileFromReference = [
         result: true,
         value: TermResourceAbsolutePathSchema.parse({
           format: "plaintext",
-          path: join(fixturesWorkspace1Folder, "terms/test-term.txt"),
+          path: join(fixturesUnitTestWorkspaceFolder, "terms/test-term.txt"),
           options: {
             whitespaceLines: "skipTrailing",
             trimWhitespace: true,

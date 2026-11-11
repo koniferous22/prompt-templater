@@ -19,7 +19,10 @@ const testCasesForTemplateResourceReferenceSchema = [
         type: "absolute",
         filePath: {
           format: "handlebars",
-          path: join(__dirname, "../../../../../fixtures/workspace1/templates/test-template.hbs"),
+          path: join(
+            __dirname,
+            "../../../../../fixtures/unit-test-workspace/templates/test-template.hbs",
+          ),
         },
       },
       testCaseDescription: "valid absolute handlebars template input",

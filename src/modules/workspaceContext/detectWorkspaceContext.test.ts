@@ -20,7 +20,10 @@ const testCasesForDetectWorkspaceContextFromCliInput = [
       data: {
         workflowFile: await ConfigResourceFileSchema.parseAsync({
           format: "yaml",
-          path: join(__dirname, "../../../fixtures/workspace1/workflows/test-workflow.yml"),
+          path: join(
+            __dirname,
+            "../../../fixtures/unit-test-workspace/workflows/test-workflow.yml",
+          ),
         }),
         workflowPresetFile: null,
       },
@@ -30,7 +33,7 @@ const testCasesForDetectWorkspaceContextFromCliInput = [
       testBehaviourDescription: "should succeed",
       data: {
         result: true,
-        value: AbsolutePathSchema.parse(join(__dirname, "../../../fixtures/workspace1")),
+        value: AbsolutePathSchema.parse(join(__dirname, "../../../fixtures/unit-test-workspace")),
       },
     },
   },
@@ -39,13 +42,16 @@ const testCasesForDetectWorkspaceContextFromCliInput = [
       data: {
         workflowFile: await ConfigResourceFileSchema.parseAsync({
           format: "yaml",
-          path: join(__dirname, "../../../fixtures/workspace1/workflows/test-workflow.yml"),
+          path: join(
+            __dirname,
+            "../../../fixtures/unit-test-workspace/workflows/test-workflow.yml",
+          ),
         }),
         workflowPresetFile: await ConfigResourceFileSchema.parseAsync({
           format: "yaml",
           path: join(
             __dirname,
-            "../../../fixtures/workspace1/workflow-presets/test-workflow-preset.yml",
+            "../../../fixtures/unit-test-workspace/workflow-presets/test-workflow-preset.yml",
           ),
         }),
       },
@@ -55,7 +61,7 @@ const testCasesForDetectWorkspaceContextFromCliInput = [
       testBehaviourDescription: "should succeed",
       data: {
         result: true,
-        value: AbsolutePathSchema.parse(join(__dirname, "../../../fixtures/workspace1")),
+        value: AbsolutePathSchema.parse(join(__dirname, "../../../fixtures/unit-test-workspace")),
       },
     },
   },

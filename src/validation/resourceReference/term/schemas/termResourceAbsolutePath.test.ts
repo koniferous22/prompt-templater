@@ -17,7 +17,7 @@ const testCasesForTermResourceAbsolutePathSchema = [
     testInput: {
       data: {
         format: "json",
-        path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.json"),
+        path: join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.json"),
         selector: null,
       },
       testCaseDescription: "valid .json input",
@@ -31,7 +31,7 @@ const testCasesForTermResourceAbsolutePathSchema = [
     testInput: {
       data: {
         format: "json",
-        path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.json"),
+        path: join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.json"),
         selector: ["key", 0],
       },
       testCaseDescription: "valid .json input with selector",
@@ -45,7 +45,7 @@ const testCasesForTermResourceAbsolutePathSchema = [
     testInput: {
       data: {
         format: "yaml",
-        path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.yml"),
+        path: join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.yml"),
         selector: null,
       },
       testCaseDescription: "valid .yaml input",
@@ -59,7 +59,7 @@ const testCasesForTermResourceAbsolutePathSchema = [
     testInput: {
       data: {
         format: "yaml",
-        path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.yml"),
+        path: join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.yml"),
         selector: ["key", 0],
       },
       testCaseDescription: "valid .yaml input with selector",
@@ -73,7 +73,7 @@ const testCasesForTermResourceAbsolutePathSchema = [
     testInput: {
       data: {
         format: "plaintext",
-        path: join(__dirname, "../../../../../fixtures/workspace1/terms/test-term.txt"),
+        path: join(__dirname, "../../../../../fixtures/unit-test-workspace/terms/test-term.txt"),
         options: {
           whitespaceLines: "skipTrailing",
           trimWhitespace: true,

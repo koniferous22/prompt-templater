@@ -16,13 +16,15 @@ import { NonEmptyStringToTermResourceReferenceSchema } from "./nonEmptyStringToR
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
-const fixturesWorkspace1Folder = AbsolutePathSchema.parse(
-  join(projectFixturesFolder, "workspace1"),
+const fixturesUnitTestWorkspaceFolder = AbsolutePathSchema.parse(
+  join(projectFixturesFolder, "unit-test-workspace"),
 );
 const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
   {
     testInput: {
-      data: NonEmptyStringSchema.parse(join(fixturesWorkspace1Folder, "terms/test-term.json")),
+      data: NonEmptyStringSchema.parse(
+        join(fixturesUnitTestWorkspaceFolder, "terms/test-term.json"),
+      ),
       testCaseDescription: "absolute path with .json term extension",
     },
     testOutcome: {
@@ -32,7 +34,7 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
           type: "absolute",
           filePath: {
             format: "json",
-            path: join(fixturesWorkspace1Folder, "terms/test-term.json"),
+            path: join(fixturesUnitTestWorkspaceFolder, "terms/test-term.json"),
             selector: null,
           },
         }),
@@ -42,7 +44,9 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
   },
   {
     testInput: {
-      data: NonEmptyStringSchema.parse(join(fixturesWorkspace1Folder, "terms/test-term.yml")),
+      data: NonEmptyStringSchema.parse(
+        join(fixturesUnitTestWorkspaceFolder, "terms/test-term.yml"),
+      ),
       testCaseDescription: "absolute path with .yml term extension",
     },
     testOutcome: {
@@ -52,7 +56,7 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
           type: "absolute",
           filePath: {
             format: "yaml",
-            path: join(fixturesWorkspace1Folder, "terms/test-term.yml"),
+            path: join(fixturesUnitTestWorkspaceFolder, "terms/test-term.yml"),
             selector: null,
           },
         }),
@@ -62,7 +66,9 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
   },
   {
     testInput: {
-      data: NonEmptyStringSchema.parse(join(fixturesWorkspace1Folder, "terms/test-term.txt")),
+      data: NonEmptyStringSchema.parse(
+        join(fixturesUnitTestWorkspaceFolder, "terms/test-term.txt"),
+      ),
       testCaseDescription: "absolute path with plaintext as fallback",
     },
     testOutcome: {
@@ -72,7 +78,7 @@ const testCasesForNonEmptyStringToTermResourceReferenceSchema = [
           type: "absolute",
           filePath: {
             format: "plaintext",
-            path: join(fixturesWorkspace1Folder, "terms/test-term.txt"),
+            path: join(fixturesUnitTestWorkspaceFolder, "terms/test-term.txt"),
             options: {
               whitespaceLines: "skipTrailing",
               trimWhitespace: true,

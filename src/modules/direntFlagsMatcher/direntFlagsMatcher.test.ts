@@ -21,15 +21,34 @@ import { createDirentFlagsMatcher, type DirentFlagPatterns } from "./direntFlags
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
+const fixturesWorkspaceFolder = AbsolutePathSchema.parse(
+  join(projectFixturesFolder, "unit-test-workspace"),
+);
 
 const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        inputFolderPath: projectFixturesFolder,
+        inputFolderPath: fixturesWorkspaceFolder,
         expectedFlagPatterns: new Map([
           [
-            PathFragmentSchema.parse("workspace1"),
+            PathFragmentSchema.parse("templates"),
+            {
+              isDirectory: true,
+              isFile: false,
+              isSymlink: false,
+            },
+          ],
+          [
+            PathFragmentSchema.parse("terms"),
+            {
+              isDirectory: true,
+              isFile: false,
+              isSymlink: false,
+            },
+          ],
+          [
+            PathFragmentSchema.parse("workflows"),
             {
               isDirectory: true,
               isFile: false,
@@ -41,7 +60,8 @@ const testCasesForDirentFlagsMatcher = [
           failOnExtraItems: false,
         },
       },
-      testCaseDescription: 'input consisting of partial match of "fixtures" folder contents',
+      testCaseDescription:
+        'input consisting of partial match of "unit-test-workspace" folder contents',
     },
     testOutcome: {
       data: {
@@ -54,10 +74,26 @@ const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        inputFolderPath: projectFixturesFolder,
+        inputFolderPath: fixturesWorkspaceFolder,
         expectedFlagPatterns: new Map([
           [
-            PathFragmentSchema.parse("workspace1"),
+            PathFragmentSchema.parse("templates"),
+            {
+              isDirectory: true,
+              isFile: false,
+              isSymlink: false,
+            },
+          ],
+          [
+            PathFragmentSchema.parse("terms"),
+            {
+              isDirectory: true,
+              isFile: false,
+              isSymlink: false,
+            },
+          ],
+          [
+            PathFragmentSchema.parse("workflows"),
             {
               isDirectory: true,
               isFile: false,
@@ -69,14 +105,14 @@ const testCasesForDirentFlagsMatcher = [
           failOnExtraItems: true,
         },
       },
-      testCaseDescription: 'input expecting full match of "fixtures" folder contents',
+      testCaseDescription: 'input expecting full match of "unit-test-workspace" folder contents',
     },
     testOutcome: {
       data: {
         ok: false,
         errors: createError("module_direntFlagsMatcher_extraItemsFound", {
-          expectedFolderPath: projectFixturesFolder,
-          extraItem: AbsolutePathSchema.parse(join(projectFixturesFolder, "workspace2")),
+          expectedFolderPath: fixturesWorkspaceFolder,
+          extraItem: AbsolutePathSchema.parse(join(fixturesWorkspaceFolder, "workflow-presets")),
         }),
       },
       testBehaviourDescription: "return error",
@@ -85,10 +121,10 @@ const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        inputFolderPath: projectFixturesFolder,
+        inputFolderPath: fixturesWorkspaceFolder,
         expectedFlagPatterns: new Map([
           [
-            PathFragmentSchema.parse("workspace1"),
+            PathFragmentSchema.parse("templates"),
             {
               isDirectory: true,
               isFile: false,
@@ -96,7 +132,7 @@ const testCasesForDirentFlagsMatcher = [
             },
           ],
           [
-            PathFragmentSchema.parse("workspace3"),
+            PathFragmentSchema.parse("does-not-exist"),
             {
               isDirectory: true,
               isFile: false,
@@ -108,14 +144,15 @@ const testCasesForDirentFlagsMatcher = [
           failOnExtraItems: false,
         },
       },
-      testCaseDescription: 'input having items not present in "fixtures" folder contents',
+      testCaseDescription:
+        'input having items not present in "unit-test-workspace" folder contents',
     },
     testOutcome: {
       data: {
         ok: false,
         errors: createError("module_direntFlagsMatcher_patternNotFound", {
-          pattern: PathFragmentSchema.parse("workspace3"),
-          parentPath: projectFixturesFolder,
+          pattern: PathFragmentSchema.parse("does-not-exist"),
+          parentPath: fixturesWorkspaceFolder,
         }),
       },
       testBehaviourDescription: "return error",
@@ -124,10 +161,10 @@ const testCasesForDirentFlagsMatcher = [
   {
     testInput: {
       data: {
-        inputFolderPath: projectFixturesFolder,
+        inputFolderPath: fixturesWorkspaceFolder,
         expectedFlagPatterns: new Map([
           [
-            PathFragmentSchema.parse("workspace1"),
+            PathFragmentSchema.parse("templates"),
             {
               isDirectory: true,
               isFile: false,
@@ -135,7 +172,23 @@ const testCasesForDirentFlagsMatcher = [
             },
           ],
           [
-            PathFragmentSchema.parse("workspace2"),
+            PathFragmentSchema.parse("terms"),
+            {
+              isDirectory: true,
+              isFile: false,
+              isSymlink: false,
+            },
+          ],
+          [
+            PathFragmentSchema.parse("workflow-presets"),
+            {
+              isDirectory: true,
+              isFile: false,
+              isSymlink: false,
+            },
+          ],
+          [
+            PathFragmentSchema.parse("workflows"),
             {
               isDirectory: true,
               isFile: false,

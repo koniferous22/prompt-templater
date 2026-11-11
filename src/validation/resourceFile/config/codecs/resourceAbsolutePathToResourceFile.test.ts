@@ -22,7 +22,10 @@ const testCasesForConfigResourceFileSchema = [
       data: ConfigResourceAbsolutePathSchema.parse({
         format: "yaml",
         path: AbsolutePathSchema.parse(
-          join(__dirname, "../../../../../fixtures/workspace1/workflows/test-workflow.yml"),
+          join(
+            __dirname,
+            "../../../../../fixtures/unit-test-workspace/workflows/test-workflow.yml",
+          ),
         ),
       }),
       testCaseDescription: "yaml config resource path pointing to existing file",
@@ -39,7 +42,10 @@ const testCasesForConfigResourceFileSchema = [
       data: ConfigResourceAbsolutePathSchema.parse({
         format: "json",
         path: AbsolutePathSchema.parse(
-          join(__dirname, "../../../../../fixtures/workspace1/workflows/test-workflow.json"),
+          join(
+            __dirname,
+            "../../../../../fixtures/unit-test-workspace/workflows/test-workflow.json",
+          ),
         ),
       }),
       testCaseDescription: "json config resource path pointing to existing file",

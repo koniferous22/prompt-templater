@@ -17,14 +17,14 @@ import { NonEmptyStringToConfigResourceReferenceSchema } from "./nonEmptyStringT
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
-const fixturesWorkspace1Folder = AbsolutePathSchema.parse(
-  join(projectFixturesFolder, "workspace1"),
+const fixturesUnitTestWorkspaceFolder = AbsolutePathSchema.parse(
+  join(projectFixturesFolder, "unit-test-workspace"),
 );
 const testCasesForNonEmptyStringToConfigResourceReferenceSchema = [
   {
     testInput: {
       data: NonEmptyStringSchema.parse(
-        join(fixturesWorkspace1Folder, "workflows/test-workflow.json"),
+        join(fixturesUnitTestWorkspaceFolder, "workflows/test-workflow.json"),
       ),
       testCaseDescription: "absolute path for .json config resource",
     },
@@ -35,7 +35,7 @@ const testCasesForNonEmptyStringToConfigResourceReferenceSchema = [
           type: "absolute",
           filePath: {
             format: "json",
-            path: join(fixturesWorkspace1Folder, "workflows/test-workflow.json"),
+            path: join(fixturesUnitTestWorkspaceFolder, "workflows/test-workflow.json"),
           },
         }),
       },
@@ -45,7 +45,7 @@ const testCasesForNonEmptyStringToConfigResourceReferenceSchema = [
   {
     testInput: {
       data: NonEmptyStringSchema.parse(
-        join(fixturesWorkspace1Folder, "workflows/test-workflow.yml"),
+        join(fixturesUnitTestWorkspaceFolder, "workflows/test-workflow.yml"),
       ),
       testCaseDescription: "absolute path for .yaml config resource",
     },
@@ -56,7 +56,7 @@ const testCasesForNonEmptyStringToConfigResourceReferenceSchema = [
           type: "absolute",
           filePath: {
             format: "yaml",
-            path: join(fixturesWorkspace1Folder, "workflows/test-workflow.yml"),
+            path: join(fixturesUnitTestWorkspaceFolder, "workflows/test-workflow.yml"),
           },
         }),
       },
@@ -66,7 +66,7 @@ const testCasesForNonEmptyStringToConfigResourceReferenceSchema = [
   {
     testInput: {
       data: NonEmptyStringSchema.parse(
-        join(fixturesWorkspace1Folder, "templates/test-template.hbs"),
+        join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
       ),
       testCaseDescription: "absolute path with invalid extension",
     },

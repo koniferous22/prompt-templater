@@ -16,14 +16,14 @@ import { AbsolutePathToConfigResourceAbsolutePath } from "./absolutePathToResour
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = AbsolutePathSchema.parse(join(__dirname, "../../../../../"));
 const projectFixturesFolder = AbsolutePathSchema.parse(join(projectRoot, "fixtures"));
-const fixturesWorkspace1Folder = AbsolutePathSchema.parse(
-  join(projectFixturesFolder, "workspace1"),
+const fixturesUnitTestWorkspaceFolder = AbsolutePathSchema.parse(
+  join(projectFixturesFolder, "unit-test-workspace"),
 );
 const testCasesForAbsolutePathToConfigResourceAbsolutePath = [
   {
     testInput: {
       data: AbsolutePathSchema.parse(
-        join(fixturesWorkspace1Folder, "workflows/test-workflow.json"),
+        join(fixturesUnitTestWorkspaceFolder, "workflows/test-workflow.json"),
       ),
       testCaseDescription: "absolute path of config resource with .json extension",
     },
@@ -32,7 +32,7 @@ const testCasesForAbsolutePathToConfigResourceAbsolutePath = [
         result: true,
         value: ConfigResourceAbsolutePathSchema.parse({
           format: "json",
-          path: join(fixturesWorkspace1Folder, "workflows/test-workflow.json"),
+          path: join(fixturesUnitTestWorkspaceFolder, "workflows/test-workflow.json"),
         }),
       },
       testBehaviourDescription: "succeed with original absolute path",
@@ -40,7 +40,9 @@ const testCasesForAbsolutePathToConfigResourceAbsolutePath = [
   },
   {
     testInput: {
-      data: AbsolutePathSchema.parse(join(fixturesWorkspace1Folder, "workflows/test-workflow.yml")),
+      data: AbsolutePathSchema.parse(
+        join(fixturesUnitTestWorkspaceFolder, "workflows/test-workflow.yml"),
+      ),
       testCaseDescription: "absolute path of config resource with .yml extension",
     },
     testOutcome: {
@@ -48,7 +50,7 @@ const testCasesForAbsolutePathToConfigResourceAbsolutePath = [
         result: true,
         value: ConfigResourceAbsolutePathSchema.parse({
           format: "yaml",
-          path: join(fixturesWorkspace1Folder, "workflows/test-workflow.yml"),
+          path: join(fixturesUnitTestWorkspaceFolder, "workflows/test-workflow.yml"),
         }),
       },
       testBehaviourDescription: "succeed with original absolute path",
@@ -56,7 +58,9 @@ const testCasesForAbsolutePathToConfigResourceAbsolutePath = [
   },
   {
     testInput: {
-      data: AbsolutePathSchema.parse(join(fixturesWorkspace1Folder, "templates/test-template.hbs")),
+      data: AbsolutePathSchema.parse(
+        join(fixturesUnitTestWorkspaceFolder, "templates/test-template.hbs"),
+      ),
       testCaseDescription: "absolute path (not a template)",
     },
     testOutcome: {
