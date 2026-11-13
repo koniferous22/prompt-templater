@@ -48,15 +48,22 @@ export const createTemplate = (
       );
       const renderFn = renderFnSchema.implement(templateInstance.getCompiledTemplate());
       // Wrap to handle neverthrow errors
+      // Note for some reason `throw`n error isn't instance of `z.ZodError` - i.e. following condition fails
+      // return appErrFromThrowable(renderFn, (error) =>
+      //   error instanceof z.ZodError
+      //     ? createError("module_resources_template_createRenderFunction_invalidRenderingInput", {
+      //         templateFile: context.file,
+      //         zodError: error,
+      //       })
+      //     : createError("module_resources_template_createRenderFunction_unknownError", {
+      //         templateFile: context.file,
+      //       }),
+      // );
       return appErrFromThrowable(renderFn, (error) =>
-        error instanceof z.ZodError
-          ? createError("module_resources_template_createRenderFunction_invalidRenderingInput", {
-              templateFile: context.file,
-              zodError: error,
-            })
-          : createError("module_resources_template_createRenderFunction_unknownError", {
-              templateFile: context.file,
-            }),
+        createError("module_resources_template_createRenderFunction_invalidRenderingInput", {
+          templateFile: context.file,
+          zodError: error as z.ZodError,
+        }),
       );
     },
   };
