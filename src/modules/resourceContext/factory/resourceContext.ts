@@ -23,7 +23,7 @@ export function createResourceContext(workspaceContext: WorkspaceContext) {
       });
       return result.isOk() ? ok(this) : result;
     },
-    async addWorkflowPreset(file: ConfigResourceFile) {
+    async addWorkflowPreset(_file: ConfigResourceFile) {
       // TBD - noop for now
       return ok(this);
     },

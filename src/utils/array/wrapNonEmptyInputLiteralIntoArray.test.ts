@@ -1,5 +1,4 @@
 import { describe, expect, it } from "bun:test";
-import assert from "node:assert/strict";
 
 import { wrapNonEmptyInputLiteralIntoArray } from "./wrapNonEmptyInputLiteralIntoArray.js";
 

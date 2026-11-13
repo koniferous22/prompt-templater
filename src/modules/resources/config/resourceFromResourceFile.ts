@@ -7,17 +7,9 @@ import { match } from "ts-pattern";
 import { createError } from "../../../utils/deps/neverthrow/errorFactory.js";
 import { appErrAsyncFromThrowable } from "../../../utils/deps/neverthrow/errorFromThrowable.js";
 import type { ConfigResourceFile } from "../../../validation/resourceFile/config/codecs/resourceAbsolutePathToResourceFile.js";
-import {
-  configResourceFactories,
-  type ConfigResourceType,
-  type ConfigResourceTypes,
-} from "./factories/resourceFactories.js";
+import { configResourceFactories, type ConfigResourceType } from "./factories/resourceFactories.js";
 
-export const configResourceFromResourceFile = async <
-  ConfigResourceT extends ConfigResourceType,
-  ConfigResource extends ConfigResourceTypes[ConfigResourceT] =
-    ConfigResourceTypes[ConfigResourceT],
->(
+export const configResourceFromResourceFile = async <ConfigResourceT extends ConfigResourceType>(
   type: ConfigResourceT,
   configResourceFile: ConfigResourceFile,
 ) => {

@@ -23,7 +23,7 @@ export const createHandlebarsTemplate = (
   let ast: hbs.AST.Program;
   try {
     ast = Handlebars.parse(templateSource) as unknown as hbs.AST.Program;
-  } catch (e: any) {
+  } catch {
     return appErr(
       "module_templateEngines_handlebars_createHandlebarsTemplate_unableToParseInput",
       context,

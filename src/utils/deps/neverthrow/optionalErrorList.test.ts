@@ -238,6 +238,7 @@ describe("resultFromOptionalErrorList", () => {
           );
         })
         .exhaustive();
+      // oxlint-disable-next-line no-unused-expressions
       result.isOk()
         ? expectTypeOf(result.value).toEqualTypeOf<null>()
         : match(result.error)

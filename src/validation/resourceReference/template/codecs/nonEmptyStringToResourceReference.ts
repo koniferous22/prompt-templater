@@ -59,7 +59,7 @@ export const NonEmptyStringToTemplateResourceReferenceSchema = z.codec(
           type: "relative" as const,
           filePath: resourceRelativePathResult.data,
         };
-      } catch (err: any) {
+      } catch {
         zodRegisterIssue(
           nonEmptyString,
           ctx,

@@ -1,4 +1,4 @@
-import { describe, test, expect, spyOn, afterEach, it } from "bun:test";
+import { describe, expect, spyOn, afterEach, it } from "bun:test";
 
 import { ok, Result } from "neverthrow";
 
@@ -6,49 +6,6 @@ import type { AppErrorCode } from "../../constants/errorCodes.js";
 import { appErr } from "../deps/neverthrow/errorFactory.js";
 import type { AppAggregateErr, AppError } from "../deps/neverthrow/types.js";
 import { handleCliError } from "./cliErrorHandler.js";
-
-// describe("handleCliError", () => {
-//   let originalExitCode: typeof process.exitCode;
-
-//   afterEach(() => {
-//     // Critical: prevent contaminating bun test’s exit code
-//     process.exitCode = originalExitCode;
-//   });
-
-//   test("sets process.exitCode = 1 and logs the error message on Err", async () => {
-//     originalExitCode = process.exitCode;
-//     process.exitCode = 0;
-
-//     const consoleError = spyOn(console, "error").mockImplementation(() => {});
-
-//     const failing = async () => appErr('dependency_nodeFs_fsReadDir_invalidOuptutShape', undefined)
-//     const run = handleCliError(failing);
-
-//     await run();
-
-//     expect(consoleError).toHaveBeenCalled();
-//     expect(process.exitCode).toBe(1);
-
-//     consoleError.mockRestore();
-//   });
-
-//   test("does nothing on Ok", async () => {
-//     originalExitCode = process.exitCode;
-//     process.exitCode = 0
-
-//     const consoleError = spyOn(console, "error").mockImplementation(() => {});
-
-//     const succeeding = async () => ok(42);
-//     const run = handleCliError(succeeding);
-
-//     await run();
-
-//     expect(consoleError).toHaveBeenCalled();
-//     expect(process.exitCode).toBe(0);
-
-//     consoleError.mockRestore();
-//   });
-// });
 
 const testCasesForCliErrorHandler = [
   {
