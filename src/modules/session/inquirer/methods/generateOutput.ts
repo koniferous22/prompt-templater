@@ -29,6 +29,7 @@ const generateOutput = async (
   }
   if (options.shouldPrintToStdout) {
     process.stdout.write(output);
+    process.stdout.write("\n");
   }
   return ok(undefined);
 };
