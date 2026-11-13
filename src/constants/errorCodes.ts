@@ -1,4 +1,9 @@
 export type AppErrorCode =
+  | "dependency_clipboardy_write_errorCopyingRenderedContents"
+  | "dependency_inquirer_checkbox_checkboxPromptError"
+  | "dependency_inquirer_editor_editorPromptError"
+  | "dependency_inquirer_input_inputPromptError"
+  | "dependency_inquirer_select_selectPromptError"
   | "dependency_nodeFs_fsCreateReadStream_unableToOpenForReading"
   | "dependency_nodeFs_fsReadDir_invalidOuptutShape"
   | "dependency_nodeFs_fsReadDir_operationFailed"

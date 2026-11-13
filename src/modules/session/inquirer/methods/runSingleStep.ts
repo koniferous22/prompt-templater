@@ -2,6 +2,7 @@ import { checkbox, editor, input, select } from "@inquirer/prompts";
 import { ok } from "neverthrow";
 import { match } from "ts-pattern";
 
+import { createError } from "../../../../utils/deps/neverthrow/errorFactory.js";
 import { appErrAsyncFromThrowable } from "../../../../utils/deps/neverthrow/errorFromThrowable.js";
 import type { Workflow } from "../../../../validation/resources/config/workflow/schemas/workflow.js";
 import type { ResourceContext } from "../../../resourceContext/factory/resourceContext.js";
@@ -30,7 +31,10 @@ export const createInquirerSessionRunStep =
               // TODO - inject here the validator
             });
           },
-          // TODO - runtime error handling - dependency_inquirer
+          (err: unknown) =>
+            createError("dependency_inquirer_input_inputPromptError", {
+              error: err instanceof Error ? err : null,
+            }),
         )();
         if (!inputPromptResult.isOk()) {
           return inputPromptResult;
@@ -55,7 +59,10 @@ export const createInquirerSessionRunStep =
               // TODO - inject here the validator
             });
           },
-          // TODO - runtime error handling - dependency_inquirer
+          (err: unknown) =>
+            createError("dependency_inquirer_editor_editorPromptError", {
+              error: err instanceof Error ? err : null,
+            }),
         )();
         if (!editorPromptResult.isOk()) {
           return editorPromptResult;
@@ -117,7 +124,10 @@ export const createInquirerSessionRunStep =
               choices: selectPromptChoicesResult.value,
             });
           },
-          // TODO - runtime error handling - dependency_inquirer
+          (err: unknown) =>
+            createError("dependency_inquirer_select_selectPromptError", {
+              error: err instanceof Error ? err : null,
+            }),
         )();
         if (!selectPromptResult.isOk()) {
           return selectPromptResult;
@@ -181,7 +191,10 @@ export const createInquirerSessionRunStep =
               choices: checkboxPromptChoicesResult.value,
             });
           },
-          // TODO - runtime error handling - dependency_inquirer
+          (err: unknown) =>
+            createError("dependency_inquirer_checkbox_checkboxPromptError", {
+              error: err instanceof Error ? err : null,
+            }),
         )();
         if (!checkboxPromptResult.isOk()) {
           return checkboxPromptResult;

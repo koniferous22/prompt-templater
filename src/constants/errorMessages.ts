@@ -52,6 +52,16 @@ const formatReferenceInFile = (line: number | null, column: number | null) =>
 // TODO - often encountering circular references, because zod issue formatting reuses `errorMessages` as well
 
 export const errorMessages = {
+  dependency_clipboardy_write_errorCopyingRenderedContents: () =>
+    "Error copying rendered contents to system clipboard",
+  dependency_inquirer_checkbox_checkboxPromptError: (ctx: { error: Error | null }) =>
+    `Encountered ${ctx.error === null ? "unknown error" : "error"} during inquirer "checkbox" prompt${ctx.error !== null ? ctx.error.message : ""}`,
+  dependency_inquirer_editor_editorPromptError: (ctx: { error: Error | null }) =>
+    `Encountered ${ctx.error === null ? "unknown error" : "error"} during inquirer "editor" prompt${ctx.error !== null ? ctx.error.message : ""}`,
+  dependency_inquirer_input_inputPromptError: (ctx: { error: Error | null }) =>
+    `Encountered ${ctx.error === null ? "unknown error" : "error"} during inquirer "input" prompt${ctx.error !== null ? ctx.error.message : ""}`,
+  dependency_inquirer_select_selectPromptError: (ctx: { error: Error | null }) =>
+    `Encountered ${ctx.error === null ? "unknown error" : "error"} during inquirer "select" prompt${ctx.error !== null ? ctx.error.message : ""}`,
   dependency_nodeFs_fsCreateReadStream_unableToOpenForReading: (ctx: {
     value: string;
     errorMessage: string;

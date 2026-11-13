@@ -1,6 +1,8 @@
 import clipboard from "clipboardy";
 import { ok } from "neverthrow";
 
+import { createError } from "../../../../utils/deps/neverthrow/errorFactory.js";
+import { appErrAsyncFromThrowable } from "../../../../utils/deps/neverthrow/errorFromThrowable.js";
 import type { TemplateResourceTypes } from "../../../resources/template/factories/resourceFactories.js";
 import type { TemplateVariableContext } from "../../../templateVariableContext/factories/factory.js";
 import type { TemplateVariableSpecs } from "../../../templateVariableSpecs/factories/factory.js";
@@ -17,8 +19,13 @@ const generateOutput = async (
   options: Pick<Options, "shouldCopyToClipboard" | "shouldPrintToStdout">,
 ) => {
   if (options.shouldCopyToClipboard) {
-    // TODO - error handling
-    await clipboard.write(output);
+    const clipboardWriteResult = await appErrAsyncFromThrowable(
+      () => clipboard.write(output),
+      () => createError("dependency_clipboardy_write_errorCopyingRenderedContents", undefined),
+    )();
+    if (!clipboardWriteResult.isOk()) {
+      return clipboardWriteResult;
+    }
   }
   if (options.shouldPrintToStdout) {
     process.stdout.write(output);
