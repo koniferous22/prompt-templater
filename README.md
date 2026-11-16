@@ -11,7 +11,7 @@
 
 ## How it works?
 
-![./resources/gif/readme--01-how-it-works--01-basic-use-720.gif](./resources/gif/readme--01-how-it-works--01-basic-use-1280.gif)
+![./resources/gif/readme--01-how-it-works--01-basic-use-1280.gif](./resources/gif/readme--01-how-it-works--01-basic-use-1280.gif)
 
 After running the command, you should automatically have following contents in your clipboard
 
@@ -63,7 +63,7 @@ Since workflow is the sole entrypoint of `prompt-templater`, that also reference
 
 You can assemble a simple workflow picker
 
-![./resources/gif/readme--01-how-it-works--02-fzf-recommendation-480.gif](./resources/gif/readme--01-how-it-works--02-fzf-recommendation-480.gif)
+![./resources/gif/readme--01-how-it-works--02-fzf-recommendation-1280.gif](./resources/gif/readme--01-how-it-works--02-fzf-recommendation-1280.gif)
 
 using following snippet
 
@@ -135,7 +135,7 @@ prompt_templater_run "$PWD/fixtures/unit-test-workspace"
 
 [`alias`](https://en.wikipedia.org/wiki/Alias_%28command%29) is strongly recommended as well; for example
 
-![./resources/gif/readme--01-how-it-works--03-alias-recommendation-480.gif](./resources/gif/readme--01-how-it-works--03-alias-recommendation-480.gif)
+![./resources/gif/readme--01-how-it-works--03-alias-recommendation-1280.gif](./resources/gif/readme--01-how-it-works--03-alias-recommendation-1280.gif)
 
 using following snippet
 
