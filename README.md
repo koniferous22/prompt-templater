@@ -11,7 +11,7 @@
 
 ## How it works?
 
-![./resources/gif/readme--01-how-it-works--01-basic-use-720.gif](./resources/gif/readme--01-how-it-works--01-basic-use-720.gif)
+![./resources/gif/readme--01-how-it-works--01-basic-use-720.gif](./resources/gif/readme--01-how-it-works--01-basic-use-1280.gif)
 
 After running the command, you should automatically have following contents in your clipboard
 
