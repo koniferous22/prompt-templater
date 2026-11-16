@@ -470,11 +470,8 @@ Supported block helpers are defined [here](./src/constants/enums/templateEngines
 
 Workflow specification validated against template variable references retrieved from parsed `handlebars` AST, i.e. unmatched variables should return errors
 
-<p align="center">
-  <img src="./resources/png/readme--04-feature-support--01-variable-reference-in-template-resource.png" width="45%" style="vertical-align: middle;" alt="Comparison - fzf">
-  &nbsp;&nbsp;
-  <img src="./resources/png/readme--04-feature-support--01-variable-reference-in-workflow-resource.png" width="45%" style="vertical-align: middle;" alt="Comparison - ChatGPT">
-</p>
+<img src="./resources/png/readme--04-feature-support--01-variable-reference-in-template-resource.png" alt="Comparison - fzf">
+<img src="./resources/png/readme--04-feature-support--01-variable-reference-in-workflow-resource.png" alt="Comparison - ChatGPT">
 
 This validation can be skipped by passing `--skip-template-validation` CLI option
 
