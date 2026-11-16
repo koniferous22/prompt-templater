@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "prompt-templater-v1",
+      "name": "prompt-templater",
       "dependencies": {
         "@inquirer/prompts": "^8.8.0",
         "@optique/core": "^1.3.6",

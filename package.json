@@ -1,5 +1,5 @@
 {
-  "name": "prompt-templater-v1",
+  "name": "prompt-templater",
   "version": "1.0.0",
   "description": "Templating clipboard util for making prompt typing more efficient",
   "keywords": [],

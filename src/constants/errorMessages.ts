@@ -199,7 +199,7 @@ export const errorMessages = {
     statementType: string;
     location: hbs.AST.SourceLocation;
   }) =>
-    `prompt-templater-v1 doesn't support handlebars "${ctx.statementType}" statement type (${JSON.stringify(ctx.location)})`,
+    `prompt-templater doesn't support handlebars "${ctx.statementType}" statement type (${JSON.stringify(ctx.location)})`,
   module_templateEngines_handlebars_buildSimplifiedAst_unsupportedAstBlockHelper: (ctx: {
     blockHelper: string;
     location: hbs.AST.SourceLocation;

@@ -24,7 +24,7 @@ After running the command, you should automatically have following contents in y
 For following command
 
 ```sh
-./bin/prompt-templater-v1 -w "$PWD/fixtures/unit-test-workspace" workflows/test-workflow.yml
+./bin/prompt-templater -w "$PWD/fixtures/unit-test-workspace" workflows/test-workflow.yml
 ```
 
 example template (available [here](./fixtures/unit-test-workspace/templates/test-template-basic.hbs))
@@ -87,7 +87,7 @@ function check_dependencies() {
 check_dependencies
 # Generic util
 # 1st argument = workspace - root path from which workflows are searched
-# rest arguments = CLI options passed to `prompt-templater-v1`
+# rest arguments = CLI options passed to `prompt-templater`
 function prompt_templater_run_workflow_in_workspace() {
   local prompt_templater_workspace="$1"
   if [[ ! -d $prompt_templater_workspace ]]; then
@@ -108,11 +108,11 @@ function prompt_templater_run_workflow_in_workspace() {
     echo "no file selected" >&2
     return 0
   fi
-  # Requires `prompt-templater-v1` to be present in $PATH
-  prompt-templater-v1 -w "$prompt_templater_workspace" "$@" "$fzf_output"
+  # Requires `prompt-templater` to be present in $PATH
+  prompt-templater -w "$prompt_templater_workspace" "$@" "$fzf_output"
 }
 
-# Specific util to run `prompt-templater-v1` without any additional CLI flags
+# Specific util to run `prompt-templater` without any additional CLI flags
 function prompt_templater_run() {
   local prompt_templater_workspace="$1"
   if [[ ! -d $prompt_templater_workspace ]]; then
@@ -126,7 +126,7 @@ function prompt_templater_run() {
 and test with following one-liner in root folder of cloned repository
 
 ```sh
-# To resolve `prompt-templater-v1` executable path
+# To resolve `prompt-templater` executable path
 PATH="$PATH:$PWD/bin"
 prompt_templater_run "$PWD/fixtures/unit-test-workspace"
 ```
@@ -148,7 +148,7 @@ Motivation for using `alias` is ease of workspace switching rather than typing s
 
 ```sh
 # workspace passed as `-w` argument
-prompt-templater-v1 -w "$prompt_templater_workspace" "$@" "$fzf_output"
+prompt-templater -w "$prompt_templater_workspace" "$@" "$fzf_output"
 ```
 
 Workspaces are passed as `-w` argument to `prompt-templater` executable. Workspace option `-w` is a required option. Furthermore each template and workflow belongs under a workspace.
@@ -225,7 +225,7 @@ function check_dependencies() {
 function setup() {
   # Check deps and fail if there's a dependency missing
   check_dependencies || return $?
-  git clone "https://codeberg.org/koniferous22/prompt-templater-v1.git"
+  git clone "https://codeberg.org/koniferous22/prompt-templater.git"
 }
 
 setup
@@ -240,7 +240,7 @@ Note for `nushell` users - sadly didn't have time to write `nushell` equivalent 
 ```sh
 # Generic util
 # 1st argument = workspace - root path from which workflows are searched
-# rest arguments = CLI options passed to `prompt-templater-v1`
+# rest arguments = CLI options passed to `prompt-templater`
 function prompt_templater_run_workflow_in_workspace() {
   local prompt_templater_workspace="$1"
   if [[ ! -d $prompt_templater_workspace ]]; then
@@ -261,11 +261,11 @@ function prompt_templater_run_workflow_in_workspace() {
     echo "no file selected" >&2
     return 0
   fi
-  # Requires `prompt-templater-v1` to be present in $PATH
-  prompt-templater-v1 -w "$prompt_templater_workspace" "$@" "$fzf_output"
+  # Requires `prompt-templater` to be present in $PATH
+  prompt-templater -w "$prompt_templater_workspace" "$@" "$fzf_output"
 }
 
-# Specific util to run `prompt-templater-v1` without any additional CLI flags
+# Specific util to run `prompt-templater` without any additional CLI flags
 function prompt_templater_run() {
   local prompt_templater_workspace="$1"
   if [[ ! -d $prompt_templater_workspace ]]; then
@@ -275,7 +275,7 @@ function prompt_templater_run() {
   prompt_templater_run_workflow_in_workspace "$prompt_templater_workspace"
 }
 
-# Runs `prompt-templater-v1` with additional "-u" flag
+# Runs `prompt-templater` with additional "-u" flag
 function prompt_templater_run_unsafe() {
   local prompt_templater_workspace="$1"
   if [[ ! -d $prompt_templater_workspace ]]; then

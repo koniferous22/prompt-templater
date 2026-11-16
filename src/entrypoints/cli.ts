@@ -7,7 +7,7 @@ import { createSessionFromCliInput } from "../modules/session/sessionFromCliInpu
 
 export const runCli = async () => {
   const cliInput = await run(cliArgsParser, {
-    programName: "prompt-templater-v1",
+    programName: "prompt-templater",
     contexts: [envContext],
     help: "option",
     brief: message`"prompt-templater" ~ interactive templating util for quick text composition`,
