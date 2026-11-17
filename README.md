@@ -4,8 +4,8 @@
 
 - [How it works?](#how-it-works)
 - [How to setup?](#how-to-setup)
-- [Motivation](#motivation)
 - [Feature support](#feature-support)
+- [Motivation](#motivation)
 - [Roadmap](#roadmap)
 - [Anyways...](#anyways)
 
@@ -324,6 +324,63 @@ ptmpwu1="prompt_templater_run_unsafe \"\$PROMPT_TEMPLATER_WORKSPACE1\""
 ptmpwu2="prompt_templater_run_unsafe \"\$PROMPT_TEMPLATER_WORKSPACE2\""
 ```
 
+## Feature support
+
+<span style="color: #FFD700;">⚠️</span> this section is work in progress and potentially subject to frequent changes
+
+### workflow syntax
+
+TBD
+
+### `handlebars` template syntax
+
+`prompt-templater` uses restricted `handlebars` template syntax
+
+Following `handlebars` features are not supported
+
+- [`decorators`](https://handlebarsjs.com/api-reference/runtime.html#handlebars-registerdecorator-name-helper-deprecated)
+- [`partials`](https://handlebarsjs.com/guide/partials.html)
+
+unsupported features are defined with respect to codebase [here](./src/constants/enums/templateEngines/handlebars/ast.ts)
+
+### [`handlebars` block helpers](https://handlebarsjs.com/guide/builtin-helpers.html)
+
+Block syntax, for instance
+
+```hbs
+{{#if 0 includeZero=true}}
+  <h1>Does render</h1>
+{{/if}}
+```
+
+defines block keywords (in this case `if`, in `#if` block)
+
+following block helpers are supported
+
+- `with`
+- `each`
+- `if`
+- `unless`
+- `ifEquals`
+- `unlessEquals`
+
+This feature is expected to improve over time
+
+Supported block helpers are defined [here](./src/constants/enums/templateEngines/handlebars/ast.ts)
+
+### Template validation against workflow
+
+Workflow specification validated against template variable references retrieved from parsed `handlebars` AST, i.e. unmatched variables should return errors
+
+<img src="./resources/png/readme--04-feature-support--01-variable-reference-in-template-resource.png" alt="Comparison - fzf">
+<img src="./resources/png/readme--04-feature-support--01-variable-reference-in-workflow-resource.png" alt="Comparison - ChatGPT">
+
+This validation can be skipped by passing `--skip-template-validation` CLI option
+
+### `-u/--unsafe-render` CLI option
+
+TBD
+
 ## Motivation
 
 [(skip to shorter version)](#shorter-version)
@@ -468,63 +525,6 @@ take a look at these two images, and think which one of these two interfaces is 
   &nbsp;&nbsp;
   <img src="./resources/png/readme--03-motivation--03-screenshot-chatgpt-ui.png" width="45%" style="vertical-align: middle;" alt="Comparison - ChatGPT">
 </p>
-
-## Feature support
-
-<span style="color: #FFD700;">⚠️</span> this section is work in progress and potentially subject to frequent changes
-
-### workflow syntax
-
-TBD
-
-### `handlebars` template syntax
-
-`prompt-templater` uses restricted `handlebars` template syntax
-
-Following `handlebars` features are not supported
-
-- [`decorators`](https://handlebarsjs.com/api-reference/runtime.html#handlebars-registerdecorator-name-helper-deprecated)
-- [`partials`](https://handlebarsjs.com/guide/partials.html)
-
-unsupported features are defined with respect to codebase [here](./src/constants/enums/templateEngines/handlebars/ast.ts)
-
-### [`handlebars` block helpers](https://handlebarsjs.com/guide/builtin-helpers.html)
-
-Block syntax, for instance
-
-```hbs
-{{#if 0 includeZero=true}}
-  <h1>Does render</h1>
-{{/if}}
-```
-
-defines block keywords (in this case `if`, in `#if` block)
-
-following block helpers are supported
-
-- `with`
-- `each`
-- `if`
-- `unless`
-- `ifEquals`
-- `unlessEquals`
-
-This feature is expected to improve over time
-
-Supported block helpers are defined [here](./src/constants/enums/templateEngines/handlebars/ast.ts)
-
-### Template validation against workflow
-
-Workflow specification validated against template variable references retrieved from parsed `handlebars` AST, i.e. unmatched variables should return errors
-
-<img src="./resources/png/readme--04-feature-support--01-variable-reference-in-template-resource.png" alt="Comparison - fzf">
-<img src="./resources/png/readme--04-feature-support--01-variable-reference-in-workflow-resource.png" alt="Comparison - ChatGPT">
-
-This validation can be skipped by passing `--skip-template-validation` CLI option
-
-### `-u/--unsafe-render` CLI option
-
-TBD
 
 ## Roadmap
 
