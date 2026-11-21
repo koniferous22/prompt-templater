@@ -199,7 +199,7 @@ Procedural thinking in codebases is largely achieved using LLM Skills, however s
 - [`bun`](https://bun.sh/)
 - [`fzf`](https://github.com/junegunn/fzf) (recommended)
 
-### 1. `git clone`
+### 1. `git clone` + dependency checks
 
 ```sh
 # Check if executables on which bash function depends are present
@@ -386,6 +386,10 @@ TBD
 [(skip to shorter version)](#shorter-version)
 
 ### Longer version (goes a off tangent, so naturally don't read it, unless you have no other choice)
+
+srsly, if you scrolled here consider [skipping to shorter version](#shorter-version), I don't assume by default, the reader to be in mood for lenghty ramblings, that eventually might make little sense. I'm planning to move this type of posts elsewhere, with a bit more pre-processing. Neverthless, threw it here for sake of getting ideas out of head at very least.
+
+but if you insist here it is
 
 `prompt-templater` at the present moment can assist in few use cases with respect to AI, due to being in proof-of-concept stage. The usefulness is limited namely through limited workflow syntax, hopefully [it gets better soon](#roadmap). Neverthless AI is the primary motivation for this project, especially the area of orchestrating complex tasks with reliable outcomes. Tasks with desired outcome should have short, or preferably no [agentic loop](https://en.wikipedia.org/wiki/AI_agent)s. I've put together a few reasons why, however don't expect me to lead hour-long debates defending the reasons. Or in case you do expect me to defend stated reasons for some reason, don't expect prompt responses on stated topics, as I got shit to do.
 
