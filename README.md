@@ -188,7 +188,7 @@ Organization of workspaces is subject to user decisions; workspaces can be conta
 
 The obvious use-case for `prompt-templater` is LLM prompt crafting, which is the main motivation why this utility came to existence in the first place.
 
-Procedural thinking in codebases is largely achieved using LLM Skills, however skillify-ing sessions / defining skill doesn't really fill the gap towards one-shotting UX with LLMs. Use of skills still requires articulating a lot of supplementary prompt text. Fuzzy finder with a few keypresses followed by clipboard paste gets closer to the almost-deterministic feel of getting things done with AI. Think of it as lightweight low-friction management of stored procedures in form of plaintext.
+Procedural thinking in codebases is largely achieved using LLM Skills, however skill-building from sessions / defining skill doesn't really fill the gap towards one-shotting UX with LLMs. Use of skills still requires articulating at least some supplementary prompt text. Fuzzy finder with a few keypresses followed by clipboard paste gets closer to the almost-deterministic feel of getting things done with AI. Think of it as lightweight low-friction management of stored procedures in form of plaintext.
 
 ## How to setup?
 
