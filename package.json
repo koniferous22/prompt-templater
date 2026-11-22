@@ -17,7 +17,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@inquirer/prompts": "^8.8.0",
+    "@inquirer/prompts": "^8.8.1",
     "@optique/core": "^1.4.0",
     "@optique/env": "^1.4.0",
     "@optique/run": "^1.4.0",
